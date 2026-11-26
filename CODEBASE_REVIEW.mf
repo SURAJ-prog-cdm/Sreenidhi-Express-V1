@@ -13597,9 +13597,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
       <div className="mb-3 flex items-center justify-between px-1 text-xs text-slate-500 dark:text-slate-400">
         <span className="inline-flex items-center gap-2 truncate pr-2 font-semibold">
           <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
-          {import.meta.env.DEV
-            ? 'Live Campus Telemetry • Demo Mode'
-            : 'Sreenidhi University Campus Transit'}
+          Live Campus Telemetry
         </span>
         <button
           type="button"
