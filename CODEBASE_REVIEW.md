@@ -8,9 +8,9 @@
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 75 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 76 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack UI audit cleanup, and Prismatic Daylight Glass UI upgrade, all 75 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing), end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing), and concurrency load benchmarks (`scripts/load-test.mjs`, 50 concurrent SSE streams, 0% error rate).
+Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack UI audit cleanup, and Prismatic Daylight Glass UI upgrade, all 76 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing), end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing), and concurrency load benchmarks (`scripts/load-test.mjs`, 50 concurrent SSE streams, 0% error rate).
 
 ### Summary Audit Matrix:
 
@@ -91,6 +91,7 @@ Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack
 | **73** | **P1** | Copy Consistency | **Purge Remaining Stale "10 PM Cutoff" Strings**: Replaced all remaining `10:00 PM` / `10 PM Cutoff` strings with `1 hour before bus departure` / `1h pre-departure cutoff` across `CommuteSimulationContext.tsx`, `AdminDashboard.tsx`, and `ParentPortal.tsx`. | [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx) |
 | **74** | **P1** | Mobile UI Restyle (v20.1) | **BusTrack White-and-Indigo Design Across All Phase 1 Portals**: Restyled `App.tsx`, `MobileBottomNav.tsx`, `StudentLoginPage.tsx`, 4-tab `StudentPortal.tsx` (`HOME` / `MAP` / `PASS` / `MORE`), 3-tab `DriverConsole.tsx` (`TRIP` / `STOPS` / `ALERTS` with `startedAt` IST clock), and 3-tab `AdminDashboard.tsx` (`VERIFY` / `FLEET` / `LOGS`) on `#F5F7FB` canvas and `#4F46E5` indigo hero cards with dark-mode `dark:` parity preserved. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/components/common/MobileBottomNav.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/common/MobileBottomNav.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx) |
 | **75** | **P1** | Prismatic Daylight UI | **Prismatic Daylight Glass Design System & Light-First Boot**: Switched default boot state to Light Mode (`index.html` & `CommuteSimulationContext.tsx`), created cohesive pearl-white aurora canvas (`.bg-prismatic-canvas`), frosted porcelain glass surfaces (`.prismatic-card`, `.prismatic-subcard`), electric indigo-to-cyan gradients (`.electric-hero`, `.electric-cta`), tactile micro-interactions (`.futuristic-tile`, `.tactile-btn`, `.animate-electric-sheen`, `.animate-panel-in`), and purged all remaining hardcoded dark-only slabs and legacy `#0D4B42` accents across modals, drawers, maps, login, and all portals while preserving optional `dark:` fallback parity. | [`index.html`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/index.html), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css), [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
+| **76** | **P1** | Mobile Polish & CSS Hygiene | **Phase 1 Bottom-Bar Collision Fix & Duplicate CSS Cleanup**: Suppressed redundant `<MobileBottomNav />` in `src/App.tsx` when `activeView` is `'STUDENT'`, `'DRIVER'`, or `'ADMIN'` (preventing overlap over `StudentPortal.tsx`'s fixed `bottom-3` 4-tab pill bar), shifted Student mobile floating theme toggle to `bottom-20`, and deleted duplicate legacy emerald `.futuristic-tile` / `.futuristic-tile-active` overrides in `src/index.css` so indigo/cyan tile styling applies cleanly. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css) |
 
 ---
 
@@ -959,18 +960,6 @@ self.addEventListener('notificationclick', (event) => {
   background: linear-gradient(135deg, #0b1120 0%, #1e1b4b 45%, #0f172a 75%, #2b1222 100%);
   background-size: 200% 200%;
   animation: holo-sheen 12s ease infinite;
-}
-
-/* Futuristic smooth glowing tile transitions */
-.futuristic-tile {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.dark .futuristic-tile:hover {
-  background: rgba(30, 41, 59, 0.7);
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.15), inset 0 0 0 1px rgba(52, 211, 153, 0.25);
-}
-.dark .futuristic-tile-active {
-  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.25), inset 0 0 0 1px rgba(52, 211, 153, 0.4);
 }
 
 ```
@@ -10697,6 +10686,7 @@ const ActiveViewBody: React.FC = () => {
 
 const MainShell: React.FC = () => {
   const {
+    activeView,
     currentUser,
     latestToast,
     dismissToast,
@@ -10708,6 +10698,11 @@ const MainShell: React.FC = () => {
     isDark,
     toggleDark,
   } = useCommuteSimulation();
+
+  // Phase 1 portals (Student, Driver, Admin) provide their own navigation and logout controls
+  const hidePhase1BottomNav =
+    activeView === 'STUDENT' || activeView === 'DRIVER' || activeView === 'ADMIN';
+  const showMobileBottomNav = isMobileShell && Boolean(currentUser) && !hidePhase1BottomNav;
 
   useEffect(() => {
     if (!latestToast) return;
@@ -10788,7 +10783,7 @@ const MainShell: React.FC = () => {
 
           {toastEl}
 
-          {isMobileShell && (
+          {showMobileBottomNav && (
             <div className="shrink-0">
               <MobileBottomNav />
             </div>
@@ -10816,7 +10811,7 @@ const MainShell: React.FC = () => {
           </Suspense>
         </main>
 
-        {isMobileShell && (
+        {showMobileBottomNav && (
           <div className="fixed inset-x-0 bottom-0 z-40">
             <MobileBottomNav />
           </div>
@@ -10824,7 +10819,9 @@ const MainShell: React.FC = () => {
 
         {/* Discreet frosted bottom floating utility dock */}
         <div className={`prismatic-card fixed right-3 z-40 flex items-center gap-1.5 rounded-full p-1.5 ${
-          isMobileShell && currentUser
+          isMobileShell && currentUser && activeView === 'STUDENT'
+            ? 'bottom-20'
+            : showMobileBottomNav
             ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))]'
             : 'bottom-3'
         }`}>

@@ -79,6 +79,7 @@ const ActiveViewBody: React.FC = () => {
 
 const MainShell: React.FC = () => {
   const {
+    activeView,
     currentUser,
     latestToast,
     dismissToast,
@@ -90,6 +91,11 @@ const MainShell: React.FC = () => {
     isDark,
     toggleDark,
   } = useCommuteSimulation();
+
+  // Phase 1 portals (Student, Driver, Admin) provide their own navigation and logout controls
+  const hidePhase1BottomNav =
+    activeView === 'STUDENT' || activeView === 'DRIVER' || activeView === 'ADMIN';
+  const showMobileBottomNav = isMobileShell && Boolean(currentUser) && !hidePhase1BottomNav;
 
   useEffect(() => {
     if (!latestToast) return;
@@ -170,7 +176,7 @@ const MainShell: React.FC = () => {
 
           {toastEl}
 
-          {isMobileShell && (
+          {showMobileBottomNav && (
             <div className="shrink-0">
               <MobileBottomNav />
             </div>
@@ -198,7 +204,7 @@ const MainShell: React.FC = () => {
           </Suspense>
         </main>
 
-        {isMobileShell && (
+        {showMobileBottomNav && (
           <div className="fixed inset-x-0 bottom-0 z-40">
             <MobileBottomNav />
           </div>
@@ -206,7 +212,9 @@ const MainShell: React.FC = () => {
 
         {/* Discreet frosted bottom floating utility dock */}
         <div className={`prismatic-card fixed right-3 z-40 flex items-center gap-1.5 rounded-full p-1.5 ${
-          isMobileShell && currentUser
+          isMobileShell && currentUser && activeView === 'STUDENT'
+            ? 'bottom-20'
+            : showMobileBottomNav
             ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))]'
             : 'bottom-3'
         }`}>
