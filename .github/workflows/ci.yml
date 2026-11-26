@@ -1,0 +1,39 @@
+name: Sreenidhi Express CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint Codebase (oxlint)
+        run: npm run lint
+
+      - name: Security & Functional Unit Tests
+        run: npm test
+
+      - name: Production Build (Vite & Chunk Verification)
+        run: npm run build
+
+      - name: Full 9-Stage E2E Pilot Test
+        run: npm run test:pilot
+
+      - name: SSE & HTTP Concurrency Load Benchmark
+        run: npm run test:load
