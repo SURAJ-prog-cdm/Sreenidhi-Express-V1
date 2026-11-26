@@ -219,7 +219,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
           </div>
           <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
             <WifiOff className="w-3.5 h-3.5" />
-            <span>Offline Digital Bus Pass</span>
+            <span>Works Offline (PWA)</span>
           </div>
           <div className="flex items-center gap-1.5 text-[#4F46E5] dark:text-indigo-300">
             <Sparkles className="w-3.5 h-3.5" />

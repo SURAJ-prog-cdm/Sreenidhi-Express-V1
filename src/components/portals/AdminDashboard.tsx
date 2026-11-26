@@ -10,7 +10,6 @@ import {
   Star,
   Download,
   CheckCircle2,
-  CreditCard,
   Send,
   RotateCcw,
   Lock,
@@ -80,10 +79,6 @@ export const AdminDashboard: React.FC = () => {
   // Ride feedback
   const [feedbackList, setFeedbackList] = useState<any[]>([]);
 
-  // Demo student fee toggle state
-  const [demoStudentFee, setDemoStudentFee] = useState<'PAID' | 'DUE'>('PAID');
-  const [targetStudentRoll, setTargetStudentRoll] = useState('26011CSEAI0109');
-
   // Bulk Excel Onboarding & Live SQLite Backup State
   const [isImportingRoster, setIsImportingRoster] = useState(false);
   const [bulkImportResult, setBulkImportResult] = useState<{
@@ -149,8 +144,8 @@ export const AdminDashboard: React.FC = () => {
           rollNumber: a.roll_number || a.roll || a.rollNumber || '',
           program: a.program || 'B.Tech Undergrad',
           routeId: a.route_id || a.routeId || 'route-51',
-          requestType: a.request_type || a.requestType || 'BUS_PASS_RENEWAL',
-          title: a.title || 'Bus Pass Application',
+          requestType: a.request_type || a.requestType || 'ROUTE_CHANGE',
+          title: a.title || 'Transport Service Request',
           reason: a.description || a.reason || '',
           status: a.status === 'PENDING_SCRUTINY' ? 'PENDING' : (a.status || 'PENDING'),
         }))
@@ -231,17 +226,6 @@ export const AdminDashboard: React.FC = () => {
       pushToast('success', 'Lost Item Resolved', `Item #${id} marked as returned to owner.`);
       void reloadData();
     }
-  };
-
-  const handleToggleFeeStatus = async () => {
-    const nextStatus = demoStudentFee === 'PAID' ? 'DUE' : 'PAID';
-    setDemoStudentFee(nextStatus);
-    await excelService.setAdminFeeStatus(targetStudentRoll, nextStatus);
-    pushToast(
-      nextStatus === 'PAID' ? 'success' : 'warning',
-      `Student Fee Set to ${nextStatus}`,
-      `Student (${targetStudentRoll}) fee status is now ${nextStatus}. Test Digital Bus Pass in Student Portal.`
-    );
   };
 
   const handleDownloadCsv = async (type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility') => {
@@ -424,27 +408,8 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Actions: Reset Cycle, Master Excel & Logout */}
+        {/* Right Actions: Master Excel & Logout */}
         <div className="flex flex-wrap items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={async () => {
-              if (window.confirm('Reset emergency grace passes for all students for the new billing cycle?')) {
-                const res = await excelService.resetBillingCycle();
-                if (res.success) {
-                  pushToast('success', 'Billing Cycle Reset', `Grace passes renewed for ${res.resetCount || 0} riders (${res.newCycle || 'Current Term'}).`);
-                } else {
-                  pushToast('danger', 'Reset Failed', 'Could not reset billing cycle.');
-                }
-              }
-            }}
-            className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
-            title="Reset monthly emergency grace pass limits"
-          >
-            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
-            <span>Reset Cycle</span>
-          </button>
-
           <button
             type="button"
             onClick={downloadMasterExcel}
@@ -612,7 +577,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                  Pass Scrutiny Queue &amp; Special Requests
+                  Transport Requests &amp; Scrutiny Queue
                 </h3>
               </div>
               <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
@@ -623,7 +588,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="mt-4 space-y-3">
               {applications.length === 0 ? (
                 <p className="text-xs text-slate-500 dark:text-slate-400 italic p-4 text-center rounded-2xl border border-dashed border-slate-200 dark:border-[#2E3646]">
-                  No pending scrutiny applications found. All special requests and renewals are cleared.
+                  No pending scrutiny applications found. All special transport requests are cleared.
                 </p>
               ) : (
                 applications.map((app) => (
@@ -688,45 +653,6 @@ export const AdminDashboard: React.FC = () => {
               )}
             </div>
           </div>
-
-          {/* Student Fee Gating Simulator */}
-          <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-5">
-            <div>
-              <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
-                  Student Fee Gating Simulator
-                </h3>
-              </div>
-              <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span>Target student:</span>
-                <select
-                  value={targetStudentRoll}
-                  onChange={(e) => setTargetStudentRoll(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-[#F7F9FF] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
-                >
-                  <option value="26011CSEAI0109">Suraj (26011CSEAI0109 — Route 51)</option>
-                  <option value="23SN1A0501">Aarav Reddy (23SN1A0501 — Route 14)</option>
-                </select>
-                <span>• Status:</span>
-                <span className={`font-mono font-bold ${demoStudentFee === 'PAID' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                  {demoStudentFee}
-                </span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleToggleFeeStatus}
-              className={`rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer ${
-                demoStudentFee === 'PAID'
-                  ? 'tactile-btn bg-rose-600 hover:bg-rose-700'
-                  : 'electric-cta'
-              }`}
-            >
-              {demoStudentFee === 'PAID' ? `Set Fee to DUE (${targetStudentRoll})` : `Set Fee to PAID (${targetStudentRoll})`}
-            </button>
-          </div>
         </div>
       )}
 
@@ -768,7 +694,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-72 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -777,7 +703,9 @@ export const AdminDashboard: React.FC = () => {
                   heightClass="h-72 w-full"
                 />
               ) : (
-                <MetroSchematicMap activeBus={activeBus} />
+                <div className="h-72 w-full">
+                  <MetroSchematicMap activeBus={activeBus} />
+                </div>
               )}
             </div>
           </div>

@@ -600,7 +600,7 @@ class ExcelService {
     on: boolean,
     rollNumber?: string,
     day?: 'TODAY' | 'TOMORROW',
-  ): Promise<{ ok: boolean; status: number; locked?: boolean; cutoffIso?: string | null; error?: string; routePlan?: any }> {
+  ): Promise<{ ok: boolean; status: number; locked?: boolean; lockReason?: string | null; cutoffIso?: string | null; error?: string; routePlan?: any }> {
     try {
       const res = await fetch(`${this.serverBaseUrl}/api/students/absence`, {
         method: 'POST',
@@ -612,19 +612,20 @@ class ExcelService {
         ok: res.ok,
         status: res.status,
         locked: Boolean(data.locked),
+        lockReason: data.lockReason ?? null,
         cutoffIso: data.cutoffIso || null,
         error: data.error,
         routePlan: data.routePlan,
       };
     } catch (err: any) {
-      return { ok: false, status: 0, error: err?.message || 'Network error' };
+      return { ok: false, status: 0, lockReason: null, error: err?.message || 'Network error' };
     }
   }
 
   public async getAbsenceTomorrow(
     rollNumber?: string,
     day?: 'TODAY' | 'TOMORROW',
-  ): Promise<{ absentTomorrow: boolean; locked?: boolean; cutoffIso?: string | null; routePlan?: any }> {
+  ): Promise<{ absentTomorrow: boolean; locked?: boolean; lockReason?: string | null; cutoffIso?: string | null; routePlan?: any }> {
     try {
       const params = new URLSearchParams();
       if (rollNumber) params.set('rollNumber', rollNumber);
@@ -634,16 +635,17 @@ class ExcelService {
         ? `${this.serverBaseUrl}/api/students/absence?${qs}`
         : `${this.serverBaseUrl}/api/students/absence`;
       const res = await fetch(url, { headers: this.authHeaders() });
-      if (!res.ok) return { absentTomorrow: false };
+      if (!res.ok) return { absentTomorrow: false, lockReason: null };
       const data = await res.json();
       return {
         absentTomorrow: Boolean(data.absentTomorrow),
         locked: Boolean(data.locked),
+        lockReason: data.lockReason ?? null,
         cutoffIso: data.cutoffIso || null,
         routePlan: data.routePlan,
       };
     } catch {
-      return { absentTomorrow: false };
+      return { absentTomorrow: false, lockReason: null };
     }
   }
 

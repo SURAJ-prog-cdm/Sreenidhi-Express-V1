@@ -13,6 +13,7 @@ import {
 import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
 import type { BusVehicle, RouteStop } from '../../types/transit';
 import { osrmRoutingService } from '../../services/osrmRoutingService';
+import { excelService } from '../../services/excelService';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 
 interface HybridTransitMapProps {
@@ -371,7 +372,7 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
   heightClass = 'h-72 sm:h-80',
 }) => {
   const { isDark } = useCommuteSimulation();
-  const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+  const apiBase = excelService.getServerBaseUrl().replace(/\/+$/, '');
   const renderedBuses = showAllFleet ? buses : [focusedBus];
   const stopWaypoints = useRef<[number, number][]>([]);
   stopWaypoints.current = focusedBus.stops.map((s) => [s.lat, s.lng]);
@@ -420,214 +421,221 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
   }, [focusedBus.routeId, focusedBus.flyoverBypassActive, focusedBus.skippedClusterIds?.length]);
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-2xl border border-slate-200/80 shadow-inner dark:border-white/[0.1] ${heightClass}`}>
-      {useGoogleMaps && window.google?.maps ? (
-        <GoogleMapsCanvas
-          buses={buses}
-          focusedBus={focusedBus}
-          showAllFleet={showAllFleet}
-        />
-      ) : (
-        <MapContainer
-          center={[focusedBus.currentLat, focusedBus.currentLng]}
-          zoom={showAllFleet ? 11 : 12}
-          className="h-full w-full"
-          scrollWheelZoom={true}
-        >
-          <TileLayer
-            key={isDark ? 'carto-dark' : 'carto-light'}
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url={
-              isDark
-                ? `${apiBase}/api/tiles/dark_all/{z}/{x}/{y}`
-                : `${apiBase}/api/tiles/voyager/{z}/{x}/{y}`
-            }
-            maxZoom={19}
-          />
-          <MapCameraController
-            focusedBus={focusedBus}
-            roadCoordinates={roadCoordinates}
-            followBus={followBus}
-            setFollowBus={setFollowBus}
-          />
-
-          {/* Dual-Layer Glowing OSRM Corridor Polyline */}
-          <Polyline
-            positions={roadCoordinates}
-            pathOptions={{
-              color: isDark ? '#38bdf8' : '#4f46e5',
-              weight: 11,
-              opacity: focusedBus.shortcutPath ? 0.12 : 0.22,
-              lineCap: 'round',
-              lineJoin: 'round',
-            }}
-          />
-          <Polyline
-            positions={roadCoordinates}
-            pathOptions={{
-              color: isDark ? '#38bdf8' : '#4f46e5',
-              weight: 4,
-              opacity: focusedBus.shortcutPath ? 0.35 : 0.95,
-              dashArray: focusedBus.shortcutPath ? '6 8' : undefined,
-            }}
-          />
-
-          {/* Shortcut Bypass Polyline when area is skipped */}
-          {focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1 && (
-            <>
-              <Polyline
-                positions={focusedBus.shortcutPath}
-                pathOptions={{
-                  color: '#10b981',
-                  weight: 12,
-                  opacity: 0.24,
-                  lineCap: 'round',
-                  lineJoin: 'round',
-                }}
-              />
-              <Polyline
-                positions={focusedBus.shortcutPath}
-                pathOptions={{
-                  color: '#10b981',
-                  weight: 4.5,
-                  opacity: 0.98,
-                }}
-              />
-            </>
-          )}
-
-          {/* Stops & Geofences */}
-          {focusedBus.stops.map((stop, idx) => {
-            const isCurrent = idx === focusedBus.currentStopIndex;
-            const isHighlighted = stop.id === highlightStopId;
-            const isPassed = idx < focusedBus.currentStopIndex;
-            return (
-              <React.Fragment key={stop.id}>
-                <Circle
-                  center={[stop.lat, stop.lng]}
-                  radius={stop.geofenceRadiusMeters}
-                  pathOptions={{
-                    color: stop.isBypassed
-                      ? '#64748b'
-                      : isHighlighted
-                        ? '#f59e0b'
-                        : '#4f46e5',
-                    fillOpacity: isHighlighted ? 0.2 : 0.08,
-                    weight: 1,
-                  }}
-                />
-                <Marker
-                  position={[stop.lat, stop.lng]}
-                  icon={createStopDivIcon(stop, isCurrent, isHighlighted, isPassed, isDark)}
-                >
-                  <Popup>
-                    <div className="min-w-[175px] text-xs">
-                      <p className="font-bold text-slate-900 dark:text-slate-100">
-                        {stop.sequence}. {stop.name}
-                      </p>
-                      <p className="text-slate-600 dark:text-slate-400">{stop.areaClusterName}</p>
-                      <p className="mt-1 text-slate-700 dark:text-slate-300">
-                        AM: {stop.scheduledMorningTime} • PM: {stop.scheduledEveningTime}
-                      </p>
-                      {stop.metroInterchange && (
-                        <p className="mt-1 font-semibold text-indigo-600 dark:text-indigo-400">
-                          🚇 {stop.metroInterchange.stationName} ({stop.metroInterchange.line})
-                        </p>
-                      )}
-                      {stop.isBypassed && (
-                        <p className="mt-1 font-bold text-emerald-600 dark:text-emerald-400">
-                          ✓ SKIPPED BY BYPASS ROUTE
-                        </p>
-                      )}
-                    </div>
-                  </Popup>
-                </Marker>
-              </React.Fragment>
-            );
-          })}
-
-          {/* Sreenidhi University Campus Beacon */}
-          <Circle
-            center={[SREENIDHI_CAMPUS.lat, SREENIDHI_CAMPUS.lng]}
-            radius={220}
-            pathOptions={{ color: '#e53c2e', fillOpacity: 0.16, weight: 1.5 }}
-          />
-
-          {/* Live Bus Markers */}
-          {renderedBuses.map((bus) => (
-            <Marker
-              key={bus.routeId}
-              position={[bus.currentLat, bus.currentLng]}
-              icon={createBusDivIcon(bus, bus.routeId === focusedBus.routeId)}
-            >
-              <Popup>
-                <div className="min-w-[180px] text-xs">
-                  <p className="font-bold text-slate-900 dark:text-slate-100">
-                    {bus.routeNumber} — {bus.registrationNo}
-                  </p>
-                  <p className="text-slate-600 dark:text-slate-400">Driver: {bus.driverName}</p>
-                  <p className="mt-1 text-slate-700 dark:text-slate-300">
-                    Speed: <b className="text-slate-900 dark:text-white">{bus.speedKmh} km/h</b> • Delay: <b className="text-slate-900 dark:text-white">+{bus.trafficDelayMinutes}m</b>
-                  </p>
-                  <p className="mt-1 font-medium text-indigo-600 dark:text-indigo-400">
-                    GPS: {bus.telemetrySource === 'DRIVER_PRIMARY' ? 'Driver Primary' : 'Crowd-Sourced Students'}
-                  </p>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-      )}
-
-      {/* Top-Left Floating Telemetry Pill */}
-      <div className="pointer-events-none absolute top-3 left-14 z-[400] flex max-w-[calc(100%-110px)] items-center gap-1.5 sm:gap-2 truncate rounded-full border border-slate-200/80 bg-white/92 px-2.5 sm:px-3 py-1 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-slate-900/92 text-[11px] sm:text-xs">
-        <span className="relative flex h-2 w-2 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-        </span>
-        <span className="font-bold text-slate-800 dark:text-slate-100 shrink-0">
-          {focusedBus.routeNumber}
-        </span>
-        <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
-        <span className="font-mono font-semibold text-indigo-600 dark:text-cyan-400 shrink-0">
-          {Math.round(focusedBus.speedKmh)} km/h
-        </span>
+    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 shadow-inner dark:border-white/[0.1] dark:bg-slate-900/90">
+      {/* Top Bar ABOVE the Map Canvas */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/75 px-3 py-2 text-[11px] sm:text-xs dark:border-white/10">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span className="font-bold text-slate-800 dark:text-slate-100 shrink-0">
+            {focusedBus.routeNumber}
+          </span>
+          <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
+          <span className="font-mono font-semibold text-indigo-600 dark:text-cyan-400 shrink-0">
+            {Math.round(focusedBus.speedKmh)} km/h
+          </span>
+        </div>
         {nextStop && (
-          <>
-            <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
-            <span className="truncate text-slate-600 dark:text-slate-300">
-              Next: <span className="font-semibold text-slate-900 dark:text-white">{nextStop.shortName || nextStop.name}</span>
+          <div className="text-slate-600 dark:text-slate-300 leading-tight">
+            Next:{' '}
+            <span className="font-semibold text-slate-900 dark:text-white">
+              {nextStop.shortName || nextStop.name}
             </span>
-          </>
+          </div>
         )}
       </div>
 
-      {/* Prismatic Daylight HUD Map Overlay */}
-      <div className="pointer-events-none absolute bottom-6 sm:bottom-3 left-3 z-[400] flex max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-15rem)] flex-wrap items-center gap-1.5">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-white/92 px-3 py-1 text-[10px] font-bold tracking-wide text-slate-800 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-100">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
-          {useGoogleMaps && window.google?.maps
-            ? 'Google Maps Live Traffic'
-            : routingSource === 'OSRM'
-              ? 'OSRM Road-Snapped Corridor (₹0)'
-              : 'OpenStreetMap / Leaflet Corridor'}
-        </span>
+      {/* Unobstructed Map Canvas */}
+      <div className={`relative w-full ${heightClass}`}>
+        {useGoogleMaps && window.google?.maps ? (
+          <GoogleMapsCanvas
+            buses={buses}
+            focusedBus={focusedBus}
+            showAllFleet={showAllFleet}
+          />
+        ) : (
+          <MapContainer
+            center={[focusedBus.currentLat, focusedBus.currentLng]}
+            zoom={showAllFleet ? 11 : 12}
+            className="h-full w-full"
+            scrollWheelZoom={true}
+          >
+            <TileLayer
+              key={isDark ? 'carto-dark' : 'carto-light'}
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url={
+                isDark
+                  ? `${apiBase}/api/tiles/dark_all/{z}/{x}/{y}`
+                  : `${apiBase}/api/tiles/voyager/{z}/{x}/{y}`
+              }
+              maxZoom={19}
+            />
+            <MapCameraController
+              focusedBus={focusedBus}
+              roadCoordinates={roadCoordinates}
+              followBus={followBus}
+              setFollowBus={setFollowBus}
+            />
+
+            {/* Dual-Layer Glowing OSRM Corridor Polyline */}
+            <Polyline
+              positions={roadCoordinates}
+              pathOptions={{
+                color: isDark ? '#38bdf8' : '#4f46e5',
+                weight: 11,
+                opacity: focusedBus.shortcutPath ? 0.12 : 0.22,
+                lineCap: 'round',
+                lineJoin: 'round',
+              }}
+            />
+            <Polyline
+              positions={roadCoordinates}
+              pathOptions={{
+                color: isDark ? '#38bdf8' : '#4f46e5',
+                weight: 4,
+                opacity: focusedBus.shortcutPath ? 0.35 : 0.95,
+                dashArray: focusedBus.shortcutPath ? '6 8' : undefined,
+              }}
+            />
+
+            {/* Shortcut Bypass Polyline when area is skipped */}
+            {focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1 && (
+              <>
+                <Polyline
+                  positions={focusedBus.shortcutPath}
+                  pathOptions={{
+                    color: '#10b981',
+                    weight: 12,
+                    opacity: 0.24,
+                    lineCap: 'round',
+                    lineJoin: 'round',
+                  }}
+                />
+                <Polyline
+                  positions={focusedBus.shortcutPath}
+                  pathOptions={{
+                    color: '#10b981',
+                    weight: 4.5,
+                    opacity: 0.98,
+                  }}
+                />
+              </>
+            )}
+
+            {/* Stops & Geofences */}
+            {focusedBus.stops.map((stop, idx) => {
+              const isCurrent = idx === focusedBus.currentStopIndex;
+              const isHighlighted = stop.id === highlightStopId;
+              const isPassed = idx < focusedBus.currentStopIndex;
+              return (
+                <React.Fragment key={stop.id}>
+                  <Circle
+                    center={[stop.lat, stop.lng]}
+                    radius={stop.geofenceRadiusMeters}
+                    pathOptions={{
+                      color: stop.isBypassed
+                        ? '#64748b'
+                        : isHighlighted
+                          ? '#f59e0b'
+                          : '#4f46e5',
+                      fillOpacity: isHighlighted ? 0.2 : 0.08,
+                      weight: 1,
+                    }}
+                  />
+                  <Marker
+                    position={[stop.lat, stop.lng]}
+                    icon={createStopDivIcon(stop, isCurrent, isHighlighted, isPassed, isDark)}
+                  >
+                    <Popup>
+                      <div className="min-w-[175px] text-xs">
+                        <p className="font-bold text-slate-900 dark:text-slate-100">
+                          {stop.sequence}. {stop.name}
+                        </p>
+                        <p className="text-slate-600 dark:text-slate-400">{stop.areaClusterName}</p>
+                        <p className="mt-1 text-slate-700 dark:text-slate-300">
+                          AM: {stop.scheduledMorningTime} • PM: {stop.scheduledEveningTime}
+                        </p>
+                        {stop.metroInterchange && (
+                          <p className="mt-1 font-semibold text-indigo-600 dark:text-indigo-400">
+                            🚇 {stop.metroInterchange.stationName} ({stop.metroInterchange.line})
+                          </p>
+                        )}
+                        {stop.isBypassed && (
+                          <p className="mt-1 font-bold text-emerald-600 dark:text-emerald-400">
+                            ✓ SKIPPED BY BYPASS ROUTE
+                          </p>
+                        )}
+                      </div>
+                    </Popup>
+                  </Marker>
+                </React.Fragment>
+              );
+            })}
+
+            {/* Sreenidhi University Campus Beacon */}
+            <Circle
+              center={[SREENIDHI_CAMPUS.lat, SREENIDHI_CAMPUS.lng]}
+              radius={220}
+              pathOptions={{ color: '#e53c2e', fillOpacity: 0.16, weight: 1.5 }}
+            />
+
+            {/* Live Bus Markers */}
+            {renderedBuses.map((bus) => (
+              <Marker
+                key={bus.routeId}
+                position={[bus.currentLat, bus.currentLng]}
+                icon={createBusDivIcon(bus, bus.routeId === focusedBus.routeId)}
+              >
+                <Popup>
+                  <div className="min-w-[180px] text-xs">
+                    <p className="font-bold text-slate-900 dark:text-slate-100">
+                      {bus.routeNumber} — {bus.registrationNo}
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-400">Driver: {bus.driverName}</p>
+                    <p className="mt-1 text-slate-700 dark:text-slate-300">
+                      Speed: <b className="text-slate-900 dark:text-white">{bus.speedKmh} km/h</b> • Delay: <b className="text-slate-900 dark:text-white">+{bus.trafficDelayMinutes}m</b>
+                    </p>
+                    <p className="mt-1 font-medium text-indigo-600 dark:text-indigo-400">
+                      GPS: {bus.telemetrySource === 'DRIVER_PRIMARY' ? 'Driver Primary' : 'Crowd-Sourced Students'}
+                    </p>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        )}
+      </div>
+
+      {/* Footer Bar BELOW the Map Canvas */}
+      <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-slate-200/75 px-3 py-2 dark:border-white/10">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-indigo-50/70 px-2.5 py-1 text-[10px] font-bold tracking-wide text-slate-800 dark:border-white/15 dark:bg-slate-800/80 dark:text-slate-100">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
+            {useGoogleMaps && window.google?.maps
+              ? 'Google Maps Live Traffic'
+              : routingSource === 'OSRM'
+                ? 'OSRM Road-Snapped Corridor (₹0)'
+                : 'OpenStreetMap / Leaflet Corridor'}
+          </span>
+          {focusedBus.shortcutPath && (
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.35)]">
+              Bypass Route Active
+            </span>
+          )}
+        </div>
         <a
           href={googleMapsTrafficUrl}
           target="_blank"
           rel="noopener noreferrer"
           title="Open live Google Maps traffic directions from bus GPS to stop (₹0, no API key required)"
-          className="tactile-btn pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white/95 px-3 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-md backdrop-blur-md transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-900/90 dark:text-cyan-200 dark:hover:bg-slate-800"
+          className="tactile-btn inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-xs transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-800/90 dark:text-cyan-200 dark:hover:bg-slate-800"
         >
           <Navigation className="h-3 w-3 shrink-0 text-[#06B6D4]" />
           <span>Google Maps Traffic</span>
           <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-75" />
         </a>
-        {focusedBus.shortcutPath && (
-          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
-            Bypass Route Active
-          </span>
-        )}
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import {
   Phone,
   PhoneCall,
   Clock,
-  ShieldCheck,
   CalendarX,
   Star,
   PackageSearch,
@@ -74,8 +73,8 @@ export const StudentPortal: React.FC = () => {
 
   const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const [applyServiceType, setApplyServiceType] = useState('BUS_PASS_RENEWAL');
-  const [applyReason, setApplyReason] = useState('Fee cleared; request pass activation');
+  const [applyServiceType, setApplyServiceType] = useState('ROUTE_CHANGE');
+  const [applyReason, setApplyReason] = useState('Requesting route or drop stop update.');
 
   // Parent app link code
   const [parentLinkCode, setParentLinkCode] = useState<string | null>(null);
@@ -96,26 +95,8 @@ export const StudentPortal: React.FC = () => {
     expectedClockTime: '08:14:32 AM',
   });
 
-  // Digital Bus Pass & Grace Pass State
-  const [passState, setPassState] = useState<{
-    feeStatus: string;
-    passStatus: string;
-    isGraceActive: boolean;
-    graceUntil: number;
-    canTravel: boolean;
-    offlineCached?: boolean;
-  }>({
-    feeStatus: 'PAID',
-    passStatus: 'ACTIVE',
-    isGraceActive: false,
-    graceUntil: 0,
-    canTravel: true,
-    offlineCached: false,
-  });
-  const [isActivatingGrace, setIsActivatingGrace] = useState(false);
-
-  // v20.1 BusTrack Portal Tab & Hybrid Self-Check-In State
-  const [portalTab, setPortalTab] = useState<'HOME' | 'MAP' | 'PASS' | 'MORE'>('HOME');
+  // v20.2 Portal Tab & Hybrid Self-Check-In State
+  const [portalTab, setPortalTab] = useState<'HOME' | 'MAP' | 'HELP' | 'MORE'>('HOME');
   const [showAbsenceBar, setShowAbsenceBar] = useState(false);
   const [isSelfCheckingIn, setIsSelfCheckingIn] = useState(false);
   const [localSelfBoarded, setLocalSelfBoarded] = useState(false);
@@ -124,6 +105,7 @@ export const StudentPortal: React.FC = () => {
   const [isAbsentTomorrow, setIsAbsentTomorrow] = useState(false);
   const [absenceDay, setAbsenceDay] = useState<'TODAY' | 'TOMORROW'>('TOMORROW');
   const [absenceLocked, setAbsenceLocked] = useState(false);
+  const [absenceLockReason, setAbsenceLockReason] = useState<string | null>(null);
   const [isUpdatingAbsence, setIsUpdatingAbsence] = useState(false);
 
   // Two-Step SOS Confirmation State
@@ -192,15 +174,9 @@ export const StudentPortal: React.FC = () => {
     }
   };
 
-  // Load backend pass & absence states on mount
+  // Load backend contact & bus states on mount
   useEffect(() => {
     let mounted = true;
-    void (async () => {
-      const p = await excelService.getPassStatus();
-      if (mounted) setPassState(p);
-      const abs = await excelService.getAbsenceTomorrow(activeStudent?.rollNumber);
-      if (mounted) setIsAbsentTomorrow(abs.absentTomorrow);
-    })();
 
     const roll = currentUser?.role === 'STUDENT' ? (currentUser.rollNumber || activeStudent?.rollNumber || '23SN1A0501') : (activeStudent?.rollNumber || '23SN1A0501');
     excelService.getContactInfo(roll)
@@ -390,21 +366,14 @@ export const StudentPortal: React.FC = () => {
     }
   };
 
-  const handleActivateGrace = async () => {
-    setIsActivatingGrace(true);
-    const res = await excelService.activateGracePass();
-    setIsActivatingGrace(false);
-    if (res.success) {
-      setPassState((prev) => ({
-        ...prev,
-        isGraceActive: true,
-        canTravel: true,
-        graceUntil: Date.now() + 24 * 3600 * 1000,
-      }));
-      pushToast('success', '1-Day Grace Pass Activated', res.validUntilText ? `Valid until ${res.validUntilText}` : 'Active for 24 hours');
-    } else {
-      pushToast('danger', 'Grace Pass Failed', res.message || 'Could not activate grace pass.');
+  const getAbsenceLockMessage = (reason: string | null) => {
+    if (reason === 'ADMIN_LOCKED') {
+      return 'Locked by Transport Office — Admin can unlock under Fleet';
     }
+    if (reason === 'TRIP_RUNNING') {
+      return 'Trip already in progress — switch to Tomorrow to opt out';
+    }
+    return 'Closed within 1h of departure — switch to Tomorrow or contact Transport Office';
   };
 
   const isOnBoardCleared =
@@ -460,6 +429,7 @@ export const StudentPortal: React.FC = () => {
       if (active) {
         setIsAbsentTomorrow(Boolean(res.absentTomorrow));
         setAbsenceLocked(Boolean(res.locked));
+        setAbsenceLockReason(res.lockReason ?? null);
       }
     });
     return () => {
@@ -472,11 +442,15 @@ export const StudentPortal: React.FC = () => {
     const nextState = !isAbsentTomorrow;
     const res = await setAbsenceTomorrow(studentRoll, nextState, absenceDay);
     setIsUpdatingAbsence(false);
-    if (res.locked) setAbsenceLocked(true);
+    if (res.locked) {
+      setAbsenceLocked(true);
+      setAbsenceLockReason(res.lockReason ?? null);
+    } else if (res.success) {
+      setAbsenceLocked(false);
+      setAbsenceLockReason(res.lockReason ?? null);
+    }
     if (res.success) {
       setIsAbsentTomorrow(nextState);
-    } else if (res.error) {
-      pushToast('warning', 'Opt-Out Locked', res.error);
     }
   };
 
@@ -560,54 +534,57 @@ export const StudentPortal: React.FC = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4 pb-28 antialiased">
-      {/* Compact Greeting Header (Always Visible at Top) */}
-      <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
-        <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
-            <img
-              src="/sreenidhi_express_logo.jpg"
-              alt="Sreenidhi Express Logo"
-              className="h-10 w-10 rounded-full object-cover"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
-                Welcome Back, {firstName}
-              </h1>
-              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
-                Route {routeNum} • SUH Campus
-              </span>
+      {/* Two-Row Greeting Header (Always Visible at Top, Zero Truncation) */}
+      <div className="prismatic-card rounded-3xl p-3.5 sm:p-4">
+        {/* Row 1: Logo + Unclipped Greeting + Bell / Logout */}
+        <div className="flex items-center justify-between gap-2.5">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+              <img
+                src="/sreenidhi_express_logo.jpg"
+                alt="Sreenidhi Express Logo"
+                className="h-10 w-10 rounded-full object-cover"
+              />
             </div>
-            <p className="mt-0.5 font-mono text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate">
-              {isFaculty ? 'Employee ID' : 'Roll No'}: {studentRoll}
-            </p>
+            <h1 className="text-sm sm:text-base font-extrabold leading-snug tracking-tight text-slate-900 dark:text-white">
+              Welcome Back, {firstName}
+            </h1>
+          </div>
+
+          {/* Circular Notification Bell & Logout Buttons */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsSmsDrawerOpen(true)}
+              className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
+              title="Live Transit SMS & App Messages"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={logoutUser}
+              className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+              title="Sign Out"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
-        {/* Circular Notification Bell & Logout Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => setIsSmsDrawerOpen(true)}
-            className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
-            title="Live Transit SMS & App Messages"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={logoutUser}
-            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
-            title="Sign Out"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
+        {/* Row 2: Full Roll Number / Employee ID + Route Pill */}
+        <div className="mt-2.5 pt-2.5 border-t border-slate-100 dark:border-[#2E3646] flex flex-wrap items-center justify-between gap-2">
+          <span className="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 break-all">
+            {isFaculty ? 'Employee ID' : 'Roll No'}: {studentRoll}
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300 shrink-0">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
+            Route {routeNum} • SUH Campus
+          </span>
         </div>
       </div>
 
@@ -723,7 +700,13 @@ export const StudentPortal: React.FC = () => {
                 type="button"
                 onClick={() => {
                   setShowAbsenceBar(true);
-                  if (!absenceLocked) {
+                  if (absenceLocked) {
+                    pushToast(
+                      'warning',
+                      'Opt-Out Locked',
+                      getAbsenceLockMessage(absenceLockReason)
+                    );
+                  } else {
                     void handleToggleAbsence();
                   }
                 }}
@@ -785,7 +768,7 @@ export const StudentPortal: React.FC = () => {
                     </div>
                     <p className="mt-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
                       {absenceLocked
-                        ? 'Locked within 1h of departure — contact Transport Office for urgent updates'
+                        ? getAbsenceLockMessage(absenceLockReason)
                         : 'Cutoff: 1 hour before bus departure'}
                     </p>
                   </div>
@@ -845,7 +828,7 @@ export const StudentPortal: React.FC = () => {
 
           {/* Rounded Live Map Preview Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="h-48 sm:h-56 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               <HybridTransitMap
                 buses={buses}
                 focusedBus={activeBus}
@@ -923,7 +906,7 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-80 sm:h-96 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -932,10 +915,12 @@ export const StudentPortal: React.FC = () => {
                   heightClass="h-80 sm:h-96 w-full"
                 />
               ) : (
-                <MetroSchematicMap
-                  activeBus={activeBus}
-                  highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                />
+                <div className="h-80 sm:h-96 w-full">
+                  <MetroSchematicMap
+                    activeBus={activeBus}
+                    highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -953,82 +938,8 @@ export const StudentPortal: React.FC = () => {
         </div>
       )}
 
-      {portalTab === 'PASS' && (
+      {portalTab === 'HELP' && (
         <div className="animate-panel-in space-y-4">
-          {/* Digital Campus Bus Pass Card */}
-          <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div
-              className={`p-5 ${
-                passState.canTravel
-                  ? 'bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/70 dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
-                  : 'bg-rose-50 dark:bg-rose-950/30'
-              }`}
-            >
-              <div className="flex items-center justify-between gap-2 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck
-                    className={`h-5 w-5 ${
-                      passState.canTravel ? 'text-[#4F46E5] dark:text-cyan-300' : 'text-rose-500'
-                    }`}
-                  />
-                  <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
-                    Digital Campus Bus Pass
-                  </span>
-                </div>
-                <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
-                    passState.offlineCached
-                      ? 'border border-amber-300 bg-amber-100 text-amber-900 dark:border-amber-700 dark:bg-amber-950/80 dark:text-amber-200'
-                      : passState.feeStatus === 'UNAVAILABLE'
-                      ? 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300'
-                      : passState.isGraceActive
-                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200'
-                      : passState.canTravel
-                      ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-700/40 dark:bg-emerald-900/60 dark:text-emerald-200'
-                      : 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200'
-                  }`}
-                >
-                  {passState.offlineCached
-                    ? 'OFFLINE CACHED PASS'
-                    : passState.feeStatus === 'UNAVAILABLE'
-                    ? 'STATUS UNAVAILABLE'
-                    : passState.isGraceActive
-                    ? '1-DAY GRACE PASS'
-                    : passState.canTravel
-                    ? 'FEE PAID · ACTIVE'
-                    : 'PASS LOCKED · FEE DUE'}
-                </span>
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 pt-3.5 dark:border-[#2E3646]">
-                <div>
-                  <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-                    {studentName} • <span className="font-mono text-[#4F46E5] dark:text-cyan-300">{studentRoll}</span>
-                  </p>
-                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                    {routeNumber} • {assignedStopName}
-                  </p>
-                  {passState.isGraceActive && passState.graceUntil > 0 && (
-                    <p className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 mt-1">
-                      Grace pass valid until: {new Date(passState.graceUntil).toLocaleString('en-IN', { hour12: true })}
-                    </p>
-                  )}
-                </div>
-
-                {!passState.canTravel && !passState.isGraceActive && passState.feeStatus !== 'UNAVAILABLE' && (
-                  <button
-                    type="button"
-                    onClick={handleActivateGrace}
-                    disabled={isActivatingGrace}
-                    className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
-                  >
-                    {isActivatingGrace ? 'Activating...' : 'Activate 1-Day Grace Pass'}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* Transport Assistance & Helpline */}
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
@@ -1322,7 +1233,7 @@ export const StudentPortal: React.FC = () => {
             [
               { id: 'HOME', label: 'Home', Icon: Home },
               { id: 'MAP', label: 'Map', Icon: MapIcon },
-              { id: 'PASS', label: 'Pass', Icon: Bus },
+              { id: 'HELP', label: 'Help', Icon: PhoneCall },
               { id: 'MORE', label: 'More', Icon: MoreHorizontal },
             ] as const
           ).map(({ id, label, Icon }) => {
@@ -1366,9 +1277,8 @@ export const StudentPortal: React.FC = () => {
                   onChange={(e) => setApplyServiceType(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
-                  <option value="BUS_PASS_RENEWAL">Semester Bus Pass Renewal</option>
                   <option value="ROUTE_CHANGE">Evening Alternate Drop Stop / Route Change</option>
-                  <option value="FEE_GRACE_PERIOD">Transport Fee Clearance / Grace Pass</option>
+                  <option value="EXAM_SHUTTLE">Special / Exam Shuttle Request</option>
                 </select>
               </div>
               <div>

@@ -1193,7 +1193,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
       studentRoll: string,
       notComing: boolean,
       day?: 'TODAY' | 'TOMORROW',
-    ): Promise<{ success: boolean; error?: string; locked?: boolean }> => {
+    ): Promise<{ success: boolean; error?: string; locked?: boolean; lockReason?: string | null }> => {
       const res = await excelService.setAbsenceTomorrow(notComing, studentRoll, day);
       if (res.ok) {
         setStudents((prev) =>
@@ -1217,7 +1217,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
             ? 'Driver and transport office will not expect you at the stop tomorrow.'
             : 'You are registered for tomorrow’s morning run.',
         );
-        return { success: true };
+        return { success: true, lockReason: res.lockReason ?? null };
       } else {
         const errorMsg =
           res.error ||
@@ -1225,7 +1225,12 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
             ? 'Cutoff passed (1 hour before bus departure). Contact the Transport Office for urgent updates.'
             : 'Failed to update absence');
         pushToast('danger', 'Absence Update Failed', errorMsg);
-        return { success: false, error: errorMsg, locked: res.status === 409 };
+        return {
+          success: false,
+          error: errorMsg,
+          locked: Boolean(res.locked || res.status === 409),
+          lockReason: res.lockReason ?? null,
+        };
       }
     },
     [applyOptimizationPlan, pushToast],

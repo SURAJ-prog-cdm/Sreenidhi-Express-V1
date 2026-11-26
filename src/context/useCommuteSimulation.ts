@@ -131,7 +131,7 @@ export interface CommuteSimulationContextValue {
 
   // Route Optimization (Area-Based Dynamic Routing)
   routeOptimizationPlan: any;
-  setAbsenceTomorrow: (studentRoll: string, notComing: boolean, day?: 'TODAY' | 'TOMORROW') => Promise<{ success: boolean; error?: string; locked?: boolean }>;
+  setAbsenceTomorrow: (studentRoll: string, notComing: boolean, day?: 'TODAY' | 'TOMORROW') => Promise<{ success: boolean; error?: string; locked?: boolean; lockReason?: string | null }>;
   setClusterOptimizationOverride: (routeId: string, clusterId: string, keep: boolean) => Promise<{ success: boolean; plan?: any; error?: string }>;
   toggleRoutePlanLock: (routeId: string, lock: boolean) => Promise<{ success: boolean; plan?: any; error?: string }>;
 }

@@ -277,7 +277,7 @@ export const ParentPortal: React.FC = () => {
               {studentName}
             </h1>
             <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
-              Child&apos;s Bus Pass Active
+              Verified Rider
             </span>
           </div>
           <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
@@ -493,7 +493,7 @@ export const ParentPortal: React.FC = () => {
           </div>
         </div>
 
-        <div className="h-64 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+        <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
           {mapMode === 'INTERACTIVE' ? (
             <HybridTransitMap
               buses={buses}
@@ -502,10 +502,12 @@ export const ParentPortal: React.FC = () => {
               heightClass="h-64 w-full"
             />
           ) : (
-            <MetroSchematicMap
-              activeBus={activeBus}
-              highlightStopId={highlightStopId}
-            />
+            <div className="h-64 w-full">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={highlightStopId}
+              />
+            </div>
           )}
         </div>
       </div>

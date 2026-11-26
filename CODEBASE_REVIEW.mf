@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 26, 2026
-> **Build Status:** Production Prototype / Prismatic Daylight Glass UI & v20.1 Pilot Hardening Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System Across All Portals, Clean 4-Tab Student / 3-Tab Driver / 3-Tab Admin Navigation, Phase 1 3-Portal Scope + VITE_ENABLE_PARENT_PORTAL Flag, Transport Office 1-Click Rider Verification, ±2 Min GPS Arrival Window, Hybrid 1-Tap & Optional BLE Self-Check-In, Driver Trip Start & Dwell-Time Audit CSV, 1-Hour Pre-Departure Opt-Out Cutoff, CARTO Tile Proxy [₹0], OSRM Corridor, 36/36 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.2 Prismatic Daylight Glass UI & Pilot Hardening Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Reason Diagnostics, Bus Pass / Grace Pass / Fee Simulator Removed From Phase 1 UI, Clean 4-Tab Student `Home | Map | Help | More` / 3-Tab Driver / 3-Tab Admin Navigation, 36/36 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 76 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 77 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack UI audit cleanup, and Prismatic Daylight Glass UI upgrade, all 76 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing), end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing), and concurrency load benchmarks (`scripts/load-test.mjs`, 50 concurrent SSE streams, 0% error rate).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, and v20.2 mobile UX/map/opt-out polish pass, all 77 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -92,6 +92,7 @@ Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack
 | **74** | **P1** | Mobile UI Restyle (v20.1) | **BusTrack White-and-Indigo Design Across All Phase 1 Portals**: Restyled `App.tsx`, `MobileBottomNav.tsx`, `StudentLoginPage.tsx`, 4-tab `StudentPortal.tsx` (`HOME` / `MAP` / `PASS` / `MORE`), 3-tab `DriverConsole.tsx` (`TRIP` / `STOPS` / `ALERTS` with `startedAt` IST clock), and 3-tab `AdminDashboard.tsx` (`VERIFY` / `FLEET` / `LOGS`) on `#F5F7FB` canvas and `#4F46E5` indigo hero cards with dark-mode `dark:` parity preserved. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/components/common/MobileBottomNav.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/common/MobileBottomNav.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx) |
 | **75** | **P1** | Prismatic Daylight UI | **Prismatic Daylight Glass Design System & Light-First Boot**: Switched default boot state to Light Mode (`index.html` & `CommuteSimulationContext.tsx`), created cohesive pearl-white aurora canvas (`.bg-prismatic-canvas`), frosted porcelain glass surfaces (`.prismatic-card`, `.prismatic-subcard`), electric indigo-to-cyan gradients (`.electric-hero`, `.electric-cta`), tactile micro-interactions (`.futuristic-tile`, `.tactile-btn`, `.animate-electric-sheen`, `.animate-panel-in`), and purged all remaining hardcoded dark-only slabs and legacy `#0D4B42` accents across modals, drawers, maps, login, and all portals while preserving optional `dark:` fallback parity. | [`index.html`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/index.html), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css), [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
 | **76** | **P1** | Mobile Polish & CSS Hygiene | **Phase 1 Bottom-Bar Collision Fix & Duplicate CSS Cleanup**: Suppressed redundant `<MobileBottomNav />` in `src/App.tsx` when `activeView` is `'STUDENT'`, `'DRIVER'`, or `'ADMIN'` (preventing overlap over `StudentPortal.tsx`'s fixed `bottom-3` 4-tab pill bar), shifted Student mobile floating theme toggle to `bottom-20`, and deleted duplicate legacy emerald `.futuristic-tile` / `.futuristic-tile-active` overrides in `src/index.css` so indigo/cyan tile styling applies cleanly. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css) |
+| **77** | **P0** | v20.2 Mobile UX & Map Fix | **Mobile LAN CARTO Tiles, Unobstructed Map HUD, Granular Lock Feedback, 2-Row Student Header & Bus Pass UI Removal**: Switched `HybridTransitMap.tsx` tile base to `excelService.getServerBaseUrl()` for automatic LAN IP loading and moved route/OSRM/Google Maps bars above and below the map canvas; added `getPlanLockStatus` (`ADMIN_LOCKED` / `TRIP_RUNNING` / `CUTOFF_PASSED`) with matching captions/toasts; upgraded `StudentPortal.tsx` header to unclipped 2 rows; updated login role card to `Student / Faculty`; removed Bus Pass, Grace Pass, and Fee Simulator UI cleanly replacing the 3rd student tab with `Help`. | [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/modals/InstallAppModal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/modals/InstallAppModal.tsx) |
 
 ---
 
@@ -127,11 +128,11 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 22. [`src/services/firebaseSyncService.ts`](#srcservicesfirebasesyncservicets) — *Firebase Realtime Database synchronization listener for telemetry updates and active bus positioning.*
 23. [`src/components/common/MobileBottomNav.tsx`](#srccomponentscommonmobilebottomnavtsx) — *Bottom navigation bar optimized for mobile viewports and Capacitor native shells.*
 24. [`src/components/common/SreenidhiLogo.tsx`](#srccomponentscommonsreenidhilogotsx) — *Official branded Sreenidhi Express shield and bus insignia component.*
-25. [`src/components/portals/StudentPortal.tsx`](#srccomponentsportalsstudentportaltsx) — *Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Pass, More) with electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.*
+25. [`src/components/portals/StudentPortal.tsx`](#srccomponentsportalsstudentportaltsx) — *Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Help, More) with 2-row header, electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.*
 26. [`src/components/portals/DriverConsole.tsx`](#srccomponentsportalsdriverconsoletsx) — *Prismatic Daylight 3-tab Driver Cockpit (Trip, Stops, Alerts) with electric live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.*
 27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
 28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.*
-29. [`src/components/map/HybridTransitMap.tsx`](#srccomponentsmaphybridtransitmaptsx) — *Interactive Leaflet GIS map with dual-layer glowing OSRM route corridors, glassmorphic camera controls, numbered stop badges, live SVG bus pill with radar pulse, telemetry HUD, and ₹0 Google Maps Traffic directions handoff.*
+29. [`src/components/map/HybridTransitMap.tsx`](#srccomponentsmaphybridtransitmaptsx) — *Interactive Leaflet GIS map with unobstructed canvas, above/below HUD telemetry & OSRM/Google Maps bars, dynamic LAN/origin CARTO tile loading, glowing route corridors, glassmorphic camera controls, and live SVG bus pill.*
 30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Isometric Metro-style corridor schematic illustrating the Hyderabad Blue Line & Campus Express alignment.*
 31. [`scripts/load-test.mjs`](#scriptsloadtestmjs) — *Zero-dependency concurrency and load benchmark validating SSE connections, sub-100ms latency, and 0% error rate.*
 32. [`src/services/eventQueue.ts`](#srcserviceseventqueuets) — *IndexedDB resilient offline event queue with priority eviction, backoff retry, and idempotency keys.*
@@ -5286,20 +5287,24 @@ function getFirstDepartureUtcMs(routeId, dayStr) {
   }
 }
 
-function isPlanLocked(routeId, day) {
+function getPlanLockStatus(routeId, day) {
   const plan = extras.getRoutePlan(routeId, day);
-  if (plan && plan.locked === 1) return true;
+  if (plan && plan.locked === 1) return { locked: true, reason: 'ADMIN_LOCKED' };
   if (day === getTodayStr()) {
     const trip = extras.getTripState(routeId);
-    if (trip && trip.running) return true;
+    if (trip && trip.running) return { locked: true, reason: 'TRIP_RUNNING' };
   }
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
   if (depUtcMs !== null) {
     // Cutoff is ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN (60 min) prior to first bus departure
     const cutoffUtcMs = depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000;
-    if (Date.now() >= cutoffUtcMs) return true;
+    if (Date.now() >= cutoffUtcMs) return { locked: true, reason: 'CUTOFF_PASSED' };
   }
-  return false;
+  return { locked: false, reason: null };
+}
+
+function isPlanLocked(routeId, day) {
+  return getPlanLockStatus(routeId, day).locked;
 }
 
 function resolveAbsenceDay(rawDay) {
@@ -5318,18 +5323,25 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
   const routeId = student.route_id;
 
   // Enforce 1-hour pre-departure cutoff lock (or locked/active route plan)
-  if (isPlanLocked(routeId, day)) {
+  const lockStatus = getPlanLockStatus(routeId, day);
+  if (lockStatus.locked) {
     const currentPlan = extras.computeRouteOptimization(routeId, day);
     if (!on && student.area_cluster_id && currentPlan.skippedClusterIds.includes(student.area_cluster_id)) {
       return res.status(409).json({
         error: "This trip's route is already locked and your area cluster is bypassed. Contact the Transport Office to restore your stop.",
         locked: true,
+        lockReason: lockStatus.reason,
         cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
       });
     }
+    const lockedMsg =
+      lockStatus.reason === 'ADMIN_LOCKED'
+        ? 'Route plan is locked by the Transport Office. Contact Admin to unlock.'
+        : `Changes closed: cutoff is ${ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN} minutes before bus departure. Contact the Transport Office for urgent updates.`;
     return res.status(409).json({
-      error: `Changes closed: cutoff is ${ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN} minutes before bus departure. Contact the Transport Office for urgent updates.`,
+      error: lockedMsg,
       locked: true,
+      lockReason: lockStatus.reason,
       cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     });
   }
@@ -5337,6 +5349,7 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
   extras.setAbsence(roll, day, on);
   const plan = extras.computeRouteOptimization(routeId, day);
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
+  const postLockStatus = getPlanLockStatus(routeId, day);
   broadcast('route_plan_updated', { routeId: normalizeRoute(routeId), day, plan }, normalizeRoute(routeId));
   broadcast('ROUTE_PLAN_UPDATED', { routeId: normalizeRoute(routeId), day, plan }, normalizeRoute(routeId));
   res.json({
@@ -5345,7 +5358,8 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
     day,
     absentTomorrow: on,
     absent: on,
-    locked: isPlanLocked(routeId, day),
+    locked: postLockStatus.locked,
+    lockReason: postLockStatus.reason,
     cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     cutoffIso: depUtcMs ? new Date(depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000).toISOString() : null,
     routePlan: plan,
@@ -5360,13 +5374,15 @@ app.get('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =>
   const routeId = student?.route_id || 'route-51';
   const plan = student ? extras.computeRouteOptimization(routeId, day) : null;
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
+  const lockStatus = student ? getPlanLockStatus(routeId, day) : { locked: false, reason: null };
   res.json({
     success: true,
     rollNumber: roll,
     day,
     absentTomorrow: absent,
     absent,
-    locked: student ? isPlanLocked(routeId, day) : false,
+    locked: lockStatus.locked,
+    lockReason: lockStatus.reason,
     cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     cutoffIso: depUtcMs ? new Date(depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000).toISOString() : null,
     routePlan: plan,
@@ -11006,7 +11022,7 @@ export interface CommuteSimulationContextValue {
 
   // Route Optimization (Area-Based Dynamic Routing)
   routeOptimizationPlan: any;
-  setAbsenceTomorrow: (studentRoll: string, notComing: boolean, day?: 'TODAY' | 'TOMORROW') => Promise<{ success: boolean; error?: string; locked?: boolean }>;
+  setAbsenceTomorrow: (studentRoll: string, notComing: boolean, day?: 'TODAY' | 'TOMORROW') => Promise<{ success: boolean; error?: string; locked?: boolean; lockReason?: string | null }>;
   setClusterOptimizationOverride: (routeId: string, clusterId: string, keep: boolean) => Promise<{ success: boolean; plan?: any; error?: string }>;
   toggleRoutePlanLock: (routeId: string, lock: boolean) => Promise<{ success: boolean; plan?: any; error?: string }>;
 }
@@ -12247,7 +12263,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
       studentRoll: string,
       notComing: boolean,
       day?: 'TODAY' | 'TOMORROW',
-    ): Promise<{ success: boolean; error?: string; locked?: boolean }> => {
+    ): Promise<{ success: boolean; error?: string; locked?: boolean; lockReason?: string | null }> => {
       const res = await excelService.setAbsenceTomorrow(notComing, studentRoll, day);
       if (res.ok) {
         setStudents((prev) =>
@@ -12271,7 +12287,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
             ? 'Driver and transport office will not expect you at the stop tomorrow.'
             : 'You are registered for tomorrow’s morning run.',
         );
-        return { success: true };
+        return { success: true, lockReason: res.lockReason ?? null };
       } else {
         const errorMsg =
           res.error ||
@@ -12279,7 +12295,12 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
             ? 'Cutoff passed (1 hour before bus departure). Contact the Transport Office for urgent updates.'
             : 'Failed to update absence');
         pushToast('danger', 'Absence Update Failed', errorMsg);
-        return { success: false, error: errorMsg, locked: res.status === 409 };
+        return {
+          success: false,
+          error: errorMsg,
+          locked: Boolean(res.locked || res.status === 409),
+          lockReason: res.lockReason ?? null,
+        };
       }
     },
     [applyOptimizationPlan, pushToast],
@@ -13628,7 +13649,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             </span>
           </h1>
           <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
-            Choose your campus role to sync live arrivals and boarding pass.
+            Choose your campus role to sync live bus arrivals and route updates.
           </p>
         </div>
 
@@ -13680,10 +13701,10 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                Student
+                Student / Faculty
               </h3>
               <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
-                ETA, pass and alerts
+                Live ETA, map &amp; alerts
               </p>
             </div>
           </button>
@@ -13817,7 +13838,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold text-slate-900 dark:text-white">
-                {studentAuthMode === 'LOGIN' ? 'Student & Faculty Sign-In' : 'New Commuter Self-Registration'}
+                {studentAuthMode === 'LOGIN' ? 'Student / Faculty Login' : 'New Commuter Self-Registration'}
               </span>
               <button
                 type="button"
@@ -14408,7 +14429,7 @@ export const SreenidhiLogo: React.FC<SreenidhiLogoProps> = ({ compact = false, c
 
 ## 25. `src/components/portals/StudentPortal.tsx` <a id="srccomponentsportalsstudentportaltsx"></a>
 
-**Description:** Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Pass, More) with electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.  
+**Description:** Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Help, More) with 2-row header, electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.  
 **File Path:** `sreenidhi-express/src/components/portals/StudentPortal.tsx`  
 
 ```tsx
@@ -14419,7 +14440,6 @@ import {
   Phone,
   PhoneCall,
   Clock,
-  ShieldCheck,
   CalendarX,
   Star,
   PackageSearch,
@@ -14488,8 +14508,8 @@ export const StudentPortal: React.FC = () => {
 
   const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const [applyServiceType, setApplyServiceType] = useState('BUS_PASS_RENEWAL');
-  const [applyReason, setApplyReason] = useState('Fee cleared; request pass activation');
+  const [applyServiceType, setApplyServiceType] = useState('ROUTE_CHANGE');
+  const [applyReason, setApplyReason] = useState('Requesting route or drop stop update.');
 
   // Parent app link code
   const [parentLinkCode, setParentLinkCode] = useState<string | null>(null);
@@ -14510,26 +14530,8 @@ export const StudentPortal: React.FC = () => {
     expectedClockTime: '08:14:32 AM',
   });
 
-  // Digital Bus Pass & Grace Pass State
-  const [passState, setPassState] = useState<{
-    feeStatus: string;
-    passStatus: string;
-    isGraceActive: boolean;
-    graceUntil: number;
-    canTravel: boolean;
-    offlineCached?: boolean;
-  }>({
-    feeStatus: 'PAID',
-    passStatus: 'ACTIVE',
-    isGraceActive: false,
-    graceUntil: 0,
-    canTravel: true,
-    offlineCached: false,
-  });
-  const [isActivatingGrace, setIsActivatingGrace] = useState(false);
-
-  // v20.1 BusTrack Portal Tab & Hybrid Self-Check-In State
-  const [portalTab, setPortalTab] = useState<'HOME' | 'MAP' | 'PASS' | 'MORE'>('HOME');
+  // v20.2 Portal Tab & Hybrid Self-Check-In State
+  const [portalTab, setPortalTab] = useState<'HOME' | 'MAP' | 'HELP' | 'MORE'>('HOME');
   const [showAbsenceBar, setShowAbsenceBar] = useState(false);
   const [isSelfCheckingIn, setIsSelfCheckingIn] = useState(false);
   const [localSelfBoarded, setLocalSelfBoarded] = useState(false);
@@ -14538,6 +14540,7 @@ export const StudentPortal: React.FC = () => {
   const [isAbsentTomorrow, setIsAbsentTomorrow] = useState(false);
   const [absenceDay, setAbsenceDay] = useState<'TODAY' | 'TOMORROW'>('TOMORROW');
   const [absenceLocked, setAbsenceLocked] = useState(false);
+  const [absenceLockReason, setAbsenceLockReason] = useState<string | null>(null);
   const [isUpdatingAbsence, setIsUpdatingAbsence] = useState(false);
 
   // Two-Step SOS Confirmation State
@@ -14606,15 +14609,9 @@ export const StudentPortal: React.FC = () => {
     }
   };
 
-  // Load backend pass & absence states on mount
+  // Load backend contact & bus states on mount
   useEffect(() => {
     let mounted = true;
-    void (async () => {
-      const p = await excelService.getPassStatus();
-      if (mounted) setPassState(p);
-      const abs = await excelService.getAbsenceTomorrow(activeStudent?.rollNumber);
-      if (mounted) setIsAbsentTomorrow(abs.absentTomorrow);
-    })();
 
     const roll = currentUser?.role === 'STUDENT' ? (currentUser.rollNumber || activeStudent?.rollNumber || '23SN1A0501') : (activeStudent?.rollNumber || '23SN1A0501');
     excelService.getContactInfo(roll)
@@ -14804,21 +14801,14 @@ export const StudentPortal: React.FC = () => {
     }
   };
 
-  const handleActivateGrace = async () => {
-    setIsActivatingGrace(true);
-    const res = await excelService.activateGracePass();
-    setIsActivatingGrace(false);
-    if (res.success) {
-      setPassState((prev) => ({
-        ...prev,
-        isGraceActive: true,
-        canTravel: true,
-        graceUntil: Date.now() + 24 * 3600 * 1000,
-      }));
-      pushToast('success', '1-Day Grace Pass Activated', res.validUntilText ? `Valid until ${res.validUntilText}` : 'Active for 24 hours');
-    } else {
-      pushToast('danger', 'Grace Pass Failed', res.message || 'Could not activate grace pass.');
+  const getAbsenceLockMessage = (reason: string | null) => {
+    if (reason === 'ADMIN_LOCKED') {
+      return 'Locked by Transport Office — Admin can unlock under Fleet';
     }
+    if (reason === 'TRIP_RUNNING') {
+      return 'Trip already in progress — switch to Tomorrow to opt out';
+    }
+    return 'Closed within 1h of departure — switch to Tomorrow or contact Transport Office';
   };
 
   const isOnBoardCleared =
@@ -14874,6 +14864,7 @@ export const StudentPortal: React.FC = () => {
       if (active) {
         setIsAbsentTomorrow(Boolean(res.absentTomorrow));
         setAbsenceLocked(Boolean(res.locked));
+        setAbsenceLockReason(res.lockReason ?? null);
       }
     });
     return () => {
@@ -14886,11 +14877,15 @@ export const StudentPortal: React.FC = () => {
     const nextState = !isAbsentTomorrow;
     const res = await setAbsenceTomorrow(studentRoll, nextState, absenceDay);
     setIsUpdatingAbsence(false);
-    if (res.locked) setAbsenceLocked(true);
+    if (res.locked) {
+      setAbsenceLocked(true);
+      setAbsenceLockReason(res.lockReason ?? null);
+    } else if (res.success) {
+      setAbsenceLocked(false);
+      setAbsenceLockReason(res.lockReason ?? null);
+    }
     if (res.success) {
       setIsAbsentTomorrow(nextState);
-    } else if (res.error) {
-      pushToast('warning', 'Opt-Out Locked', res.error);
     }
   };
 
@@ -14974,54 +14969,57 @@ export const StudentPortal: React.FC = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4 pb-28 antialiased">
-      {/* Compact Greeting Header (Always Visible at Top) */}
-      <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
-        <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
-            <img
-              src="/sreenidhi_express_logo.jpg"
-              alt="Sreenidhi Express Logo"
-              className="h-10 w-10 rounded-full object-cover"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
-                Welcome Back, {firstName}
-              </h1>
-              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
-                Route {routeNum} • SUH Campus
-              </span>
+      {/* Two-Row Greeting Header (Always Visible at Top, Zero Truncation) */}
+      <div className="prismatic-card rounded-3xl p-3.5 sm:p-4">
+        {/* Row 1: Logo + Unclipped Greeting + Bell / Logout */}
+        <div className="flex items-center justify-between gap-2.5">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+              <img
+                src="/sreenidhi_express_logo.jpg"
+                alt="Sreenidhi Express Logo"
+                className="h-10 w-10 rounded-full object-cover"
+              />
             </div>
-            <p className="mt-0.5 font-mono text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate">
-              {isFaculty ? 'Employee ID' : 'Roll No'}: {studentRoll}
-            </p>
+            <h1 className="text-sm sm:text-base font-extrabold leading-snug tracking-tight text-slate-900 dark:text-white">
+              Welcome Back, {firstName}
+            </h1>
+          </div>
+
+          {/* Circular Notification Bell & Logout Buttons */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsSmsDrawerOpen(true)}
+              className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
+              title="Live Transit SMS & App Messages"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={logoutUser}
+              className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+              title="Sign Out"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
-        {/* Circular Notification Bell & Logout Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => setIsSmsDrawerOpen(true)}
-            className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
-            title="Live Transit SMS & App Messages"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={logoutUser}
-            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
-            title="Sign Out"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
+        {/* Row 2: Full Roll Number / Employee ID + Route Pill */}
+        <div className="mt-2.5 pt-2.5 border-t border-slate-100 dark:border-[#2E3646] flex flex-wrap items-center justify-between gap-2">
+          <span className="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 break-all">
+            {isFaculty ? 'Employee ID' : 'Roll No'}: {studentRoll}
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300 shrink-0">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
+            Route {routeNum} • SUH Campus
+          </span>
         </div>
       </div>
 
@@ -15137,7 +15135,13 @@ export const StudentPortal: React.FC = () => {
                 type="button"
                 onClick={() => {
                   setShowAbsenceBar(true);
-                  if (!absenceLocked) {
+                  if (absenceLocked) {
+                    pushToast(
+                      'warning',
+                      'Opt-Out Locked',
+                      getAbsenceLockMessage(absenceLockReason)
+                    );
+                  } else {
                     void handleToggleAbsence();
                   }
                 }}
@@ -15199,7 +15203,7 @@ export const StudentPortal: React.FC = () => {
                     </div>
                     <p className="mt-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
                       {absenceLocked
-                        ? 'Locked within 1h of departure — contact Transport Office for urgent updates'
+                        ? getAbsenceLockMessage(absenceLockReason)
                         : 'Cutoff: 1 hour before bus departure'}
                     </p>
                   </div>
@@ -15259,7 +15263,7 @@ export const StudentPortal: React.FC = () => {
 
           {/* Rounded Live Map Preview Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="h-48 sm:h-56 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               <HybridTransitMap
                 buses={buses}
                 focusedBus={activeBus}
@@ -15337,7 +15341,7 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-80 sm:h-96 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -15346,10 +15350,12 @@ export const StudentPortal: React.FC = () => {
                   heightClass="h-80 sm:h-96 w-full"
                 />
               ) : (
-                <MetroSchematicMap
-                  activeBus={activeBus}
-                  highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                />
+                <div className="h-80 sm:h-96 w-full">
+                  <MetroSchematicMap
+                    activeBus={activeBus}
+                    highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -15367,82 +15373,8 @@ export const StudentPortal: React.FC = () => {
         </div>
       )}
 
-      {portalTab === 'PASS' && (
+      {portalTab === 'HELP' && (
         <div className="animate-panel-in space-y-4">
-          {/* Digital Campus Bus Pass Card */}
-          <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div
-              className={`p-5 ${
-                passState.canTravel
-                  ? 'bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/70 dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
-                  : 'bg-rose-50 dark:bg-rose-950/30'
-              }`}
-            >
-              <div className="flex items-center justify-between gap-2 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck
-                    className={`h-5 w-5 ${
-                      passState.canTravel ? 'text-[#4F46E5] dark:text-cyan-300' : 'text-rose-500'
-                    }`}
-                  />
-                  <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
-                    Digital Campus Bus Pass
-                  </span>
-                </div>
-                <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
-                    passState.offlineCached
-                      ? 'border border-amber-300 bg-amber-100 text-amber-900 dark:border-amber-700 dark:bg-amber-950/80 dark:text-amber-200'
-                      : passState.feeStatus === 'UNAVAILABLE'
-                      ? 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300'
-                      : passState.isGraceActive
-                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200'
-                      : passState.canTravel
-                      ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-700/40 dark:bg-emerald-900/60 dark:text-emerald-200'
-                      : 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200'
-                  }`}
-                >
-                  {passState.offlineCached
-                    ? 'OFFLINE CACHED PASS'
-                    : passState.feeStatus === 'UNAVAILABLE'
-                    ? 'STATUS UNAVAILABLE'
-                    : passState.isGraceActive
-                    ? '1-DAY GRACE PASS'
-                    : passState.canTravel
-                    ? 'FEE PAID · ACTIVE'
-                    : 'PASS LOCKED · FEE DUE'}
-                </span>
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 pt-3.5 dark:border-[#2E3646]">
-                <div>
-                  <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-                    {studentName} • <span className="font-mono text-[#4F46E5] dark:text-cyan-300">{studentRoll}</span>
-                  </p>
-                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                    {routeNumber} • {assignedStopName}
-                  </p>
-                  {passState.isGraceActive && passState.graceUntil > 0 && (
-                    <p className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 mt-1">
-                      Grace pass valid until: {new Date(passState.graceUntil).toLocaleString('en-IN', { hour12: true })}
-                    </p>
-                  )}
-                </div>
-
-                {!passState.canTravel && !passState.isGraceActive && passState.feeStatus !== 'UNAVAILABLE' && (
-                  <button
-                    type="button"
-                    onClick={handleActivateGrace}
-                    disabled={isActivatingGrace}
-                    className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
-                  >
-                    {isActivatingGrace ? 'Activating...' : 'Activate 1-Day Grace Pass'}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* Transport Assistance & Helpline */}
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
@@ -15736,7 +15668,7 @@ export const StudentPortal: React.FC = () => {
             [
               { id: 'HOME', label: 'Home', Icon: Home },
               { id: 'MAP', label: 'Map', Icon: MapIcon },
-              { id: 'PASS', label: 'Pass', Icon: Bus },
+              { id: 'HELP', label: 'Help', Icon: PhoneCall },
               { id: 'MORE', label: 'More', Icon: MoreHorizontal },
             ] as const
           ).map(({ id, label, Icon }) => {
@@ -15780,9 +15712,8 @@ export const StudentPortal: React.FC = () => {
                   onChange={(e) => setApplyServiceType(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
-                  <option value="BUS_PASS_RENEWAL">Semester Bus Pass Renewal</option>
                   <option value="ROUTE_CHANGE">Evening Alternate Drop Stop / Route Change</option>
-                  <option value="FEE_GRACE_PERIOD">Transport Fee Clearance / Grace Pass</option>
+                  <option value="EXAM_SHUTTLE">Special / Exam Shuttle Request</option>
                 </select>
               </div>
               <div>
@@ -17144,7 +17075,6 @@ import {
   Star,
   Download,
   CheckCircle2,
-  CreditCard,
   Send,
   RotateCcw,
   Lock,
@@ -17214,10 +17144,6 @@ export const AdminDashboard: React.FC = () => {
   // Ride feedback
   const [feedbackList, setFeedbackList] = useState<any[]>([]);
 
-  // Demo student fee toggle state
-  const [demoStudentFee, setDemoStudentFee] = useState<'PAID' | 'DUE'>('PAID');
-  const [targetStudentRoll, setTargetStudentRoll] = useState('26011CSEAI0109');
-
   // Bulk Excel Onboarding & Live SQLite Backup State
   const [isImportingRoster, setIsImportingRoster] = useState(false);
   const [bulkImportResult, setBulkImportResult] = useState<{
@@ -17283,8 +17209,8 @@ export const AdminDashboard: React.FC = () => {
           rollNumber: a.roll_number || a.roll || a.rollNumber || '',
           program: a.program || 'B.Tech Undergrad',
           routeId: a.route_id || a.routeId || 'route-51',
-          requestType: a.request_type || a.requestType || 'BUS_PASS_RENEWAL',
-          title: a.title || 'Bus Pass Application',
+          requestType: a.request_type || a.requestType || 'ROUTE_CHANGE',
+          title: a.title || 'Transport Service Request',
           reason: a.description || a.reason || '',
           status: a.status === 'PENDING_SCRUTINY' ? 'PENDING' : (a.status || 'PENDING'),
         }))
@@ -17365,17 +17291,6 @@ export const AdminDashboard: React.FC = () => {
       pushToast('success', 'Lost Item Resolved', `Item #${id} marked as returned to owner.`);
       void reloadData();
     }
-  };
-
-  const handleToggleFeeStatus = async () => {
-    const nextStatus = demoStudentFee === 'PAID' ? 'DUE' : 'PAID';
-    setDemoStudentFee(nextStatus);
-    await excelService.setAdminFeeStatus(targetStudentRoll, nextStatus);
-    pushToast(
-      nextStatus === 'PAID' ? 'success' : 'warning',
-      `Student Fee Set to ${nextStatus}`,
-      `Student (${targetStudentRoll}) fee status is now ${nextStatus}. Test Digital Bus Pass in Student Portal.`
-    );
   };
 
   const handleDownloadCsv = async (type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility') => {
@@ -17558,27 +17473,8 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Actions: Reset Cycle, Master Excel & Logout */}
+        {/* Right Actions: Master Excel & Logout */}
         <div className="flex flex-wrap items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={async () => {
-              if (window.confirm('Reset emergency grace passes for all students for the new billing cycle?')) {
-                const res = await excelService.resetBillingCycle();
-                if (res.success) {
-                  pushToast('success', 'Billing Cycle Reset', `Grace passes renewed for ${res.resetCount || 0} riders (${res.newCycle || 'Current Term'}).`);
-                } else {
-                  pushToast('danger', 'Reset Failed', 'Could not reset billing cycle.');
-                }
-              }
-            }}
-            className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
-            title="Reset monthly emergency grace pass limits"
-          >
-            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
-            <span>Reset Cycle</span>
-          </button>
-
           <button
             type="button"
             onClick={downloadMasterExcel}
@@ -17746,7 +17642,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                  Pass Scrutiny Queue &amp; Special Requests
+                  Transport Requests &amp; Scrutiny Queue
                 </h3>
               </div>
               <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
@@ -17757,7 +17653,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="mt-4 space-y-3">
               {applications.length === 0 ? (
                 <p className="text-xs text-slate-500 dark:text-slate-400 italic p-4 text-center rounded-2xl border border-dashed border-slate-200 dark:border-[#2E3646]">
-                  No pending scrutiny applications found. All special requests and renewals are cleared.
+                  No pending scrutiny applications found. All special transport requests are cleared.
                 </p>
               ) : (
                 applications.map((app) => (
@@ -17822,45 +17718,6 @@ export const AdminDashboard: React.FC = () => {
               )}
             </div>
           </div>
-
-          {/* Student Fee Gating Simulator */}
-          <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-5">
-            <div>
-              <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
-                  Student Fee Gating Simulator
-                </h3>
-              </div>
-              <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span>Target student:</span>
-                <select
-                  value={targetStudentRoll}
-                  onChange={(e) => setTargetStudentRoll(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-[#F7F9FF] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
-                >
-                  <option value="26011CSEAI0109">Suraj (26011CSEAI0109 — Route 51)</option>
-                  <option value="23SN1A0501">Aarav Reddy (23SN1A0501 — Route 14)</option>
-                </select>
-                <span>• Status:</span>
-                <span className={`font-mono font-bold ${demoStudentFee === 'PAID' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                  {demoStudentFee}
-                </span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleToggleFeeStatus}
-              className={`rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer ${
-                demoStudentFee === 'PAID'
-                  ? 'tactile-btn bg-rose-600 hover:bg-rose-700'
-                  : 'electric-cta'
-              }`}
-            >
-              {demoStudentFee === 'PAID' ? `Set Fee to DUE (${targetStudentRoll})` : `Set Fee to PAID (${targetStudentRoll})`}
-            </button>
-          </div>
         </div>
       )}
 
@@ -17902,7 +17759,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-72 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -17911,7 +17768,9 @@ export const AdminDashboard: React.FC = () => {
                   heightClass="h-72 w-full"
                 />
               ) : (
-                <MetroSchematicMap activeBus={activeBus} />
+                <div className="h-72 w-full">
+                  <MetroSchematicMap activeBus={activeBus} />
+                </div>
               )}
             </div>
           </div>
@@ -18829,7 +18688,7 @@ export const ParentPortal: React.FC = () => {
               {studentName}
             </h1>
             <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
-              Child&apos;s Bus Pass Active
+              Verified Rider
             </span>
           </div>
           <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
@@ -19045,7 +18904,7 @@ export const ParentPortal: React.FC = () => {
           </div>
         </div>
 
-        <div className="h-64 w-full bg-[#F7F9FF] dark:bg-[#141821]">
+        <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
           {mapMode === 'INTERACTIVE' ? (
             <HybridTransitMap
               buses={buses}
@@ -19054,10 +18913,12 @@ export const ParentPortal: React.FC = () => {
               heightClass="h-64 w-full"
             />
           ) : (
-            <MetroSchematicMap
-              activeBus={activeBus}
-              highlightStopId={highlightStopId}
-            />
+            <div className="h-64 w-full">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={highlightStopId}
+              />
+            </div>
           )}
         </div>
       </div>
@@ -19219,7 +19080,7 @@ export const ParentPortal: React.FC = () => {
 
 ## 29. `src/components/map/HybridTransitMap.tsx` <a id="srccomponentsmaphybridtransitmaptsx"></a>
 
-**Description:** Interactive Leaflet GIS map with dual-layer glowing OSRM route corridors, glassmorphic camera controls, numbered stop badges, live SVG bus pill with radar pulse, telemetry HUD, and ₹0 Google Maps Traffic directions handoff.  
+**Description:** Interactive Leaflet GIS map with unobstructed canvas, above/below HUD telemetry & OSRM/Google Maps bars, dynamic LAN/origin CARTO tile loading, glowing route corridors, glassmorphic camera controls, and live SVG bus pill.  
 **File Path:** `sreenidhi-express/src/components/map/HybridTransitMap.tsx`  
 
 ```tsx
@@ -19238,6 +19099,7 @@ import {
 import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
 import type { BusVehicle, RouteStop } from '../../types/transit';
 import { osrmRoutingService } from '../../services/osrmRoutingService';
+import { excelService } from '../../services/excelService';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 
 interface HybridTransitMapProps {
@@ -19596,7 +19458,7 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
   heightClass = 'h-72 sm:h-80',
 }) => {
   const { isDark } = useCommuteSimulation();
-  const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+  const apiBase = excelService.getServerBaseUrl().replace(/\/+$/, '');
   const renderedBuses = showAllFleet ? buses : [focusedBus];
   const stopWaypoints = useRef<[number, number][]>([]);
   stopWaypoints.current = focusedBus.stops.map((s) => [s.lat, s.lng]);
@@ -19645,214 +19507,221 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
   }, [focusedBus.routeId, focusedBus.flyoverBypassActive, focusedBus.skippedClusterIds?.length]);
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-2xl border border-slate-200/80 shadow-inner dark:border-white/[0.1] ${heightClass}`}>
-      {useGoogleMaps && window.google?.maps ? (
-        <GoogleMapsCanvas
-          buses={buses}
-          focusedBus={focusedBus}
-          showAllFleet={showAllFleet}
-        />
-      ) : (
-        <MapContainer
-          center={[focusedBus.currentLat, focusedBus.currentLng]}
-          zoom={showAllFleet ? 11 : 12}
-          className="h-full w-full"
-          scrollWheelZoom={true}
-        >
-          <TileLayer
-            key={isDark ? 'carto-dark' : 'carto-light'}
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url={
-              isDark
-                ? `${apiBase}/api/tiles/dark_all/{z}/{x}/{y}`
-                : `${apiBase}/api/tiles/voyager/{z}/{x}/{y}`
-            }
-            maxZoom={19}
-          />
-          <MapCameraController
-            focusedBus={focusedBus}
-            roadCoordinates={roadCoordinates}
-            followBus={followBus}
-            setFollowBus={setFollowBus}
-          />
-
-          {/* Dual-Layer Glowing OSRM Corridor Polyline */}
-          <Polyline
-            positions={roadCoordinates}
-            pathOptions={{
-              color: isDark ? '#38bdf8' : '#4f46e5',
-              weight: 11,
-              opacity: focusedBus.shortcutPath ? 0.12 : 0.22,
-              lineCap: 'round',
-              lineJoin: 'round',
-            }}
-          />
-          <Polyline
-            positions={roadCoordinates}
-            pathOptions={{
-              color: isDark ? '#38bdf8' : '#4f46e5',
-              weight: 4,
-              opacity: focusedBus.shortcutPath ? 0.35 : 0.95,
-              dashArray: focusedBus.shortcutPath ? '6 8' : undefined,
-            }}
-          />
-
-          {/* Shortcut Bypass Polyline when area is skipped */}
-          {focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1 && (
-            <>
-              <Polyline
-                positions={focusedBus.shortcutPath}
-                pathOptions={{
-                  color: '#10b981',
-                  weight: 12,
-                  opacity: 0.24,
-                  lineCap: 'round',
-                  lineJoin: 'round',
-                }}
-              />
-              <Polyline
-                positions={focusedBus.shortcutPath}
-                pathOptions={{
-                  color: '#10b981',
-                  weight: 4.5,
-                  opacity: 0.98,
-                }}
-              />
-            </>
-          )}
-
-          {/* Stops & Geofences */}
-          {focusedBus.stops.map((stop, idx) => {
-            const isCurrent = idx === focusedBus.currentStopIndex;
-            const isHighlighted = stop.id === highlightStopId;
-            const isPassed = idx < focusedBus.currentStopIndex;
-            return (
-              <React.Fragment key={stop.id}>
-                <Circle
-                  center={[stop.lat, stop.lng]}
-                  radius={stop.geofenceRadiusMeters}
-                  pathOptions={{
-                    color: stop.isBypassed
-                      ? '#64748b'
-                      : isHighlighted
-                        ? '#f59e0b'
-                        : '#4f46e5',
-                    fillOpacity: isHighlighted ? 0.2 : 0.08,
-                    weight: 1,
-                  }}
-                />
-                <Marker
-                  position={[stop.lat, stop.lng]}
-                  icon={createStopDivIcon(stop, isCurrent, isHighlighted, isPassed, isDark)}
-                >
-                  <Popup>
-                    <div className="min-w-[175px] text-xs">
-                      <p className="font-bold text-slate-900 dark:text-slate-100">
-                        {stop.sequence}. {stop.name}
-                      </p>
-                      <p className="text-slate-600 dark:text-slate-400">{stop.areaClusterName}</p>
-                      <p className="mt-1 text-slate-700 dark:text-slate-300">
-                        AM: {stop.scheduledMorningTime} • PM: {stop.scheduledEveningTime}
-                      </p>
-                      {stop.metroInterchange && (
-                        <p className="mt-1 font-semibold text-indigo-600 dark:text-indigo-400">
-                          🚇 {stop.metroInterchange.stationName} ({stop.metroInterchange.line})
-                        </p>
-                      )}
-                      {stop.isBypassed && (
-                        <p className="mt-1 font-bold text-emerald-600 dark:text-emerald-400">
-                          ✓ SKIPPED BY BYPASS ROUTE
-                        </p>
-                      )}
-                    </div>
-                  </Popup>
-                </Marker>
-              </React.Fragment>
-            );
-          })}
-
-          {/* Sreenidhi University Campus Beacon */}
-          <Circle
-            center={[SREENIDHI_CAMPUS.lat, SREENIDHI_CAMPUS.lng]}
-            radius={220}
-            pathOptions={{ color: '#e53c2e', fillOpacity: 0.16, weight: 1.5 }}
-          />
-
-          {/* Live Bus Markers */}
-          {renderedBuses.map((bus) => (
-            <Marker
-              key={bus.routeId}
-              position={[bus.currentLat, bus.currentLng]}
-              icon={createBusDivIcon(bus, bus.routeId === focusedBus.routeId)}
-            >
-              <Popup>
-                <div className="min-w-[180px] text-xs">
-                  <p className="font-bold text-slate-900 dark:text-slate-100">
-                    {bus.routeNumber} — {bus.registrationNo}
-                  </p>
-                  <p className="text-slate-600 dark:text-slate-400">Driver: {bus.driverName}</p>
-                  <p className="mt-1 text-slate-700 dark:text-slate-300">
-                    Speed: <b className="text-slate-900 dark:text-white">{bus.speedKmh} km/h</b> • Delay: <b className="text-slate-900 dark:text-white">+{bus.trafficDelayMinutes}m</b>
-                  </p>
-                  <p className="mt-1 font-medium text-indigo-600 dark:text-indigo-400">
-                    GPS: {bus.telemetrySource === 'DRIVER_PRIMARY' ? 'Driver Primary' : 'Crowd-Sourced Students'}
-                  </p>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-      )}
-
-      {/* Top-Left Floating Telemetry Pill */}
-      <div className="pointer-events-none absolute top-3 left-14 z-[400] flex max-w-[calc(100%-110px)] items-center gap-1.5 sm:gap-2 truncate rounded-full border border-slate-200/80 bg-white/92 px-2.5 sm:px-3 py-1 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-slate-900/92 text-[11px] sm:text-xs">
-        <span className="relative flex h-2 w-2 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-        </span>
-        <span className="font-bold text-slate-800 dark:text-slate-100 shrink-0">
-          {focusedBus.routeNumber}
-        </span>
-        <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
-        <span className="font-mono font-semibold text-indigo-600 dark:text-cyan-400 shrink-0">
-          {Math.round(focusedBus.speedKmh)} km/h
-        </span>
+    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 shadow-inner dark:border-white/[0.1] dark:bg-slate-900/90">
+      {/* Top Bar ABOVE the Map Canvas */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/75 px-3 py-2 text-[11px] sm:text-xs dark:border-white/10">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span className="font-bold text-slate-800 dark:text-slate-100 shrink-0">
+            {focusedBus.routeNumber}
+          </span>
+          <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
+          <span className="font-mono font-semibold text-indigo-600 dark:text-cyan-400 shrink-0">
+            {Math.round(focusedBus.speedKmh)} km/h
+          </span>
+        </div>
         {nextStop && (
-          <>
-            <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
-            <span className="truncate text-slate-600 dark:text-slate-300">
-              Next: <span className="font-semibold text-slate-900 dark:text-white">{nextStop.shortName || nextStop.name}</span>
+          <div className="text-slate-600 dark:text-slate-300 leading-tight">
+            Next:{' '}
+            <span className="font-semibold text-slate-900 dark:text-white">
+              {nextStop.shortName || nextStop.name}
             </span>
-          </>
+          </div>
         )}
       </div>
 
-      {/* Prismatic Daylight HUD Map Overlay */}
-      <div className="pointer-events-none absolute bottom-6 sm:bottom-3 left-3 z-[400] flex max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-15rem)] flex-wrap items-center gap-1.5">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-white/92 px-3 py-1 text-[10px] font-bold tracking-wide text-slate-800 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-100">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
-          {useGoogleMaps && window.google?.maps
-            ? 'Google Maps Live Traffic'
-            : routingSource === 'OSRM'
-              ? 'OSRM Road-Snapped Corridor (₹0)'
-              : 'OpenStreetMap / Leaflet Corridor'}
-        </span>
+      {/* Unobstructed Map Canvas */}
+      <div className={`relative w-full ${heightClass}`}>
+        {useGoogleMaps && window.google?.maps ? (
+          <GoogleMapsCanvas
+            buses={buses}
+            focusedBus={focusedBus}
+            showAllFleet={showAllFleet}
+          />
+        ) : (
+          <MapContainer
+            center={[focusedBus.currentLat, focusedBus.currentLng]}
+            zoom={showAllFleet ? 11 : 12}
+            className="h-full w-full"
+            scrollWheelZoom={true}
+          >
+            <TileLayer
+              key={isDark ? 'carto-dark' : 'carto-light'}
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url={
+                isDark
+                  ? `${apiBase}/api/tiles/dark_all/{z}/{x}/{y}`
+                  : `${apiBase}/api/tiles/voyager/{z}/{x}/{y}`
+              }
+              maxZoom={19}
+            />
+            <MapCameraController
+              focusedBus={focusedBus}
+              roadCoordinates={roadCoordinates}
+              followBus={followBus}
+              setFollowBus={setFollowBus}
+            />
+
+            {/* Dual-Layer Glowing OSRM Corridor Polyline */}
+            <Polyline
+              positions={roadCoordinates}
+              pathOptions={{
+                color: isDark ? '#38bdf8' : '#4f46e5',
+                weight: 11,
+                opacity: focusedBus.shortcutPath ? 0.12 : 0.22,
+                lineCap: 'round',
+                lineJoin: 'round',
+              }}
+            />
+            <Polyline
+              positions={roadCoordinates}
+              pathOptions={{
+                color: isDark ? '#38bdf8' : '#4f46e5',
+                weight: 4,
+                opacity: focusedBus.shortcutPath ? 0.35 : 0.95,
+                dashArray: focusedBus.shortcutPath ? '6 8' : undefined,
+              }}
+            />
+
+            {/* Shortcut Bypass Polyline when area is skipped */}
+            {focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1 && (
+              <>
+                <Polyline
+                  positions={focusedBus.shortcutPath}
+                  pathOptions={{
+                    color: '#10b981',
+                    weight: 12,
+                    opacity: 0.24,
+                    lineCap: 'round',
+                    lineJoin: 'round',
+                  }}
+                />
+                <Polyline
+                  positions={focusedBus.shortcutPath}
+                  pathOptions={{
+                    color: '#10b981',
+                    weight: 4.5,
+                    opacity: 0.98,
+                  }}
+                />
+              </>
+            )}
+
+            {/* Stops & Geofences */}
+            {focusedBus.stops.map((stop, idx) => {
+              const isCurrent = idx === focusedBus.currentStopIndex;
+              const isHighlighted = stop.id === highlightStopId;
+              const isPassed = idx < focusedBus.currentStopIndex;
+              return (
+                <React.Fragment key={stop.id}>
+                  <Circle
+                    center={[stop.lat, stop.lng]}
+                    radius={stop.geofenceRadiusMeters}
+                    pathOptions={{
+                      color: stop.isBypassed
+                        ? '#64748b'
+                        : isHighlighted
+                          ? '#f59e0b'
+                          : '#4f46e5',
+                      fillOpacity: isHighlighted ? 0.2 : 0.08,
+                      weight: 1,
+                    }}
+                  />
+                  <Marker
+                    position={[stop.lat, stop.lng]}
+                    icon={createStopDivIcon(stop, isCurrent, isHighlighted, isPassed, isDark)}
+                  >
+                    <Popup>
+                      <div className="min-w-[175px] text-xs">
+                        <p className="font-bold text-slate-900 dark:text-slate-100">
+                          {stop.sequence}. {stop.name}
+                        </p>
+                        <p className="text-slate-600 dark:text-slate-400">{stop.areaClusterName}</p>
+                        <p className="mt-1 text-slate-700 dark:text-slate-300">
+                          AM: {stop.scheduledMorningTime} • PM: {stop.scheduledEveningTime}
+                        </p>
+                        {stop.metroInterchange && (
+                          <p className="mt-1 font-semibold text-indigo-600 dark:text-indigo-400">
+                            🚇 {stop.metroInterchange.stationName} ({stop.metroInterchange.line})
+                          </p>
+                        )}
+                        {stop.isBypassed && (
+                          <p className="mt-1 font-bold text-emerald-600 dark:text-emerald-400">
+                            ✓ SKIPPED BY BYPASS ROUTE
+                          </p>
+                        )}
+                      </div>
+                    </Popup>
+                  </Marker>
+                </React.Fragment>
+              );
+            })}
+
+            {/* Sreenidhi University Campus Beacon */}
+            <Circle
+              center={[SREENIDHI_CAMPUS.lat, SREENIDHI_CAMPUS.lng]}
+              radius={220}
+              pathOptions={{ color: '#e53c2e', fillOpacity: 0.16, weight: 1.5 }}
+            />
+
+            {/* Live Bus Markers */}
+            {renderedBuses.map((bus) => (
+              <Marker
+                key={bus.routeId}
+                position={[bus.currentLat, bus.currentLng]}
+                icon={createBusDivIcon(bus, bus.routeId === focusedBus.routeId)}
+              >
+                <Popup>
+                  <div className="min-w-[180px] text-xs">
+                    <p className="font-bold text-slate-900 dark:text-slate-100">
+                      {bus.routeNumber} — {bus.registrationNo}
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-400">Driver: {bus.driverName}</p>
+                    <p className="mt-1 text-slate-700 dark:text-slate-300">
+                      Speed: <b className="text-slate-900 dark:text-white">{bus.speedKmh} km/h</b> • Delay: <b className="text-slate-900 dark:text-white">+{bus.trafficDelayMinutes}m</b>
+                    </p>
+                    <p className="mt-1 font-medium text-indigo-600 dark:text-indigo-400">
+                      GPS: {bus.telemetrySource === 'DRIVER_PRIMARY' ? 'Driver Primary' : 'Crowd-Sourced Students'}
+                    </p>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        )}
+      </div>
+
+      {/* Footer Bar BELOW the Map Canvas */}
+      <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-slate-200/75 px-3 py-2 dark:border-white/10">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-indigo-50/70 px-2.5 py-1 text-[10px] font-bold tracking-wide text-slate-800 dark:border-white/15 dark:bg-slate-800/80 dark:text-slate-100">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
+            {useGoogleMaps && window.google?.maps
+              ? 'Google Maps Live Traffic'
+              : routingSource === 'OSRM'
+                ? 'OSRM Road-Snapped Corridor (₹0)'
+                : 'OpenStreetMap / Leaflet Corridor'}
+          </span>
+          {focusedBus.shortcutPath && (
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.35)]">
+              Bypass Route Active
+            </span>
+          )}
+        </div>
         <a
           href={googleMapsTrafficUrl}
           target="_blank"
           rel="noopener noreferrer"
           title="Open live Google Maps traffic directions from bus GPS to stop (₹0, no API key required)"
-          className="tactile-btn pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white/95 px-3 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-md backdrop-blur-md transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-900/90 dark:text-cyan-200 dark:hover:bg-slate-800"
+          className="tactile-btn inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-xs transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-800/90 dark:text-cyan-200 dark:hover:bg-slate-800"
         >
           <Navigation className="h-3 w-3 shrink-0 text-[#06B6D4]" />
           <span>Google Maps Traffic</span>
           <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-75" />
         </a>
-        {focusedBus.shortcutPath && (
-          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
-            Bypass Route Active
-          </span>
-        )}
       </div>
     </div>
   );
@@ -21091,7 +20960,7 @@ class ExcelService {
     on: boolean,
     rollNumber?: string,
     day?: 'TODAY' | 'TOMORROW',
-  ): Promise<{ ok: boolean; status: number; locked?: boolean; cutoffIso?: string | null; error?: string; routePlan?: any }> {
+  ): Promise<{ ok: boolean; status: number; locked?: boolean; lockReason?: string | null; cutoffIso?: string | null; error?: string; routePlan?: any }> {
     try {
       const res = await fetch(`${this.serverBaseUrl}/api/students/absence`, {
         method: 'POST',
@@ -21103,19 +20972,20 @@ class ExcelService {
         ok: res.ok,
         status: res.status,
         locked: Boolean(data.locked),
+        lockReason: data.lockReason ?? null,
         cutoffIso: data.cutoffIso || null,
         error: data.error,
         routePlan: data.routePlan,
       };
     } catch (err: any) {
-      return { ok: false, status: 0, error: err?.message || 'Network error' };
+      return { ok: false, status: 0, lockReason: null, error: err?.message || 'Network error' };
     }
   }
 
   public async getAbsenceTomorrow(
     rollNumber?: string,
     day?: 'TODAY' | 'TOMORROW',
-  ): Promise<{ absentTomorrow: boolean; locked?: boolean; cutoffIso?: string | null; routePlan?: any }> {
+  ): Promise<{ absentTomorrow: boolean; locked?: boolean; lockReason?: string | null; cutoffIso?: string | null; routePlan?: any }> {
     try {
       const params = new URLSearchParams();
       if (rollNumber) params.set('rollNumber', rollNumber);
@@ -21125,16 +20995,17 @@ class ExcelService {
         ? `${this.serverBaseUrl}/api/students/absence?${qs}`
         : `${this.serverBaseUrl}/api/students/absence`;
       const res = await fetch(url, { headers: this.authHeaders() });
-      if (!res.ok) return { absentTomorrow: false };
+      if (!res.ok) return { absentTomorrow: false, lockReason: null };
       const data = await res.json();
       return {
         absentTomorrow: Boolean(data.absentTomorrow),
         locked: Boolean(data.locked),
+        lockReason: data.lockReason ?? null,
         cutoffIso: data.cutoffIso || null,
         routePlan: data.routePlan,
       };
     } catch {
-      return { absentTomorrow: false };
+      return { absentTomorrow: false, lockReason: null };
     }
   }
 
@@ -24968,7 +24839,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
           </div>
           <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
             <WifiOff className="w-3.5 h-3.5" />
-            <span>Offline Digital Bus Pass</span>
+            <span>Works Offline (PWA)</span>
           </div>
           <div className="flex items-center gap-1.5 text-[#4F46E5] dark:text-indigo-300">
             <Sparkles className="w-3.5 h-3.5" />

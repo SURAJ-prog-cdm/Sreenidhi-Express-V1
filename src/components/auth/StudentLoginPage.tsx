@@ -269,7 +269,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             </span>
           </h1>
           <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
-            Choose your campus role to sync live arrivals and boarding pass.
+            Choose your campus role to sync live bus arrivals and route updates.
           </p>
         </div>
 
@@ -321,10 +321,10 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                Student
+                Student / Faculty
               </h3>
               <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
-                ETA, pass and alerts
+                Live ETA, map &amp; alerts
               </p>
             </div>
           </button>
@@ -458,7 +458,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold text-slate-900 dark:text-white">
-                {studentAuthMode === 'LOGIN' ? 'Student & Faculty Sign-In' : 'New Commuter Self-Registration'}
+                {studentAuthMode === 'LOGIN' ? 'Student / Faculty Login' : 'New Commuter Self-Registration'}
               </span>
               <button
                 type="button"

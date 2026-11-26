@@ -1260,20 +1260,24 @@ function getFirstDepartureUtcMs(routeId, dayStr) {
   }
 }
 
-function isPlanLocked(routeId, day) {
+function getPlanLockStatus(routeId, day) {
   const plan = extras.getRoutePlan(routeId, day);
-  if (plan && plan.locked === 1) return true;
+  if (plan && plan.locked === 1) return { locked: true, reason: 'ADMIN_LOCKED' };
   if (day === getTodayStr()) {
     const trip = extras.getTripState(routeId);
-    if (trip && trip.running) return true;
+    if (trip && trip.running) return { locked: true, reason: 'TRIP_RUNNING' };
   }
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
   if (depUtcMs !== null) {
     // Cutoff is ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN (60 min) prior to first bus departure
     const cutoffUtcMs = depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000;
-    if (Date.now() >= cutoffUtcMs) return true;
+    if (Date.now() >= cutoffUtcMs) return { locked: true, reason: 'CUTOFF_PASSED' };
   }
-  return false;
+  return { locked: false, reason: null };
+}
+
+function isPlanLocked(routeId, day) {
+  return getPlanLockStatus(routeId, day).locked;
 }
 
 function resolveAbsenceDay(rawDay) {
@@ -1292,18 +1296,25 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
   const routeId = student.route_id;
 
   // Enforce 1-hour pre-departure cutoff lock (or locked/active route plan)
-  if (isPlanLocked(routeId, day)) {
+  const lockStatus = getPlanLockStatus(routeId, day);
+  if (lockStatus.locked) {
     const currentPlan = extras.computeRouteOptimization(routeId, day);
     if (!on && student.area_cluster_id && currentPlan.skippedClusterIds.includes(student.area_cluster_id)) {
       return res.status(409).json({
         error: "This trip's route is already locked and your area cluster is bypassed. Contact the Transport Office to restore your stop.",
         locked: true,
+        lockReason: lockStatus.reason,
         cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
       });
     }
+    const lockedMsg =
+      lockStatus.reason === 'ADMIN_LOCKED'
+        ? 'Route plan is locked by the Transport Office. Contact Admin to unlock.'
+        : `Changes closed: cutoff is ${ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN} minutes before bus departure. Contact the Transport Office for urgent updates.`;
     return res.status(409).json({
-      error: `Changes closed: cutoff is ${ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN} minutes before bus departure. Contact the Transport Office for urgent updates.`,
+      error: lockedMsg,
       locked: true,
+      lockReason: lockStatus.reason,
       cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     });
   }
@@ -1311,6 +1322,7 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
   extras.setAbsence(roll, day, on);
   const plan = extras.computeRouteOptimization(routeId, day);
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
+  const postLockStatus = getPlanLockStatus(routeId, day);
   broadcast('route_plan_updated', { routeId: normalizeRoute(routeId), day, plan }, normalizeRoute(routeId));
   broadcast('ROUTE_PLAN_UPDATED', { routeId: normalizeRoute(routeId), day, plan }, normalizeRoute(routeId));
   res.json({
@@ -1319,7 +1331,8 @@ app.post('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =
     day,
     absentTomorrow: on,
     absent: on,
-    locked: isPlanLocked(routeId, day),
+    locked: postLockStatus.locked,
+    lockReason: postLockStatus.reason,
     cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     cutoffIso: depUtcMs ? new Date(depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000).toISOString() : null,
     routePlan: plan,
@@ -1334,13 +1347,15 @@ app.get('/api/students/absence', requireRole('STUDENT', 'PARENT'), (req, res) =>
   const routeId = student?.route_id || 'route-51';
   const plan = student ? extras.computeRouteOptimization(routeId, day) : null;
   const depUtcMs = getFirstDepartureUtcMs(routeId, day);
+  const lockStatus = student ? getPlanLockStatus(routeId, day) : { locked: false, reason: null };
   res.json({
     success: true,
     rollNumber: roll,
     day,
     absentTomorrow: absent,
     absent,
-    locked: student ? isPlanLocked(routeId, day) : false,
+    locked: lockStatus.locked,
+    lockReason: lockStatus.reason,
     cutoffMinutesBeforeDeparture: ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN,
     cutoffIso: depUtcMs ? new Date(depUtcMs - ABSENCE_CUTOFF_BEFORE_DEPARTURE_MIN * 60 * 1000).toISOString() : null,
     routePlan: plan,
