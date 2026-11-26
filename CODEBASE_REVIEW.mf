@@ -105,9 +105,9 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 1. [`package.json`](#packagejson) — *Package dependencies, Node engine requirements (>=22.12.0), Capacitor plugins, and npm scripts.*
 2. [`vite.config.ts`](#viteconfigts) — *Vite 8 build engine configuration with React and Tailwind CSS plugins.*
 3. [`capacitor.config.ts`](#capacitorconfigts) — *Capacitor 8 Android and native mobile configuration for Sreenidhi Express (in.edu.suh.express).*
-4. [`index.html`](#indexhtml) — *HTML5 single-page application shell with responsive mobile viewport and localhost service worker purge.*
+4. [`index.html`](#indexhtml) — *HTML5 light-first application shell (#F7F9FF theme, electric pre-hydration splash, responsive mobile viewport, localhost SW cleanup).*
 5. [`public/sw.js`](#publicswjs) — *Self-cleaning and cache purge Service Worker with clean native network pass-through (no stream-locking fetch interception).*
-6. [`src/index.css`](#srcindexcss) — *Tailwind CSS 4 setup, Leaflet tile styles, glass panels, glassmorphic controls, dark popups, and bus pulse keyframe animations.*
+6. [`src/index.css`](#srcindexcss) — *Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), Leaflet tile styles, and pulse animations.*
 7. [`server/security.js`](#serversecurityjs) — *Hardened security engine: scrypt password hashing, RFC 7519 HS256 JWT sessions, brute-force IP rate-limiting, LAN & local CORS origin matching, DELETE method support, event allowlist validation, and time-skew gate tokens.*
 8. [`server/routeTopology.js`](#serverroutetopologyjs) — *Canonical transit route topology, area clusters, stop coordinates, and fuzzy student-stop matching engine for Route 51 & Route 14.*
 9. [`server/dbExtras.js`](#serverdbextrasjs) — *SQLite migration layer (verification_status, trip started_at, stop_dwell_logs, otp_verifications PK), prepared statement caching, student verification queue, 60-day dwell audit logs, Route 51 manifest seeding, and audit logging.*
@@ -126,10 +126,10 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 22. [`src/services/firebaseSyncService.ts`](#srcservicesfirebasesyncservicets) — *Firebase Realtime Database synchronization listener for telemetry updates and active bus positioning.*
 23. [`src/components/common/MobileBottomNav.tsx`](#srccomponentscommonmobilebottomnavtsx) — *Bottom navigation bar optimized for mobile viewports and Capacitor native shells.*
 24. [`src/components/common/SreenidhiLogo.tsx`](#srccomponentscommonsreenidhilogotsx) — *Official branded Sreenidhi Express shield and bus insignia component.*
-25. [`src/components/portals/StudentPortal.tsx`](#srccomponentsportalsstudentportaltsx) — *BusTrack white-and-indigo 4-tab Student Commuter Portal (Home, Map, Pass, More) with indigo ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.*
-26. [`src/components/portals/DriverConsole.tsx`](#srccomponentsportalsdriverconsoletsx) — *BusTrack white-and-indigo 3-tab Driver Cockpit (Trip, Stops, Alerts) with live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.*
-27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *BusTrack white-and-indigo 3-tab Transport Admin Desk (Verify, Fleet, Logs) with pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
-28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Parent oversight interface for tracking child bus arrival, boarding history, and emergency alerts.*
+25. [`src/components/portals/StudentPortal.tsx`](#srccomponentsportalsstudentportaltsx) — *Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Pass, More) with electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.*
+26. [`src/components/portals/DriverConsole.tsx`](#srccomponentsportalsdriverconsoletsx) — *Prismatic Daylight 3-tab Driver Cockpit (Trip, Stops, Alerts) with electric live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.*
+27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
+28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.*
 29. [`src/components/map/HybridTransitMap.tsx`](#srccomponentsmaphybridtransitmaptsx) — *Interactive Leaflet GIS map with dual-layer glowing OSRM route corridors, glassmorphic camera controls, numbered stop badges, live SVG bus pill with radar pulse, telemetry HUD, and ₹0 Google Maps Traffic directions handoff.*
 30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Isometric Metro-style corridor schematic illustrating the Hyderabad Blue Line & Campus Express alignment.*
 31. [`scripts/load-test.mjs`](#scriptsloadtestmjs) — *Zero-dependency concurrency and load benchmark validating SSE connections, sub-100ms latency, and 0% error rate.*
@@ -308,7 +308,7 @@ export default config;
 
 ## 4. `index.html` <a id="indexhtml"></a>
 
-**Description:** HTML5 single-page application shell with responsive mobile viewport and localhost service worker purge.  
+**Description:** HTML5 light-first application shell (#F7F9FF theme, electric pre-hydration splash, responsive mobile viewport, localhost SW cleanup).  
 **File Path:** `sreenidhi-express/index.html`  
 
 ```html
@@ -557,7 +557,7 @@ self.addEventListener('notificationclick', (event) => {
 
 ## 6. `src/index.css` <a id="srcindexcss"></a>
 
-**Description:** Tailwind CSS 4 setup, Leaflet tile styles, glass panels, glassmorphic controls, dark popups, and bus pulse keyframe animations.  
+**Description:** Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), Leaflet tile styles, and pulse animations.  
 **File Path:** `sreenidhi-express/src/index.css`  
 
 ```css
@@ -14411,7 +14411,7 @@ export const SreenidhiLogo: React.FC<SreenidhiLogoProps> = ({ compact = false, c
 
 ## 25. `src/components/portals/StudentPortal.tsx` <a id="srccomponentsportalsstudentportaltsx"></a>
 
-**Description:** BusTrack white-and-indigo 4-tab Student Commuter Portal (Home, Map, Pass, More) with indigo ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.  
+**Description:** Prismatic Daylight 4-tab Student Commuter Portal (Home, Map, Pass, More) with electric indigo-cyan ETA window hero, map preview card, docked bottom nav, and 1h opt-out cutoff.  
 **File Path:** `sreenidhi-express/src/components/portals/StudentPortal.tsx`  
 
 ```tsx
@@ -15924,7 +15924,7 @@ export const StudentPortal: React.FC = () => {
 
 ## 26. `src/components/portals/DriverConsole.tsx` <a id="srccomponentsportalsdriverconsoletsx"></a>
 
-**Description:** BusTrack white-and-indigo 3-tab Driver Cockpit (Trip, Stops, Alerts) with live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.  
+**Description:** Prismatic Daylight 3-tab Driver Cockpit (Trip, Stops, Alerts) with electric live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.  
 **File Path:** `sreenidhi-express/src/components/portals/DriverConsole.tsx`  
 
 ```tsx
@@ -17131,7 +17131,7 @@ export const DriverConsole: React.FC = () => {
 
 ## 27. `src/components/portals/AdminDashboard.tsx` <a id="srccomponentsportalsadmindashboardtsx"></a>
 
-**Description:** BusTrack white-and-indigo 3-tab Transport Admin Desk (Verify, Fleet, Logs) with pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.  
+**Description:** Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.  
 **File Path:** `sreenidhi-express/src/components/portals/AdminDashboard.tsx`  
 
 ```tsx
@@ -18549,7 +18549,7 @@ export const AdminDashboard: React.FC = () => {
 
 ## 28. `src/components/portals/ParentPortal.tsx` <a id="srccomponentsportalsparentportaltsx"></a>
 
-**Description:** Parent oversight interface for tracking child bus arrival, boarding history, and emergency alerts.  
+**Description:** Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.  
 **File Path:** `sreenidhi-express/src/components/portals/ParentPortal.tsx`  
 
 ```tsx
