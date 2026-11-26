@@ -147,22 +147,22 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
   };
 
   return (
-    <div className="bg-[#181C24] border border-[#262C36] rounded-2xl p-5 shadow-lg text-[#E5E8EC]">
+    <div className="prismatic-card rounded-3xl p-5 text-slate-900 dark:text-slate-100">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#262C36]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-[#2E3646]">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-[#0D4B42]/50 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-sm shadow-indigo-500/20">
             <Smartphone className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-white flex items-center space-x-2">
+            <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center space-x-2 flex-wrap">
               <span>{userType === 'PARENT' ? 'Parent Mobile Alert Center' : userType === 'FACULTY' ? 'Faculty Mobile Alert Center' : 'Student Mobile Alert Center'}</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                E-Commerce Push
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-[#4F46E5] border border-indigo-200/80 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800/50">
+                Real-Time Push
               </span>
             </h4>
-            <p className="text-xs text-slate-400">
-              Direct mobile SMS & lockscreen push notifications
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Direct mobile SMS &amp; lockscreen push notifications
             </p>
           </div>
         </div>
@@ -170,16 +170,16 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
         {/* Registered phone badge */}
         <div className="flex items-center space-x-2">
           {phoneNumber ? (
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#11141A] border border-[#2A313D]">
-              <span className="text-xs font-mono text-emerald-400 font-semibold">
+            <div className="prismatic-subcard flex items-center space-x-2 px-3 py-1.5 rounded-2xl">
+              <span className="text-xs font-mono text-[#4F46E5] dark:text-cyan-300 font-bold">
                 {formatIndianPhone(phoneNumber)}
               </span>
-              <span className="flex items-center text-[10px] text-emerald-400 bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-600/40">
+              <span className="flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40">
                 <Check className="w-3 h-3 mr-0.5" /> {isVerified ? 'Verified' : 'Unverified'}
               </span>
               <button
                 onClick={onOpenPhoneModal}
-                className="text-xs text-slate-400 hover:text-white underline ml-1"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 ml-1 cursor-pointer"
               >
                 Edit
               </button>
@@ -187,7 +187,7 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
           ) : (
             <button
               onClick={onOpenPhoneModal}
-              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-md shadow-emerald-900/30 transition-all"
+              className="electric-cta px-3.5 py-2 rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 cursor-pointer"
             >
               <Smartphone className="w-3.5 h-3.5" />
               <span>Register Mobile Number</span>
@@ -197,28 +197,28 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
       </div>
 
       {/* Browser Push Notification Permission Banner */}
-      <div className="mt-4 p-3.5 rounded-xl bg-[#11141A] border border-[#262C36] flex flex-wrap items-center justify-between gap-3">
+      <div className="prismatic-subcard mt-4 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center space-x-2.5">
-          <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+          <div className="p-2 rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
             <Bell className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs font-bold text-white">Device / Lockscreen Push Notifications</div>
-            <p className="text-[11px] text-slate-400">
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white">Device / Lockscreen Push Notifications</div>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               Receive pop-up alerts on phone or desktop when bus departs or nears your stop
             </p>
           </div>
         </div>
         <div>
           {pushStatus === 'granted' ? (
-            <span className="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-medium border border-emerald-500/30 flex items-center space-x-1">
+            <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40 flex items-center space-x-1">
               <Check className="w-3.5 h-3.5" />
               <span>Push Active</span>
             </span>
           ) : (
             <button
               onClick={requestPushPermission}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-colors"
+              className="tactile-btn px-3.5 py-1.5 rounded-xl bg-white hover:bg-indigo-50 text-[#4F46E5] text-xs font-bold border border-indigo-200 dark:bg-[#1E2430] dark:text-indigo-300 dark:border-[#2E3646] cursor-pointer"
             >
               Enable Browser Push
             </button>
@@ -226,9 +226,9 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
         </div>
       </div>
 
-      {/* 6 E-Commerce Milestone Toggles */}
+      {/* 6 Milestone Toggles */}
       <div className="mt-4">
-        <div className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2.5">
+        <div className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2.5">
           Transit Alert Milestones ({userType === 'PARENT' ? 'Guardian Alerts' : 'Passenger Alerts'})
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
@@ -249,23 +249,23 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
               <div
                 key={item.key}
                 onClick={() => togglePreference(item.key as keyof typeof preferences)}
-                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start justify-between space-x-2 ${
+                className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-start justify-between space-x-2 ${
                   active
-                    ? 'bg-[#151922] border-emerald-500/40'
-                    : 'bg-[#11141A]/60 border-[#222834] opacity-60'
+                    ? 'bg-gradient-to-br from-indigo-50/75 via-white to-cyan-50/60 border-indigo-200 shadow-2xs dark:bg-[#1E2430] dark:border-indigo-500/40'
+                    : 'bg-[#F7F9FF]/70 border-slate-200/80 opacity-65 dark:bg-[#141821]/60 dark:border-[#2E3646]'
                 }`}
               >
                 <div>
-                  <div className="text-xs font-bold text-white">{item.label}</div>
-                  <div className="text-[11px] text-slate-400">{item.desc}</div>
+                  <div className="text-xs font-extrabold text-slate-900 dark:text-white">{item.label}</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">{item.desc}</div>
                 </div>
                 <div
                   className={`w-9 h-5 rounded-full p-0.5 transition-colors shrink-0 mt-0.5 ${
-                    active ? 'bg-emerald-500' : 'bg-slate-700'
+                    active ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]' : 'bg-slate-300 dark:bg-slate-700'
                   }`}
                 >
                   <div
-                    className={`w-4 h-4 rounded-full bg-white transition-transform ${
+                    className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
                       active ? 'translate-x-4' : 'translate-x-0'
                     }`}
                   />
@@ -277,18 +277,18 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
       </div>
 
       {/* Quick Test Alert Action */}
-      <div className="mt-4 pt-3 border-t border-[#222834] flex flex-wrap items-center justify-between gap-2">
-        <span className="text-[11px] text-slate-400">
-          Want to see how notifications appear on your phone?
+      <div className="mt-4 pt-3.5 border-t border-slate-200/70 dark:border-[#2E3646] flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11px] text-slate-500 dark:text-slate-400">
+          Preview how live arrival alerts trigger on your phone:
         </span>
         <button
           onClick={handleSendTestNotification}
           disabled={testSent}
-          className="px-3 py-1.5 rounded-lg bg-[#0D4B42] hover:bg-[#0F5A4F] text-emerald-200 text-xs font-semibold flex items-center space-x-1.5 border border-emerald-500/30 transition-all"
+          className="electric-cta px-3.5 py-2 rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 disabled:opacity-60 cursor-pointer"
         >
           {testSent ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-cyan-200" />
               <span>Test SMS Dispatched!</span>
             </>
           ) : (

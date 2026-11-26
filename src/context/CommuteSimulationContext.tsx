@@ -134,7 +134,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
     }
     return 'STUDENT_LOGIN';
   });
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState<boolean>(false);
   const [latestToast, setLatestToast] = useState<ToastBanner | null>(null);
 

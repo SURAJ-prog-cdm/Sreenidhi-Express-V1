@@ -559,21 +559,24 @@ export const StudentPortal: React.FC = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-4 pb-24 antialiased">
+    <div className="mx-auto w-full max-w-5xl space-y-4 pb-28 antialiased">
       {/* Compact Greeting Header (Always Visible at Top) */}
-      <div className="flex items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <img
-            src="/sreenidhi_express_logo.jpg"
-            alt="Sreenidhi Express Logo"
-            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-xs ring-2 ring-[#4F46E5]/20 dark:ring-indigo-400/30"
-          />
+          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+            <img
+              src="/sreenidhi_express_logo.jpg"
+              alt="Sreenidhi Express Logo"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
                 Welcome Back, {firstName}
               </h1>
-              <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
                 Route {routeNum} • SUH Campus
               </span>
             </div>
@@ -588,19 +591,19 @@ export const StudentPortal: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsSmsDrawerOpen(true)}
-            className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-300 cursor-pointer"
+            className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
             title="Live Transit SMS & App Messages"
           >
             <Bell className="h-4 w-4" />
             <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
             </span>
           </button>
           <button
             type="button"
             onClick={logoutUser}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-slate-50 text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
             title="Sign Out"
           >
             <LogOut className="h-4 w-4" />
@@ -610,7 +613,7 @@ export const StudentPortal: React.FC = () => {
 
       {/* 2-Minute Stop Arrival Countdown & Not Coming Opt-Out Action */}
       {arrivalStage === 'ARRIVED_2_MIN_TIMER' && twoMinCountdownSec > 0 && (
-        <div className="rounded-3xl border border-amber-400/50 bg-amber-50 p-3.5 shadow-sm dark:bg-amber-950/40 dark:border-amber-700/60 animate-pulse">
+        <div className="rounded-3xl border border-amber-400/50 bg-amber-50/95 p-3.5 shadow-sm dark:bg-amber-950/40 dark:border-amber-700/60 animate-pulse">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -618,7 +621,7 @@ export const StudentPortal: React.FC = () => {
                 <p className="text-xs font-black uppercase text-amber-800 dark:text-amber-200">
                   Bus at {assignedStopName} (2-Min Timer)
                 </p>
-                <p className="font-mono text-base font-black text-amber-900 dark:text-white">
+                <p className="font-mono-timer text-base font-black text-amber-900 dark:text-white">
                   {formatHms(twoMinCountdownSec)} remaining
                 </p>
               </div>
@@ -629,7 +632,7 @@ export const StudentPortal: React.FC = () => {
                 await markStudentNotComing(activeStudent?.id || 'stu-01', 'Skipped by student at stop approaching');
                 pushToast('info', 'Stop Skipped', 'Driver notified that you are not boarding this trip.');
               }}
-              className="rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 active:scale-95 cursor-pointer shrink-0"
+              className="tactile-btn rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 cursor-pointer shrink-0"
             >
               Not Coming
             </button>
@@ -639,68 +642,70 @@ export const StudentPortal: React.FC = () => {
 
       {/* Proactive Proximity Heads-Up Departure Banner */}
       {countdownSec > 0 && countdownSec <= 120 && (
-        <div className="flex items-center gap-2.5 rounded-3xl border border-emerald-500/30 bg-emerald-50/90 p-3 text-xs font-bold text-emerald-800 shadow-sm dark:bg-emerald-950/50 dark:text-emerald-200 animate-pulse">
-          <BellRing className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+        <div className="flex items-center gap-2.5 rounded-3xl border border-cyan-400/40 bg-cyan-50/95 p-3 text-xs font-bold text-cyan-900 shadow-sm dark:bg-cyan-950/50 dark:text-cyan-200 animate-pulse">
+          <BellRing className="h-4 w-4 shrink-0 text-[#06B6D4]" />
           <span>Bus arriving at {assignedStopName} now! Head to the boarding point.</span>
         </div>
       )}
       {countdownSec > 120 && countdownSec <= 600 && (
-        <div className="flex items-center gap-2.5 rounded-3xl border border-amber-500/30 bg-amber-50/90 p-3 text-xs font-bold text-amber-800 shadow-sm dark:bg-amber-950/50 dark:text-amber-200">
+        <div className="flex items-center gap-2.5 rounded-3xl border border-amber-400/40 bg-amber-50/95 p-3 text-xs font-bold text-amber-900 shadow-sm dark:bg-amber-950/50 dark:text-amber-200">
           <Clock className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
           <span>10-Minute Heads-Up: Bus is ~{Math.round(countdownSec / 60)} mins away. Leave for your stop!</span>
         </div>
       )}
 
       {portalTab === 'HOME' && (
-        <div className="space-y-4">
-          {/* Primary Indigo Hero Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-[#4F46E5] to-[#5B52F0] p-5 text-white shadow-lg shadow-indigo-500/20">
+        <div className="animate-panel-in space-y-4">
+          {/* Primary Electric Indigo -> Cyan Hero Card */}
+          <div className="electric-hero rounded-3xl p-5 text-white">
+            <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-25" />
+
             {/* Top row */}
-            <div className="flex items-center justify-between gap-2">
+            <div className="relative flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/18 backdrop-blur-xs">
                   <Bus className="h-4 w-4 text-white" />
                 </span>
                 <span className="text-sm font-extrabold tracking-tight">Bus #{routeNum}</span>
               </div>
               {busDelayMinutes > 0 ? (
-                <span className="inline-flex items-center rounded-full bg-amber-400/25 px-3 py-1 text-[11px] font-extrabold text-amber-100 ring-1 ring-amber-300/40">
+                <span className="inline-flex items-center rounded-full bg-amber-400/25 px-3 py-1 text-[11px] font-extrabold text-amber-50 ring-1 ring-amber-200/50 backdrop-blur-xs">
                   +{busDelayMinutes}m Delay
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/25 px-3 py-1 text-[11px] font-extrabold text-emerald-100 ring-1 ring-emerald-300/30">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/18 px-3 py-1 text-[11px] font-extrabold text-white ring-1 ring-white/30 backdrop-blur-xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.9)] animate-pulse" />
                   On Time
                 </span>
               )}
             </div>
 
             {/* Split Metric Row */}
-            <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl bg-white/10 p-3.5 backdrop-blur-xs">
+            <div className="relative mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-white/15 bg-white/12 p-3.5 backdrop-blur-md">
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold text-indigo-100/80">Estimated Arrival:</p>
-                <p className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-white">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Estimated Arrival:</p>
+                <p className="font-mono-timer mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-white">
                   {heroEtaLabel}
                 </p>
-                <p className="mt-0.5 text-[10px] font-medium text-indigo-100/85 truncate">
+                <p className="mt-0.5 text-[10px] font-medium text-cyan-100/95 truncate">
                   ±2 min buffer • {clockWindowLabel}
                 </p>
               </div>
-              <div className="min-w-0 border-l border-white/15 pl-3">
-                <p className="text-[11px] font-semibold text-indigo-100/80">Next Stop:</p>
+              <div className="min-w-0 border-l border-white/20 pl-3">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Next Stop:</p>
                 <p className="mt-0.5 text-base sm:text-lg font-extrabold leading-snug text-white line-clamp-2">
                   {assignedStopName}
                 </p>
-                <p className="mt-0.5 text-[10px] font-medium text-indigo-100/85 truncate">
+                <p className="mt-0.5 text-[10px] font-medium text-cyan-100/95 truncate">
                   {etaDetails.distanceText} • {etaDetails.source}
                 </p>
               </div>
             </div>
 
             {/* Bottom 2-Button Action Row */}
-            <div className="mt-4 flex items-center gap-2.5">
+            <div className="relative mt-4 flex items-center gap-2.5">
               {isOnBoardCleared ? (
-                <span className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-400/25 px-4 py-2.5 text-xs font-extrabold text-white ring-1 ring-emerald-200/50">
+                <span className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-400/25 px-4 py-2.5 text-xs font-extrabold text-white ring-1 ring-emerald-200/60 backdrop-blur-xs">
                   On Board ✓
                 </span>
               ) : (
@@ -708,7 +713,7 @@ export const StudentPortal: React.FC = () => {
                   type="button"
                   onClick={() => void handleSelfCheckIn('STUDENT_SELF_TAP')}
                   disabled={isSelfCheckingIn || !isTripActive}
-                  className="flex-1 rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-sm transition hover:bg-indigo-50 active:scale-[0.98] disabled:opacity-60 cursor-pointer"
+                  className="animate-electric-sheen tactile-btn relative flex-1 overflow-hidden rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 disabled:opacity-60 cursor-pointer"
                 >
                   {isSelfCheckingIn ? 'Checking In...' : isTripActive ? "I'm On Board" : 'Wait for Trip Start'}
                 </button>
@@ -723,10 +728,10 @@ export const StudentPortal: React.FC = () => {
                   }
                 }}
                 disabled={isUpdatingAbsence}
-                className={`rounded-xl px-3.5 py-2.5 text-xs font-bold transition active:scale-[0.98] disabled:opacity-60 cursor-pointer ${
+                className={`tactile-btn rounded-xl px-3.5 py-2.5 text-xs font-bold backdrop-blur-xs transition disabled:opacity-60 cursor-pointer ${
                   isAbsentTomorrow
-                    ? 'bg-amber-400/30 text-white ring-1 ring-amber-200/70 hover:bg-amber-400/40'
-                    : 'bg-white/20 text-white hover:bg-white/30'
+                    ? 'bg-amber-400/35 text-white ring-1 ring-amber-200/70 hover:bg-amber-400/45'
+                    : 'bg-white/18 text-white ring-1 ring-white/20 hover:bg-white/28'
                 }`}
               >
                 {isAbsentTomorrow ? 'Absent ✓' : 'Not Traveling'}
@@ -734,9 +739,9 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Inline Absence Day Selector & 1h Cutoff Caption (Shown When Toggled / Active / Expandable) */}
+          {/* Inline Absence Day Selector & 1h Cutoff Caption */}
           {(showAbsenceBar || isAbsentTomorrow) ? (
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-3.5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card animate-panel-in rounded-3xl p-3.5">
               <div className="flex flex-wrap items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div
@@ -753,13 +758,13 @@ export const StudentPortal: React.FC = () => {
                       <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                         Opt-Out ({absenceDay === 'TODAY' ? 'Today' : 'Tomorrow'})
                       </span>
-                      <div className="inline-flex rounded-lg border border-slate-200/80 bg-[#F5F7FB] p-0.5 text-[10px] font-bold dark:border-[#2E3646] dark:bg-[#141821]">
+                      <div className="prismatic-subcard inline-flex rounded-xl p-0.5 text-[10px] font-bold">
                         <button
                           type="button"
                           onClick={() => setAbsenceDay('TODAY')}
-                          className={`rounded-md px-2 py-0.5 cursor-pointer transition ${
+                          className={`rounded-lg px-2 py-0.5 cursor-pointer transition ${
                             absenceDay === 'TODAY'
-                              ? 'bg-[#4F46E5] text-white'
+                              ? 'bg-[#4F46E5] text-white shadow-2xs'
                               : 'text-slate-500 dark:text-slate-400'
                           }`}
                         >
@@ -768,9 +773,9 @@ export const StudentPortal: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setAbsenceDay('TOMORROW')}
-                          className={`rounded-md px-2 py-0.5 cursor-pointer transition ${
+                          className={`rounded-lg px-2 py-0.5 cursor-pointer transition ${
                             absenceDay === 'TOMORROW'
-                              ? 'bg-[#4F46E5] text-white'
+                              ? 'bg-[#4F46E5] text-white shadow-2xs'
                               : 'text-slate-500 dark:text-slate-400'
                           }`}
                         >
@@ -792,7 +797,7 @@ export const StudentPortal: React.FC = () => {
                     onClick={handleToggleAbsence}
                     disabled={isUpdatingAbsence || absenceLocked}
                     className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 ${
-                      isAbsentTomorrow ? 'bg-[#4F46E5]' : 'bg-slate-300 dark:bg-slate-700'
+                      isAbsentTomorrow ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]' : 'bg-slate-300 dark:bg-slate-700'
                     }`}
                     role="switch"
                     aria-checked={isAbsentTomorrow}
@@ -814,12 +819,12 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-between px-1 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex items-center justify-between px-1.5 text-[11px] text-slate-500 dark:text-slate-400">
               <span>Cutoff: 1 hour before bus departure</span>
               <button
                 type="button"
                 onClick={() => setShowAbsenceBar(true)}
-                className="font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Today / Tomorrow options
               </button>
@@ -828,19 +833,19 @@ export const StudentPortal: React.FC = () => {
 
           {/* Area Cluster Bypass Notice */}
           {isClusterBypassed && (
-            <div className="rounded-2xl border border-amber-300 bg-amber-50 p-3 text-[11px] text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+            <div className="rounded-2xl border border-amber-300 bg-amber-50/90 p-3 text-[11px] text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
               <span className="font-bold">⚠️ Area Cluster Bypassed:</span> 100% of riders in your area marked absent. Bus uses the highway express route.
             </div>
           )}
           {isDownstreamBypass && (
-            <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-3 text-[11px] text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
+            <div className="rounded-2xl border border-emerald-300 bg-emerald-50/90 p-3 text-[11px] text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
               <span className="font-bold">⚡ Earlier Arrival Notice:</span> Upstream area cluster skipped. Bus may arrive 5–10 minutes earlier.
             </div>
           )}
 
           {/* Rounded Live Map Preview Card */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-            <div className="h-48 sm:h-56 w-full bg-slate-100 dark:bg-[#141821]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
+            <div className="h-48 sm:h-56 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               <HybridTransitMap
                 buses={buses}
                 focusedBus={activeBus}
@@ -851,29 +856,29 @@ export const StudentPortal: React.FC = () => {
             <button
               type="button"
               onClick={() => setPortalTab('MAP')}
-              className="flex w-full items-center justify-center gap-1.5 bg-[#4F46E5] py-2.5 text-xs font-bold text-white transition hover:bg-[#4338CA] cursor-pointer"
+              className="electric-cta flex w-full items-center justify-center gap-1.5 py-2.5 text-xs font-extrabold text-white cursor-pointer"
             >
               <span>View Full Map / Metro View →</span>
             </button>
           </div>
 
           {/* Compact Recent Updates + Driver Strip */}
-          <div className="flex items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-4">
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-cyan-300">
                 Recent Updates:
               </p>
               <p className="mt-0.5 text-xs font-semibold text-slate-800 dark:text-slate-100">
                 {recentUpdateText}
               </p>
               <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                Driver: <b className="text-slate-700 dark:text-slate-200">{activeBus.driverName || 'Assigned Driver'}</b> ({activeBus.driverPhone || '+91 77999 56801'})
+                Driver: <b className="text-slate-800 dark:text-slate-200">{activeBus.driverName || 'Assigned Driver'}</b> ({activeBus.driverPhone || '+91 77999 56801'})
               </p>
             </div>
             <a
               href={`tel:${activeBus.driverPhone ? activeBus.driverPhone.replace(/\s+/g, '') : '+917799956801'}`}
               title={`Call ${activeBus.driverName || 'Driver'}`}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#4F46E5] text-white shadow-sm transition hover:bg-[#4338CA] active:scale-95"
+              className="electric-cta flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white"
             >
               <Phone className="h-4 w-4" />
             </a>
@@ -882,23 +887,23 @@ export const StudentPortal: React.FC = () => {
       )}
 
       {portalTab === 'MAP' && (
-        <div className="space-y-4">
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-            <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
+        <div className="animate-panel-in space-y-4">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
+            <div className="flex items-center justify-between border-b border-slate-200/70 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#4F46E5] animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Corridor Tracking • {routeNumber}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 rounded-xl bg-[#F5F7FB] p-1 dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
                 <button
                   type="button"
                   onClick={() => setMapMode('INTERACTIVE')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'INTERACTIVE'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -909,7 +914,7 @@ export const StudentPortal: React.FC = () => {
                   onClick={() => setMapMode('SCHEMATIC')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'SCHEMATIC'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -918,7 +923,7 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-80 sm:h-96 w-full bg-slate-100 dark:bg-[#141821]">
+            <div className="h-80 sm:h-96 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -949,13 +954,13 @@ export const StudentPortal: React.FC = () => {
       )}
 
       {portalTab === 'PASS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Digital Campus Bus Pass Card */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
             <div
               className={`p-5 ${
                 passState.canTravel
-                  ? 'bg-gradient-to-br from-[#4F46E5]/10 via-indigo-50/40 to-white dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
+                  ? 'bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/70 dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
                   : 'bg-rose-50 dark:bg-rose-950/30'
               }`}
             >
@@ -963,7 +968,7 @@ export const StudentPortal: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <ShieldCheck
                     className={`h-5 w-5 ${
-                      passState.canTravel ? 'text-[#4F46E5] dark:text-indigo-400' : 'text-rose-500'
+                      passState.canTravel ? 'text-[#4F46E5] dark:text-cyan-300' : 'text-rose-500'
                     }`}
                   />
                   <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
@@ -979,7 +984,7 @@ export const StudentPortal: React.FC = () => {
                       : passState.isGraceActive
                       ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200'
                       : passState.canTravel
-                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200'
+                      ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-700/40 dark:bg-emerald-900/60 dark:text-emerald-200'
                       : 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200'
                   }`}
                 >
@@ -998,7 +1003,7 @@ export const StudentPortal: React.FC = () => {
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 pt-3.5 dark:border-[#2E3646]">
                 <div>
                   <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-                    {studentName} • <span className="font-mono">{studentRoll}</span>
+                    {studentName} • <span className="font-mono text-[#4F46E5] dark:text-cyan-300">{studentRoll}</span>
                   </p>
                   <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                     {routeNumber} • {assignedStopName}
@@ -1015,7 +1020,7 @@ export const StudentPortal: React.FC = () => {
                     type="button"
                     onClick={handleActivateGrace}
                     disabled={isActivatingGrace}
-                    className="rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                    className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                   >
                     {isActivatingGrace ? 'Activating...' : 'Activate 1-Day Grace Pass'}
                   </button>
@@ -1024,17 +1029,17 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Transport Assistance & Helpline (+91 77999 56801) */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Transport Assistance & Helpline */}
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
-              <PhoneCall className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <PhoneCall className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Transport Assistance &amp; Help Desk
               </h2>
             </div>
 
             <div className="mt-4 space-y-3">
-              <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3.5">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Assigned Bus Driver ({routeNumber})
@@ -1042,21 +1047,21 @@ export const StudentPortal: React.FC = () => {
                   <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                     {activeBus.driverName || 'Assigned Driver'}
                   </p>
-                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-indigo-400">
+                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                     {activeBus.driverPhone || '+91 77999 56801'}
                   </p>
                 </div>
 
                 <a
                   href={`tel:${activeBus.driverPhone ? activeBus.driverPhone.replace(/\s+/g, '') : '+917799956801'}`}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95"
+                  className="electric-cta inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white"
                 >
                   <Phone className="h-3.5 w-3.5" />
                   <span>Call Driver</span>
                 </a>
               </div>
 
-              <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3.5">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Sreenidhi Transport Helpline
@@ -1064,21 +1069,21 @@ export const StudentPortal: React.FC = () => {
                   <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                     Campus Transport Desk (SNIST)
                   </p>
-                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-indigo-400">
+                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                     +91 77999 56801 / +91 77999 56802
                   </p>
                 </div>
 
                 <a
                   href="tel:+917799956801"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/20 active:scale-95"
+                  className="tactile-btn inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/20"
                 >
                   <Phone className="h-3.5 w-3.5" />
                   <span>Call Helpline</span>
                 </a>
               </div>
 
-              <div className="rounded-2xl border border-dashed border-slate-200 p-3 text-[11px] text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
+              <div className="rounded-2xl border border-dashed border-indigo-200/80 p-3 text-[11px] text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
                 <p>
                   <b>Campus EPABX:</b> +91 8415-395222 / 395444 • <b>General:</b> +91 9948119481
                 </p>
@@ -1089,8 +1094,8 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Emergency SOS Flow (2-Step Confirmation) */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Emergency SOS Flow */}
+          <div className="prismatic-card rounded-3xl p-4">
             {confirmSos ? (
               <div className="space-y-2.5">
                 <p className="text-xs font-bold text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
@@ -1102,14 +1107,14 @@ export const StudentPortal: React.FC = () => {
                     type="button"
                     onClick={handleConfirmSos}
                     disabled={isSendingSos}
-                    className="flex-1 rounded-xl bg-rose-600 py-2.5 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 active:scale-95 cursor-pointer"
+                    className="tactile-btn flex-1 rounded-xl bg-rose-600 py-2.5 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 cursor-pointer"
                   >
                     {isSendingSos ? 'Dispatching SOS...' : 'Yes, Send SOS'}
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmSos(false)}
-                    className="flex-1 rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
+                    className="tactile-btn flex-1 rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -1128,7 +1133,7 @@ export const StudentPortal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setConfirmSos(true)}
-                  className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 active:scale-95 cursor-pointer"
+                  className="tactile-btn rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 cursor-pointer"
                 >
                   SOS
                 </button>
@@ -1140,12 +1145,12 @@ export const StudentPortal: React.FC = () => {
 
       {/* Secondary Utilities on MORE Tab */}
       {portalTab === 'MORE' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {ENABLE_PARENT_PORTAL && !isFaculty && (
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="rounded-2xl bg-indigo-50 p-2.5 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                  <div className="rounded-2xl bg-indigo-50 p-2.5 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                     <KeyRound className="h-5 w-5" />
                   </div>
                   <div>
@@ -1161,19 +1166,19 @@ export const StudentPortal: React.FC = () => {
                   type="button"
                   onClick={handleGenerateParentCode}
                   disabled={isGeneratingParentCode}
-                  className="rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   {isGeneratingParentCode ? 'Generating...' : parentLinkCode ? 'Refresh Code' : 'Generate Code'}
                 </button>
               </div>
 
               {parentLinkCode && (
-                <div className="mt-3 rounded-2xl bg-[#F5F7FB] p-3 border border-slate-200 dark:bg-[#141821] dark:border-[#2E3646] flex items-center justify-between">
+                <div className="prismatic-subcard mt-3 rounded-2xl p-3 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
                       Share with Parent:
                     </span>
-                    <p className="font-mono text-sm font-black text-[#4F46E5] dark:text-indigo-400 tracking-widest">
+                    <p className="font-mono text-sm font-black text-[#4F46E5] dark:text-cyan-300 tracking-widest">
                       {parentLinkCode}
                     </p>
                   </div>
@@ -1183,7 +1188,7 @@ export const StudentPortal: React.FC = () => {
                       navigator.clipboard?.writeText(parentLinkCode);
                       pushToast('success', 'Code Copied', 'Parent access code copied to clipboard.');
                     }}
-                    className="rounded-xl bg-slate-200 px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+                    className="tactile-btn rounded-xl bg-indigo-50 px-3 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-100 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
                   >
                     Copy
                   </button>
@@ -1202,9 +1207,9 @@ export const StudentPortal: React.FC = () => {
           />
 
           {/* Lost & Found Item Form */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
-              <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Lost Something on the Bus?
               </h2>
@@ -1215,14 +1220,14 @@ export const StudentPortal: React.FC = () => {
                 onChange={(e) => setLostDescription(e.target.value)}
                 rows={2}
                 placeholder="Describe the item (e.g. Blue water bottle, left on seat 12 on Route 14)"
-                className="w-full rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                className="w-full rounded-2xl border border-slate-200/80 bg-[#F7F9FF] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 maxLength={280}
                 required
               />
               <button
                 type="submit"
                 disabled={isSubmittingLost || !lostDescription.trim()}
-                className="rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] disabled:opacity-50 cursor-pointer"
+                className="electric-cta rounded-xl px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingLost ? 'Reporting...' : 'Report to Transport Office'}
               </button>
@@ -1230,7 +1235,7 @@ export const StudentPortal: React.FC = () => {
           </div>
 
           {/* Ride Quality Feedback & 1-5 Star Rating */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-amber-500 fill-amber-500" />
@@ -1275,13 +1280,13 @@ export const StudentPortal: React.FC = () => {
                   onChange={(e) => setFeedbackMsg(e.target.value)}
                   rows={2}
                   placeholder="How was the driver, bus cleanliness, or highway ride punctuality?"
-                  className="w-full rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="w-full rounded-2xl border border-slate-200/80 bg-[#F7F9FF] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   maxLength={280}
                 />
 
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] cursor-pointer"
+                  className="electric-cta rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer"
                 >
                   Submit Ride Feedback
                 </button>
@@ -1298,9 +1303,9 @@ export const StudentPortal: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowApplyModal(true)}
-              className="flex w-full items-center justify-center gap-2 rounded-3xl border border-slate-200/80 bg-white p-3.5 text-xs font-bold text-slate-900 shadow-sm transition hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white dark:hover:bg-[#262E3D] cursor-pointer"
+              className="prismatic-card tactile-btn flex w-full items-center justify-center gap-2 rounded-3xl p-3.5 text-xs font-extrabold text-[#4F46E5] dark:text-cyan-300 cursor-pointer"
             >
-              <CreditCard className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+              <CreditCard className="h-4 w-4 text-[#06B6D4]" />
               <span>Transit Services Desk</span>
             </button>
           </div>
@@ -1310,7 +1315,7 @@ export const StudentPortal: React.FC = () => {
       {/* Sleek Docked 4-Tab Pill Bottom Bar */}
       <nav
         aria-label="Student Portal Navigation"
-        className="fixed bottom-3 left-1/2 z-40 w-[min(92vw,420px)] -translate-x-1/2 rounded-full border border-slate-200/90 bg-white/95 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur-md dark:border-[#2E3646] dark:bg-[#1E2430]/95"
+        className="fixed bottom-3 left-1/2 z-40 w-[min(92vw,420px)] -translate-x-1/2 rounded-full border border-indigo-100/90 bg-white/90 p-1.5 shadow-[0_14px_38px_-10px_rgba(79,70,229,0.28)] backdrop-blur-2xl dark:border-[#2E3646] dark:bg-[#1E2430]/92"
       >
         <div className="grid grid-cols-4 gap-1">
           {(
@@ -1327,10 +1332,10 @@ export const StudentPortal: React.FC = () => {
                 key={id}
                 type="button"
                 onClick={() => setPortalTab(id)}
-                className={`flex items-center justify-center gap-1.5 rounded-full py-2 text-[11px] font-extrabold transition cursor-pointer ${
+                className={`tactile-btn flex items-center justify-center gap-1.5 rounded-full py-2 text-[11px] font-extrabold transition cursor-pointer ${
                   active
-                    ? 'bg-[#4F46E5] text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm shadow-indigo-500/25'
+                    : 'text-slate-500 hover:bg-indigo-50/70 hover:text-[#4F46E5] dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -1343,23 +1348,23 @@ export const StudentPortal: React.FC = () => {
 
       {/* Transit Services Modal */}
       {showApplyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-sm rounded-3xl border border-[#D1D5DB] bg-white p-6 shadow-xl dark:border-[#374151] dark:bg-[#222733]">
-            <h3 className="text-base font-extrabold text-[#111827] dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/35 p-4 backdrop-blur-md">
+          <div className="prismatic-card animate-panel-in w-full max-w-sm rounded-3xl p-6">
+            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
               Transit Services Desk
             </h3>
-            <p className="mt-1 text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
               Direct submission to the Transport Office Scrutiny Desk.
             </p>
             <form onSubmit={handleApplySubmit} className="mt-4 space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Service Request Type
                 </label>
                 <select
                   value={applyServiceType}
                   onChange={(e) => setApplyServiceType(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="BUS_PASS_RENEWAL">Semester Bus Pass Renewal</option>
                   <option value="ROUTE_CHANGE">Evening Alternate Drop Stop / Route Change</option>
@@ -1367,14 +1372,14 @@ export const StudentPortal: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Reason / Notes
                 </label>
                 <textarea
                   value={applyReason}
                   onChange={(e) => setApplyReason(e.target.value)}
                   rows={3}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-medium text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-medium text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   required
                 />
               </div>
@@ -1382,13 +1387,13 @@ export const StudentPortal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowApplyModal(false)}
-                  className="flex-1 rounded-xl border border-[#D1D5DB] py-2 text-xs font-bold text-[#4B5563] dark:border-[#374151] dark:text-[#9CA3AF] cursor-pointer"
+                  className="tactile-btn flex-1 rounded-xl border border-slate-200 py-2 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 rounded-xl bg-[#4F46E5] py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] cursor-pointer"
+                  className="electric-cta flex-1 rounded-xl py-2 text-xs font-bold text-white cursor-pointer"
                 >
                   Submit
                 </button>
@@ -1423,59 +1428,59 @@ export const StudentPortal: React.FC = () => {
 
       {/* Mandatory Forced Password Change Modal */}
       {isPasswordModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-sm rounded-3xl border border-amber-500/40 bg-white p-6 shadow-2xl dark:border-amber-500/30 dark:bg-[#222733]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 p-4 backdrop-blur-md">
+          <div className="prismatic-card animate-panel-in w-full max-w-sm rounded-3xl border-amber-300/80 p-6">
             <div className="flex items-center gap-2.5 text-amber-600 dark:text-amber-400">
               <ShieldAlert className="h-6 w-6" />
-              <h3 className="text-base font-extrabold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Update Temporary Password
               </h3>
             </div>
-            <p className="mt-2 text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
               Your account was provisioned with a temporary password. Security policy requires you to set a permanent password before continuing.
             </p>
             {pwError && (
-              <div className="mt-3 rounded-xl bg-red-50 p-2.5 text-xs font-semibold text-red-600 dark:bg-red-950/40 dark:text-red-400">
+              <div className="mt-3 rounded-xl bg-rose-50 border border-rose-200 p-2.5 text-xs font-semibold text-rose-600 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-400">
                 {pwError}
               </div>
             )}
             <form onSubmit={handleChangePassword} className="mt-4 space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Current Temporary Password
                 </label>
                 <input
                   type="password"
                   value={currentPw}
                   onChange={(e) => setCurrentPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="Current password"
                   required
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   New Permanent Password (min 10 characters)
                 </label>
                 <input
                   type="password"
                   value={newPw}
                   onChange={(e) => setNewPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="New password (10+ characters)"
                   minLength={10}
                   required
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Confirm New Password
                 </label>
                 <input
                   type="password"
                   value={confirmPw}
                   onChange={(e) => setConfirmPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="Confirm new password"
                   minLength={10}
                   required
@@ -1484,7 +1489,7 @@ export const StudentPortal: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmittingPw}
-                className="w-full mt-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-98 disabled:opacity-50 cursor-pointer"
+                className="electric-cta w-full mt-2 rounded-xl py-2.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingPw ? 'Updating Password...' : 'Save & Enter Student Portal'}
               </button>

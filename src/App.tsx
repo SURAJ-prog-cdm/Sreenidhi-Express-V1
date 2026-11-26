@@ -22,9 +22,14 @@ const ParentPortal = React.lazy(() =>
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
 
 const PortalLoadingSkeleton: React.FC = () => (
-  <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-[#4B5563] dark:text-[#9CA3AF]">
-    <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#4F46E5] border-t-transparent dark:border-indigo-400 dark:border-t-transparent" />
-    <span className="text-sm font-semibold tracking-wide">Loading portal...</span>
+  <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3.5 text-slate-600 dark:text-slate-300">
+    <div className="relative flex h-12 w-12 items-center justify-center">
+      <span className="absolute inset-0 animate-ping rounded-full bg-cyan-400/30" />
+      <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#4F46E5] border-t-cyan-400 dark:border-indigo-400 dark:border-t-cyan-400" />
+    </div>
+    <span className="text-xs font-extrabold uppercase tracking-widest text-[#4F46E5] dark:text-indigo-300">
+      Syncing Telemetry...
+    </span>
   </div>
 );
 
@@ -93,15 +98,15 @@ const MainShell: React.FC = () => {
   }, [latestToast, dismissToast]);
 
   const toastColors = {
-    info: 'border-[#CBD0D8] bg-white text-[#111827] shadow-lg dark:bg-[#222733] dark:border-[#374151] dark:text-white',
-    success: 'border-[#A7F3D0] bg-[#ECFDF5] text-[#065F46] shadow-lg dark:bg-[#163828] dark:border-[#22543D] dark:text-[#A7F3D0]',
-    warning: 'border-[#FDE68A] bg-[#FFFBEB] text-[#92400E] shadow-lg dark:bg-[#3D2C15] dark:border-[#523A1B] dark:text-[#FDE68A]',
-    danger: 'border-[#FECACA] bg-[#FEF2F2] text-[#991B1B] shadow-lg dark:bg-[#3C1818] dark:border-[#5B2222] dark:text-[#FECACA]',
+    info: 'border-indigo-200/90 bg-white/95 text-slate-900 shadow-[0_14px_34px_-12px_rgba(79,70,229,0.22)] dark:bg-[#1E2430]/95 dark:border-[#2E3646] dark:text-white',
+    success: 'border-emerald-200 bg-emerald-50/95 text-emerald-900 shadow-lg dark:bg-[#163828] dark:border-[#22543D] dark:text-[#A7F3D0]',
+    warning: 'border-amber-200 bg-amber-50/95 text-amber-900 shadow-lg dark:bg-[#3D2C15] dark:border-[#523A1B] dark:text-[#FDE68A]',
+    danger: 'border-rose-200 bg-rose-50/95 text-rose-900 shadow-lg dark:bg-[#3C1818] dark:border-[#5B2222] dark:text-[#FECACA]',
   };
 
   const toastEl = latestToast && (
     <div
-      className={`z-50 rounded-2xl border p-3.5 shadow-xl backdrop-blur-md ${
+      className={`animate-panel-in z-50 rounded-2xl border p-3.5 shadow-xl backdrop-blur-xl ${
         mobilePreviewFrame
           ? 'absolute bottom-20 inset-x-3'
           : isMobileShell
@@ -112,13 +117,13 @@ const MainShell: React.FC = () => {
     >
       <div className="flex items-start justify-between gap-2.5">
         <div className="min-w-0">
-          <p className="text-xs font-bold tracking-tight">{latestToast.title}</p>
+          <p className="text-xs font-extrabold tracking-tight">{latestToast.title}</p>
           <p className="mt-0.5 text-[11px] opacity-90">{latestToast.body}</p>
         </div>
         <button
           type="button"
           onClick={dismissToast}
-          className="rounded-lg p-1 text-slate-400 hover:bg-black/5 hover:text-black dark:hover:bg-white/10 dark:hover:text-white cursor-pointer"
+          className="rounded-lg p-1 text-slate-400 hover:bg-indigo-50 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white cursor-pointer"
         >
           <X className="h-3.5 w-3.5" />
         </button>
@@ -129,30 +134,30 @@ const MainShell: React.FC = () => {
   // Desktop interactive Phone Frame preview (Optional simulation viewport)
   if (mobilePreviewFrame) {
     return (
-      <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#F5F7FB] p-4 text-[#111827] dark:bg-[#141821] dark:text-slate-100">
+      <div className="bg-prismatic-canvas relative flex min-h-screen flex-col items-center justify-center p-4 text-slate-900 dark:text-slate-100">
         <div className="relative z-10 mb-3 flex items-center gap-3">
-          <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-indigo-400">
-            Mobile Viewport (Screen Preview)
+          <span className="prismatic-card rounded-full px-3.5 py-1 text-xs font-extrabold text-[#4F46E5] dark:text-indigo-400">
+            Mobile Viewport (Live Preview)
           </span>
           <button
             type="button"
             onClick={toggleMobilePreviewFrame}
-            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-[#111827] shadow-xs hover:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white cursor-pointer"
+            className="prismatic-card tactile-btn inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
           >
-            <Monitor className="h-3.5 w-3.5" />
+            <Monitor className="h-3.5 w-3.5 text-[#06B6D4]" />
             Full Screen
           </button>
         </div>
 
         {/* Phone Bezel */}
-        <div className="relative z-10 flex h-[min(840px,calc(100vh-5.5rem))] w-[420px] max-w-full flex-col overflow-hidden rounded-[44px] border-[8px] border-[#CBD0D8] bg-[#F5F7FB] shadow-2xl dark:border-[#2E3646] dark:bg-[#141821]">
+        <div className="bg-prismatic-canvas relative z-10 flex h-[min(840px,calc(100vh-5.5rem))] w-[420px] max-w-full flex-col overflow-hidden rounded-[44px] border-[8px] border-white/95 shadow-[0_28px_75px_-18px_rgba(79,70,229,0.28)] ring-1 ring-indigo-100 dark:border-[#2E3646] dark:ring-white/10">
           {/* Phone Status Bar */}
-          <div className="flex shrink-0 items-center justify-between bg-transparent px-6 pt-2.5 pb-1 text-[11px] font-bold text-[#4B5563] dark:text-[#9CA3AF]">
+          <div className="flex shrink-0 items-center justify-between bg-transparent px-6 pt-2.5 pb-1 text-[11px] font-bold text-slate-500 dark:text-slate-400">
             <span className="font-mono-timer">09:41</span>
-            <div className="h-4 w-20 rounded-full bg-[#111827]/80 dark:bg-black" />
+            <div className="h-4 w-20 rounded-full bg-slate-900/90 dark:bg-black" />
             <div className="flex items-center gap-1.5">
-              <Signal className="h-3 w-3" />
-              <Wifi className="h-3 w-3" />
+              <Signal className="h-3 w-3 text-[#4F46E5] dark:text-indigo-400" />
+              <Wifi className="h-3 w-3 text-[#06B6D4]" />
               <BatteryCharging className="h-3.5 w-3.5 text-emerald-600" />
             </div>
           </div>
@@ -181,13 +186,13 @@ const MainShell: React.FC = () => {
     );
   }
 
-  // Full Screen View with BusTrack Light & Dark Canvas
+  // Full Screen View with Prismatic Daylight Glass Canvas
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#F5F7FB] text-[#111827] transition-colors dark:bg-[#141821] dark:text-slate-100">
+    <div className="bg-prismatic-canvas relative min-h-screen overflow-x-hidden text-slate-900 transition-colors dark:text-slate-100">
       <div className="relative z-10">
         {toastEl}
 
-        <main className="mx-auto w-full max-w-5xl lg:max-w-6xl px-1 sm:px-4 md:px-6 pt-1 sm:pt-4 pb-32 sm:pb-16">
+        <main className="mx-auto w-full max-w-5xl lg:max-w-6xl px-1.5 sm:px-4 md:px-6 pt-2 sm:pt-5 pb-32 sm:pb-16">
           <Suspense fallback={<PortalLoadingSkeleton />}>
             <ActiveViewBody />
           </Suspense>
@@ -199,8 +204,8 @@ const MainShell: React.FC = () => {
           </div>
         )}
 
-        {/* Discreet bottom floating utility dock for theme & viewport controls */}
-        <div className={`fixed right-3 z-40 flex items-center gap-1.5 rounded-full border border-[#D1D5DB] bg-white/95 p-1.5 shadow-md backdrop-blur-md dark:border-[#374151] dark:bg-[#222733]/95 ${
+        {/* Discreet frosted bottom floating utility dock */}
+        <div className={`prismatic-card fixed right-3 z-40 flex items-center gap-1.5 rounded-full p-1.5 ${
           isMobileShell && currentUser
             ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))]'
             : 'bottom-3'
@@ -208,15 +213,15 @@ const MainShell: React.FC = () => {
           <button
             type="button"
             onClick={toggleDark}
-            className="rounded-full p-2 text-[#4B5563] hover:bg-[#F3F5F7] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
+            className="tactile-btn rounded-full p-2 text-slate-500 hover:bg-indigo-50 hover:text-[#4F46E5] dark:text-slate-300 dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
             title="Toggle Light / Dark Mode"
           >
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
           </button>
           <button
             type="button"
             onClick={toggleMobilePreviewFrame}
-            className="hidden md:inline-flex rounded-full p-2 text-[#4B5563] hover:bg-[#F3F5F7] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
+            className="tactile-btn hidden md:inline-flex rounded-full p-2 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 dark:text-slate-300 dark:hover:bg-[#2B313F] dark:hover:text-cyan-300 cursor-pointer"
             title="Toggle Phone Simulator Viewport"
           >
             <Smartphone className="h-4 w-4" />

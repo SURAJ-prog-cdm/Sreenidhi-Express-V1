@@ -38,7 +38,7 @@ const MobileBottomNavComponent: React.FC = () => {
   return (
     <nav
       aria-label="Mobile App Bottom Navigation"
-      className="border-t border-[#D1D5DB] bg-white/95 px-3 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-2xl dark:border-[#374151] dark:bg-[#181C24]/95"
+      className="border-t border-indigo-100/90 bg-white/90 px-3 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-14px_rgba(79,70,229,0.16)] backdrop-blur-2xl dark:border-[#2E3646] dark:bg-[#141821]/92"
     >
       <div className={`grid gap-2 ${tabs.length === 1 ? 'grid-cols-2' : tabs.length === 2 ? 'grid-cols-3' : 'grid-cols-4'}`}>
         {tabs.map((tab) => {
@@ -49,13 +49,13 @@ const MobileBottomNavComponent: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => handleSelectTab(tab.id)}
-              className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-bold transition cursor-pointer ${
+              className={`tactile-btn flex flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-bold transition cursor-pointer ${
                 active
-                  ? 'bg-[#4F46E5]/10 text-[#4F46E5] ring-1 ring-[#4F46E5]/30 dark:bg-indigo-950/60 dark:text-indigo-400 dark:ring-indigo-400/30'
-                  : 'text-[#6B7280] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:text-white'
+                  ? 'bg-gradient-to-br from-[#4F46E5]/12 to-[#06B6D4]/12 text-[#4F46E5] ring-1 ring-[#4F46E5]/30 dark:bg-indigo-950/60 dark:text-indigo-300 dark:ring-indigo-400/30'
+                  : 'text-slate-500 hover:bg-indigo-50/50 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
-              <Icon className={`h-4 w-4 ${active ? 'scale-110' : ''}`} />
+              <Icon className={`h-4 w-4 transition-transform ${active ? 'scale-110 text-[#4F46E5] dark:text-cyan-300' : ''}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -68,7 +68,7 @@ const MobileBottomNavComponent: React.FC = () => {
             audioSpeechService.playClickTone();
             logoutUser();
           }}
-          className="flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-bold text-[#6B7280] hover:text-rose-500 dark:text-[#9CA3AF] dark:hover:text-rose-400 transition cursor-pointer"
+          className="tactile-btn flex flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-bold text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition cursor-pointer"
           title="Sign out of current role"
         >
           <LogOut className="h-4 w-4" />

@@ -602,10 +602,10 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
         )}
       </div>
 
-      {/* Futuristic HUD Map Overlay */}
+      {/* Prismatic Daylight HUD Map Overlay */}
       <div className="pointer-events-none absolute bottom-6 sm:bottom-3 left-3 z-[400] flex max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-15rem)] flex-wrap items-center gap-1.5">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-slate-950/80 px-3 py-1 text-[10px] font-semibold tracking-wide text-slate-100 backdrop-blur-md">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.9)]" />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-white/92 px-3 py-1 text-[10px] font-bold tracking-wide text-slate-800 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-100">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
           {useGoogleMaps && window.google?.maps
             ? 'Google Maps Live Traffic'
             : routingSource === 'OSRM'
@@ -617,14 +617,14 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           title="Open live Google Maps traffic directions from bus GPS to stop (₹0, no API key required)"
-          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-emerald-400/35 bg-slate-950/85 px-3 py-1 text-[10px] font-semibold tracking-wide text-emerald-200 shadow-lg backdrop-blur-md transition-all hover:border-emerald-400/70 hover:bg-slate-900 hover:text-white"
+          className="tactile-btn pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white/95 px-3 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-md backdrop-blur-md transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-900/90 dark:text-cyan-200 dark:hover:bg-slate-800"
         >
-          <Navigation className="h-3 w-3 shrink-0 text-emerald-400" />
+          <Navigation className="h-3 w-3 shrink-0 text-[#06B6D4]" />
           <span>Google Maps Traffic</span>
           <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-75" />
         </a>
         {focusedBus.shortcutPath && (
-          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/85 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
+          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
             Bypass Route Active
           </span>
         )}

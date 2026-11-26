@@ -212,56 +212,69 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   };
 
   return (
-    <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col justify-center px-1 sm:px-4 py-1 sm:py-6 antialiased">
-      {/* Top Banner above card matching Screen 1 */}
-      <div className="mb-2 flex items-center justify-between px-1 text-xs text-[#4B5563] dark:text-[#9CA3AF]">
-        <span className="truncate pr-2">
+    <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col justify-center px-1 sm:px-4 py-2 sm:py-6 antialiased">
+      {/* Top Banner */}
+      <div className="mb-3 flex items-center justify-between px-1 text-xs text-slate-500 dark:text-slate-400">
+        <span className="inline-flex items-center gap-2 truncate pr-2 font-semibold">
+          <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
           {import.meta.env.DEV
-            ? 'Demo build with simulated buses and sample data.'
-            : 'Sreenidhi University Campus Transit Portal'}
+            ? 'Live Campus Telemetry • Demo Mode'
+            : 'Sreenidhi University Campus Transit'}
         </span>
         <button
           type="button"
           onClick={() => setIsInstallModalOpen(true)}
-          className="shrink-0 rounded-xl border border-slate-200 bg-white px-2.5 sm:px-3 py-1 font-bold text-[#111827] shadow-xs transition hover:bg-slate-50 active:scale-95 dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white cursor-pointer"
+          className="prismatic-card tactile-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-[#4F46E5] dark:text-indigo-300 cursor-pointer"
         >
-          Download app
+          Install App ⚡
         </button>
       </div>
 
-      {/* Main Role Selection Card (BusTrack White-and-Indigo Theme) */}
-      <div className="w-full rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-7 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-        {/* App Title Header with Official Sreenidhi Express Logo */}
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <img
-              src="/sreenidhi_express_logo.jpg"
-              alt="Sreenidhi Express"
-              className="h-12 w-12 rounded-2xl object-cover shadow-sm ring-1 ring-black/10 dark:ring-white/10"
-            />
+      {/* Main Role Selection Card (Prismatic Daylight Glass) */}
+      <div className="prismatic-card relative w-full overflow-hidden rounded-[2rem] p-5 sm:p-8">
+        <div className="pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full bg-cyan-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-indigo-500/12 blur-3xl" />
+
+        {/* App Title Header */}
+        <div className="relative flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-3.5">
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-md shadow-indigo-500/20">
+              <img
+                src="/sreenidhi_express_logo.jpg"
+                alt="Sreenidhi Express"
+                className="h-12 w-12 rounded-[14px] object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] bg-clip-text text-xl font-black tracking-tight text-transparent dark:from-indigo-300 dark:to-cyan-300">
+                Sreenidhi Express
+              </h2>
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                SNIST Smart Bus Grid • Helpline: +91 77999 56801
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-extrabold tracking-tight text-[#4F46E5] dark:text-indigo-400">
-              Sreenidhi Express
-            </h2>
-            <p className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF]">
-              Sreenidhi University bus app • Helpline: +91 77999 56801
-            </p>
-          </div>
+          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-cyan-200/80 bg-cyan-50/80 px-3 py-1 text-[11px] font-extrabold text-cyan-800 dark:border-cyan-800/60 dark:bg-cyan-950/40 dark:text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-ping" />
+            NH-163 Real-Time
+          </span>
         </div>
 
         {/* Big Heading */}
-        <div className="mt-6 sm:mt-7">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#111827] sm:text-3xl dark:text-white">
-            Who are you?
+        <div className="relative mt-6 sm:mt-7">
+          <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+            Select your{' '}
+            <span className="bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] bg-clip-text text-transparent">
+              access deck
+            </span>
           </h1>
-          <p className="mt-1 text-sm font-medium text-[#4B5563] dark:text-[#9CA3AF]">
-            Pick your role to log in.
+          <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+            Choose your campus role to sync live arrivals and boarding pass.
           </p>
         </div>
 
-        {/* Role Selection Grid (3-portal Phase 1 scope unless VITE_ENABLE_PARENT_PORTAL=true) */}
-        <div className={`mt-5 sm:mt-6 grid gap-2.5 sm:gap-3.5 ${ENABLE_PARENT_PORTAL ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
+        {/* Role Selection Grid */}
+        <div className={`relative mt-5 sm:mt-6 grid gap-3 ${ENABLE_PARENT_PORTAL ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {/* Card 1: Parent (Phase 2 feature flag) */}
           {ENABLE_PARENT_PORTAL && (
             <button
@@ -270,20 +283,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 setSelectedRole('PARENT');
                 setAuthError(null);
               }}
-              className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+              className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
                 selectedRole === 'PARENT'
-                  ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                  : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                  ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                  : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
               }`}
             >
-              <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-                <Users className="h-6 w-6 stroke-[2.2]" />
+              <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+                <Users className="h-5 w-5 stroke-[2.2]" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-[#111827] dark:text-white">
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                   Parent
                 </h3>
-                <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+                <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                   Follow your child&apos;s bus
                 </p>
               </div>
@@ -297,20 +310,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('STUDENT');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'STUDENT'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-              <GraduationCap className="h-6 w-6 stroke-[2.2]" />
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+              <GraduationCap className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Student
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 ETA, pass and alerts
               </p>
             </div>
@@ -323,15 +336,15 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('DRIVER');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'DRIVER'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
               <svg
-                className="h-6 w-6 stroke-[2.2]"
+                className="h-5 w-5 stroke-[2.2]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -347,10 +360,10 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               </svg>
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Driver
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 Trips, stops and SOS
               </p>
             </div>
@@ -363,20 +376,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('ADMIN');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'ADMIN'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-              <LayoutGrid className="h-6 w-6 stroke-[2.2]" />
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+              <LayoutGrid className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Admin
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 Fleet and records
               </p>
             </div>
@@ -385,56 +398,55 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
 
         {/* Global Error Notice */}
         {authError && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-700 dark:bg-red-950/40 dark:text-red-300">
-            <AlertCircle className="h-4 w-4 shrink-0 text-red-500" />
+          <div className="animate-panel-in mt-4 flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300">
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
             <span>{authError}</span>
           </div>
         )}
 
-        {/* Role Credentials Trays (Smoothly expands when role is selected) */}
+        {/* Role Credentials Trays */}
         {ENABLE_PARENT_PORTAL && selectedRole === 'PARENT' && (
-          <form onSubmit={handleParentSubmit} className="mt-5 space-y-3 rounded-2xl border border-[#D1D5DB] bg-[#F3F5F7] p-4 dark:border-[#374151] dark:bg-[#2B313F]">
+          <form onSubmit={handleParentSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Parent Sign-In
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Primary Demo: Suraj (Route 51)
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Parent Access Code
               </label>
               <input
                 type="text"
                 value={parentCode}
                 onChange={(e) => setParentCode(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#0D4B42] focus:outline-none dark:border-[#374151] dark:bg-[#222733] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="Enter 8-character parent access code"
                 required
               />
             </div>
-            {/* Quick Demo Parent Code */}
             {import.meta.env.DEV && (
-              <div className="flex items-center justify-between rounded-xl bg-white/70 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 border border-black/5 dark:border-white/5">
+              <div className="flex items-center justify-between rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300">
                 <span>👨‍👩‍👧 <b>Demo Parent:</b></span>
                 <button
                   type="button"
                   onClick={() => setParentCode('PARENT51')}
-                  className="text-[#0D4B42] dark:text-[#4ADE80] font-mono font-bold hover:underline cursor-pointer"
+                  className="text-[#4F46E5] dark:text-indigo-400 font-mono font-bold hover:underline cursor-pointer"
                 >
                   PARENT51 (Suraj — Route 51)
                 </button>
               </div>
             )}
-            <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
-              💡 <em>Generate a 30-day code inside the Student Portal under Profile to link a parent device.</em>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              💡 <em>Generate a 30-day code inside the Student Portal under More to link a parent device.</em>
             </p>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0D4B42] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#0A3C34] active:scale-98 dark:bg-[#15803D] dark:hover:bg-[#166534] cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Locating Bus...' : 'Track Child’s Bus'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -443,9 +455,9 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'STUDENT' && (
-          <div className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 {studentAuthMode === 'LOGIN' ? 'Student & Faculty Sign-In' : 'New Commuter Self-Registration'}
               </span>
               <button
@@ -455,7 +467,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   setAuthError(null);
                   setRegSuccessMsg(null);
                 }}
-                className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-indigo-400 cursor-pointer"
+                className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-cyan-300 cursor-pointer"
               >
                 {studentAuthMode === 'LOGIN' ? 'New Commuter? Self-Register' : 'Already Verified? Sign In'}
               </button>
@@ -464,20 +476,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             {studentAuthMode === 'LOGIN' ? (
               <form onSubmit={handleStudentSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Roll Number / Employee ID
                   </label>
                   <input
                     type="text"
                     value={studentRoll}
                     onChange={(e) => setStudentRoll(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                     placeholder="26011CSEAI0109 or 40000116"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Password
                   </label>
                   <div className="relative mt-1">
@@ -485,22 +497,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                       type={showStudentPassword ? 'text' : 'password'}
                       value={studentPassword}
                       onChange={(e) => setStudentPassword(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Enter your password"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowStudentPassword(!showStudentPassword)}
-                      className="absolute right-2.5 top-2 text-[#9CA3AF] hover:text-[#4B5563] cursor-pointer"
+                      className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer"
                     >
                       {showStudentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
-                {/* Quick Demo Fill Buttons */}
                 {import.meta.env.DEV && (
-                  <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+                  <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                     <div className="flex items-center justify-between">
                       <span>🎓 <b>Student (Route 51):</b></span>
                       <button
@@ -526,7 +537,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+                  className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
                 >
                   <span>{isSubmitting ? 'Signing In...' : 'Sign In as Student / Faculty'}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -541,27 +552,27 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Roll / Employee ID
                     </label>
                     <input
                       type="text"
                       value={regRoll}
                       onChange={(e) => setRegRoll(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="26011CSEAI0199"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Full Name
                     </label>
                     <input
                       type="text"
                       value={regName}
                       onChange={(e) => setRegName(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Your full name"
                       required
                     />
@@ -569,27 +580,27 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       College Email
                     </label>
                     <input
                       type="email"
                       value={regEmail}
                       onChange={(e) => setRegEmail(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="name@sreenidhi.edu.in"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       10-Digit Mobile
                     </label>
                     <input
                       type="tel"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-mono font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-mono font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="9876543210"
                       required
                     />
@@ -597,21 +608,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Password (min 8 chars)
                     </label>
                     <input
                       type="password"
                       value={regPassword}
                       onChange={(e) => setRegPassword(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Create a strong password"
                       minLength={8}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Requested Pickup Stop
                     </label>
                     <input
@@ -619,7 +630,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                       list="suh-register-stops"
                       value={regPickupStop}
                       onChange={(e) => setRegPickupStop(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Erragadda, KPHB, Miyapur..."
                       required
                     />
@@ -638,13 +649,13 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                     </datalist>
                   </div>
                 </div>
-                <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Transport Office verification is required before first login (no paid SMS OTP required).
                 </p>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+                  className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
                 >
                   <span>{isSubmitting ? 'Submitting...' : 'Submit for Transport Office Verification'}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -655,23 +666,23 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'DRIVER' && (
-          <form onSubmit={handleDriverSubmit} className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <form onSubmit={handleDriverSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Driver Cabin Access
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Bus PIN
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Assigned Route
               </label>
               <select
                 value={driverRoute}
                 onChange={(e) => setDriverRoute(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
               >
                 {buses.map((b) => (
                   <option key={b.routeId} value={b.routeId}>
@@ -681,7 +692,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               </select>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Driver 6-Digit PIN
               </label>
               <input
@@ -689,14 +700,13 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 maxLength={6}
                 value={driverPin}
                 onChange={(e) => setDriverPin(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm font-mono font-bold tracking-widest text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-center text-sm font-mono font-bold tracking-widest text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="515151"
                 required
               />
             </div>
-            {/* Quick Demo Fill Buttons */}
             {import.meta.env.DEV && (
-              <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+              <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                 <div className="flex items-center justify-between">
                   <span>🚍 <b>Route 51 PIN:</b></span>
                   <button
@@ -712,7 +722,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Opening Cabin...' : 'Enter Driver Console'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -721,30 +731,30 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'ADMIN' && (
-          <form onSubmit={handleAdminSubmit} className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <form onSubmit={handleAdminSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Transport Office Admin
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Official admin ID
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Admin ID
               </label>
               <input
                 type="text"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="Admin ID"
                 required
               />
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Admin Password
               </label>
               <div className="relative mt-1">
@@ -752,22 +762,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   type={showAdminPassword ? 'text' : 'password'}
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                   placeholder="Password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowAdminPassword(!showAdminPassword)}
-                  className="absolute right-2.5 top-2 text-[#9CA3AF] hover:text-[#4B5563] cursor-pointer"
+                  className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer"
                 >
                   {showAdminPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
-            {/* Quick Demo Fill Buttons */}
             {import.meta.env.DEV && (
-              <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+              <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                 <div className="flex items-center justify-between">
                   <span>🏢 <b>Transport Office:</b></span>
                   <button
@@ -783,7 +792,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Authenticating...' : 'Enter Transport Office'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -791,8 +800,8 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           </form>
         )}
 
-        {/* Bottom Disclaimer matching Screen 1 */}
-        <p className="mt-8 text-center text-xs font-normal leading-relaxed text-[#4B5563] dark:text-[#9CA3AF]">
+        {/* Bottom Disclaimer */}
+        <p className="mt-8 text-center text-xs font-normal leading-relaxed text-slate-500 dark:text-slate-400">
           By signing in you agree that a child&apos;s bus location is shared only with
           that child&apos;s parent and the transport office during an active trip.
         </p>

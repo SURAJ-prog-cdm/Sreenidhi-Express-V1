@@ -399,19 +399,22 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4 sm:space-y-5 pb-16 antialiased">
       {/* Compact Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
         <div className="flex items-center gap-3 min-w-[220px] flex-1">
-          <img
-            src="/sreenidhi_express_logo.jpg"
-            alt="Sreenidhi Express Logo"
-            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-xs ring-2 ring-[#4F46E5]/20 dark:ring-indigo-400/30"
-          />
+          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+            <img
+              src="/sreenidhi_express_logo.jpg"
+              alt="Sreenidhi Express Logo"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
                 Transport Admin
               </h1>
-              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
                 {activeBus?.routeNumber || 'Route 51'} Pilot
               </span>
             </div>
@@ -435,17 +438,17 @@ export const AdminDashboard: React.FC = () => {
                 }
               }
             }}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-2 text-xs font-bold text-slate-700 shadow-2xs hover:bg-indigo-50 hover:text-[#4F46E5] active:scale-95 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+            className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
             title="Reset monthly emergency grace pass limits"
           >
-            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-indigo-400" />
+            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
             <span>Reset Cycle</span>
           </button>
 
           <button
             type="button"
             onClick={downloadMasterExcel}
-            className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+            className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white cursor-pointer"
           >
             <FileSpreadsheet className="h-3.5 w-3.5" />
             <span>Master Excel (.xlsx)</span>
@@ -454,7 +457,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             type="button"
             onClick={logoutUser}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F5F7FB] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
             title="Sign Out"
           >
             <LogOut className="h-4 w-4" />
@@ -463,7 +466,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* 3-Tab Sub-Navigation */}
-      <div className="grid grid-cols-3 gap-1.5 rounded-2xl border border-slate-200/80 bg-white p-1 shadow-xs dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card grid grid-cols-3 gap-1.5 rounded-2xl p-1">
         {(
           [
             { id: 'VERIFY', label: 'Verify' },
@@ -475,10 +478,10 @@ export const AdminDashboard: React.FC = () => {
             key={id}
             type="button"
             onClick={() => setAdminTab(id)}
-            className={`rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
+            className={`tactile-btn rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
               adminTab === id
-                ? 'bg-[#4F46E5] text-white shadow-xs'
-                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm shadow-indigo-500/20'
+                : 'text-slate-500 hover:bg-indigo-50/70 hover:text-[#4F46E5] dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             {label}
@@ -487,22 +490,24 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {adminTab === 'VERIFY' && (
-        <div className="space-y-4">
-          {/* Indigo Summary Hero Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-[#4F46E5] to-[#5B52F0] p-5 text-white shadow-lg shadow-indigo-500/20">
-            <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="animate-panel-in space-y-4">
+          {/* Electric Indigo -> Cyan Summary Hero Card */}
+          <div className="electric-hero rounded-3xl p-5 text-white">
+            <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-25" />
+
+            <div className="relative flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-[11px] font-semibold text-indigo-100/85">Pending Approvals:</p>
-                <p className="mt-0.5 font-mono text-3xl sm:text-4xl font-black tracking-tight text-white">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Pending Approvals:</p>
+                <p className="font-mono-timer mt-0.5 text-3xl sm:text-4xl font-black tracking-tight text-white">
                   {pendingVerifications.length}
                 </p>
               </div>
 
               <div className="text-right">
-                <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold text-white">
+                <span className="inline-flex items-center rounded-full bg-white/18 px-3 py-1 text-[11px] font-bold text-white ring-1 ring-white/25 backdrop-blur-xs">
                   Active Buses: {buses.length} • On-Time: {fleetPunctualityPct}%
                 </span>
-                <p className="mt-1.5 text-[11px] font-medium text-indigo-100/85">
+                <p className="mt-1.5 text-[11px] font-medium text-cyan-100/95">
                   Avg Delay: {avgFleetDelayMin}m • {activeIncidentsCount} Open Incident(s)
                 </p>
               </div>
@@ -511,7 +516,7 @@ export const AdminDashboard: React.FC = () => {
             <button
               type="button"
               onClick={() => handleDownloadCsv('driver_utility')}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-white py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-sm transition hover:bg-indigo-50 active:scale-[0.99] cursor-pointer"
+              className="animate-electric-sheen tactile-btn relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 cursor-pointer"
             >
               <Download className="h-4 w-4" />
               <span>Export Driver Utility CSV</span>
@@ -519,7 +524,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Pending Verifications Card */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
@@ -532,7 +537,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => void reloadData()}
-                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Refresh Queue
               </button>
@@ -540,17 +545,17 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="mt-3.5 space-y-2.5">
               {pendingVerifications.length === 0 ? (
-                <p className="rounded-2xl border border-dashed border-slate-200 p-4 text-center text-xs italic text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
+                <p className="rounded-2xl border border-dashed border-indigo-200/80 p-4 text-center text-xs italic text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
                   No pending self-registrations awaiting Transport Office verification.
                 </p>
               ) : (
                 pendingVerifications.map((stu) => (
                   <div
                     key={stu.roll_number}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]"
+                    className="prismatic-subcard flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-mono text-xs font-black text-[#4F46E5] dark:text-indigo-400 truncate">
+                      <p className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300 truncate">
                         {stu.roll_number} • <span className="font-sans font-bold text-slate-900 dark:text-white">{stu.pickup_stop || 'Unassigned'}</span>
                       </p>
                       <p className="mt-0.5 text-xs font-bold text-slate-900 dark:text-white">
@@ -580,7 +585,7 @@ export const AdminDashboard: React.FC = () => {
                         type="button"
                         disabled={verifyingRoll === stu.roll_number}
                         onClick={() => void handleVerifyRegistration(stu.roll_number, true)}
-                        className="inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 hover:bg-emerald-100 active:scale-95 disabled:opacity-50 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
+                        className="tactile-btn inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
                         title="Approve & assign route"
                       >
                         ✓
@@ -589,7 +594,7 @@ export const AdminDashboard: React.FC = () => {
                         type="button"
                         disabled={verifyingRoll === stu.roll_number}
                         onClick={() => void handleVerifyRegistration(stu.roll_number, false)}
-                        className="inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-extrabold text-rose-700 hover:bg-rose-100 active:scale-95 disabled:opacity-50 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-300 cursor-pointer"
+                        className="tactile-btn inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-extrabold text-rose-700 hover:bg-rose-100 disabled:opacity-50 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-300 cursor-pointer"
                         title="Reject registration"
                       >
                         ✕
@@ -602,10 +607,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Master Scrutiny & Approval Workflow */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Pass Scrutiny Queue &amp; Special Requests
                 </h3>
@@ -624,11 +629,11 @@ export const AdminDashboard: React.FC = () => {
                 applications.map((app) => (
                   <div
                     key={app.id}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]"
+                    className="prismatic-subcard flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4"
                   >
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-indigo-400">
+                        <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300">
                           {app.id}
                         </span>
                         <span className="font-bold text-xs text-slate-900 dark:text-white">
@@ -653,7 +658,7 @@ export const AdminDashboard: React.FC = () => {
                             type="button"
                             disabled={scrutinyLoadingId === app.id}
                             onClick={() => handleStatusChange(app.id, 'APPROVED')}
-                            className="rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                            className="electric-cta rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                           >
                             {scrutinyLoadingId === app.id ? 'Saving...' : 'Approve'}
                           </button>
@@ -661,7 +666,7 @@ export const AdminDashboard: React.FC = () => {
                             type="button"
                             disabled={scrutinyLoadingId === app.id}
                             onClick={() => handleStatusChange(app.id, 'REJECTED')}
-                            className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300 disabled:opacity-50 cursor-pointer"
+                            className="tactile-btn rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300 disabled:opacity-50 cursor-pointer"
                           >
                             {scrutinyLoadingId === app.id ? 'Saving...' : 'Reject'}
                           </button>
@@ -684,11 +689,11 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Student Fee Gating & 1-Day Grace Demonstration Simulator */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Student Fee Gating Simulator */}
+          <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-5">
             <div>
               <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
                   Student Fee Gating Simulator
                 </h3>
@@ -698,7 +703,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={targetStudentRoll}
                   onChange={(e) => setTargetStudentRoll(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-[#F5F7FB] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-lg border border-slate-200 bg-[#F7F9FF] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="26011CSEAI0109">Suraj (26011CSEAI0109 — Route 51)</option>
                   <option value="23SN1A0501">Aarav Reddy (23SN1A0501 — Route 14)</option>
@@ -713,10 +718,10 @@ export const AdminDashboard: React.FC = () => {
             <button
               type="button"
               onClick={handleToggleFeeStatus}
-              className={`rounded-xl px-4 py-2 text-xs font-bold text-white shadow-xs active:scale-95 cursor-pointer ${
+              className={`rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer ${
                 demoStudentFee === 'PAID'
-                  ? 'bg-rose-600 hover:bg-rose-700'
-                  : 'bg-[#4F46E5] hover:bg-[#4338CA]'
+                  ? 'tactile-btn bg-rose-600 hover:bg-rose-700'
+                  : 'electric-cta'
               }`}
             >
               {demoStudentFee === 'PAID' ? `Set Fee to DUE (${targetStudentRoll})` : `Set Fee to PAID (${targetStudentRoll})`}
@@ -726,24 +731,24 @@ export const AdminDashboard: React.FC = () => {
       )}
 
       {adminTab === 'FLEET' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Dual Mode Fleet Radar Map */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
             <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#4F46E5] animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Fleet Radar Overview
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 rounded-xl bg-[#F5F7FB] p-1 dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
                 <button
                   type="button"
                   onClick={() => setMapMode('INTERACTIVE')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'INTERACTIVE'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
                   }`}
                 >
@@ -754,7 +759,7 @@ export const AdminDashboard: React.FC = () => {
                   onClick={() => setMapMode('SCHEMATIC')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'SCHEMATIC'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
                   }`}
                 >
@@ -763,7 +768,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-72 w-full bg-slate-100 dark:bg-[#141821]">
+            <div className="h-72 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -778,10 +783,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Dynamic Route Optimization & Area Attendance Matrix */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Navigation className="h-4 w-4" />
                 </span>
                 <div>
@@ -789,7 +794,7 @@ export const AdminDashboard: React.FC = () => {
                     <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                       Route Optimization &amp; Area Attendance Matrix
                     </h2>
-                    <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                    <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                       {activeRouteId === 'route-51'
                         ? '26 Registered (18 Students • 8 Faculty/Staff)'
                         : `${routeOptimizationPlan?.totalRouteStudents || 0} Registered`}
@@ -805,7 +810,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={activeRouteId}
                   onChange={(e) => setActiveRouteId(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   {buses.map((b) => (
                     <option key={b.routeId} value={b.routeId}>
@@ -817,10 +822,10 @@ export const AdminDashboard: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => toggleRoutePlanLock(activeRouteId, !routeOptimizationPlan?.locked)}
-                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition shadow-xs cursor-pointer ${
+                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
                     routeOptimizationPlan?.locked
                       ? 'bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800'
-                      : 'bg-[#4F46E5] text-white hover:bg-[#4338CA]'
+                      : 'electric-cta text-white'
                   }`}
                 >
                   {routeOptimizationPlan?.locked ? (
@@ -857,7 +862,7 @@ export const AdminDashboard: React.FC = () => {
                       Array.isArray(routeOptimizationPlan?.overrideKeepClusters) &&
                       routeOptimizationPlan.overrideKeepClusters.includes(cluster.clusterId);
                     return (
-                      <tr key={cluster.clusterId} className="hover:bg-slate-50/70 dark:hover:bg-white/[0.02]">
+                      <tr key={cluster.clusterId} className="hover:bg-indigo-50/40 dark:hover:bg-white/[0.02]">
                         <td className="py-2.5 font-bold text-slate-900 dark:text-white">
                           {cluster.clusterName}
                         </td>
@@ -902,10 +907,10 @@ export const AdminDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setClusterOptimizationOverride(activeRouteId, cluster.clusterId, !isOverridden)}
-                              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
+                              className={`tactile-btn rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                                 isOverridden
                                   ? 'bg-indigo-100 text-[#4F46E5] hover:bg-indigo-200 dark:bg-indigo-950/70 dark:text-indigo-300'
-                                  : 'border border-slate-200 bg-[#F5F7FB] text-slate-800 hover:bg-white dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
+                                  : 'border border-slate-200 bg-[#F7F9FF] text-slate-800 hover:bg-white dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
                               }`}
                             >
                               {isOverridden ? 'Clear Keep Override' : 'Force Keep Stop'}
@@ -921,7 +926,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Live Incident Queue */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
                 <AlertTriangle className={`h-5 w-5 ${activeIncidentsCount > 0 ? 'text-rose-500 animate-bounce' : 'text-slate-400'}`} />
@@ -932,7 +937,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={reloadData}
-                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Refresh Feed
               </button>
@@ -949,8 +954,8 @@ export const AdminDashboard: React.FC = () => {
                     key={inc.id}
                     className={`flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-3.5 ${
                       inc.open
-                        ? 'border-rose-500/40 bg-rose-50/60 dark:bg-rose-950/30'
-                        : 'border-slate-200/80 bg-[#F5F7FB] opacity-60 dark:border-[#2E3646] dark:bg-[#141821]'
+                        ? 'border-rose-300 bg-rose-50/70 dark:bg-rose-950/30'
+                        : 'prismatic-subcard opacity-60'
                     }`}
                   >
                     <div>
@@ -976,7 +981,7 @@ export const AdminDashboard: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleResolveIncident(inc.id)}
-                        className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-extrabold text-white shadow-xs hover:bg-emerald-700 active:scale-95 cursor-pointer"
+                        className="tactile-btn flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-extrabold text-white shadow-xs hover:bg-emerald-700 cursor-pointer"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         <span>Mark Resolved</span>
@@ -991,9 +996,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Announcements Composer */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
-              <Bell className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <Bell className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Campus Route Announcements Composer
               </h2>
@@ -1004,7 +1009,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={newAnnouncementRoute}
                   onChange={(e) => setNewAnnouncementRoute(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-2 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="ALL">Broadcast to All Routes</option>
                   {buses.map((b) => (
@@ -1019,7 +1024,7 @@ export const AdminDashboard: React.FC = () => {
                   value={newAnnouncementText}
                   onChange={(e) => setNewAnnouncementText(e.target.value)}
                   placeholder="e.g. Warangal Highway heavy rain advisory: Bus arriving with 10m caution."
-                  className="flex-1 min-w-[240px] rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-2 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="flex-1 min-w-[240px] rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   maxLength={280}
                   required
                 />
@@ -1027,7 +1032,7 @@ export const AdminDashboard: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isPostingAnnouncement || !newAnnouncementText.trim()}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Send className="h-3.5 w-3.5" />
                   <span>{isPostingAnnouncement ? 'Broadcasting...' : 'Publish'}</span>
@@ -1043,10 +1048,10 @@ export const AdminDashboard: React.FC = () => {
                 {announcements.slice(0, 4).map((ann) => (
                   <div
                     key={ann.id}
-                    className="flex items-center justify-between rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                    className="prismatic-subcard flex items-center justify-between rounded-xl p-2.5 text-xs"
                   >
                     <div>
-                      <span className="font-bold text-[#4F46E5] dark:text-indigo-400">[{ann.route_id}]:</span>{' '}
+                      <span className="font-bold text-[#4F46E5] dark:text-cyan-300">[{ann.route_id}]:</span>{' '}
                       <span className="text-slate-900 dark:text-white">{ann.msg}</span>
                       <span className="ml-2 text-[10px] text-slate-500 dark:text-slate-400">
                         {new Date(ann.ts).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
@@ -1069,12 +1074,12 @@ export const AdminDashboard: React.FC = () => {
       )}
 
       {adminTab === 'LOGS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Live Server Health Strip */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Activity className="h-4 w-4" />
                 </span>
                 <div>
@@ -1088,13 +1093,13 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
-                  <Radio className="h-3.5 w-3.5 text-emerald-600 animate-pulse" />
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
+                  <Radio className="h-3.5 w-3.5 text-[#06B6D4] animate-pulse" />
                   <span className="text-slate-500 dark:text-slate-400">SSE:</span>
                   <span className="font-bold text-slate-900 dark:text-white">{serverHealth?.activeSseClients ?? 0}</span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <span className="text-slate-500 dark:text-slate-400">Routes:</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-400">{serverHealth?.liveRoutes ?? 0} live</span>
                   {serverHealth?.staleRoutes && serverHealth.staleRoutes.length > 0 && (
@@ -1102,7 +1107,7 @@ export const AdminDashboard: React.FC = () => {
                   )}
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <HardDrive className="h-3.5 w-3.5 text-[#4F46E5]" />
                   <span className="text-slate-500 dark:text-slate-400">WAL:</span>
                   <span className="font-mono font-bold text-slate-900 dark:text-white">
@@ -1110,7 +1115,7 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <span className="text-slate-500 dark:text-slate-400">Last Backup:</span>
                   <span className="font-bold text-slate-900 dark:text-white">
                     {serverHealth?.lastBackupAt ? new Date(serverHealth.lastBackupAt).toLocaleTimeString() : 'None'}
@@ -1121,7 +1126,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={handleCreateBackup}
                   disabled={isBackupLoading}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Database className="h-3.5 w-3.5" />
                   <span>{isBackupLoading ? 'Backing Up...' : 'SQLite WAL Backup'}</span>
@@ -1132,7 +1137,7 @@ export const AdminDashboard: React.FC = () => {
                   onClick={fetchHealth}
                   disabled={isHealthRefreshing}
                   title="Refresh Server Health"
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] p-1.5 text-slate-700 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                  className="tactile-btn rounded-xl border border-slate-200 bg-[#F7F9FF] p-1.5 text-slate-700 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
                 >
                   <RotateCcw className={`h-3.5 w-3.5 ${isHealthRefreshing ? 'animate-spin' : ''}`} />
                 </button>
@@ -1141,10 +1146,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Bulk Onboard Roster (.xlsx) & SQLite WAL Backup */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Upload className="h-4 w-4" />
                 </span>
                 <div>
@@ -1169,7 +1174,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isImportingRoster}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Upload className="h-3.5 w-3.5" />
                   <span>{isImportingRoster ? 'Parsing Sheet...' : 'Bulk Onboard Roster (.xlsx)'}</span>
@@ -1178,7 +1183,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={handleCreateBackup}
                   disabled={isBackupLoading}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-[#F5F7FB] px-3.5 py-2 text-xs font-bold text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white cursor-pointer"
+                  className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200 bg-[#F7F9FF] px-3.5 py-2 text-xs font-bold text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white cursor-pointer"
                 >
                   <Database className="h-3.5 w-3.5 text-[#4F46E5]" />
                   <span>{isBackupLoading ? 'Backing Up...' : 'Create SQLite WAL Backup'}</span>
@@ -1191,7 +1196,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                   <div>
                     <h4 className="text-xs font-extrabold text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
-                      <Key className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+                      <Key className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
                       <span>One-Time Rider Activation PINs ({bulkImportResult.createdCount} Accounts Created)</span>
                     </h4>
                     <p className="text-[11px] text-indigo-700 dark:text-indigo-300 mt-0.5">
@@ -1202,7 +1207,7 @@ export const AdminDashboard: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleDownloadPinsCsv}
-                      className="flex items-center gap-1 rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] cursor-pointer shadow-xs"
+                      className="electric-cta flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
                     >
                       <Download className="h-3.5 w-3.5" />
                       <span>Download Onboarding PINs (CSV)</span>
@@ -1210,7 +1215,7 @@ export const AdminDashboard: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setBulkImportResult(null)}
-                      className="rounded-xl border border-indigo-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-50 dark:border-indigo-800 dark:bg-[#1E2430] dark:text-indigo-300 cursor-pointer"
+                      className="tactile-btn rounded-xl border border-indigo-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-50 dark:border-indigo-800 dark:bg-[#1E2430] dark:text-indigo-300 cursor-pointer"
                     >
                       Dismiss
                     </button>
@@ -1220,7 +1225,7 @@ export const AdminDashboard: React.FC = () => {
                 {bulkImportResult.credentials && bulkImportResult.credentials.length > 0 && (
                   <div className="overflow-x-auto max-h-64 rounded-xl border border-indigo-200 bg-white dark:border-indigo-900 dark:bg-[#141821]">
                     <table className="w-full text-left text-xs">
-                      <thead className="sticky top-0 bg-[#F5F7FB] dark:bg-[#1E2430] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-[#2E3646]">
+                      <thead className="sticky top-0 bg-[#F7F9FF] dark:bg-[#1E2430] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-[#2E3646]">
                         <tr>
                           <th className="px-3 py-2">Roll Number</th>
                           <th className="px-3 py-2">Name</th>
@@ -1264,9 +1269,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* 1-Click CSV Export Bar */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Download className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+              <Download className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 1-Click Administrative CSV Data Exports
               </h3>
@@ -1275,42 +1280,42 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('incidents')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Incidents (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('feedback')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Feedback (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('absences')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Absences (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('lost')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Lost &amp; Found (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('boardings')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Boarding Roster (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('driver_utility')}
-                className="rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] cursor-pointer"
+                className="electric-cta rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
               >
                 Export Driver Utility CSV
               </button>
@@ -1319,9 +1324,9 @@ export const AdminDashboard: React.FC = () => {
 
           {/* Lost & Found Desk & Student Ride Feedback Dual Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-5">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
-                <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Campus Lost &amp; Found Desk
                 </h3>
@@ -1335,7 +1340,7 @@ export const AdminDashboard: React.FC = () => {
                   lostItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                      className="prismatic-subcard flex items-center justify-between rounded-xl p-2.5 text-xs"
                     >
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">{item.msg}</p>
@@ -1347,7 +1352,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleResolveLost(item.id)}
-                          className="rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white hover:bg-emerald-700 cursor-pointer"
+                          className="tactile-btn rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white hover:bg-emerald-700 cursor-pointer"
                         >
                           Returned
                         </button>
@@ -1360,7 +1365,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-5">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
                 <Star className="h-5 w-5 text-amber-500 fill-amber-500" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
@@ -1376,7 +1381,7 @@ export const AdminDashboard: React.FC = () => {
                   feedbackList.slice(0, 6).map((fb) => (
                     <div
                       key={fb.id}
-                      className="rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                      className="prismatic-subcard rounded-xl p-2.5 text-xs"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-slate-900 dark:text-white">

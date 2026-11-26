@@ -3,14 +3,14 @@
 > **Project Name:** Sreenidhi Express (Smart Campus Bus & Student Safety Platform)
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
-> **Date of Compilation:** November 25, 2026
-> **Build Status:** Production Prototype / v20.1 BusTrack UI & Pilot Hardening Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, BusTrack White-and-Indigo UI Across 3 Phase 1 Portals + Login, Clean 4-Tab Student / 3-Tab Driver / 3-Tab Admin Navigation, Phase 1 3-Portal Scope + VITE_ENABLE_PARENT_PORTAL Flag, Transport Office 1-Click Rider Verification, ±2 Min GPS Arrival Window, Hybrid 1-Tap & Optional BLE Self-Check-In, Driver Trip Start & Dwell-Time Audit CSV, 1-Hour Pre-Departure Opt-Out Cutoff, CARTO Tile Proxy [₹0], OSRM Corridor, 36/36 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Date of Compilation:** November 26, 2026
+> **Build Status:** Production Prototype / Prismatic Daylight Glass UI & v20.1 Pilot Hardening Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System Across All Portals, Clean 4-Tab Student / 3-Tab Driver / 3-Tab Admin Navigation, Phase 1 3-Portal Scope + VITE_ENABLE_PARENT_PORTAL Flag, Transport Office 1-Click Rider Verification, ±2 Min GPS Arrival Window, Hybrid 1-Tap & Optional BLE Self-Check-In, Driver Trip Start & Dwell-Time Audit CSV, 1-Hour Pre-Departure Opt-Out Cutoff, CARTO Tile Proxy [₹0], OSRM Corridor, 36/36 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 74 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 75 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, and v20.1 BusTrack UI audit cleanup of the codebase, all 74 issues across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing), end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing), and concurrency load benchmarks (`scripts/load-test.mjs`, 50 concurrent SSE streams, 0% error rate).
+Following the rigorous static architecture, HOD pre-pilot review, v20.1 BusTrack UI audit cleanup, and Prismatic Daylight Glass UI upgrade, all 75 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing), end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing), and concurrency load benchmarks (`scripts/load-test.mjs`, 50 concurrent SSE streams, 0% error rate).
 
 ### Summary Audit Matrix:
 
@@ -90,6 +90,7 @@ Following the rigorous static architecture, HOD pre-pilot review, and v20.1 BusT
 | **72** | **P0** | Signup Cleanup & Password Alignment | **Remove Leftover Duplicate `410` Register Stub & Align 8-Char Minimum**: Removed dead v19 `410` stub for `POST /api/students/register` in `server/index.js` and tightened active registration validation from `password.length < 6` to `password.length < 8` matching `StudentLoginPage.tsx`. | [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js) |
 | **73** | **P1** | Copy Consistency | **Purge Remaining Stale "10 PM Cutoff" Strings**: Replaced all remaining `10:00 PM` / `10 PM Cutoff` strings with `1 hour before bus departure` / `1h pre-departure cutoff` across `CommuteSimulationContext.tsx`, `AdminDashboard.tsx`, and `ParentPortal.tsx`. | [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx) |
 | **74** | **P1** | Mobile UI Restyle (v20.1) | **BusTrack White-and-Indigo Design Across All Phase 1 Portals**: Restyled `App.tsx`, `MobileBottomNav.tsx`, `StudentLoginPage.tsx`, 4-tab `StudentPortal.tsx` (`HOME` / `MAP` / `PASS` / `MORE`), 3-tab `DriverConsole.tsx` (`TRIP` / `STOPS` / `ALERTS` with `startedAt` IST clock), and 3-tab `AdminDashboard.tsx` (`VERIFY` / `FLEET` / `LOGS`) on `#F5F7FB` canvas and `#4F46E5` indigo hero cards with dark-mode `dark:` parity preserved. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/components/common/MobileBottomNav.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/common/MobileBottomNav.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx) |
+| **75** | **P1** | Prismatic Daylight UI | **Prismatic Daylight Glass Design System & Light-First Boot**: Switched default boot state to Light Mode (`index.html` & `CommuteSimulationContext.tsx`), created cohesive pearl-white aurora canvas (`.bg-prismatic-canvas`), frosted porcelain glass surfaces (`.prismatic-card`, `.prismatic-subcard`), electric indigo-to-cyan gradients (`.electric-hero`, `.electric-cta`), tactile micro-interactions (`.futuristic-tile`, `.tactile-btn`, `.animate-electric-sheen`, `.animate-panel-in`), and purged all remaining hardcoded dark-only slabs and legacy `#0D4B42` accents across modals, drawers, maps, login, and all portals while preserving optional `dark:` fallback parity. | [`index.html`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/index.html), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css), [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
 
 ---
 
@@ -312,7 +313,7 @@ export default config;
 
 ```html
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -325,10 +326,10 @@ export default config;
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#181C24" />
+    <meta name="theme-color" content="#F7F9FF" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Sreenidhi Express" />
     <title>Sreenidhi Express — Smart Campus Bus &amp; Student Safety Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -345,37 +346,37 @@ export default config;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
       }
       html.dark, html.dark body {
-        background-color: #181C24 !important;
+        background-color: #141821 !important;
         color: #f8fafc !important;
       }
       html:not(.dark), html:not(.dark) body {
-        background-color: #E5E8EC !important;
-        color: #111827 !important;
+        background-color: #F7F9FF !important;
+        color: #0F172A !important;
       }
       @keyframes pulse-subtle {
-        0%, 100% { opacity: 0.6; transform: scale(0.98); }
-        50% { opacity: 1; transform: scale(1.02); }
+        0%, 100% { opacity: 0.72; transform: scale(0.98); }
+        50% { opacity: 1; transform: scale(1.03); }
       }
       .loader-pulse {
-        animation: pulse-subtle 1.8s ease-in-out infinite;
+        animation: pulse-subtle 1.6s ease-in-out infinite;
       }
     </style>
   </head>
-  <body class="antialiased selection:bg-indigo-500/30">
+  <body class="antialiased selection:bg-indigo-500/20 selection:text-indigo-900">
     <div id="root">
       <!-- Pre-hydration loading fallback: Replaced immediately when React mounts -->
-      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #F4F6F5; color: #4B5563; text-align: center; padding: 24px;">
-        <div class="loader-pulse" style="width: 56px; height: 56px; border-radius: 16px; background: #0D4B42; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 26px; color: white;">
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 80% 10%, rgba(6,182,212,0.10), transparent 45%), radial-gradient(circle at 15% 15%, rgba(79,70,229,0.10), transparent 45%), #F7F9FF; color: #475569; text-align: center; padding: 24px;">
+        <div class="loader-pulse" style="width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, #4F46E5, #06B6D4); box-shadow: 0 14px 32px -10px rgba(79,70,229,0.45); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 26px; color: white;">
           🚌
         </div>
-        <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0 0 6px; letter-spacing: -0.01em;">
+        <h2 style="font-size: 20px; font-weight: 800; color: #0F172A; margin: 0 0 6px; letter-spacing: -0.02em;">
           Sreenidhi Express
         </h2>
-        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px; max-width: 300px; line-height: 1.5;">
-          Sreenidhi University Bus Platform
+        <p style="font-size: 13px; color: #64748B; margin: 0 0 20px; max-width: 300px; line-height: 1.5;">
+          Connecting to live campus telemetry...
         </p>
-        <div style="width: 140px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 9999px; overflow: hidden; position: relative;">
-          <div style="width: 50%; height: 100%; background: linear-gradient(90deg, #4f46e5, #06b6d4); border-radius: 9999px; animation: pulse-subtle 1.2s ease-in-out infinite;"></div>
+        <div style="width: 150px; height: 4px; background: rgba(79,70,229,0.12); border-radius: 9999px; overflow: hidden; position: relative;">
+          <div style="width: 55%; height: 100%; background: linear-gradient(90deg, #4F46E5, #06B6D4); border-radius: 9999px; animation: pulse-subtle 1.1s ease-in-out infinite;"></div>
         </div>
       </div>
     </div>
@@ -586,19 +587,147 @@ self.addEventListener('notificationclick', (event) => {
   }
 }
 
+/* Prismatic Daylight Canvas (Pearl-White Architectural Grid + Atmospheric Aurora Bloom) */
+.bg-prismatic-canvas {
+  background-color: #F7F9FF;
+  background-image:
+    radial-gradient(620px circle at 92% -4%, rgba(6, 182, 212, 0.14), transparent 65%),
+    radial-gradient(680px circle at 6% 4%, rgba(79, 70, 229, 0.12), transparent 65%),
+    linear-gradient(to right, rgba(79, 70, 229, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(79, 70, 229, 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+}
+
+.dark .bg-prismatic-canvas {
+  background-color: #141821;
+  background-image:
+    radial-gradient(620px circle at 90% -5%, rgba(6, 182, 212, 0.12), transparent 65%),
+    radial-gradient(660px circle at 8% 5%, rgba(79, 70, 229, 0.16), transparent 65%),
+    linear-gradient(to right, rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* Frosted Porcelain Surfaces */
+.prismatic-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(203, 213, 225, 0.78);
+  box-shadow: 0 12px 32px -14px rgba(79, 70, 229, 0.12), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.prismatic-card:hover {
+  border-color: rgba(79, 70, 229, 0.26);
+  box-shadow: 0 18px 40px -16px rgba(79, 70, 229, 0.18), 0 4px 10px -2px rgba(6, 182, 212, 0.08);
+}
+
+.dark .prismatic-card {
+  background: rgba(30, 36, 48, 0.9);
+  border-color: rgba(46, 54, 70, 0.95);
+  box-shadow: 0 16px 38px -18px rgba(0, 0, 0, 0.65);
+}
+
+.prismatic-subcard {
+  background: rgba(247, 249, 255, 0.88);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.dark .prismatic-subcard {
+  background: rgba(20, 24, 33, 0.85);
+  border-color: rgba(46, 54, 70, 0.9);
+}
+
+/* High-Voltage Electric Indigo -> Cyan Hero Surface */
+.electric-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4F46E5 0%, #5B52F0 54%, #06B6D4 100%);
+  box-shadow: 0 20px 44px -14px rgba(79, 70, 229, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.electric-cta {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 55%, #0891B2 100%);
+  box-shadow: 0 10px 24px -10px rgba(79, 70, 229, 0.52);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.electric-cta:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -10px rgba(6, 182, 212, 0.46), 0 6px 16px -6px rgba(79, 70, 229, 0.4);
+  filter: brightness(1.05);
+}
+
+.electric-cta:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Interactive Role & Action Tiles */
+.futuristic-tile {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.futuristic-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -14px rgba(79, 70, 229, 0.24), 0 0 0 1px rgba(6, 182, 212, 0.2);
+}
+
+.futuristic-tile:active {
+  transform: scale(0.97);
+}
+
+.futuristic-tile-active {
+  box-shadow: 0 14px 32px -12px rgba(79, 70, 229, 0.32), 0 0 0 1px rgba(79, 70, 229, 0.35);
+}
+
+/* Micro-Motion Keyframes */
+@keyframes electric-sheen {
+  0% { transform: translateX(-120%) skewX(-18deg); }
+  55%, 100% { transform: translateX(220%) skewX(-18deg); }
+}
+
+.animate-electric-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.26), transparent);
+  animation: electric-sheen 4.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-panel-in {
+  animation: panel-enter 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Subtle futuristic architectural background grid */
 .bg-futuristic-grid {
   background-image:
-    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-  background-size: 36px 36px;
+    linear-gradient(to right, rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 .dark .bg-futuristic-grid {
   background-image:
     linear-gradient(to right, rgba(148, 163, 184, 0.045) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
-  background-size: 36px 36px;
+  background-size: 32px 32px;
 }
 
 /* Clean glassmorphic panels */
@@ -10511,9 +10640,14 @@ const ParentPortal = React.lazy(() =>
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
 
 const PortalLoadingSkeleton: React.FC = () => (
-  <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-[#4B5563] dark:text-[#9CA3AF]">
-    <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#4F46E5] border-t-transparent dark:border-indigo-400 dark:border-t-transparent" />
-    <span className="text-sm font-semibold tracking-wide">Loading portal...</span>
+  <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3.5 text-slate-600 dark:text-slate-300">
+    <div className="relative flex h-12 w-12 items-center justify-center">
+      <span className="absolute inset-0 animate-ping rounded-full bg-cyan-400/30" />
+      <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#4F46E5] border-t-cyan-400 dark:border-indigo-400 dark:border-t-cyan-400" />
+    </div>
+    <span className="text-xs font-extrabold uppercase tracking-widest text-[#4F46E5] dark:text-indigo-300">
+      Syncing Telemetry...
+    </span>
   </div>
 );
 
@@ -10582,15 +10716,15 @@ const MainShell: React.FC = () => {
   }, [latestToast, dismissToast]);
 
   const toastColors = {
-    info: 'border-[#CBD0D8] bg-white text-[#111827] shadow-lg dark:bg-[#222733] dark:border-[#374151] dark:text-white',
-    success: 'border-[#A7F3D0] bg-[#ECFDF5] text-[#065F46] shadow-lg dark:bg-[#163828] dark:border-[#22543D] dark:text-[#A7F3D0]',
-    warning: 'border-[#FDE68A] bg-[#FFFBEB] text-[#92400E] shadow-lg dark:bg-[#3D2C15] dark:border-[#523A1B] dark:text-[#FDE68A]',
-    danger: 'border-[#FECACA] bg-[#FEF2F2] text-[#991B1B] shadow-lg dark:bg-[#3C1818] dark:border-[#5B2222] dark:text-[#FECACA]',
+    info: 'border-indigo-200/90 bg-white/95 text-slate-900 shadow-[0_14px_34px_-12px_rgba(79,70,229,0.22)] dark:bg-[#1E2430]/95 dark:border-[#2E3646] dark:text-white',
+    success: 'border-emerald-200 bg-emerald-50/95 text-emerald-900 shadow-lg dark:bg-[#163828] dark:border-[#22543D] dark:text-[#A7F3D0]',
+    warning: 'border-amber-200 bg-amber-50/95 text-amber-900 shadow-lg dark:bg-[#3D2C15] dark:border-[#523A1B] dark:text-[#FDE68A]',
+    danger: 'border-rose-200 bg-rose-50/95 text-rose-900 shadow-lg dark:bg-[#3C1818] dark:border-[#5B2222] dark:text-[#FECACA]',
   };
 
   const toastEl = latestToast && (
     <div
-      className={`z-50 rounded-2xl border p-3.5 shadow-xl backdrop-blur-md ${
+      className={`animate-panel-in z-50 rounded-2xl border p-3.5 shadow-xl backdrop-blur-xl ${
         mobilePreviewFrame
           ? 'absolute bottom-20 inset-x-3'
           : isMobileShell
@@ -10601,13 +10735,13 @@ const MainShell: React.FC = () => {
     >
       <div className="flex items-start justify-between gap-2.5">
         <div className="min-w-0">
-          <p className="text-xs font-bold tracking-tight">{latestToast.title}</p>
+          <p className="text-xs font-extrabold tracking-tight">{latestToast.title}</p>
           <p className="mt-0.5 text-[11px] opacity-90">{latestToast.body}</p>
         </div>
         <button
           type="button"
           onClick={dismissToast}
-          className="rounded-lg p-1 text-slate-400 hover:bg-black/5 hover:text-black dark:hover:bg-white/10 dark:hover:text-white cursor-pointer"
+          className="rounded-lg p-1 text-slate-400 hover:bg-indigo-50 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white cursor-pointer"
         >
           <X className="h-3.5 w-3.5" />
         </button>
@@ -10618,30 +10752,30 @@ const MainShell: React.FC = () => {
   // Desktop interactive Phone Frame preview (Optional simulation viewport)
   if (mobilePreviewFrame) {
     return (
-      <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#F5F7FB] p-4 text-[#111827] dark:bg-[#141821] dark:text-slate-100">
+      <div className="bg-prismatic-canvas relative flex min-h-screen flex-col items-center justify-center p-4 text-slate-900 dark:text-slate-100">
         <div className="relative z-10 mb-3 flex items-center gap-3">
-          <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-indigo-400">
-            Mobile Viewport (Screen Preview)
+          <span className="prismatic-card rounded-full px-3.5 py-1 text-xs font-extrabold text-[#4F46E5] dark:text-indigo-400">
+            Mobile Viewport (Live Preview)
           </span>
           <button
             type="button"
             onClick={toggleMobilePreviewFrame}
-            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-[#111827] shadow-xs hover:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white cursor-pointer"
+            className="prismatic-card tactile-btn inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
           >
-            <Monitor className="h-3.5 w-3.5" />
+            <Monitor className="h-3.5 w-3.5 text-[#06B6D4]" />
             Full Screen
           </button>
         </div>
 
         {/* Phone Bezel */}
-        <div className="relative z-10 flex h-[min(840px,calc(100vh-5.5rem))] w-[420px] max-w-full flex-col overflow-hidden rounded-[44px] border-[8px] border-[#CBD0D8] bg-[#F5F7FB] shadow-2xl dark:border-[#2E3646] dark:bg-[#141821]">
+        <div className="bg-prismatic-canvas relative z-10 flex h-[min(840px,calc(100vh-5.5rem))] w-[420px] max-w-full flex-col overflow-hidden rounded-[44px] border-[8px] border-white/95 shadow-[0_28px_75px_-18px_rgba(79,70,229,0.28)] ring-1 ring-indigo-100 dark:border-[#2E3646] dark:ring-white/10">
           {/* Phone Status Bar */}
-          <div className="flex shrink-0 items-center justify-between bg-transparent px-6 pt-2.5 pb-1 text-[11px] font-bold text-[#4B5563] dark:text-[#9CA3AF]">
+          <div className="flex shrink-0 items-center justify-between bg-transparent px-6 pt-2.5 pb-1 text-[11px] font-bold text-slate-500 dark:text-slate-400">
             <span className="font-mono-timer">09:41</span>
-            <div className="h-4 w-20 rounded-full bg-[#111827]/80 dark:bg-black" />
+            <div className="h-4 w-20 rounded-full bg-slate-900/90 dark:bg-black" />
             <div className="flex items-center gap-1.5">
-              <Signal className="h-3 w-3" />
-              <Wifi className="h-3 w-3" />
+              <Signal className="h-3 w-3 text-[#4F46E5] dark:text-indigo-400" />
+              <Wifi className="h-3 w-3 text-[#06B6D4]" />
               <BatteryCharging className="h-3.5 w-3.5 text-emerald-600" />
             </div>
           </div>
@@ -10670,13 +10804,13 @@ const MainShell: React.FC = () => {
     );
   }
 
-  // Full Screen View with BusTrack Light & Dark Canvas
+  // Full Screen View with Prismatic Daylight Glass Canvas
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#F5F7FB] text-[#111827] transition-colors dark:bg-[#141821] dark:text-slate-100">
+    <div className="bg-prismatic-canvas relative min-h-screen overflow-x-hidden text-slate-900 transition-colors dark:text-slate-100">
       <div className="relative z-10">
         {toastEl}
 
-        <main className="mx-auto w-full max-w-5xl lg:max-w-6xl px-1 sm:px-4 md:px-6 pt-1 sm:pt-4 pb-32 sm:pb-16">
+        <main className="mx-auto w-full max-w-5xl lg:max-w-6xl px-1.5 sm:px-4 md:px-6 pt-2 sm:pt-5 pb-32 sm:pb-16">
           <Suspense fallback={<PortalLoadingSkeleton />}>
             <ActiveViewBody />
           </Suspense>
@@ -10688,8 +10822,8 @@ const MainShell: React.FC = () => {
           </div>
         )}
 
-        {/* Discreet bottom floating utility dock for theme & viewport controls */}
-        <div className={`fixed right-3 z-40 flex items-center gap-1.5 rounded-full border border-[#D1D5DB] bg-white/95 p-1.5 shadow-md backdrop-blur-md dark:border-[#374151] dark:bg-[#222733]/95 ${
+        {/* Discreet frosted bottom floating utility dock */}
+        <div className={`prismatic-card fixed right-3 z-40 flex items-center gap-1.5 rounded-full p-1.5 ${
           isMobileShell && currentUser
             ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))]'
             : 'bottom-3'
@@ -10697,15 +10831,15 @@ const MainShell: React.FC = () => {
           <button
             type="button"
             onClick={toggleDark}
-            className="rounded-full p-2 text-[#4B5563] hover:bg-[#F3F5F7] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
+            className="tactile-btn rounded-full p-2 text-slate-500 hover:bg-indigo-50 hover:text-[#4F46E5] dark:text-slate-300 dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
             title="Toggle Light / Dark Mode"
           >
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
           </button>
           <button
             type="button"
             onClick={toggleMobilePreviewFrame}
-            className="hidden md:inline-flex rounded-full p-2 text-[#4B5563] hover:bg-[#F3F5F7] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] dark:hover:text-white cursor-pointer"
+            className="tactile-btn hidden md:inline-flex rounded-full p-2 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 dark:text-slate-300 dark:hover:bg-[#2B313F] dark:hover:text-cyan-300 cursor-pointer"
             title="Toggle Phone Simulator Viewport"
           >
             <Smartphone className="h-4 w-4" />
@@ -11057,7 +11191,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
     }
     return 'STUDENT_LOGIN';
   });
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState<boolean>(false);
   const [latestToast, setLatestToast] = useState<ToastBanner | null>(null);
 
@@ -13440,56 +13574,69 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   };
 
   return (
-    <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col justify-center px-1 sm:px-4 py-1 sm:py-6 antialiased">
-      {/* Top Banner above card matching Screen 1 */}
-      <div className="mb-2 flex items-center justify-between px-1 text-xs text-[#4B5563] dark:text-[#9CA3AF]">
-        <span className="truncate pr-2">
+    <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col justify-center px-1 sm:px-4 py-2 sm:py-6 antialiased">
+      {/* Top Banner */}
+      <div className="mb-3 flex items-center justify-between px-1 text-xs text-slate-500 dark:text-slate-400">
+        <span className="inline-flex items-center gap-2 truncate pr-2 font-semibold">
+          <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
           {import.meta.env.DEV
-            ? 'Demo build with simulated buses and sample data.'
-            : 'Sreenidhi University Campus Transit Portal'}
+            ? 'Live Campus Telemetry • Demo Mode'
+            : 'Sreenidhi University Campus Transit'}
         </span>
         <button
           type="button"
           onClick={() => setIsInstallModalOpen(true)}
-          className="shrink-0 rounded-xl border border-slate-200 bg-white px-2.5 sm:px-3 py-1 font-bold text-[#111827] shadow-xs transition hover:bg-slate-50 active:scale-95 dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white cursor-pointer"
+          className="prismatic-card tactile-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-[#4F46E5] dark:text-indigo-300 cursor-pointer"
         >
-          Download app
+          Install App ⚡
         </button>
       </div>
 
-      {/* Main Role Selection Card (BusTrack White-and-Indigo Theme) */}
-      <div className="w-full rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-7 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-        {/* App Title Header with Official Sreenidhi Express Logo */}
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <img
-              src="/sreenidhi_express_logo.jpg"
-              alt="Sreenidhi Express"
-              className="h-12 w-12 rounded-2xl object-cover shadow-sm ring-1 ring-black/10 dark:ring-white/10"
-            />
+      {/* Main Role Selection Card (Prismatic Daylight Glass) */}
+      <div className="prismatic-card relative w-full overflow-hidden rounded-[2rem] p-5 sm:p-8">
+        <div className="pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full bg-cyan-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-indigo-500/12 blur-3xl" />
+
+        {/* App Title Header */}
+        <div className="relative flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-3.5">
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-md shadow-indigo-500/20">
+              <img
+                src="/sreenidhi_express_logo.jpg"
+                alt="Sreenidhi Express"
+                className="h-12 w-12 rounded-[14px] object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] bg-clip-text text-xl font-black tracking-tight text-transparent dark:from-indigo-300 dark:to-cyan-300">
+                Sreenidhi Express
+              </h2>
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                SNIST Smart Bus Grid • Helpline: +91 77999 56801
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-extrabold tracking-tight text-[#4F46E5] dark:text-indigo-400">
-              Sreenidhi Express
-            </h2>
-            <p className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF]">
-              Sreenidhi University bus app • Helpline: +91 77999 56801
-            </p>
-          </div>
+          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-cyan-200/80 bg-cyan-50/80 px-3 py-1 text-[11px] font-extrabold text-cyan-800 dark:border-cyan-800/60 dark:bg-cyan-950/40 dark:text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-ping" />
+            NH-163 Real-Time
+          </span>
         </div>
 
         {/* Big Heading */}
-        <div className="mt-6 sm:mt-7">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#111827] sm:text-3xl dark:text-white">
-            Who are you?
+        <div className="relative mt-6 sm:mt-7">
+          <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+            Select your{' '}
+            <span className="bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] bg-clip-text text-transparent">
+              access deck
+            </span>
           </h1>
-          <p className="mt-1 text-sm font-medium text-[#4B5563] dark:text-[#9CA3AF]">
-            Pick your role to log in.
+          <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+            Choose your campus role to sync live arrivals and boarding pass.
           </p>
         </div>
 
-        {/* Role Selection Grid (3-portal Phase 1 scope unless VITE_ENABLE_PARENT_PORTAL=true) */}
-        <div className={`mt-5 sm:mt-6 grid gap-2.5 sm:gap-3.5 ${ENABLE_PARENT_PORTAL ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
+        {/* Role Selection Grid */}
+        <div className={`relative mt-5 sm:mt-6 grid gap-3 ${ENABLE_PARENT_PORTAL ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {/* Card 1: Parent (Phase 2 feature flag) */}
           {ENABLE_PARENT_PORTAL && (
             <button
@@ -13498,20 +13645,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 setSelectedRole('PARENT');
                 setAuthError(null);
               }}
-              className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+              className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
                 selectedRole === 'PARENT'
-                  ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                  : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                  ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                  : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
               }`}
             >
-              <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-                <Users className="h-6 w-6 stroke-[2.2]" />
+              <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+                <Users className="h-5 w-5 stroke-[2.2]" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-[#111827] dark:text-white">
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                   Parent
                 </h3>
-                <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+                <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                   Follow your child&apos;s bus
                 </p>
               </div>
@@ -13525,20 +13672,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('STUDENT');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'STUDENT'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-              <GraduationCap className="h-6 w-6 stroke-[2.2]" />
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+              <GraduationCap className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Student
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 ETA, pass and alerts
               </p>
             </div>
@@ -13551,15 +13698,15 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('DRIVER');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'DRIVER'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
               <svg
-                className="h-6 w-6 stroke-[2.2]"
+                className="h-5 w-5 stroke-[2.2]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -13575,10 +13722,10 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               </svg>
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Driver
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 Trips, stops and SOS
               </p>
             </div>
@@ -13591,20 +13738,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               setSelectedRole('ADMIN');
               setAuthError(null);
             }}
-            className={`futuristic-tile group flex flex-col justify-between rounded-2xl border p-3.5 sm:p-4 text-left cursor-pointer ${
+            className={`futuristic-tile group flex flex-col justify-between rounded-3xl border p-4 text-left cursor-pointer ${
               selectedRole === 'ADMIN'
-                ? 'border-[#4F46E5] bg-indigo-50/70 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/30 futuristic-tile-active'
-                : 'border-slate-200/80 bg-[#F5F7FB] hover:border-[#4F46E5]/50 hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#141821] dark:hover:bg-indigo-950/20'
+                ? 'border-[#4F46E5] bg-gradient-to-br from-indigo-50/95 via-white to-cyan-50/80 ring-2 ring-[#4F46E5]/20 dark:border-indigo-400 dark:bg-indigo-950/40 futuristic-tile-active'
+                : 'border-slate-200/80 bg-white/75 hover:border-indigo-300 dark:border-[#2E3646] dark:bg-[#141821]/85'
             }`}
           >
-            <div className="mb-3 sm:mb-4 text-[#4F46E5] dark:text-indigo-400">
-              <LayoutGrid className="h-6 w-6 stroke-[2.2]" />
+            <div className="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/12 to-cyan-500/15 text-[#4F46E5] ring-1 ring-indigo-500/15 transition group-hover:scale-105 dark:text-cyan-300">
+              <LayoutGrid className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Admin
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF] leading-tight">
+              <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">
                 Fleet and records
               </p>
             </div>
@@ -13613,56 +13760,55 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
 
         {/* Global Error Notice */}
         {authError && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-700 dark:bg-red-950/40 dark:text-red-300">
-            <AlertCircle className="h-4 w-4 shrink-0 text-red-500" />
+          <div className="animate-panel-in mt-4 flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300">
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
             <span>{authError}</span>
           </div>
         )}
 
-        {/* Role Credentials Trays (Smoothly expands when role is selected) */}
+        {/* Role Credentials Trays */}
         {ENABLE_PARENT_PORTAL && selectedRole === 'PARENT' && (
-          <form onSubmit={handleParentSubmit} className="mt-5 space-y-3 rounded-2xl border border-[#D1D5DB] bg-[#F3F5F7] p-4 dark:border-[#374151] dark:bg-[#2B313F]">
+          <form onSubmit={handleParentSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Parent Sign-In
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Primary Demo: Suraj (Route 51)
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Parent Access Code
               </label>
               <input
                 type="text"
                 value={parentCode}
                 onChange={(e) => setParentCode(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#0D4B42] focus:outline-none dark:border-[#374151] dark:bg-[#222733] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="Enter 8-character parent access code"
                 required
               />
             </div>
-            {/* Quick Demo Parent Code */}
             {import.meta.env.DEV && (
-              <div className="flex items-center justify-between rounded-xl bg-white/70 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 border border-black/5 dark:border-white/5">
+              <div className="flex items-center justify-between rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300">
                 <span>👨‍👩‍👧 <b>Demo Parent:</b></span>
                 <button
                   type="button"
                   onClick={() => setParentCode('PARENT51')}
-                  className="text-[#0D4B42] dark:text-[#4ADE80] font-mono font-bold hover:underline cursor-pointer"
+                  className="text-[#4F46E5] dark:text-indigo-400 font-mono font-bold hover:underline cursor-pointer"
                 >
                   PARENT51 (Suraj — Route 51)
                 </button>
               </div>
             )}
-            <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
-              💡 <em>Generate a 30-day code inside the Student Portal under Profile to link a parent device.</em>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              💡 <em>Generate a 30-day code inside the Student Portal under More to link a parent device.</em>
             </p>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0D4B42] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#0A3C34] active:scale-98 dark:bg-[#15803D] dark:hover:bg-[#166534] cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Locating Bus...' : 'Track Child’s Bus'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -13671,9 +13817,9 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'STUDENT' && (
-          <div className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 {studentAuthMode === 'LOGIN' ? 'Student & Faculty Sign-In' : 'New Commuter Self-Registration'}
               </span>
               <button
@@ -13683,7 +13829,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   setAuthError(null);
                   setRegSuccessMsg(null);
                 }}
-                className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-indigo-400 cursor-pointer"
+                className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-cyan-300 cursor-pointer"
               >
                 {studentAuthMode === 'LOGIN' ? 'New Commuter? Self-Register' : 'Already Verified? Sign In'}
               </button>
@@ -13692,20 +13838,20 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             {studentAuthMode === 'LOGIN' ? (
               <form onSubmit={handleStudentSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Roll Number / Employee ID
                   </label>
                   <input
                     type="text"
                     value={studentRoll}
                     onChange={(e) => setStudentRoll(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                     placeholder="26011CSEAI0109 or 40000116"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Password
                   </label>
                   <div className="relative mt-1">
@@ -13713,22 +13859,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                       type={showStudentPassword ? 'text' : 'password'}
                       value={studentPassword}
                       onChange={(e) => setStudentPassword(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Enter your password"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowStudentPassword(!showStudentPassword)}
-                      className="absolute right-2.5 top-2 text-[#9CA3AF] hover:text-[#4B5563] cursor-pointer"
+                      className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer"
                     >
                       {showStudentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
-                {/* Quick Demo Fill Buttons */}
                 {import.meta.env.DEV && (
-                  <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+                  <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                     <div className="flex items-center justify-between">
                       <span>🎓 <b>Student (Route 51):</b></span>
                       <button
@@ -13754,7 +13899,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+                  className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
                 >
                   <span>{isSubmitting ? 'Signing In...' : 'Sign In as Student / Faculty'}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -13769,27 +13914,27 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Roll / Employee ID
                     </label>
                     <input
                       type="text"
                       value={regRoll}
                       onChange={(e) => setRegRoll(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="26011CSEAI0199"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Full Name
                     </label>
                     <input
                       type="text"
                       value={regName}
                       onChange={(e) => setRegName(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Your full name"
                       required
                     />
@@ -13797,27 +13942,27 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       College Email
                     </label>
                     <input
                       type="email"
                       value={regEmail}
                       onChange={(e) => setRegEmail(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="name@sreenidhi.edu.in"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       10-Digit Mobile
                     </label>
                     <input
                       type="tel"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-mono font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-mono font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="9876543210"
                       required
                     />
@@ -13825,21 +13970,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Password (min 8 chars)
                     </label>
                     <input
                       type="password"
                       value={regPassword}
                       onChange={(e) => setRegPassword(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Create a strong password"
                       minLength={8}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Requested Pickup Stop
                     </label>
                     <input
@@ -13847,7 +13992,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                       list="suh-register-stops"
                       value={regPickupStop}
                       onChange={(e) => setRegPickupStop(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                       placeholder="Erragadda, KPHB, Miyapur..."
                       required
                     />
@@ -13866,13 +14011,13 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                     </datalist>
                   </div>
                 </div>
-                <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Transport Office verification is required before first login (no paid SMS OTP required).
                 </p>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+                  className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
                 >
                   <span>{isSubmitting ? 'Submitting...' : 'Submit for Transport Office Verification'}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -13883,23 +14028,23 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'DRIVER' && (
-          <form onSubmit={handleDriverSubmit} className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <form onSubmit={handleDriverSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Driver Cabin Access
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Bus PIN
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Assigned Route
               </label>
               <select
                 value={driverRoute}
                 onChange={(e) => setDriverRoute(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
               >
                 {buses.map((b) => (
                   <option key={b.routeId} value={b.routeId}>
@@ -13909,7 +14054,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
               </select>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Driver 6-Digit PIN
               </label>
               <input
@@ -13917,14 +14062,13 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 maxLength={6}
                 value={driverPin}
                 onChange={(e) => setDriverPin(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm font-mono font-bold tracking-widest text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-center text-sm font-mono font-bold tracking-widest text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="515151"
                 required
               />
             </div>
-            {/* Quick Demo Fill Buttons */}
             {import.meta.env.DEV && (
-              <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+              <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                 <div className="flex items-center justify-between">
                   <span>🚍 <b>Route 51 PIN:</b></span>
                   <button
@@ -13940,7 +14084,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Opening Cabin...' : 'Enter Driver Console'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -13949,30 +14093,30 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
         )}
 
         {selectedRole === 'ADMIN' && (
-          <form onSubmit={handleAdminSubmit} className="mt-5 space-y-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]">
+          <form onSubmit={handleAdminSubmit} className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#111827] dark:text-white">
+              <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Transport Office Admin
               </span>
-              <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 Official admin ID
               </span>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Admin ID
               </label>
               <input
                 type="text"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                 placeholder="Admin ID"
                 required
               />
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                 Admin Password
               </label>
               <div className="relative mt-1">
@@ -13980,22 +14124,21 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   type={showAdminPassword ? 'text' : 'password'}
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#111827] focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
                   placeholder="Password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowAdminPassword(!showAdminPassword)}
-                  className="absolute right-2.5 top-2 text-[#9CA3AF] hover:text-[#4B5563] cursor-pointer"
+                  className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700 cursor-pointer"
                 >
                   {showAdminPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
-            {/* Quick Demo Fill Buttons */}
             {import.meta.env.DEV && (
-              <div className="rounded-xl bg-white/80 p-2 text-[11px] text-slate-700 dark:bg-black/20 dark:text-slate-300 space-y-1 border border-slate-200/80 dark:border-white/5">
+              <div className="rounded-xl border border-indigo-100 bg-white/90 p-2.5 text-[11px] text-slate-700 dark:border-white/5 dark:bg-black/20 dark:text-slate-300 space-y-1">
                 <div className="flex items-center justify-between">
                   <span>🏢 <b>Transport Office:</b></span>
                   <button
@@ -14011,7 +14154,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4338CA] active:scale-98 cursor-pointer"
+              className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white cursor-pointer"
             >
               <span>{isSubmitting ? 'Authenticating...' : 'Enter Transport Office'}</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -14019,8 +14162,8 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           </form>
         )}
 
-        {/* Bottom Disclaimer matching Screen 1 */}
-        <p className="mt-8 text-center text-xs font-normal leading-relaxed text-[#4B5563] dark:text-[#9CA3AF]">
+        {/* Bottom Disclaimer */}
+        <p className="mt-8 text-center text-xs font-normal leading-relaxed text-slate-500 dark:text-slate-400">
           By signing in you agree that a child&apos;s bus location is shared only with
           that child&apos;s parent and the transport office during an active trip.
         </p>
@@ -14157,7 +14300,7 @@ const MobileBottomNavComponent: React.FC = () => {
   return (
     <nav
       aria-label="Mobile App Bottom Navigation"
-      className="border-t border-[#D1D5DB] bg-white/95 px-3 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-2xl dark:border-[#374151] dark:bg-[#181C24]/95"
+      className="border-t border-indigo-100/90 bg-white/90 px-3 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-14px_rgba(79,70,229,0.16)] backdrop-blur-2xl dark:border-[#2E3646] dark:bg-[#141821]/92"
     >
       <div className={`grid gap-2 ${tabs.length === 1 ? 'grid-cols-2' : tabs.length === 2 ? 'grid-cols-3' : 'grid-cols-4'}`}>
         {tabs.map((tab) => {
@@ -14168,13 +14311,13 @@ const MobileBottomNavComponent: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => handleSelectTab(tab.id)}
-              className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-bold transition cursor-pointer ${
+              className={`tactile-btn flex flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-bold transition cursor-pointer ${
                 active
-                  ? 'bg-[#4F46E5]/10 text-[#4F46E5] ring-1 ring-[#4F46E5]/30 dark:bg-indigo-950/60 dark:text-indigo-400 dark:ring-indigo-400/30'
-                  : 'text-[#6B7280] hover:text-[#111827] dark:text-[#9CA3AF] dark:hover:text-white'
+                  ? 'bg-gradient-to-br from-[#4F46E5]/12 to-[#06B6D4]/12 text-[#4F46E5] ring-1 ring-[#4F46E5]/30 dark:bg-indigo-950/60 dark:text-indigo-300 dark:ring-indigo-400/30'
+                  : 'text-slate-500 hover:bg-indigo-50/50 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
-              <Icon className={`h-4 w-4 ${active ? 'scale-110' : ''}`} />
+              <Icon className={`h-4 w-4 transition-transform ${active ? 'scale-110 text-[#4F46E5] dark:text-cyan-300' : ''}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -14187,7 +14330,7 @@ const MobileBottomNavComponent: React.FC = () => {
             audioSpeechService.playClickTone();
             logoutUser();
           }}
-          className="flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-bold text-[#6B7280] hover:text-rose-500 dark:text-[#9CA3AF] dark:hover:text-rose-400 transition cursor-pointer"
+          className="tactile-btn flex flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-bold text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition cursor-pointer"
           title="Sign out of current role"
         >
           <LogOut className="h-4 w-4" />
@@ -14833,21 +14976,24 @@ export const StudentPortal: React.FC = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-4 pb-24 antialiased">
+    <div className="mx-auto w-full max-w-5xl space-y-4 pb-28 antialiased">
       {/* Compact Greeting Header (Always Visible at Top) */}
-      <div className="flex items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <img
-            src="/sreenidhi_express_logo.jpg"
-            alt="Sreenidhi Express Logo"
-            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-xs ring-2 ring-[#4F46E5]/20 dark:ring-indigo-400/30"
-          />
+          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+            <img
+              src="/sreenidhi_express_logo.jpg"
+              alt="Sreenidhi Express Logo"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
                 Welcome Back, {firstName}
               </h1>
-              <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
                 Route {routeNum} • SUH Campus
               </span>
             </div>
@@ -14862,19 +15008,19 @@ export const StudentPortal: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsSmsDrawerOpen(true)}
-            className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-300 cursor-pointer"
+            className="tactile-btn relative flex h-9 w-9 items-center justify-center rounded-full border border-indigo-100 bg-[#F7F9FF] text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:text-cyan-300 cursor-pointer"
             title="Live Transit SMS & App Messages"
           >
             <Bell className="h-4 w-4" />
             <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
             </span>
           </button>
           <button
             type="button"
             onClick={logoutUser}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-slate-50 text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
             title="Sign Out"
           >
             <LogOut className="h-4 w-4" />
@@ -14884,7 +15030,7 @@ export const StudentPortal: React.FC = () => {
 
       {/* 2-Minute Stop Arrival Countdown & Not Coming Opt-Out Action */}
       {arrivalStage === 'ARRIVED_2_MIN_TIMER' && twoMinCountdownSec > 0 && (
-        <div className="rounded-3xl border border-amber-400/50 bg-amber-50 p-3.5 shadow-sm dark:bg-amber-950/40 dark:border-amber-700/60 animate-pulse">
+        <div className="rounded-3xl border border-amber-400/50 bg-amber-50/95 p-3.5 shadow-sm dark:bg-amber-950/40 dark:border-amber-700/60 animate-pulse">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -14892,7 +15038,7 @@ export const StudentPortal: React.FC = () => {
                 <p className="text-xs font-black uppercase text-amber-800 dark:text-amber-200">
                   Bus at {assignedStopName} (2-Min Timer)
                 </p>
-                <p className="font-mono text-base font-black text-amber-900 dark:text-white">
+                <p className="font-mono-timer text-base font-black text-amber-900 dark:text-white">
                   {formatHms(twoMinCountdownSec)} remaining
                 </p>
               </div>
@@ -14903,7 +15049,7 @@ export const StudentPortal: React.FC = () => {
                 await markStudentNotComing(activeStudent?.id || 'stu-01', 'Skipped by student at stop approaching');
                 pushToast('info', 'Stop Skipped', 'Driver notified that you are not boarding this trip.');
               }}
-              className="rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 active:scale-95 cursor-pointer shrink-0"
+              className="tactile-btn rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 cursor-pointer shrink-0"
             >
               Not Coming
             </button>
@@ -14913,68 +15059,70 @@ export const StudentPortal: React.FC = () => {
 
       {/* Proactive Proximity Heads-Up Departure Banner */}
       {countdownSec > 0 && countdownSec <= 120 && (
-        <div className="flex items-center gap-2.5 rounded-3xl border border-emerald-500/30 bg-emerald-50/90 p-3 text-xs font-bold text-emerald-800 shadow-sm dark:bg-emerald-950/50 dark:text-emerald-200 animate-pulse">
-          <BellRing className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+        <div className="flex items-center gap-2.5 rounded-3xl border border-cyan-400/40 bg-cyan-50/95 p-3 text-xs font-bold text-cyan-900 shadow-sm dark:bg-cyan-950/50 dark:text-cyan-200 animate-pulse">
+          <BellRing className="h-4 w-4 shrink-0 text-[#06B6D4]" />
           <span>Bus arriving at {assignedStopName} now! Head to the boarding point.</span>
         </div>
       )}
       {countdownSec > 120 && countdownSec <= 600 && (
-        <div className="flex items-center gap-2.5 rounded-3xl border border-amber-500/30 bg-amber-50/90 p-3 text-xs font-bold text-amber-800 shadow-sm dark:bg-amber-950/50 dark:text-amber-200">
+        <div className="flex items-center gap-2.5 rounded-3xl border border-amber-400/40 bg-amber-50/95 p-3 text-xs font-bold text-amber-900 shadow-sm dark:bg-amber-950/50 dark:text-amber-200">
           <Clock className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
           <span>10-Minute Heads-Up: Bus is ~{Math.round(countdownSec / 60)} mins away. Leave for your stop!</span>
         </div>
       )}
 
       {portalTab === 'HOME' && (
-        <div className="space-y-4">
-          {/* Primary Indigo Hero Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-[#4F46E5] to-[#5B52F0] p-5 text-white shadow-lg shadow-indigo-500/20">
+        <div className="animate-panel-in space-y-4">
+          {/* Primary Electric Indigo -> Cyan Hero Card */}
+          <div className="electric-hero rounded-3xl p-5 text-white">
+            <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-25" />
+
             {/* Top row */}
-            <div className="flex items-center justify-between gap-2">
+            <div className="relative flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/18 backdrop-blur-xs">
                   <Bus className="h-4 w-4 text-white" />
                 </span>
                 <span className="text-sm font-extrabold tracking-tight">Bus #{routeNum}</span>
               </div>
               {busDelayMinutes > 0 ? (
-                <span className="inline-flex items-center rounded-full bg-amber-400/25 px-3 py-1 text-[11px] font-extrabold text-amber-100 ring-1 ring-amber-300/40">
+                <span className="inline-flex items-center rounded-full bg-amber-400/25 px-3 py-1 text-[11px] font-extrabold text-amber-50 ring-1 ring-amber-200/50 backdrop-blur-xs">
                   +{busDelayMinutes}m Delay
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/25 px-3 py-1 text-[11px] font-extrabold text-emerald-100 ring-1 ring-emerald-300/30">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/18 px-3 py-1 text-[11px] font-extrabold text-white ring-1 ring-white/30 backdrop-blur-xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.9)] animate-pulse" />
                   On Time
                 </span>
               )}
             </div>
 
             {/* Split Metric Row */}
-            <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl bg-white/10 p-3.5 backdrop-blur-xs">
+            <div className="relative mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-white/15 bg-white/12 p-3.5 backdrop-blur-md">
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold text-indigo-100/80">Estimated Arrival:</p>
-                <p className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-white">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Estimated Arrival:</p>
+                <p className="font-mono-timer mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-white">
                   {heroEtaLabel}
                 </p>
-                <p className="mt-0.5 text-[10px] font-medium text-indigo-100/85 truncate">
+                <p className="mt-0.5 text-[10px] font-medium text-cyan-100/95 truncate">
                   ±2 min buffer • {clockWindowLabel}
                 </p>
               </div>
-              <div className="min-w-0 border-l border-white/15 pl-3">
-                <p className="text-[11px] font-semibold text-indigo-100/80">Next Stop:</p>
+              <div className="min-w-0 border-l border-white/20 pl-3">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Next Stop:</p>
                 <p className="mt-0.5 text-base sm:text-lg font-extrabold leading-snug text-white line-clamp-2">
                   {assignedStopName}
                 </p>
-                <p className="mt-0.5 text-[10px] font-medium text-indigo-100/85 truncate">
+                <p className="mt-0.5 text-[10px] font-medium text-cyan-100/95 truncate">
                   {etaDetails.distanceText} • {etaDetails.source}
                 </p>
               </div>
             </div>
 
             {/* Bottom 2-Button Action Row */}
-            <div className="mt-4 flex items-center gap-2.5">
+            <div className="relative mt-4 flex items-center gap-2.5">
               {isOnBoardCleared ? (
-                <span className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-400/25 px-4 py-2.5 text-xs font-extrabold text-white ring-1 ring-emerald-200/50">
+                <span className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-400/25 px-4 py-2.5 text-xs font-extrabold text-white ring-1 ring-emerald-200/60 backdrop-blur-xs">
                   On Board ✓
                 </span>
               ) : (
@@ -14982,7 +15130,7 @@ export const StudentPortal: React.FC = () => {
                   type="button"
                   onClick={() => void handleSelfCheckIn('STUDENT_SELF_TAP')}
                   disabled={isSelfCheckingIn || !isTripActive}
-                  className="flex-1 rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-sm transition hover:bg-indigo-50 active:scale-[0.98] disabled:opacity-60 cursor-pointer"
+                  className="animate-electric-sheen tactile-btn relative flex-1 overflow-hidden rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 disabled:opacity-60 cursor-pointer"
                 >
                   {isSelfCheckingIn ? 'Checking In...' : isTripActive ? "I'm On Board" : 'Wait for Trip Start'}
                 </button>
@@ -14997,10 +15145,10 @@ export const StudentPortal: React.FC = () => {
                   }
                 }}
                 disabled={isUpdatingAbsence}
-                className={`rounded-xl px-3.5 py-2.5 text-xs font-bold transition active:scale-[0.98] disabled:opacity-60 cursor-pointer ${
+                className={`tactile-btn rounded-xl px-3.5 py-2.5 text-xs font-bold backdrop-blur-xs transition disabled:opacity-60 cursor-pointer ${
                   isAbsentTomorrow
-                    ? 'bg-amber-400/30 text-white ring-1 ring-amber-200/70 hover:bg-amber-400/40'
-                    : 'bg-white/20 text-white hover:bg-white/30'
+                    ? 'bg-amber-400/35 text-white ring-1 ring-amber-200/70 hover:bg-amber-400/45'
+                    : 'bg-white/18 text-white ring-1 ring-white/20 hover:bg-white/28'
                 }`}
               >
                 {isAbsentTomorrow ? 'Absent ✓' : 'Not Traveling'}
@@ -15008,9 +15156,9 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Inline Absence Day Selector & 1h Cutoff Caption (Shown When Toggled / Active / Expandable) */}
+          {/* Inline Absence Day Selector & 1h Cutoff Caption */}
           {(showAbsenceBar || isAbsentTomorrow) ? (
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-3.5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card animate-panel-in rounded-3xl p-3.5">
               <div className="flex flex-wrap items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div
@@ -15027,13 +15175,13 @@ export const StudentPortal: React.FC = () => {
                       <span className="text-xs font-extrabold text-slate-900 dark:text-white">
                         Opt-Out ({absenceDay === 'TODAY' ? 'Today' : 'Tomorrow'})
                       </span>
-                      <div className="inline-flex rounded-lg border border-slate-200/80 bg-[#F5F7FB] p-0.5 text-[10px] font-bold dark:border-[#2E3646] dark:bg-[#141821]">
+                      <div className="prismatic-subcard inline-flex rounded-xl p-0.5 text-[10px] font-bold">
                         <button
                           type="button"
                           onClick={() => setAbsenceDay('TODAY')}
-                          className={`rounded-md px-2 py-0.5 cursor-pointer transition ${
+                          className={`rounded-lg px-2 py-0.5 cursor-pointer transition ${
                             absenceDay === 'TODAY'
-                              ? 'bg-[#4F46E5] text-white'
+                              ? 'bg-[#4F46E5] text-white shadow-2xs'
                               : 'text-slate-500 dark:text-slate-400'
                           }`}
                         >
@@ -15042,9 +15190,9 @@ export const StudentPortal: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setAbsenceDay('TOMORROW')}
-                          className={`rounded-md px-2 py-0.5 cursor-pointer transition ${
+                          className={`rounded-lg px-2 py-0.5 cursor-pointer transition ${
                             absenceDay === 'TOMORROW'
-                              ? 'bg-[#4F46E5] text-white'
+                              ? 'bg-[#4F46E5] text-white shadow-2xs'
                               : 'text-slate-500 dark:text-slate-400'
                           }`}
                         >
@@ -15066,7 +15214,7 @@ export const StudentPortal: React.FC = () => {
                     onClick={handleToggleAbsence}
                     disabled={isUpdatingAbsence || absenceLocked}
                     className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 ${
-                      isAbsentTomorrow ? 'bg-[#4F46E5]' : 'bg-slate-300 dark:bg-slate-700'
+                      isAbsentTomorrow ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]' : 'bg-slate-300 dark:bg-slate-700'
                     }`}
                     role="switch"
                     aria-checked={isAbsentTomorrow}
@@ -15088,12 +15236,12 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-between px-1 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex items-center justify-between px-1.5 text-[11px] text-slate-500 dark:text-slate-400">
               <span>Cutoff: 1 hour before bus departure</span>
               <button
                 type="button"
                 onClick={() => setShowAbsenceBar(true)}
-                className="font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Today / Tomorrow options
               </button>
@@ -15102,19 +15250,19 @@ export const StudentPortal: React.FC = () => {
 
           {/* Area Cluster Bypass Notice */}
           {isClusterBypassed && (
-            <div className="rounded-2xl border border-amber-300 bg-amber-50 p-3 text-[11px] text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+            <div className="rounded-2xl border border-amber-300 bg-amber-50/90 p-3 text-[11px] text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
               <span className="font-bold">⚠️ Area Cluster Bypassed:</span> 100% of riders in your area marked absent. Bus uses the highway express route.
             </div>
           )}
           {isDownstreamBypass && (
-            <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-3 text-[11px] text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
+            <div className="rounded-2xl border border-emerald-300 bg-emerald-50/90 p-3 text-[11px] text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
               <span className="font-bold">⚡ Earlier Arrival Notice:</span> Upstream area cluster skipped. Bus may arrive 5–10 minutes earlier.
             </div>
           )}
 
           {/* Rounded Live Map Preview Card */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-            <div className="h-48 sm:h-56 w-full bg-slate-100 dark:bg-[#141821]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
+            <div className="h-48 sm:h-56 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               <HybridTransitMap
                 buses={buses}
                 focusedBus={activeBus}
@@ -15125,29 +15273,29 @@ export const StudentPortal: React.FC = () => {
             <button
               type="button"
               onClick={() => setPortalTab('MAP')}
-              className="flex w-full items-center justify-center gap-1.5 bg-[#4F46E5] py-2.5 text-xs font-bold text-white transition hover:bg-[#4338CA] cursor-pointer"
+              className="electric-cta flex w-full items-center justify-center gap-1.5 py-2.5 text-xs font-extrabold text-white cursor-pointer"
             >
               <span>View Full Map / Metro View →</span>
             </button>
           </div>
 
           {/* Compact Recent Updates + Driver Strip */}
-          <div className="flex items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card flex items-center justify-between gap-3 rounded-3xl p-4">
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-cyan-300">
                 Recent Updates:
               </p>
               <p className="mt-0.5 text-xs font-semibold text-slate-800 dark:text-slate-100">
                 {recentUpdateText}
               </p>
               <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                Driver: <b className="text-slate-700 dark:text-slate-200">{activeBus.driverName || 'Assigned Driver'}</b> ({activeBus.driverPhone || '+91 77999 56801'})
+                Driver: <b className="text-slate-800 dark:text-slate-200">{activeBus.driverName || 'Assigned Driver'}</b> ({activeBus.driverPhone || '+91 77999 56801'})
               </p>
             </div>
             <a
               href={`tel:${activeBus.driverPhone ? activeBus.driverPhone.replace(/\s+/g, '') : '+917799956801'}`}
               title={`Call ${activeBus.driverName || 'Driver'}`}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#4F46E5] text-white shadow-sm transition hover:bg-[#4338CA] active:scale-95"
+              className="electric-cta flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white"
             >
               <Phone className="h-4 w-4" />
             </a>
@@ -15156,23 +15304,23 @@ export const StudentPortal: React.FC = () => {
       )}
 
       {portalTab === 'MAP' && (
-        <div className="space-y-4">
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
-            <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
+        <div className="animate-panel-in space-y-4">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
+            <div className="flex items-center justify-between border-b border-slate-200/70 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#4F46E5] animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Corridor Tracking • {routeNumber}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 rounded-xl bg-[#F5F7FB] p-1 dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
                 <button
                   type="button"
                   onClick={() => setMapMode('INTERACTIVE')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'INTERACTIVE'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -15183,7 +15331,7 @@ export const StudentPortal: React.FC = () => {
                   onClick={() => setMapMode('SCHEMATIC')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'SCHEMATIC'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -15192,7 +15340,7 @@ export const StudentPortal: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-80 sm:h-96 w-full bg-slate-100 dark:bg-[#141821]">
+            <div className="h-80 sm:h-96 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -15223,13 +15371,13 @@ export const StudentPortal: React.FC = () => {
       )}
 
       {portalTab === 'PASS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Digital Campus Bus Pass Card */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
             <div
               className={`p-5 ${
                 passState.canTravel
-                  ? 'bg-gradient-to-br from-[#4F46E5]/10 via-indigo-50/40 to-white dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
+                  ? 'bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/70 dark:from-[#4F46E5]/20 dark:via-[#1E2430] dark:to-[#1E2430]'
                   : 'bg-rose-50 dark:bg-rose-950/30'
               }`}
             >
@@ -15237,7 +15385,7 @@ export const StudentPortal: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <ShieldCheck
                     className={`h-5 w-5 ${
-                      passState.canTravel ? 'text-[#4F46E5] dark:text-indigo-400' : 'text-rose-500'
+                      passState.canTravel ? 'text-[#4F46E5] dark:text-cyan-300' : 'text-rose-500'
                     }`}
                   />
                   <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
@@ -15253,7 +15401,7 @@ export const StudentPortal: React.FC = () => {
                       : passState.isGraceActive
                       ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200'
                       : passState.canTravel
-                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200'
+                      ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-700/40 dark:bg-emerald-900/60 dark:text-emerald-200'
                       : 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200'
                   }`}
                 >
@@ -15272,7 +15420,7 @@ export const StudentPortal: React.FC = () => {
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 pt-3.5 dark:border-[#2E3646]">
                 <div>
                   <p className="text-sm font-extrabold text-slate-900 dark:text-white">
-                    {studentName} • <span className="font-mono">{studentRoll}</span>
+                    {studentName} • <span className="font-mono text-[#4F46E5] dark:text-cyan-300">{studentRoll}</span>
                   </p>
                   <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                     {routeNumber} • {assignedStopName}
@@ -15289,7 +15437,7 @@ export const StudentPortal: React.FC = () => {
                     type="button"
                     onClick={handleActivateGrace}
                     disabled={isActivatingGrace}
-                    className="rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                    className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                   >
                     {isActivatingGrace ? 'Activating...' : 'Activate 1-Day Grace Pass'}
                   </button>
@@ -15298,17 +15446,17 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Transport Assistance & Helpline (+91 77999 56801) */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Transport Assistance & Helpline */}
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
-              <PhoneCall className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <PhoneCall className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Transport Assistance &amp; Help Desk
               </h2>
             </div>
 
             <div className="mt-4 space-y-3">
-              <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3.5">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Assigned Bus Driver ({routeNumber})
@@ -15316,21 +15464,21 @@ export const StudentPortal: React.FC = () => {
                   <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                     {activeBus.driverName || 'Assigned Driver'}
                   </p>
-                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-indigo-400">
+                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                     {activeBus.driverPhone || '+91 77999 56801'}
                   </p>
                 </div>
 
                 <a
                   href={`tel:${activeBus.driverPhone ? activeBus.driverPhone.replace(/\s+/g, '') : '+917799956801'}`}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95"
+                  className="electric-cta inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white"
                 >
                   <Phone className="h-3.5 w-3.5" />
                   <span>Call Driver</span>
                 </a>
               </div>
 
-              <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3.5">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Sreenidhi Transport Helpline
@@ -15338,21 +15486,21 @@ export const StudentPortal: React.FC = () => {
                   <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                     Campus Transport Desk (SNIST)
                   </p>
-                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-indigo-400">
+                  <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                     +91 77999 56801 / +91 77999 56802
                   </p>
                 </div>
 
                 <a
                   href="tel:+917799956801"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/20 active:scale-95"
+                  className="tactile-btn inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/20"
                 >
                   <Phone className="h-3.5 w-3.5" />
                   <span>Call Helpline</span>
                 </a>
               </div>
 
-              <div className="rounded-2xl border border-dashed border-slate-200 p-3 text-[11px] text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
+              <div className="rounded-2xl border border-dashed border-indigo-200/80 p-3 text-[11px] text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
                 <p>
                   <b>Campus EPABX:</b> +91 8415-395222 / 395444 • <b>General:</b> +91 9948119481
                 </p>
@@ -15363,8 +15511,8 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
 
-          {/* Emergency SOS Flow (2-Step Confirmation) */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Emergency SOS Flow */}
+          <div className="prismatic-card rounded-3xl p-4">
             {confirmSos ? (
               <div className="space-y-2.5">
                 <p className="text-xs font-bold text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
@@ -15376,14 +15524,14 @@ export const StudentPortal: React.FC = () => {
                     type="button"
                     onClick={handleConfirmSos}
                     disabled={isSendingSos}
-                    className="flex-1 rounded-xl bg-rose-600 py-2.5 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 active:scale-95 cursor-pointer"
+                    className="tactile-btn flex-1 rounded-xl bg-rose-600 py-2.5 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 cursor-pointer"
                   >
                     {isSendingSos ? 'Dispatching SOS...' : 'Yes, Send SOS'}
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmSos(false)}
-                    className="flex-1 rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
+                    className="tactile-btn flex-1 rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -15402,7 +15550,7 @@ export const StudentPortal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setConfirmSos(true)}
-                  className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 active:scale-95 cursor-pointer"
+                  className="tactile-btn rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-rose-700 cursor-pointer"
                 >
                   SOS
                 </button>
@@ -15414,12 +15562,12 @@ export const StudentPortal: React.FC = () => {
 
       {/* Secondary Utilities on MORE Tab */}
       {portalTab === 'MORE' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {ENABLE_PARENT_PORTAL && !isFaculty && (
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="rounded-2xl bg-indigo-50 p-2.5 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                  <div className="rounded-2xl bg-indigo-50 p-2.5 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                     <KeyRound className="h-5 w-5" />
                   </div>
                   <div>
@@ -15435,19 +15583,19 @@ export const StudentPortal: React.FC = () => {
                   type="button"
                   onClick={handleGenerateParentCode}
                   disabled={isGeneratingParentCode}
-                  className="rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   {isGeneratingParentCode ? 'Generating...' : parentLinkCode ? 'Refresh Code' : 'Generate Code'}
                 </button>
               </div>
 
               {parentLinkCode && (
-                <div className="mt-3 rounded-2xl bg-[#F5F7FB] p-3 border border-slate-200 dark:bg-[#141821] dark:border-[#2E3646] flex items-center justify-between">
+                <div className="prismatic-subcard mt-3 rounded-2xl p-3 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
                       Share with Parent:
                     </span>
-                    <p className="font-mono text-sm font-black text-[#4F46E5] dark:text-indigo-400 tracking-widest">
+                    <p className="font-mono text-sm font-black text-[#4F46E5] dark:text-cyan-300 tracking-widest">
                       {parentLinkCode}
                     </p>
                   </div>
@@ -15457,7 +15605,7 @@ export const StudentPortal: React.FC = () => {
                       navigator.clipboard?.writeText(parentLinkCode);
                       pushToast('success', 'Code Copied', 'Parent access code copied to clipboard.');
                     }}
-                    className="rounded-xl bg-slate-200 px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+                    className="tactile-btn rounded-xl bg-indigo-50 px-3 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-100 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
                   >
                     Copy
                   </button>
@@ -15476,9 +15624,9 @@ export const StudentPortal: React.FC = () => {
           />
 
           {/* Lost & Found Item Form */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2">
-              <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Lost Something on the Bus?
               </h2>
@@ -15489,14 +15637,14 @@ export const StudentPortal: React.FC = () => {
                 onChange={(e) => setLostDescription(e.target.value)}
                 rows={2}
                 placeholder="Describe the item (e.g. Blue water bottle, left on seat 12 on Route 14)"
-                className="w-full rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                className="w-full rounded-2xl border border-slate-200/80 bg-[#F7F9FF] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 maxLength={280}
                 required
               />
               <button
                 type="submit"
                 disabled={isSubmittingLost || !lostDescription.trim()}
-                className="rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] disabled:opacity-50 cursor-pointer"
+                className="electric-cta rounded-xl px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingLost ? 'Reporting...' : 'Report to Transport Office'}
               </button>
@@ -15504,7 +15652,7 @@ export const StudentPortal: React.FC = () => {
           </div>
 
           {/* Ride Quality Feedback & 1-5 Star Rating */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-amber-500 fill-amber-500" />
@@ -15549,13 +15697,13 @@ export const StudentPortal: React.FC = () => {
                   onChange={(e) => setFeedbackMsg(e.target.value)}
                   rows={2}
                   placeholder="How was the driver, bus cleanliness, or highway ride punctuality?"
-                  className="w-full rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="w-full rounded-2xl border border-slate-200/80 bg-[#F7F9FF] p-3 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   maxLength={280}
                 />
 
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] cursor-pointer"
+                  className="electric-cta rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer"
                 >
                   Submit Ride Feedback
                 </button>
@@ -15572,9 +15720,9 @@ export const StudentPortal: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowApplyModal(true)}
-              className="flex w-full items-center justify-center gap-2 rounded-3xl border border-slate-200/80 bg-white p-3.5 text-xs font-bold text-slate-900 shadow-sm transition hover:bg-indigo-50/50 dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white dark:hover:bg-[#262E3D] cursor-pointer"
+              className="prismatic-card tactile-btn flex w-full items-center justify-center gap-2 rounded-3xl p-3.5 text-xs font-extrabold text-[#4F46E5] dark:text-cyan-300 cursor-pointer"
             >
-              <CreditCard className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+              <CreditCard className="h-4 w-4 text-[#06B6D4]" />
               <span>Transit Services Desk</span>
             </button>
           </div>
@@ -15584,7 +15732,7 @@ export const StudentPortal: React.FC = () => {
       {/* Sleek Docked 4-Tab Pill Bottom Bar */}
       <nav
         aria-label="Student Portal Navigation"
-        className="fixed bottom-3 left-1/2 z-40 w-[min(92vw,420px)] -translate-x-1/2 rounded-full border border-slate-200/90 bg-white/95 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur-md dark:border-[#2E3646] dark:bg-[#1E2430]/95"
+        className="fixed bottom-3 left-1/2 z-40 w-[min(92vw,420px)] -translate-x-1/2 rounded-full border border-indigo-100/90 bg-white/90 p-1.5 shadow-[0_14px_38px_-10px_rgba(79,70,229,0.28)] backdrop-blur-2xl dark:border-[#2E3646] dark:bg-[#1E2430]/92"
       >
         <div className="grid grid-cols-4 gap-1">
           {(
@@ -15601,10 +15749,10 @@ export const StudentPortal: React.FC = () => {
                 key={id}
                 type="button"
                 onClick={() => setPortalTab(id)}
-                className={`flex items-center justify-center gap-1.5 rounded-full py-2 text-[11px] font-extrabold transition cursor-pointer ${
+                className={`tactile-btn flex items-center justify-center gap-1.5 rounded-full py-2 text-[11px] font-extrabold transition cursor-pointer ${
                   active
-                    ? 'bg-[#4F46E5] text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm shadow-indigo-500/25'
+                    : 'text-slate-500 hover:bg-indigo-50/70 hover:text-[#4F46E5] dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -15617,23 +15765,23 @@ export const StudentPortal: React.FC = () => {
 
       {/* Transit Services Modal */}
       {showApplyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-sm rounded-3xl border border-[#D1D5DB] bg-white p-6 shadow-xl dark:border-[#374151] dark:bg-[#222733]">
-            <h3 className="text-base font-extrabold text-[#111827] dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/35 p-4 backdrop-blur-md">
+          <div className="prismatic-card animate-panel-in w-full max-w-sm rounded-3xl p-6">
+            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
               Transit Services Desk
             </h3>
-            <p className="mt-1 text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
               Direct submission to the Transport Office Scrutiny Desk.
             </p>
             <form onSubmit={handleApplySubmit} className="mt-4 space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Service Request Type
                 </label>
                 <select
                   value={applyServiceType}
                   onChange={(e) => setApplyServiceType(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="BUS_PASS_RENEWAL">Semester Bus Pass Renewal</option>
                   <option value="ROUTE_CHANGE">Evening Alternate Drop Stop / Route Change</option>
@@ -15641,14 +15789,14 @@ export const StudentPortal: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Reason / Notes
                 </label>
                 <textarea
                   value={applyReason}
                   onChange={(e) => setApplyReason(e.target.value)}
                   rows={3}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-medium text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-medium text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   required
                 />
               </div>
@@ -15656,13 +15804,13 @@ export const StudentPortal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowApplyModal(false)}
-                  className="flex-1 rounded-xl border border-[#D1D5DB] py-2 text-xs font-bold text-[#4B5563] dark:border-[#374151] dark:text-[#9CA3AF] cursor-pointer"
+                  className="tactile-btn flex-1 rounded-xl border border-slate-200 py-2 text-xs font-bold text-slate-600 dark:border-[#2E3646] dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 rounded-xl bg-[#4F46E5] py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] cursor-pointer"
+                  className="electric-cta flex-1 rounded-xl py-2 text-xs font-bold text-white cursor-pointer"
                 >
                   Submit
                 </button>
@@ -15697,59 +15845,59 @@ export const StudentPortal: React.FC = () => {
 
       {/* Mandatory Forced Password Change Modal */}
       {isPasswordModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-sm rounded-3xl border border-amber-500/40 bg-white p-6 shadow-2xl dark:border-amber-500/30 dark:bg-[#222733]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 p-4 backdrop-blur-md">
+          <div className="prismatic-card animate-panel-in w-full max-w-sm rounded-3xl border-amber-300/80 p-6">
             <div className="flex items-center gap-2.5 text-amber-600 dark:text-amber-400">
               <ShieldAlert className="h-6 w-6" />
-              <h3 className="text-base font-extrabold text-[#111827] dark:text-white">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Update Temporary Password
               </h3>
             </div>
-            <p className="mt-2 text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
               Your account was provisioned with a temporary password. Security policy requires you to set a permanent password before continuing.
             </p>
             {pwError && (
-              <div className="mt-3 rounded-xl bg-red-50 p-2.5 text-xs font-semibold text-red-600 dark:bg-red-950/40 dark:text-red-400">
+              <div className="mt-3 rounded-xl bg-rose-50 border border-rose-200 p-2.5 text-xs font-semibold text-rose-600 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-400">
                 {pwError}
               </div>
             )}
             <form onSubmit={handleChangePassword} className="mt-4 space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Current Temporary Password
                 </label>
                 <input
                   type="password"
                   value={currentPw}
                   onChange={(e) => setCurrentPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="Current password"
                   required
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   New Permanent Password (min 10 characters)
                 </label>
                 <input
                   type="password"
                   value={newPw}
                   onChange={(e) => setNewPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="New password (10+ characters)"
                   minLength={10}
                   required
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#4B5563] dark:text-[#9CA3AF]">
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Confirm New Password
                 </label>
                 <input
                   type="password"
                   value={confirmPw}
                   onChange={(e) => setConfirmPw(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] px-3 py-2 text-xs font-bold text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   placeholder="Confirm new password"
                   minLength={10}
                   required
@@ -15758,7 +15906,7 @@ export const StudentPortal: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmittingPw}
-                className="w-full mt-2 rounded-xl bg-[#4F46E5] py-2.5 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-98 disabled:opacity-50 cursor-pointer"
+                className="electric-cta w-full mt-2 rounded-xl py-2.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingPw ? 'Updating Password...' : 'Save & Enter Student Portal'}
               </button>
@@ -16232,13 +16380,15 @@ export const DriverConsole: React.FC = () => {
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4 pb-16 antialiased">
       {/* Compact Driver Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <img
-            src="/sreenidhi_express_logo.jpg"
-            alt="Sreenidhi Express Logo"
-            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-xs ring-2 ring-[#4F46E5]/20 dark:ring-indigo-400/30"
-          />
+          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+            <img
+              src="/sreenidhi_express_logo.jpg"
+              alt="Sreenidhi Express Logo"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
@@ -16247,13 +16397,13 @@ export const DriverConsole: React.FC = () => {
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
                   tripRunning
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                    ? 'border border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-700/50 dark:bg-cyan-950/60 dark:text-cyan-300'
                     : 'bg-slate-100 text-slate-600 dark:bg-[#2E3646] dark:text-slate-300'
                 }`}
               >
                 {tripRunning ? (
                   <>
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
                     <span>{activeBus.routeNumber} • Live</span>
                   </>
                 ) : (
@@ -16281,7 +16431,7 @@ export const DriverConsole: React.FC = () => {
                   aria-label="Select Driver Route"
                   value={activeRouteId}
                   onChange={(e) => setActiveRouteId(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-[#F5F7FB] px-2 py-0.5 text-[11px] font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-2.5 py-0.5 text-[11px] font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   {buses.map((b) => (
                     <option key={b.routeId} value={b.routeId}>
@@ -16297,7 +16447,7 @@ export const DriverConsole: React.FC = () => {
         <button
           type="button"
           onClick={logoutUser}
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-[#F5F7FB] px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer shrink-0"
+          className="tactile-btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-[#F7F9FF] px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer shrink-0"
         >
           <LogOut className="h-3.5 w-3.5" />
           <span>Log out</span>
@@ -16305,7 +16455,7 @@ export const DriverConsole: React.FC = () => {
       </div>
 
       {/* 3-Tab Driver Sub-Navigation */}
-      <div className="grid grid-cols-3 gap-1.5 rounded-2xl border border-slate-200/80 bg-white p-1 shadow-xs dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card grid grid-cols-3 gap-1.5 rounded-2xl p-1">
         {(
           [
             { id: 'TRIP', label: 'Trip' },
@@ -16317,10 +16467,10 @@ export const DriverConsole: React.FC = () => {
             key={id}
             type="button"
             onClick={() => setDriverTab(id)}
-            className={`rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
+            className={`tactile-btn rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
               driverTab === id
-                ? 'bg-[#4F46E5] text-white shadow-xs'
-                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm shadow-indigo-500/20'
+                : 'text-slate-500 hover:bg-indigo-50/70 hover:text-[#4F46E5] dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             {label}
@@ -16330,7 +16480,7 @@ export const DriverConsole: React.FC = () => {
 
       {/* Emergency Oversleep Pull-Over Banner */}
       {oversleepingStudents.length > 0 && (
-        <div className="animate-pulse rounded-3xl border border-rose-500/50 bg-rose-500/15 p-4 text-rose-900 shadow-md dark:text-rose-100">
+        <div className="animate-pulse rounded-3xl border border-rose-400/50 bg-rose-50 p-4 text-rose-900 shadow-md dark:bg-rose-950/40 dark:text-rose-100">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-start gap-3">
               <AlertOctagon className="mt-0.5 h-7 w-7 shrink-0 text-rose-600 dark:text-rose-400" />
@@ -16346,7 +16496,7 @@ export const DriverConsole: React.FC = () => {
             <button
               type="button"
               onClick={confirmOversleepSafeDropOff}
-              className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 cursor-pointer"
+              className="tactile-btn rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:bg-rose-700 cursor-pointer"
             >
               Student Safely Stepped Off
             </button>
@@ -16355,19 +16505,21 @@ export const DriverConsole: React.FC = () => {
       )}
 
       {driverTab === 'TRIP' && (
-        <div className="space-y-4">
-          {/* Primary Indigo Driver Hero Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-[#4F46E5] to-[#5B52F0] p-5 text-white shadow-lg shadow-indigo-500/20">
+        <div className="animate-panel-in space-y-4">
+          {/* Primary Electric Indigo -> Cyan Driver Hero Card */}
+          <div className="electric-hero rounded-3xl p-5 text-white">
+            <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-25" />
+
             {/* Top Row: Live Headcount & Compact Stepper */}
-            <div className="flex items-center justify-between gap-3">
+            <div className="relative flex items-center justify-between gap-3">
               <div>
-                <p className="text-[11px] font-semibold text-indigo-100/85">Live Headcount:</p>
+                <p className="text-[11px] font-semibold text-indigo-100/90">Live Headcount:</p>
                 <div className="mt-0.5 flex items-baseline gap-2">
-                  <span className="font-mono text-3xl sm:text-4xl font-black tracking-tight text-white">
+                  <span className="font-mono-timer text-3xl sm:text-4xl font-black tracking-tight text-white">
                     {boardedCount}{' '}
-                    <span className="text-lg font-bold text-indigo-200/85">/ {activeBus.capacity}</span>
+                    <span className="text-lg font-bold text-cyan-100/90">/ {activeBus.capacity}</span>
                   </span>
-                  <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold text-white">
+                  <span className="rounded-full bg-white/18 px-2.5 py-0.5 text-[10px] font-bold text-white ring-1 ring-white/25 backdrop-blur-xs">
                     {loadPercentage}% full
                   </span>
                 </div>
@@ -16378,7 +16530,7 @@ export const DriverConsole: React.FC = () => {
                   type="button"
                   onClick={() => handleIncrementPassengers(-1)}
                   title="Decrease passenger count"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white transition hover:bg-white/30 active:scale-95 cursor-pointer"
+                  className="tactile-btn flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/25 backdrop-blur-xs transition hover:bg-white/30 cursor-pointer"
                 >
                   <Minus className="h-4 w-4" />
                 </button>
@@ -16386,7 +16538,7 @@ export const DriverConsole: React.FC = () => {
                   type="button"
                   onClick={() => handleIncrementPassengers(1)}
                   title="Increase passenger count"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white transition hover:bg-white/30 active:scale-95 cursor-pointer"
+                  className="tactile-btn flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/25 backdrop-blur-xs transition hover:bg-white/30 cursor-pointer"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -16394,15 +16546,15 @@ export const DriverConsole: React.FC = () => {
             </div>
 
             {/* Middle Row: Started Time & Live GPS / 5G Pill */}
-            <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white/10 px-3.5 py-2.5 text-xs">
+            <div className="relative mt-3.5 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/15 bg-white/12 px-3.5 py-2.5 text-xs backdrop-blur-md">
               <div className="flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5 text-indigo-200" />
+                <Clock className="h-3.5 w-3.5 text-cyan-200" />
                 <span className="font-semibold text-white">
                   Started {startedTimeIst || 'Not Started'}
                 </span>
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-white/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
-                <BatteryCharging className="h-3.5 w-3.5 text-emerald-300" />
+              <div className="flex items-center gap-2 rounded-full bg-white/18 px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
+                <BatteryCharging className="h-3.5 w-3.5 text-cyan-200" />
                 <span>{livePhoneGpsActive ? 'GPS Active' : 'GPS Standby'} • 5G • {activeBus.driverBatteryPct ?? 86}%</span>
               </div>
             </div>
@@ -16411,7 +16563,7 @@ export const DriverConsole: React.FC = () => {
             <button
               type="button"
               onClick={handleToggleTrip}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-xs font-extrabold text-[#4F46E5] shadow-sm transition hover:bg-indigo-50 active:scale-[0.99] cursor-pointer"
+              className="animate-electric-sheen tactile-btn relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white py-3 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 cursor-pointer"
             >
               {tripRunning ? <Square className="h-4 w-4" /> : <Play className="h-4 w-4" />}
               <span>{tripRunning ? 'End Bus Trip' : 'Start Bus Trip'}</span>
@@ -16419,7 +16571,7 @@ export const DriverConsole: React.FC = () => {
           </div>
 
           {/* Next Stop & Quick Delay Card */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
               <div className="min-w-0">
                 <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
@@ -16434,7 +16586,7 @@ export const DriverConsole: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-indigo-50 px-3 py-1 font-mono text-xs font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="rounded-full border border-indigo-200/80 bg-indigo-50 px-3 py-1 font-mono text-xs font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
                   {arrivalStage === 'ARRIVED_2_MIN_TIMER' && twoMinCountdownSec > 0
                     ? `Dwell: ${formatTimer(twoMinCountdownSec)}`
                     : autoGeofenceDistanceM !== null
@@ -16445,7 +16597,7 @@ export const DriverConsole: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleDepartStop}
-                    className="inline-flex items-center gap-1 rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+                    className="electric-cta inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
                   >
                     <FastForward className="h-3.5 w-3.5" />
                     <span>Next Stop →</span>
@@ -16464,10 +16616,10 @@ export const DriverConsole: React.FC = () => {
                   key={item.min}
                   type="button"
                   onClick={() => handleSetDelay(item.min)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition active:scale-95 cursor-pointer ${
+                  className={`tactile-btn rounded-full px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                     activeDelayMin === item.min
                       ? 'bg-amber-500 text-white shadow-xs'
-                      : 'border border-slate-200/80 bg-[#F5F7FB] text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200'
+                      : 'border border-slate-200/80 bg-[#F7F9FF] text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200'
                   }`}
                 >
                   {item.label}
@@ -16477,7 +16629,7 @@ export const DriverConsole: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleSetDelay(0)}
-                  className="rounded-full border border-emerald-500/40 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
+                  className="tactile-btn rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
                 >
                   On-Time
                 </button>
@@ -16486,22 +16638,22 @@ export const DriverConsole: React.FC = () => {
           </div>
 
           {/* Compact Live Map / Metro Line Radar Card */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#4F46E5] animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Live Corridor Radar • {activeBus.routeNumber}
                 </h4>
               </div>
               <div className="flex items-center gap-2 text-xs">
-                <div className="flex rounded-xl bg-[#F5F7FB] p-0.5 dark:bg-[#141821]">
+                <div className="prismatic-subcard flex rounded-xl p-0.5">
                   <button
                     type="button"
                     onClick={() => setMapMode('INTERACTIVE')}
                     className={`rounded-lg px-2.5 py-1 text-[10px] font-bold transition cursor-pointer ${
                       mapMode === 'INTERACTIVE'
-                        ? 'bg-[#4F46E5] text-white shadow-xs'
+                        ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                         : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                     }`}
                   >
@@ -16512,14 +16664,14 @@ export const DriverConsole: React.FC = () => {
                     onClick={() => setMapMode('SCHEMATIC')}
                     className={`rounded-lg px-2.5 py-1 text-[10px] font-bold transition cursor-pointer ${
                       mapMode === 'SCHEMATIC'
-                        ? 'bg-[#4F46E5] text-white shadow-xs'
+                        ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                         : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                     }`}
                   >
                     Metro Line
                   </button>
                 </div>
-                <span className="rounded-lg bg-[#F5F7FB] px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 dark:bg-[#141821] dark:text-slate-200">
+                <span className="prismatic-subcard rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-[#4F46E5] dark:text-cyan-300">
                   {Math.round(activeBus.speedKmh)} km/h
                 </span>
               </div>
@@ -16540,13 +16692,13 @@ export const DriverConsole: React.FC = () => {
       )}
 
       {driverTab === 'STOPS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Stop-by-Stop Passenger Manifest & Batch Boarding */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                     <Bus className="h-4 w-4" />
                   </span>
                   <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
@@ -16567,7 +16719,7 @@ export const DriverConsole: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleBatchBoardCurrentStop}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white cursor-pointer"
                 >
                   <CheckCircle2 className="h-4 w-4" />
                   <span>Mark {currentStop.name} Boarded</span>
@@ -16575,7 +16727,7 @@ export const DriverConsole: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setManifestExpanded(!manifestExpanded)}
-                  className="flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-2 text-xs font-bold text-[#4F46E5] dark:border-[#2E3646] dark:text-indigo-300 cursor-pointer"
+                  className="tactile-btn flex items-center gap-1 rounded-xl border border-indigo-200 bg-indigo-50/70 px-2.5 py-2 text-xs font-bold text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-cyan-300 cursor-pointer"
                 >
                   <span>{manifestExpanded ? 'Collapse' : 'Expand'}</span>
                   {manifestExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -16596,10 +16748,10 @@ export const DriverConsole: React.FC = () => {
                       key={stop.id}
                       className={`rounded-2xl border p-3.5 transition-all ${
                         isCurrent
-                          ? 'border-[#4F46E5] bg-indigo-50/70 dark:border-indigo-500 dark:bg-indigo-950/30'
+                          ? 'border-[#4F46E5]/60 bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/70 shadow-sm dark:border-indigo-500 dark:bg-indigo-950/30'
                           : isPassed
-                          ? 'border-slate-200/60 bg-slate-50 opacity-75 dark:border-[#2E3646] dark:bg-[#141821]'
-                          : 'border-slate-200/80 bg-[#F5F7FB] dark:border-[#2E3646] dark:bg-[#141821]'
+                          ? 'border-slate-200/60 bg-slate-50/70 opacity-75 dark:border-[#2E3646] dark:bg-[#141821]'
+                          : 'border-slate-200/80 bg-[#F7F9FF] dark:border-[#2E3646] dark:bg-[#141821]'
                       }`}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -16607,7 +16759,7 @@ export const DriverConsole: React.FC = () => {
                           <span
                             className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl font-bold text-xs ${
                               isCurrent
-                                ? 'bg-[#4F46E5] text-white'
+                                ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white'
                                 : isPassed
                                 ? 'bg-slate-300 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
                                 : 'bg-white text-slate-900 border border-slate-200 dark:bg-[#1E2430] dark:text-white dark:border-[#2E3646]'
@@ -16621,7 +16773,7 @@ export const DriverConsole: React.FC = () => {
                                 {stop.name}
                               </h4>
                               {stop.metroInterchange && (
-                                <span className="rounded bg-indigo-100 px-1.5 py-0.5 text-[9px] font-bold text-[#4F46E5] dark:bg-indigo-950 dark:text-indigo-300">
+                                <span className="rounded bg-cyan-50 border border-cyan-200 px-1.5 py-0.5 text-[9px] font-bold text-cyan-800 dark:bg-cyan-950 dark:border-cyan-800 dark:text-cyan-300">
                                   METRO
                                 </span>
                               )}
@@ -16636,7 +16788,7 @@ export const DriverConsole: React.FC = () => {
                           <span
                             className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
                               isCurrent
-                                ? 'bg-[#4F46E5] text-white'
+                                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white'
                                 : isPassed
                                 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
                                 : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
@@ -16651,7 +16803,7 @@ export const DriverConsole: React.FC = () => {
                       </div>
 
                       {isCurrent && stopStudents.length > 0 && (
-                        <div className="mt-3 border-t border-slate-200/70 pt-2.5 dark:border-[#2E3646]">
+                        <div className="mt-3 border-t border-indigo-100 pt-2.5 dark:border-[#2E3646]">
                           <p className="text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1.5">
                             Stop Passenger Manifest:
                           </p>
@@ -16659,7 +16811,7 @@ export const DriverConsole: React.FC = () => {
                             {stopStudents.map((st) => (
                               <div
                                 key={st.id}
-                                className="flex items-center justify-between rounded-xl bg-white px-2.5 py-1.5 text-xs shadow-2xs dark:bg-[#1E2430]"
+                                className="flex items-center justify-between rounded-xl bg-white/95 px-2.5 py-1.5 text-xs shadow-2xs dark:bg-[#1E2430]"
                               >
                                 <div className="flex items-center gap-2">
                                   <span className="font-bold text-slate-900 dark:text-white">{st.name}</span>
@@ -16692,7 +16844,7 @@ export const DriverConsole: React.FC = () => {
                                     <button
                                       type="button"
                                       onClick={() => handleCheckInIndividualStudent(st.id, st.name)}
-                                      className="rounded-lg bg-[#4F46E5] px-2.5 py-0.5 text-[10px] font-bold text-white hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+                                      className="electric-cta rounded-lg px-2.5 py-0.5 text-[10px] font-bold text-white cursor-pointer"
                                     >
                                       Board
                                     </button>
@@ -16711,10 +16863,10 @@ export const DriverConsole: React.FC = () => {
           </div>
 
           {/* Tomorrow / Active Route Optimization Panel */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Navigation className="h-4 w-4" />
                 </span>
                 <div>
@@ -16727,7 +16879,7 @@ export const DriverConsole: React.FC = () => {
                         {routeOptimizationPlan.skippedClusterIds.length} Cluster(s) Bypassed
                       </span>
                     ) : (
-                      <span className="rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 text-[10px] font-bold">
+                      <span className="rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 text-[10px] font-bold">
                         Standard Route (All Stops Active)
                       </span>
                     )}
@@ -16750,7 +16902,7 @@ export const DriverConsole: React.FC = () => {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-xl bg-[#4F46E5] text-white px-3.5 py-2 text-xs font-bold hover:bg-[#4338CA] active:scale-95 shadow-xs transition cursor-pointer"
+                    className="electric-cta flex items-center gap-2 rounded-xl text-white px-3.5 py-2 text-xs font-bold cursor-pointer"
                   >
                     <Navigation className="h-3.5 w-3.5" />
                     <span>Navigate Optimized Route (Google Maps)</span>
@@ -16782,7 +16934,7 @@ export const DriverConsole: React.FC = () => {
                     className={`rounded-2xl border p-3 flex flex-col justify-between ${
                       c.isSkipped
                         ? 'border-emerald-300 bg-emerald-50/50 dark:border-emerald-800 dark:bg-emerald-950/30'
-                        : 'border-slate-200/80 bg-[#F5F7FB] dark:border-[#2E3646] dark:bg-[#141821]'
+                        : 'prismatic-subcard'
                     }`}
                   >
                     <div>
@@ -16794,7 +16946,7 @@ export const DriverConsole: React.FC = () => {
                           className={`rounded-full px-1.5 py-0.5 text-[9px] font-extrabold uppercase shrink-0 ${
                             c.isSkipped
                               ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
-                              : 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
+                              : 'bg-indigo-50 text-[#4F46E5] dark:bg-slate-700 dark:text-slate-300'
                           }`}
                         >
                           {c.isSkipped ? 'BYPASS' : 'STOP'}
@@ -16823,17 +16975,17 @@ export const DriverConsole: React.FC = () => {
       )}
 
       {driverTab === 'ALERTS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Automatic GPS Geofence & Manual Override */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
                 <span className="relative flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4F46E5] opacity-75"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#06B6D4] opacity-75"></span>
                   <span className="relative inline-flex h-3 w-3 rounded-full bg-[#4F46E5]"></span>
                 </span>
                 <div>
-                  <span className="text-xs font-extrabold text-[#4F46E5] dark:text-indigo-300">
+                  <span className="text-xs font-extrabold text-[#4F46E5] dark:text-cyan-300">
                     Automatic GPS Geofence Active
                   </span>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -16842,7 +16994,7 @@ export const DriverConsole: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <span className="rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300 font-mono">
+              <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-[10px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300 font-mono">
                 ≤150m AUTO-ARRIVE • &gt;225m AUTO-DEPART
               </span>
             </div>
@@ -16851,7 +17003,7 @@ export const DriverConsole: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowManualOverride((prev) => !prev)}
-                className="self-start text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-300 cursor-pointer"
+                className="self-start text-xs font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 {showManualOverride ? 'Hide Manual Override' : 'Show Manual Override Controls'}
               </button>
@@ -16860,14 +17012,14 @@ export const DriverConsole: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleArriveCurrentStop}
-                    className="rounded-xl bg-amber-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-amber-700 active:scale-95 cursor-pointer"
+                    className="tactile-btn rounded-xl bg-amber-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-amber-700 cursor-pointer"
                   >
                     Force Arrive Stop (2m Timer)
                   </button>
                   <button
                     type="button"
                     onClick={handleDepartStop}
-                    className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+                    className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white cursor-pointer"
                   >
                     <FastForward className="h-3.5 w-3.5" />
                     <span>Force Depart / Next Stop</span>
@@ -16877,10 +17029,10 @@ export const DriverConsole: React.FC = () => {
             </div>
           </div>
 
-          {/* Cabin Controls: Phone GPS, Voice Readouts & Rescue Dispatch */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Cabin Controls */}
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2 mb-3.5">
-              <Users className="h-4 w-4 text-[#4F46E5] dark:text-indigo-300" />
+              <Users className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Driver Telemetry &amp; Safety Actions
               </h3>
@@ -16890,10 +17042,10 @@ export const DriverConsole: React.FC = () => {
               <button
                 type="button"
                 onClick={toggleLivePhoneGps}
-                className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
+                className={`tactile-btn inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
                   livePhoneGpsActive
                     ? 'bg-emerald-100 text-emerald-800 ring-1 ring-emerald-500/40 dark:bg-emerald-950/60 dark:text-emerald-300'
-                    : 'border border-slate-200 bg-[#F5F7FB] text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
+                    : 'border border-slate-200 bg-[#F7F9FF] text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
                 }`}
               >
                 <LocateFixed className="h-4 w-4" />
@@ -16903,10 +17055,10 @@ export const DriverConsole: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setDriverVoiceEnabled(!driverVoiceEnabled)}
-                className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
+                className={`tactile-btn inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
                   driverVoiceEnabled
-                    ? 'bg-indigo-100 text-[#4F46E5] ring-1 ring-[#4F46E5]/40 dark:bg-indigo-950/60 dark:text-indigo-300'
-                    : 'border border-slate-200 bg-[#F5F7FB] text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
+                    ? 'bg-indigo-100 text-[#4F46E5] ring-1 ring-[#4F46E5]/40 dark:bg-indigo-950/60 dark:text-cyan-300'
+                    : 'border border-slate-200 bg-[#F7F9FF] text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
                 }`}
               >
                 {driverVoiceEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
@@ -16917,7 +17069,7 @@ export const DriverConsole: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => clearBreakdownStatus()}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-700 cursor-pointer"
+                  className="tactile-btn inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-700 cursor-pointer"
                 >
                   <CheckCircle2 className="h-4 w-4" />
                   <span>Clear Rescue / Resume Run</span>
@@ -16926,7 +17078,7 @@ export const DriverConsole: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => triggerBreakdownAndRescue()}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-rose-700 cursor-pointer"
+                  className="tactile-btn inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-rose-700 cursor-pointer"
                 >
                   <Wrench className="h-4 w-4" />
                   <span>Breakdown / Rescue Bus</span>
@@ -16935,11 +17087,11 @@ export const DriverConsole: React.FC = () => {
             </div>
           </div>
 
-          {/* NH-163 Warangal Highway Corridor Mode & Uppal Flyover Bypass */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* NH-163 Warangal Highway Corridor Mode */}
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Zap className="h-4 w-4" />
                 </span>
                 <div>
@@ -16960,7 +17112,7 @@ export const DriverConsole: React.FC = () => {
                 className={`rounded-xl px-4 py-2 text-xs font-extrabold transition cursor-pointer ${
                   activeBus.flyoverBypassActive
                     ? 'bg-emerald-100 text-emerald-800 ring-1 ring-emerald-500/40 dark:bg-emerald-950/60 dark:text-emerald-300'
-                    : 'bg-[#4F46E5] text-white hover:bg-[#4338CA]'
+                    : 'electric-cta text-white'
                 }`}
               >
                 {activeBus.flyoverBypassActive ? 'Flyover Active (-14 min)' : 'Engage Uppal Flyover Bypass'}
@@ -17384,19 +17536,22 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4 sm:space-y-5 pb-16 antialiased">
       {/* Compact Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-3.5 sm:p-4">
         <div className="flex items-center gap-3 min-w-[220px] flex-1">
-          <img
-            src="/sreenidhi_express_logo.jpg"
-            alt="Sreenidhi Express Logo"
-            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-xs ring-2 ring-[#4F46E5]/20 dark:ring-indigo-400/30"
-          />
+          <div className="rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5 shadow-sm shrink-0">
+            <img
+              src="/sreenidhi_express_logo.jpg"
+              alt="Sreenidhi Express Logo"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
                 Transport Admin
               </h1>
-              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] animate-pulse" />
                 {activeBus?.routeNumber || 'Route 51'} Pilot
               </span>
             </div>
@@ -17420,17 +17575,17 @@ export const AdminDashboard: React.FC = () => {
                 }
               }
             }}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-2 text-xs font-bold text-slate-700 shadow-2xs hover:bg-indigo-50 hover:text-[#4F46E5] active:scale-95 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+            className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
             title="Reset monthly emergency grace pass limits"
           >
-            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-indigo-400" />
+            <RotateCcw className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
             <span>Reset Cycle</span>
           </button>
 
           <button
             type="button"
             onClick={downloadMasterExcel}
-            className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] active:scale-95 cursor-pointer"
+            className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white cursor-pointer"
           >
             <FileSpreadsheet className="h-3.5 w-3.5" />
             <span>Master Excel (.xlsx)</span>
@@ -17439,7 +17594,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             type="button"
             onClick={logoutUser}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F5F7FB] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
+            className="tactile-btn flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-[#F7F9FF] text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 cursor-pointer"
             title="Sign Out"
           >
             <LogOut className="h-4 w-4" />
@@ -17448,7 +17603,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* 3-Tab Sub-Navigation */}
-      <div className="grid grid-cols-3 gap-1.5 rounded-2xl border border-slate-200/80 bg-white p-1 shadow-xs dark:border-[#2E3646] dark:bg-[#1E2430]">
+      <div className="prismatic-card grid grid-cols-3 gap-1.5 rounded-2xl p-1">
         {(
           [
             { id: 'VERIFY', label: 'Verify' },
@@ -17460,10 +17615,10 @@ export const AdminDashboard: React.FC = () => {
             key={id}
             type="button"
             onClick={() => setAdminTab(id)}
-            className={`rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
+            className={`tactile-btn rounded-xl py-2 text-xs font-extrabold transition cursor-pointer ${
               adminTab === id
-                ? 'bg-[#4F46E5] text-white shadow-xs'
-                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm shadow-indigo-500/20'
+                : 'text-slate-500 hover:bg-indigo-50/70 hover:text-[#4F46E5] dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             {label}
@@ -17472,22 +17627,24 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {adminTab === 'VERIFY' && (
-        <div className="space-y-4">
-          {/* Indigo Summary Hero Card */}
-          <div className="rounded-3xl bg-gradient-to-br from-[#4F46E5] to-[#5B52F0] p-5 text-white shadow-lg shadow-indigo-500/20">
-            <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="animate-panel-in space-y-4">
+          {/* Electric Indigo -> Cyan Summary Hero Card */}
+          <div className="electric-hero rounded-3xl p-5 text-white">
+            <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-25" />
+
+            <div className="relative flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-[11px] font-semibold text-indigo-100/85">Pending Approvals:</p>
-                <p className="mt-0.5 font-mono text-3xl sm:text-4xl font-black tracking-tight text-white">
+                <p className="text-[11px] font-semibold text-indigo-100/90">Pending Approvals:</p>
+                <p className="font-mono-timer mt-0.5 text-3xl sm:text-4xl font-black tracking-tight text-white">
                   {pendingVerifications.length}
                 </p>
               </div>
 
               <div className="text-right">
-                <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold text-white">
+                <span className="inline-flex items-center rounded-full bg-white/18 px-3 py-1 text-[11px] font-bold text-white ring-1 ring-white/25 backdrop-blur-xs">
                   Active Buses: {buses.length} • On-Time: {fleetPunctualityPct}%
                 </span>
-                <p className="mt-1.5 text-[11px] font-medium text-indigo-100/85">
+                <p className="mt-1.5 text-[11px] font-medium text-cyan-100/95">
                   Avg Delay: {avgFleetDelayMin}m • {activeIncidentsCount} Open Incident(s)
                 </p>
               </div>
@@ -17496,7 +17653,7 @@ export const AdminDashboard: React.FC = () => {
             <button
               type="button"
               onClick={() => handleDownloadCsv('driver_utility')}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-white py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-sm transition hover:bg-indigo-50 active:scale-[0.99] cursor-pointer"
+              className="animate-electric-sheen tactile-btn relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 cursor-pointer"
             >
               <Download className="h-4 w-4" />
               <span>Export Driver Utility CSV</span>
@@ -17504,7 +17661,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Pending Verifications Card */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
@@ -17517,7 +17674,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => void reloadData()}
-                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Refresh Queue
               </button>
@@ -17525,17 +17682,17 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="mt-3.5 space-y-2.5">
               {pendingVerifications.length === 0 ? (
-                <p className="rounded-2xl border border-dashed border-slate-200 p-4 text-center text-xs italic text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
+                <p className="rounded-2xl border border-dashed border-indigo-200/80 p-4 text-center text-xs italic text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
                   No pending self-registrations awaiting Transport Office verification.
                 </p>
               ) : (
                 pendingVerifications.map((stu) => (
                   <div
                     key={stu.roll_number}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-3.5 dark:border-[#2E3646] dark:bg-[#141821]"
+                    className="prismatic-subcard flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-mono text-xs font-black text-[#4F46E5] dark:text-indigo-400 truncate">
+                      <p className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300 truncate">
                         {stu.roll_number} • <span className="font-sans font-bold text-slate-900 dark:text-white">{stu.pickup_stop || 'Unassigned'}</span>
                       </p>
                       <p className="mt-0.5 text-xs font-bold text-slate-900 dark:text-white">
@@ -17565,7 +17722,7 @@ export const AdminDashboard: React.FC = () => {
                         type="button"
                         disabled={verifyingRoll === stu.roll_number}
                         onClick={() => void handleVerifyRegistration(stu.roll_number, true)}
-                        className="inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 hover:bg-emerald-100 active:scale-95 disabled:opacity-50 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
+                        className="tactile-btn inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 cursor-pointer"
                         title="Approve & assign route"
                       >
                         ✓
@@ -17574,7 +17731,7 @@ export const AdminDashboard: React.FC = () => {
                         type="button"
                         disabled={verifyingRoll === stu.roll_number}
                         onClick={() => void handleVerifyRegistration(stu.roll_number, false)}
-                        className="inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-extrabold text-rose-700 hover:bg-rose-100 active:scale-95 disabled:opacity-50 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-300 cursor-pointer"
+                        className="tactile-btn inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-extrabold text-rose-700 hover:bg-rose-100 disabled:opacity-50 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-300 cursor-pointer"
                         title="Reject registration"
                       >
                         ✕
@@ -17587,10 +17744,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Master Scrutiny & Approval Workflow */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <ShieldCheck className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Pass Scrutiny Queue &amp; Special Requests
                 </h3>
@@ -17609,11 +17766,11 @@ export const AdminDashboard: React.FC = () => {
                 applications.map((app) => (
                   <div
                     key={app.id}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-[#F5F7FB] p-4 dark:border-[#2E3646] dark:bg-[#141821]"
+                    className="prismatic-subcard flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4"
                   >
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-indigo-400">
+                        <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300">
                           {app.id}
                         </span>
                         <span className="font-bold text-xs text-slate-900 dark:text-white">
@@ -17638,7 +17795,7 @@ export const AdminDashboard: React.FC = () => {
                             type="button"
                             disabled={scrutinyLoadingId === app.id}
                             onClick={() => handleStatusChange(app.id, 'APPROVED')}
-                            className="rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                            className="electric-cta rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                           >
                             {scrutinyLoadingId === app.id ? 'Saving...' : 'Approve'}
                           </button>
@@ -17646,7 +17803,7 @@ export const AdminDashboard: React.FC = () => {
                             type="button"
                             disabled={scrutinyLoadingId === app.id}
                             onClick={() => handleStatusChange(app.id, 'REJECTED')}
-                            className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300 disabled:opacity-50 cursor-pointer"
+                            className="tactile-btn rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300 disabled:opacity-50 cursor-pointer"
                           >
                             {scrutinyLoadingId === app.id ? 'Saving...' : 'Reject'}
                           </button>
@@ -17669,11 +17826,11 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Student Fee Gating & 1-Day Grace Demonstration Simulator */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          {/* Student Fee Gating Simulator */}
+          <div className="prismatic-card flex flex-wrap items-center justify-between gap-3 rounded-3xl p-5">
             <div>
               <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <CreditCard className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
                   Student Fee Gating Simulator
                 </h3>
@@ -17683,7 +17840,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={targetStudentRoll}
                   onChange={(e) => setTargetStudentRoll(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-[#F5F7FB] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-lg border border-slate-200 bg-[#F7F9FF] px-2 py-0.5 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="26011CSEAI0109">Suraj (26011CSEAI0109 — Route 51)</option>
                   <option value="23SN1A0501">Aarav Reddy (23SN1A0501 — Route 14)</option>
@@ -17698,10 +17855,10 @@ export const AdminDashboard: React.FC = () => {
             <button
               type="button"
               onClick={handleToggleFeeStatus}
-              className={`rounded-xl px-4 py-2 text-xs font-bold text-white shadow-xs active:scale-95 cursor-pointer ${
+              className={`rounded-xl px-4 py-2 text-xs font-bold text-white cursor-pointer ${
                 demoStudentFee === 'PAID'
-                  ? 'bg-rose-600 hover:bg-rose-700'
-                  : 'bg-[#4F46E5] hover:bg-[#4338CA]'
+                  ? 'tactile-btn bg-rose-600 hover:bg-rose-700'
+                  : 'electric-cta'
               }`}
             >
               {demoStudentFee === 'PAID' ? `Set Fee to DUE (${targetStudentRoll})` : `Set Fee to PAID (${targetStudentRoll})`}
@@ -17711,24 +17868,24 @@ export const AdminDashboard: React.FC = () => {
       )}
 
       {adminTab === 'FLEET' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Dual Mode Fleet Radar Map */}
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card overflow-hidden rounded-3xl">
             <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#4F46E5] animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Fleet Radar Overview
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 rounded-xl bg-[#F5F7FB] p-1 dark:bg-[#141821]">
+              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
                 <button
                   type="button"
                   onClick={() => setMapMode('INTERACTIVE')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'INTERACTIVE'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
                   }`}
                 >
@@ -17739,7 +17896,7 @@ export const AdminDashboard: React.FC = () => {
                   onClick={() => setMapMode('SCHEMATIC')}
                   className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                     mapMode === 'SCHEMATIC'
-                      ? 'bg-[#4F46E5] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
                   }`}
                 >
@@ -17748,7 +17905,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="h-72 w-full bg-slate-100 dark:bg-[#141821]">
+            <div className="h-72 w-full bg-[#F7F9FF] dark:bg-[#141821]">
               {mapMode === 'INTERACTIVE' ? (
                 <HybridTransitMap
                   buses={buses}
@@ -17763,10 +17920,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Dynamic Route Optimization & Area Attendance Matrix */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Navigation className="h-4 w-4" />
                 </span>
                 <div>
@@ -17774,7 +17931,7 @@ export const AdminDashboard: React.FC = () => {
                     <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                       Route Optimization &amp; Area Attendance Matrix
                     </h2>
-                    <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                    <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                       {activeRouteId === 'route-51'
                         ? '26 Registered (18 Students • 8 Faculty/Staff)'
                         : `${routeOptimizationPlan?.totalRouteStudents || 0} Registered`}
@@ -17790,7 +17947,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={activeRouteId}
                   onChange={(e) => setActiveRouteId(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   {buses.map((b) => (
                     <option key={b.routeId} value={b.routeId}>
@@ -17802,10 +17959,10 @@ export const AdminDashboard: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => toggleRoutePlanLock(activeRouteId, !routeOptimizationPlan?.locked)}
-                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition shadow-xs cursor-pointer ${
+                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
                     routeOptimizationPlan?.locked
                       ? 'bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800'
-                      : 'bg-[#4F46E5] text-white hover:bg-[#4338CA]'
+                      : 'electric-cta text-white'
                   }`}
                 >
                   {routeOptimizationPlan?.locked ? (
@@ -17842,7 +17999,7 @@ export const AdminDashboard: React.FC = () => {
                       Array.isArray(routeOptimizationPlan?.overrideKeepClusters) &&
                       routeOptimizationPlan.overrideKeepClusters.includes(cluster.clusterId);
                     return (
-                      <tr key={cluster.clusterId} className="hover:bg-slate-50/70 dark:hover:bg-white/[0.02]">
+                      <tr key={cluster.clusterId} className="hover:bg-indigo-50/40 dark:hover:bg-white/[0.02]">
                         <td className="py-2.5 font-bold text-slate-900 dark:text-white">
                           {cluster.clusterName}
                         </td>
@@ -17887,10 +18044,10 @@ export const AdminDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setClusterOptimizationOverride(activeRouteId, cluster.clusterId, !isOverridden)}
-                              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
+                              className={`tactile-btn rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                                 isOverridden
                                   ? 'bg-indigo-100 text-[#4F46E5] hover:bg-indigo-200 dark:bg-indigo-950/70 dark:text-indigo-300'
-                                  : 'border border-slate-200 bg-[#F5F7FB] text-slate-800 hover:bg-white dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
+                                  : 'border border-slate-200 bg-[#F7F9FF] text-slate-800 hover:bg-white dark:border-[#2E3646] dark:bg-[#141821] dark:text-white'
                               }`}
                             >
                               {isOverridden ? 'Clear Keep Override' : 'Force Keep Stop'}
@@ -17906,7 +18063,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Live Incident Queue */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
                 <AlertTriangle className={`h-5 w-5 ${activeIncidentsCount > 0 ? 'text-rose-500 animate-bounce' : 'text-slate-400'}`} />
@@ -17917,7 +18074,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={reloadData}
-                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 cursor-pointer"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
               >
                 Refresh Feed
               </button>
@@ -17934,8 +18091,8 @@ export const AdminDashboard: React.FC = () => {
                     key={inc.id}
                     className={`flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-3.5 ${
                       inc.open
-                        ? 'border-rose-500/40 bg-rose-50/60 dark:bg-rose-950/30'
-                        : 'border-slate-200/80 bg-[#F5F7FB] opacity-60 dark:border-[#2E3646] dark:bg-[#141821]'
+                        ? 'border-rose-300 bg-rose-50/70 dark:bg-rose-950/30'
+                        : 'prismatic-subcard opacity-60'
                     }`}
                   >
                     <div>
@@ -17961,7 +18118,7 @@ export const AdminDashboard: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleResolveIncident(inc.id)}
-                        className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-extrabold text-white shadow-xs hover:bg-emerald-700 active:scale-95 cursor-pointer"
+                        className="tactile-btn flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-extrabold text-white shadow-xs hover:bg-emerald-700 cursor-pointer"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         <span>Mark Resolved</span>
@@ -17976,9 +18133,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Announcements Composer */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
-              <Bell className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+              <Bell className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 Campus Route Announcements Composer
               </h2>
@@ -17989,7 +18146,7 @@ export const AdminDashboard: React.FC = () => {
                 <select
                   value={newAnnouncementRoute}
                   onChange={(e) => setNewAnnouncementRoute(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-2 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                 >
                   <option value="ALL">Broadcast to All Routes</option>
                   {buses.map((b) => (
@@ -18004,7 +18161,7 @@ export const AdminDashboard: React.FC = () => {
                   value={newAnnouncementText}
                   onChange={(e) => setNewAnnouncementText(e.target.value)}
                   placeholder="e.g. Warangal Highway heavy rain advisory: Bus arriving with 10m caution."
-                  className="flex-1 min-w-[240px] rounded-xl border border-slate-200 bg-[#F5F7FB] px-3 py-2 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                  className="flex-1 min-w-[240px] rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-2 text-xs text-slate-900 outline-none focus:border-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
                   maxLength={280}
                   required
                 />
@@ -18012,7 +18169,7 @@ export const AdminDashboard: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isPostingAnnouncement || !newAnnouncementText.trim()}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#4338CA] disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Send className="h-3.5 w-3.5" />
                   <span>{isPostingAnnouncement ? 'Broadcasting...' : 'Publish'}</span>
@@ -18028,10 +18185,10 @@ export const AdminDashboard: React.FC = () => {
                 {announcements.slice(0, 4).map((ann) => (
                   <div
                     key={ann.id}
-                    className="flex items-center justify-between rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                    className="prismatic-subcard flex items-center justify-between rounded-xl p-2.5 text-xs"
                   >
                     <div>
-                      <span className="font-bold text-[#4F46E5] dark:text-indigo-400">[{ann.route_id}]:</span>{' '}
+                      <span className="font-bold text-[#4F46E5] dark:text-cyan-300">[{ann.route_id}]:</span>{' '}
                       <span className="text-slate-900 dark:text-white">{ann.msg}</span>
                       <span className="ml-2 text-[10px] text-slate-500 dark:text-slate-400">
                         {new Date(ann.ts).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
@@ -18054,12 +18211,12 @@ export const AdminDashboard: React.FC = () => {
       )}
 
       {adminTab === 'LOGS' && (
-        <div className="space-y-4">
+        <div className="animate-panel-in space-y-4">
           {/* Live Server Health Strip */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Activity className="h-4 w-4" />
                 </span>
                 <div>
@@ -18073,13 +18230,13 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
-                  <Radio className="h-3.5 w-3.5 text-emerald-600 animate-pulse" />
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
+                  <Radio className="h-3.5 w-3.5 text-[#06B6D4] animate-pulse" />
                   <span className="text-slate-500 dark:text-slate-400">SSE:</span>
                   <span className="font-bold text-slate-900 dark:text-white">{serverHealth?.activeSseClients ?? 0}</span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <span className="text-slate-500 dark:text-slate-400">Routes:</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-400">{serverHealth?.liveRoutes ?? 0} live</span>
                   {serverHealth?.staleRoutes && serverHealth.staleRoutes.length > 0 && (
@@ -18087,7 +18244,7 @@ export const AdminDashboard: React.FC = () => {
                   )}
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <HardDrive className="h-3.5 w-3.5 text-[#4F46E5]" />
                   <span className="text-slate-500 dark:text-slate-400">WAL:</span>
                   <span className="font-mono font-bold text-slate-900 dark:text-white">
@@ -18095,7 +18252,7 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-2.5 py-1 dark:border-[#2E3646] dark:bg-[#141821]">
+                <div className="prismatic-subcard flex items-center gap-1.5 rounded-xl px-2.5 py-1">
                   <span className="text-slate-500 dark:text-slate-400">Last Backup:</span>
                   <span className="font-bold text-slate-900 dark:text-white">
                     {serverHealth?.lastBackupAt ? new Date(serverHealth.lastBackupAt).toLocaleTimeString() : 'None'}
@@ -18106,7 +18263,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={handleCreateBackup}
                   disabled={isBackupLoading}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Database className="h-3.5 w-3.5" />
                   <span>{isBackupLoading ? 'Backing Up...' : 'SQLite WAL Backup'}</span>
@@ -18117,7 +18274,7 @@ export const AdminDashboard: React.FC = () => {
                   onClick={fetchHealth}
                   disabled={isHealthRefreshing}
                   title="Refresh Server Health"
-                  className="rounded-xl border border-slate-200 bg-[#F5F7FB] p-1.5 text-slate-700 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                  className="tactile-btn rounded-xl border border-slate-200 bg-[#F7F9FF] p-1.5 text-slate-700 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
                 >
                   <RotateCcw className={`h-3.5 w-3.5 ${isHealthRefreshing ? 'animate-spin' : ''}`} />
                 </button>
@@ -18126,10 +18283,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Bulk Onboard Roster (.xlsx) & SQLite WAL Backup */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
                   <Upload className="h-4 w-4" />
                 </span>
                 <div>
@@ -18154,7 +18311,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isImportingRoster}
-                  className="flex items-center gap-1.5 rounded-xl bg-[#4F46E5] px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#4338CA] active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="electric-cta flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
                 >
                   <Upload className="h-3.5 w-3.5" />
                   <span>{isImportingRoster ? 'Parsing Sheet...' : 'Bulk Onboard Roster (.xlsx)'}</span>
@@ -18163,7 +18320,7 @@ export const AdminDashboard: React.FC = () => {
                   type="button"
                   onClick={handleCreateBackup}
                   disabled={isBackupLoading}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-[#F5F7FB] px-3.5 py-2 text-xs font-bold text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white cursor-pointer"
+                  className="tactile-btn flex items-center gap-1.5 rounded-xl border border-slate-200 bg-[#F7F9FF] px-3.5 py-2 text-xs font-bold text-slate-800 hover:bg-indigo-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-white cursor-pointer"
                 >
                   <Database className="h-3.5 w-3.5 text-[#4F46E5]" />
                   <span>{isBackupLoading ? 'Backing Up...' : 'Create SQLite WAL Backup'}</span>
@@ -18176,7 +18333,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                   <div>
                     <h4 className="text-xs font-extrabold text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
-                      <Key className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+                      <Key className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
                       <span>One-Time Rider Activation PINs ({bulkImportResult.createdCount} Accounts Created)</span>
                     </h4>
                     <p className="text-[11px] text-indigo-700 dark:text-indigo-300 mt-0.5">
@@ -18187,7 +18344,7 @@ export const AdminDashboard: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleDownloadPinsCsv}
-                      className="flex items-center gap-1 rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] cursor-pointer shadow-xs"
+                      className="electric-cta flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
                     >
                       <Download className="h-3.5 w-3.5" />
                       <span>Download Onboarding PINs (CSV)</span>
@@ -18195,7 +18352,7 @@ export const AdminDashboard: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setBulkImportResult(null)}
-                      className="rounded-xl border border-indigo-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-50 dark:border-indigo-800 dark:bg-[#1E2430] dark:text-indigo-300 cursor-pointer"
+                      className="tactile-btn rounded-xl border border-indigo-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#4F46E5] hover:bg-indigo-50 dark:border-indigo-800 dark:bg-[#1E2430] dark:text-indigo-300 cursor-pointer"
                     >
                       Dismiss
                     </button>
@@ -18205,7 +18362,7 @@ export const AdminDashboard: React.FC = () => {
                 {bulkImportResult.credentials && bulkImportResult.credentials.length > 0 && (
                   <div className="overflow-x-auto max-h-64 rounded-xl border border-indigo-200 bg-white dark:border-indigo-900 dark:bg-[#141821]">
                     <table className="w-full text-left text-xs">
-                      <thead className="sticky top-0 bg-[#F5F7FB] dark:bg-[#1E2430] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-[#2E3646]">
+                      <thead className="sticky top-0 bg-[#F7F9FF] dark:bg-[#1E2430] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-[#2E3646]">
                         <tr>
                           <th className="px-3 py-2">Roll Number</th>
                           <th className="px-3 py-2">Name</th>
@@ -18249,9 +18406,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* 1-Click CSV Export Bar */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Download className="h-4 w-4 text-[#4F46E5] dark:text-indigo-400" />
+              <Download className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                 1-Click Administrative CSV Data Exports
               </h3>
@@ -18260,42 +18417,42 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('incidents')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Incidents (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('feedback')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Feedback (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('absences')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Absences (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('lost')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Lost &amp; Found (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('boardings')}
-                className="rounded-xl border border-slate-200/80 bg-[#F5F7FB] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                className="tactile-btn rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
               >
                 Export Boarding Roster (CSV)
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadCsv('driver_utility')}
-                className="rounded-xl bg-[#4F46E5] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4338CA] cursor-pointer"
+                className="electric-cta rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
               >
                 Export Driver Utility CSV
               </button>
@@ -18304,9 +18461,9 @@ export const AdminDashboard: React.FC = () => {
 
           {/* Lost & Found Desk & Student Ride Feedback Dual Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-5">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
-                <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-indigo-400" />
+                <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
                   Campus Lost &amp; Found Desk
                 </h3>
@@ -18320,7 +18477,7 @@ export const AdminDashboard: React.FC = () => {
                   lostItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                      className="prismatic-subcard flex items-center justify-between rounded-xl p-2.5 text-xs"
                     >
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">{item.msg}</p>
@@ -18332,7 +18489,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleResolveLost(item.id)}
-                          className="rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white hover:bg-emerald-700 cursor-pointer"
+                          className="tactile-btn rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white hover:bg-emerald-700 cursor-pointer"
                         >
                           Returned
                         </button>
@@ -18345,7 +18502,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-[#2E3646] dark:bg-[#1E2430]">
+            <div className="prismatic-card rounded-3xl p-5">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
                 <Star className="h-5 w-5 text-amber-500 fill-amber-500" />
                 <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
@@ -18361,7 +18518,7 @@ export const AdminDashboard: React.FC = () => {
                   feedbackList.slice(0, 6).map((fb) => (
                     <div
                       key={fb.id}
-                      className="rounded-xl bg-[#F5F7FB] p-2.5 text-xs dark:bg-[#141821]"
+                      className="prismatic-subcard rounded-xl p-2.5 text-xs"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-slate-900 dark:text-white">
@@ -18666,22 +18823,22 @@ export const ParentPortal: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-3.5 sm:space-y-4 pb-12 antialiased">
-      {/* Top Header Card with Ward Details on Left and Brand Logo at Top-Right Corner */}
-      <div className="flex items-center justify-between rounded-3xl border border-[#D1D5DB] bg-white p-4 shadow-sm dark:border-[#374151] dark:bg-[#222733]">
+    <div className="mx-auto w-full max-w-5xl space-y-4 pb-12 antialiased">
+      {/* Top Header Card */}
+      <div className="prismatic-card flex items-center justify-between rounded-3xl p-4">
         <div className="flex-1 min-w-0 pr-3">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <h1 className="text-base font-extrabold tracking-tight text-[#111827] dark:text-white truncate">
+            <h1 className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
               {studentName}
             </h1>
-            <span className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+            <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:border-indigo-700/50 dark:bg-indigo-950/60 dark:text-cyan-300">
               Child&apos;s Bus Pass Active
             </span>
           </div>
-          <p className="font-mono text-xs font-bold text-[#0D4B42] dark:text-[#4ADE80]">
+          <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
             Roll No: {studentRoll}
           </p>
-          <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF] truncate">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
             Parent Oversight • {routeNumber}
           </p>
         </div>
@@ -18691,28 +18848,28 @@ export const ParentPortal: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsSmsDrawerOpen(true)}
-            className="relative rounded-2xl border border-[#D1D5DB] p-2 text-[#4B5563] transition hover:bg-[#F3F5F7] dark:border-[#374151] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] cursor-pointer"
+            className="tactile-btn relative rounded-2xl border border-slate-200 p-2 text-slate-600 transition hover:bg-indigo-50 hover:text-[#4F46E5] dark:border-[#2E3646] dark:text-slate-300 dark:hover:bg-[#2B313F] cursor-pointer"
             title="Live Transit SMS & App Messages"
           >
             <Bell className="h-4 w-4" />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06B6D4] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06B6D4]"></span>
             </span>
           </button>
           <button
             type="button"
             onClick={logoutUser}
-            className="rounded-2xl border border-[#D1D5DB] p-2 text-[#4B5563] transition hover:bg-[#F3F5F7] dark:border-[#374151] dark:text-[#9CA3AF] dark:hover:bg-[#2B313F] cursor-pointer"
+            className="tactile-btn rounded-2xl border border-slate-200 p-2 text-slate-600 transition hover:bg-rose-50 hover:text-rose-600 dark:border-[#2E3646] dark:text-slate-300 dark:hover:bg-[#2B313F] cursor-pointer"
             title="Sign Out"
           >
             <LogOut className="h-4 w-4" />
           </button>
-          <div className="relative">
+          <div className="rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] p-0.5">
             <img
               src="/sreenidhi_express_logo.jpg"
               alt="Sreenidhi Express Logo"
-              className="h-12 w-12 rounded-2xl object-cover shadow-sm ring-1 ring-black/10 dark:ring-white/10"
+              className="h-11 w-11 rounded-[14px] object-cover"
             />
           </div>
         </div>
@@ -18724,13 +18881,13 @@ export const ParentPortal: React.FC = () => {
           {openIncidents.map((inc) => (
             <div
               key={inc.id}
-              className="flex items-start gap-2.5 rounded-2xl border border-red-500/40 bg-red-50 p-3 text-xs text-red-900 dark:bg-red-950/50 dark:text-red-200"
+              className="flex items-start gap-2.5 rounded-2xl border border-rose-300 bg-rose-50 p-3 text-xs text-rose-900 dark:bg-rose-950/50 dark:text-rose-200"
             >
-              <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 mt-0.5" />
+              <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
               <div>
                 <p className="font-extrabold uppercase tracking-wider">{inc.kind} ALERT ON {inc.route_id}</p>
                 <p className="mt-0.5 text-[11px]">{inc.msg}</p>
-                <p className="text-[10px] text-red-700/80 dark:text-red-400 mt-0.5">
+                <p className="text-[10px] text-rose-700/80 dark:text-rose-400 mt-0.5">
                   Reported at {new Date(inc.ts).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })} • Transport desk notified
                 </p>
               </div>
@@ -18739,7 +18896,7 @@ export const ParentPortal: React.FC = () => {
         </div>
       )}
 
-      {/* E-Commerce Style Live Transit Milestone Tracker */}
+      {/* Live Transit Milestone Tracker */}
       <LiveTransitTracker
         routeId={activeBus?.routeId || wardRouteId}
         routeName={activeBus?.routeName || 'Campus Express'}
@@ -18752,22 +18909,22 @@ export const ParentPortal: React.FC = () => {
       />
 
       {/* Remote Absence Control for Ward */}
-      <div className="space-y-2 rounded-2xl border border-[#D1D5DB] bg-white p-3.5 shadow-sm dark:border-[#374151] dark:bg-[#222733]">
+      <div className="prismatic-card space-y-2 rounded-3xl p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`rounded-xl p-2 ${isAbsentTomorrow ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>
+            <div className={`rounded-xl p-2 ${isAbsentTomorrow ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300' : 'bg-indigo-50 text-[#4F46E5] dark:bg-slate-800 dark:text-cyan-300'}`}>
               <CalendarX className="h-5 w-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <p className="text-xs font-bold text-[#111827] dark:text-white">
+              <div className="flex items-center gap-2 flex-wrap">
+                <p className="text-xs font-bold text-slate-900 dark:text-white">
                   Mark child not travelling tomorrow
                 </p>
-                <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+                <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-[#4F46E5] dark:bg-slate-800 dark:text-slate-400">
                   Cutoff: 1 hour before bus departure
                 </span>
               </div>
-              <p className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 {isAbsentTomorrow ? 'Bus driver notified not to wait at stop' : 'Driver and transport desk will not expect student'}
               </p>
             </div>
@@ -18778,7 +18935,7 @@ export const ParentPortal: React.FC = () => {
             onClick={handleToggleAbsence}
             disabled={isUpdatingAbsence}
             className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-              isAbsentTomorrow ? 'bg-[#0D4B42] dark:bg-[#15803D]' : 'bg-slate-300 dark:bg-slate-700'
+              isAbsentTomorrow ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]' : 'bg-slate-300 dark:bg-slate-700'
             }`}
             role="switch"
             aria-checked={isAbsentTomorrow}
@@ -18824,54 +18981,55 @@ export const ParentPortal: React.FC = () => {
       </div>
 
       {/* Live Commute Status Card */}
-      <div className="rounded-3xl border border-[#D1D5DB] bg-white p-5 shadow-sm dark:border-[#374151] dark:bg-[#222733]">
-        <div className="flex items-start justify-between">
+      <div className="electric-hero rounded-3xl p-5 text-white">
+        <div className="bg-futuristic-grid pointer-events-none absolute inset-0 opacity-20" />
+        <div className="relative flex items-start justify-between">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B7280] dark:text-[#9CA3AF]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-100/85">
               Live Commute Status
             </span>
-            <h2 className="mt-0.5 text-base font-extrabold text-[#111827] dark:text-white">
+            <h2 className="mt-0.5 text-base font-extrabold text-white">
               {routeNumber} • En Route
             </h2>
-            <p className="text-xs text-[#4B5563] dark:text-[#9CA3AF]">
-              Next Stop: <b className="text-[#111827] dark:text-white">{nextStopName}</b>
+            <p className="text-xs text-cyan-100">
+              Next Stop: <b className="text-white">{nextStopName}</b>
             </p>
           </div>
 
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-50 px-3 py-1.5 text-right dark:bg-emerald-950/40">
-            <span className="text-[10px] font-extrabold uppercase text-emerald-800 dark:text-emerald-300">
+          <div className="rounded-2xl border border-white/25 bg-white/15 px-3 py-1.5 text-right backdrop-blur-xs">
+            <span className="text-[10px] font-extrabold uppercase text-indigo-100">
               ETA ({etaSource})
             </span>
-            <p className="font-mono text-sm font-black text-emerald-900 dark:text-emerald-200">
+            <p className="font-mono-timer text-sm font-black text-white">
               ~{Math.max(1, Math.round(countdownSec / 60))} mins
             </p>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-[#E5E8EC] pt-3 text-xs text-[#6B7280] dark:border-[#374151] dark:text-[#9CA3AF]">
-          <span>Assigned Pickup: <b className="text-[#111827] dark:text-white">{pickupStopName}</b></span>
-          <span>Speed: <b className="font-mono text-[#111827] dark:text-white">{activeBus.speedKmh} km/h</b></span>
+        <div className="relative mt-4 flex items-center justify-between border-t border-white/20 pt-3 text-xs text-indigo-100">
+          <span>Assigned Pickup: <b className="text-white">{pickupStopName}</b></span>
+          <span>Speed: <b className="font-mono text-white">{activeBus.speedKmh} km/h</b></span>
         </div>
       </div>
 
-      {/* Dual Mode Map Selection Controls: Interactive Map vs Metro Line Schematic */}
-      <div className="overflow-hidden rounded-3xl border border-[#D1D5DB] bg-white shadow-sm dark:border-[#374151] dark:bg-[#222733]">
-        <div className="flex items-center justify-between border-b border-[#E5E8EC] p-3 dark:border-[#374151]">
+      {/* Dual Mode Map Selection Controls */}
+      <div className="prismatic-card overflow-hidden rounded-3xl">
+        <div className="flex items-center justify-between border-b border-slate-100 p-3 dark:border-[#2E3646]">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#111827] dark:text-white">
+            <span className="h-2 w-2 rounded-full bg-[#06B6D4] animate-pulse" />
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
               Live Fleet Map
             </span>
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-[#F3F5F7] p-1 dark:bg-[#2B313F]">
+          <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
             <button
               type="button"
               onClick={() => setMapMode('INTERACTIVE')}
               className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                 mapMode === 'INTERACTIVE'
-                  ? 'bg-white text-[#111827] shadow-xs dark:bg-[#222733] dark:text-white'
-                  : 'text-[#6B7280] hover:text-[#111827] dark:text-[#9CA3AF]'
+                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
               }`}
             >
               Interactive Map
@@ -18881,8 +19039,8 @@ export const ParentPortal: React.FC = () => {
               onClick={() => setMapMode('SCHEMATIC')}
               className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
                 mapMode === 'SCHEMATIC'
-                  ? 'bg-white text-[#0D4B42] shadow-xs dark:bg-[#222733] dark:text-[#4ADE80]'
-                  : 'text-[#6B7280] hover:text-[#111827] dark:text-[#9CA3AF]'
+                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
               }`}
             >
               Metro Line
@@ -18890,8 +19048,7 @@ export const ParentPortal: React.FC = () => {
           </div>
         </div>
 
-        {/* View container */}
-        <div className="h-64 w-full bg-[#E5E8EC] dark:bg-[#181C24]">
+        <div className="h-64 w-full bg-[#F7F9FF] dark:bg-[#141821]">
           {mapMode === 'INTERACTIVE' ? (
             <HybridTransitMap
               buses={buses}
@@ -18909,62 +19066,60 @@ export const ParentPortal: React.FC = () => {
       </div>
 
       {/* Official Sreenidhi Transport Assistance & Driver Help Desk */}
-      <div className="rounded-3xl border border-[#D1D5DB] bg-white p-5 shadow-sm dark:border-[#374151] dark:bg-[#222733]">
+      <div className="prismatic-card rounded-3xl p-5">
         <div className="flex items-center gap-2">
-          <PhoneCall className="h-5 w-5 text-[#0D4B42] dark:text-[#4ADE80]" />
-          <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#111827] dark:text-white">
+          <PhoneCall className="h-5 w-5 text-[#4F46E5] dark:text-cyan-300" />
+          <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
             Direct Driver &amp; Campus Contacts
           </h2>
         </div>
 
         <div className="mt-3.5 space-y-3">
-          {/* Driver Contact Row with Visible Number */}
-          <div className="flex items-center justify-between rounded-2xl border border-[#D1D5DB] bg-[#F3F5F7] p-3 dark:border-[#374151] dark:bg-[#2B313F]">
+          <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280] dark:text-[#9CA3AF]">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Assigned Bus Driver ({routeNumber})
               </p>
-              <p className="text-xs font-extrabold text-[#111827] dark:text-white">
+              <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                 {driverName}
               </p>
-              <p className="font-mono text-xs font-bold text-[#0D4B42] dark:text-[#4ADE80]">
+              <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                 {driverPhone}
               </p>
             </div>
 
             <a
               href={`tel:${driverPhone.replace(/\s+/g, '')}`}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0D4B42] px-3 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#0A3C34] active:scale-95 dark:bg-[#15803D]"
+              className="electric-cta inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-white"
             >
               <Phone className="h-3.5 w-3.5" />
               <span>Call Driver</span>
             </a>
           </div>
 
-          {/* Official Sreenidhi Transport Helpline Row */}
-          <div className="flex items-center justify-between rounded-2xl border border-[#D1D5DB] bg-[#F3F5F7] p-3 dark:border-[#374151] dark:bg-[#2B313F]">
+          <div className="prismatic-subcard flex items-center justify-between rounded-2xl p-3">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280] dark:text-[#9CA3AF]">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Sreenidhi Transport Helpline
               </p>
-              <p className="text-xs font-extrabold text-[#111827] dark:text-white">
+              <p className="text-xs font-extrabold text-slate-900 dark:text-white">
                 Campus Transport Desk (SNIST)
               </p>
-              <p className="font-mono text-xs font-bold text-[#0D4B42] dark:text-[#4ADE80]">
+              <p className="font-mono text-xs font-bold text-[#4F46E5] dark:text-cyan-300">
                 +91 77999 56801 / +91 77999 56802
               </p>
             </div>
 
             <a
               href="tel:+917799956801"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0072CE] px-3 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#005FA8] active:scale-95"
+              className="tactile-btn inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-white/10"
             >
               <Phone className="h-3.5 w-3.5" />
               <span>Call Helpline</span>
             </a>
           </div>
 
-          <div className="rounded-xl border border-dashed border-[#D1D5DB] p-2.5 text-[11px] text-[#4B5563] dark:border-[#374151] dark:text-[#9CA3AF]">
+          <div className="rounded-xl border border-dashed border-indigo-200/80 p-2.5 text-[11px] text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
             <p>
               <b>Campus EPABX:</b> +91 8415-395222 / 395444 • <b>General:</b> +91 9948119481
             </p>
@@ -18986,27 +19141,27 @@ export const ParentPortal: React.FC = () => {
       />
 
       {/* Lost & Found Item Form for Parents */}
-      <div className="rounded-3xl border border-[#D1D5DB] bg-white p-5 shadow-sm dark:border-[#374151] dark:bg-[#222733]">
+      <div className="prismatic-card p-5">
         <div className="flex items-center gap-2">
-          <PackageSearch className="h-5 w-5 text-[#0D4B42] dark:text-[#4ADE80]" />
-          <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#111827] dark:text-white">
+          <PackageSearch className="h-5 w-5 text-[#4F46E5] dark:text-[#06B6D4]" />
+          <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#0F172A] dark:text-white">
             Lost Something on the Bus?
           </h2>
         </div>
-        <form onSubmit={handleSubmitLost} className="mt-3 space-y-2">
+        <form onSubmit={handleSubmitLost} className="mt-3 space-y-2.5">
           <textarea
             value={lostDescription}
             onChange={(e) => setLostDescription(e.target.value)}
             rows={2}
             placeholder="Describe the lost item (e.g. child left school bag or calculator on Route 14)"
-            className="w-full rounded-xl border border-[#D1D5DB] bg-[#F3F5F7] p-2.5 text-xs text-[#111827] dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
+            className="w-full rounded-2xl border border-indigo-100/90 bg-[#F7F9FF] p-3 text-xs text-[#0F172A] placeholder:text-slate-400 focus:border-[#4F46E5] focus:outline-hidden dark:border-[#374151] dark:bg-[#2B313F] dark:text-white"
             maxLength={280}
             required
           />
           <button
             type="submit"
             disabled={isSubmittingLost || !lostDescription.trim()}
-            className="rounded-xl bg-[#0D4B42] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#0A3C34] disabled:opacity-50 dark:bg-[#15803D] cursor-pointer"
+            className="tactile-btn electric-cta px-4 py-2.5 text-xs font-extrabold disabled:opacity-50"
           >
             {isSubmittingLost ? 'Reporting...' : 'Report to Transport Office'}
           </button>
@@ -19019,16 +19174,16 @@ export const ParentPortal: React.FC = () => {
           type="button"
           onClick={handleTestAppNotification}
           disabled={isSendingTestNotif}
-          className="flex items-center justify-center gap-2 rounded-2xl border border-[#D1D5DB] bg-white py-3 px-3 text-xs font-bold text-[#111827] shadow-xs transition hover:bg-[#F3F5F7] dark:border-[#374151] dark:bg-[#222733] dark:text-white cursor-pointer"
+          className="tactile-btn prismatic-subcard flex items-center justify-center gap-2 py-3 px-3 text-xs font-extrabold text-[#0F172A] hover:border-[#4F46E5]/40 hover:bg-indigo-50/60 dark:text-white dark:hover:bg-[#323A4A]"
         >
-          <Bell className="h-4 w-4 text-[#0D4B42] dark:text-teal-400" />
+          <Bell className="h-4 w-4 text-[#4F46E5] dark:text-[#06B6D4]" />
           <span>{isSendingTestNotif ? 'Sending...' : 'Send Test App Notification'}</span>
         </button>
 
         <button
           type="button"
           onClick={handleOpenWhatsApp}
-          className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 py-3 px-3 text-xs font-bold text-emerald-700 shadow-xs transition hover:bg-emerald-500/20 dark:text-emerald-300 cursor-pointer"
+          className="tactile-btn flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 py-3 px-3 text-xs font-extrabold text-emerald-700 shadow-xs transition hover:bg-emerald-500/20 dark:text-emerald-300 cursor-pointer"
         >
           <Send className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           <span>Open WhatsApp Alert</span>
@@ -19675,10 +19830,10 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
         )}
       </div>
 
-      {/* Futuristic HUD Map Overlay */}
+      {/* Prismatic Daylight HUD Map Overlay */}
       <div className="pointer-events-none absolute bottom-6 sm:bottom-3 left-3 z-[400] flex max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-15rem)] flex-wrap items-center gap-1.5">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-slate-950/80 px-3 py-1 text-[10px] font-semibold tracking-wide text-slate-100 backdrop-blur-md">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.9)]" />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-white/92 px-3 py-1 text-[10px] font-bold tracking-wide text-slate-800 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-100">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
           {useGoogleMaps && window.google?.maps
             ? 'Google Maps Live Traffic'
             : routingSource === 'OSRM'
@@ -19690,14 +19845,14 @@ const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           title="Open live Google Maps traffic directions from bus GPS to stop (₹0, no API key required)"
-          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-emerald-400/35 bg-slate-950/85 px-3 py-1 text-[10px] font-semibold tracking-wide text-emerald-200 shadow-lg backdrop-blur-md transition-all hover:border-emerald-400/70 hover:bg-slate-900 hover:text-white"
+          className="tactile-btn pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white/95 px-3 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-md backdrop-blur-md transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-900/90 dark:text-cyan-200 dark:hover:bg-slate-800"
         >
-          <Navigation className="h-3 w-3 shrink-0 text-emerald-400" />
+          <Navigation className="h-3 w-3 shrink-0 text-[#06B6D4]" />
           <span>Google Maps Traffic</span>
           <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-75" />
         </a>
         {focusedBus.shortcutPath && (
-          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/85 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
+          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-3 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.45)] backdrop-blur-md">
             Bypass Route Active
           </span>
         )}
@@ -19778,22 +19933,22 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
   const passedTrackPathD = metroStations.slice(0, currentStopIndex + 1).map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`).join(' ');
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-2xl bg-[#F3F5F7] p-3 dark:bg-[#1E2430] ${className}`}>
+    <div className={`relative w-full overflow-hidden rounded-2xl bg-[#F7F9FF] p-3.5 dark:bg-[#1E2430] ${className}`}>
       {/* Metro Line Header Pill */}
       <div className="mb-2 flex items-center justify-between px-1 text-[11px]">
         <div className="flex items-center gap-2">
-          <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#0072CE] text-[9px] font-black text-white">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-[10px] font-black text-white shadow-xs">
             M
           </span>
-          <span className="font-extrabold uppercase tracking-wider text-[#0072CE] dark:text-[#38BDF8]">
+          <span className="font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-[#38BDF8]">
             {activeBus.routeName || 'Hyderabad Metro Corridor • Campus Express'}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="rounded-md bg-[#DCFCE7] px-2 py-0.5 text-[10px] font-bold text-[#15803D] dark:bg-[#163828] dark:text-[#4ADE80]">
-            Speed: {Math.round(activeBus.speedKmh)} km/h
+          <span className="rounded-full bg-cyan-50 border border-cyan-200 px-2.5 py-0.5 text-[10px] font-bold text-cyan-800 dark:bg-cyan-950/60 dark:border-cyan-800/50 dark:text-cyan-300">
+            {Math.round(activeBus.speedKmh)} km/h
           </span>
-          <span className="rounded-md bg-[#0D4B42] px-2 py-0.5 text-[10px] font-bold text-white">
+          <span className="rounded-full bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] px-2.5 py-0.5 text-[10px] font-bold text-white">
             {activeBus.routeNumber}
           </span>
         </div>
@@ -19811,7 +19966,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
           {fullTrackPathD && (
             <path
               d={fullTrackPathD}
-              stroke="#CBD5E1"
+              stroke="#E2E8F0"
               strokeWidth="10"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -19819,26 +19974,26 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
             />
           )}
 
-          {/* Core Metro Line Track (Hyderabad Metro Blue Line #0072CE) */}
+          {/* Core Electric Metro Line Track */}
           {fullTrackPathD && (
             <path
               d={fullTrackPathD}
-              stroke="#0072CE"
+              stroke="#06B6D4"
               strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           )}
 
-          {/* Passed segment overlay (Emerald Pine Green #0D4B42) */}
+          {/* Passed segment overlay (Electric Indigo #4F46E5) */}
           {passedTrackPathD && (
             <path
               d={passedTrackPathD}
-              stroke="#0D4B42"
+              stroke="#4F46E5"
               strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="dark:stroke-[#4ADE80]"
+              className="dark:stroke-[#818CF8]"
             />
           )}
 
@@ -19846,7 +20001,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
           {activeBus.flyoverBypassActive && metroStations.length >= 4 && (
             <path
               d={`M ${metroStations[1]?.x || 120} ${(metroStations[1]?.y || 80) - 15} Q ${(metroStations[2]?.x || 250)} 20 ${metroStations[Math.min(4, metroStations.length - 1)]?.x || 450} ${(metroStations[Math.min(4, metroStations.length - 1)]?.y || 80) + 15}`}
-              stroke="#E65100"
+              stroke="#4F46E5"
               strokeWidth="3.5"
               strokeDasharray="4 4"
               fill="none"
@@ -19864,43 +20019,40 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
               <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
                 {/* Station Node Marker */}
                 {st.isTerminus ? (
-                  // Terminus Station (Double cross-bar badge)
                   <g transform={`translate(${st.x}, ${st.y})`}>
-                    <line x1="0" y1="-12" x2="0" y2="12" stroke="#0D4B42" strokeWidth="4" className="dark:stroke-[#4ADE80]" />
-                    <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#0D4B42" stroke="#FFFFFF" strokeWidth="2.5" className="dark:fill-[#4ADE80]" />
+                    <line x1="0" y1="-12" x2="0" y2="12" stroke="#4F46E5" strokeWidth="4" className="dark:stroke-[#818CF8]" />
+                    <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.5" className="dark:fill-[#818CF8]" />
                   </g>
                 ) : st.isInterchange ? (
-                  // Interchange Station (Metro Capsule Double-Ring)
                   <g transform={`translate(${st.x}, ${st.y})`}>
                     <circle
                       cx="0"
                       cy="0"
                       r="9"
                       fill="#FFFFFF"
-                      stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#E65100' : isPassed ? '#0D4B42' : '#0072CE'}
+                      stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#06B6D4'}
                       strokeWidth="3.5"
                       strokeDasharray={isBypassed ? '3 2' : undefined}
-                      className="dark:fill-[#222733]"
+                      className="dark:fill-[#1E2430]"
                     />
                     <circle
                       cx="0"
                       cy="0"
                       r="4"
-                      fill={isBypassed ? '#9CA3AF' : isCurrent ? '#E65100' : isPassed ? '#0D4B42' : '#0072CE'}
-                      className="dark:fill-[#4ADE80]"
+                      fill={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#06B6D4'}
+                      className="dark:fill-[#38BDF8]"
                     />
                   </g>
                 ) : (
-                  // Regular Station Disc
                   <circle
                     cx={st.x}
                     cy={st.y}
                     r="5.5"
                     fill="#FFFFFF"
-                    stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#E65100' : isPassed ? '#0D4B42' : '#64748B'}
+                    stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#64748B'}
                     strokeWidth="2.5"
                     strokeDasharray={isBypassed ? '2 2' : undefined}
-                    className="dark:fill-[#222733]"
+                    className="dark:fill-[#1E2430]"
                   />
                 )}
 
@@ -19967,31 +20119,29 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
           {/* Active Live Bus Marker on the Metro Line */}
           <g transform={`translate(${busX}, ${busY})`}>
-            {/* Outer animated radar ping */}
-            <circle cx="0" cy="0" r="14" fill="#E65100" opacity="0.3" className="animate-ping" />
-            <circle cx="0" cy="0" r="11" fill="#E65100" stroke="#FFFFFF" strokeWidth="2" />
-            {/* Small Bus SVG */}
+            <circle cx="0" cy="0" r="14" fill="#4F46E5" opacity="0.28" className="animate-ping" />
+            <circle cx="0" cy="0" r="11" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2" />
             <rect x="-5" y="-3.5" width="10" height="7" rx="1.5" fill="white" />
-            <circle cx="-2" cy="1.5" r="0.8" fill="#E65100" />
-            <circle cx="2" cy="1.5" r="0.8" fill="#E65100" />
-            <rect x="-3.5" y="-2.5" width="7" height="2" rx="0.5" fill="#E65100" />
+            <circle cx="-2" cy="1.5" r="0.8" fill="#4F46E5" />
+            <circle cx="2" cy="1.5" r="0.8" fill="#4F46E5" />
+            <rect x="-3.5" y="-2.5" width="7" height="2" rx="0.5" fill="#4F46E5" />
           </g>
         </svg>
       </div>
 
       {/* Corridor Legend Footer */}
-      <div className="mt-2 flex flex-wrap items-center justify-between border-t border-[#E5E7EB] pt-2 text-[10px] text-[#4B5563] dark:border-[#374151] dark:text-[#9CA3AF]">
+      <div className="mt-2 flex flex-wrap items-center justify-between border-t border-slate-200/80 pt-2 text-[10px] text-slate-600 dark:border-[#374151] dark:text-[#9CA3AF]">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#0D4B42]" />
+            <span className="h-2 w-2 rounded-full bg-[#4F46E5]" />
             Passed
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#E65100]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]" />
             Live Bus Location
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full border border-[#0072CE] bg-white" />
+            <span className="h-2 w-2 rounded-full border border-[#06B6D4] bg-white" />
             Metro Interchange
           </span>
           <span className="flex items-center gap-1.5 opacity-60">
@@ -23504,22 +23654,22 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
   };
 
   return (
-    <div className="bg-[#181C24] border border-[#262C36] rounded-2xl p-5 shadow-lg text-[#E5E8EC]">
+    <div className="prismatic-card rounded-3xl p-5 text-slate-900 dark:text-slate-100">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#262C36]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-[#2E3646]">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-[#0D4B42]/50 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-sm shadow-indigo-500/20">
             <Smartphone className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-white flex items-center space-x-2">
+            <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center space-x-2 flex-wrap">
               <span>{userType === 'PARENT' ? 'Parent Mobile Alert Center' : userType === 'FACULTY' ? 'Faculty Mobile Alert Center' : 'Student Mobile Alert Center'}</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                E-Commerce Push
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-[#4F46E5] border border-indigo-200/80 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800/50">
+                Real-Time Push
               </span>
             </h4>
-            <p className="text-xs text-slate-400">
-              Direct mobile SMS & lockscreen push notifications
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Direct mobile SMS &amp; lockscreen push notifications
             </p>
           </div>
         </div>
@@ -23527,16 +23677,16 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
         {/* Registered phone badge */}
         <div className="flex items-center space-x-2">
           {phoneNumber ? (
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#11141A] border border-[#2A313D]">
-              <span className="text-xs font-mono text-emerald-400 font-semibold">
+            <div className="prismatic-subcard flex items-center space-x-2 px-3 py-1.5 rounded-2xl">
+              <span className="text-xs font-mono text-[#4F46E5] dark:text-cyan-300 font-bold">
                 {formatIndianPhone(phoneNumber)}
               </span>
-              <span className="flex items-center text-[10px] text-emerald-400 bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-600/40">
+              <span className="flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40">
                 <Check className="w-3 h-3 mr-0.5" /> {isVerified ? 'Verified' : 'Unverified'}
               </span>
               <button
                 onClick={onOpenPhoneModal}
-                className="text-xs text-slate-400 hover:text-white underline ml-1"
+                className="text-xs font-bold text-[#4F46E5] hover:underline dark:text-indigo-400 ml-1 cursor-pointer"
               >
                 Edit
               </button>
@@ -23544,7 +23694,7 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
           ) : (
             <button
               onClick={onOpenPhoneModal}
-              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-md shadow-emerald-900/30 transition-all"
+              className="electric-cta px-3.5 py-2 rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 cursor-pointer"
             >
               <Smartphone className="w-3.5 h-3.5" />
               <span>Register Mobile Number</span>
@@ -23554,28 +23704,28 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
       </div>
 
       {/* Browser Push Notification Permission Banner */}
-      <div className="mt-4 p-3.5 rounded-xl bg-[#11141A] border border-[#262C36] flex flex-wrap items-center justify-between gap-3">
+      <div className="prismatic-subcard mt-4 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center space-x-2.5">
-          <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+          <div className="p-2 rounded-xl bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300">
             <Bell className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs font-bold text-white">Device / Lockscreen Push Notifications</div>
-            <p className="text-[11px] text-slate-400">
+            <div className="text-xs font-extrabold text-slate-900 dark:text-white">Device / Lockscreen Push Notifications</div>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               Receive pop-up alerts on phone or desktop when bus departs or nears your stop
             </p>
           </div>
         </div>
         <div>
           {pushStatus === 'granted' ? (
-            <span className="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-medium border border-emerald-500/30 flex items-center space-x-1">
+            <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40 flex items-center space-x-1">
               <Check className="w-3.5 h-3.5" />
               <span>Push Active</span>
             </span>
           ) : (
             <button
               onClick={requestPushPermission}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-colors"
+              className="tactile-btn px-3.5 py-1.5 rounded-xl bg-white hover:bg-indigo-50 text-[#4F46E5] text-xs font-bold border border-indigo-200 dark:bg-[#1E2430] dark:text-indigo-300 dark:border-[#2E3646] cursor-pointer"
             >
               Enable Browser Push
             </button>
@@ -23583,9 +23733,9 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
         </div>
       </div>
 
-      {/* 6 E-Commerce Milestone Toggles */}
+      {/* 6 Milestone Toggles */}
       <div className="mt-4">
-        <div className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2.5">
+        <div className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2.5">
           Transit Alert Milestones ({userType === 'PARENT' ? 'Guardian Alerts' : 'Passenger Alerts'})
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
@@ -23606,23 +23756,23 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
               <div
                 key={item.key}
                 onClick={() => togglePreference(item.key as keyof typeof preferences)}
-                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start justify-between space-x-2 ${
+                className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-start justify-between space-x-2 ${
                   active
-                    ? 'bg-[#151922] border-emerald-500/40'
-                    : 'bg-[#11141A]/60 border-[#222834] opacity-60'
+                    ? 'bg-gradient-to-br from-indigo-50/75 via-white to-cyan-50/60 border-indigo-200 shadow-2xs dark:bg-[#1E2430] dark:border-indigo-500/40'
+                    : 'bg-[#F7F9FF]/70 border-slate-200/80 opacity-65 dark:bg-[#141821]/60 dark:border-[#2E3646]'
                 }`}
               >
                 <div>
-                  <div className="text-xs font-bold text-white">{item.label}</div>
-                  <div className="text-[11px] text-slate-400">{item.desc}</div>
+                  <div className="text-xs font-extrabold text-slate-900 dark:text-white">{item.label}</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">{item.desc}</div>
                 </div>
                 <div
                   className={`w-9 h-5 rounded-full p-0.5 transition-colors shrink-0 mt-0.5 ${
-                    active ? 'bg-emerald-500' : 'bg-slate-700'
+                    active ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]' : 'bg-slate-300 dark:bg-slate-700'
                   }`}
                 >
                   <div
-                    className={`w-4 h-4 rounded-full bg-white transition-transform ${
+                    className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
                       active ? 'translate-x-4' : 'translate-x-0'
                     }`}
                   />
@@ -23634,18 +23784,18 @@ export const MobileAlertCard: React.FC<MobileAlertCardProps> = ({
       </div>
 
       {/* Quick Test Alert Action */}
-      <div className="mt-4 pt-3 border-t border-[#222834] flex flex-wrap items-center justify-between gap-2">
-        <span className="text-[11px] text-slate-400">
-          Want to see how notifications appear on your phone?
+      <div className="mt-4 pt-3.5 border-t border-slate-200/70 dark:border-[#2E3646] flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11px] text-slate-500 dark:text-slate-400">
+          Preview how live arrival alerts trigger on your phone:
         </span>
         <button
           onClick={handleSendTestNotification}
           disabled={testSent}
-          className="px-3 py-1.5 rounded-lg bg-[#0D4B42] hover:bg-[#0F5A4F] text-emerald-200 text-xs font-semibold flex items-center space-x-1.5 border border-emerald-500/30 transition-all"
+          className="electric-cta px-3.5 py-2 rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 disabled:opacity-60 cursor-pointer"
         >
           {testSent ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-cyan-200" />
               <span>Test SMS Dispatched!</span>
             </>
           ) : (
@@ -23772,38 +23922,38 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md bg-[#181C24] border border-[#262C36] rounded-2xl p-6 shadow-2xl text-[#E5E8EC]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/35 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="prismatic-card animate-panel-in relative w-full max-w-md rounded-3xl p-6 text-slate-900 dark:text-slate-100">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#222834] transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-indigo-50 dark:hover:text-white dark:hover:bg-[#2E3646] transition-colors cursor-pointer"
           title="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center space-x-3 mb-5">
-          <div className="w-12 h-12 rounded-xl bg-[#0D4B42]/40 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+        <div className="flex items-center space-x-3 mb-5 pr-6">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-md shadow-indigo-500/20 shrink-0">
             <Smartphone className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+            <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2 flex-wrap">
               <span>{userType === 'PARENT' ? 'Parent Mobile Alerts' : 'Student Mobile Alerts'}</span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-[#4F46E5] border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-700/40">
                 Official
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
-              Get live bus tracking & arrival SMS like Swiggy & Uber
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Get live bus tracking &amp; arrival alerts on mobile
             </p>
           </div>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-red-900/30 border border-red-500/40 text-red-200 text-xs flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+          <div className="mb-4 p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 dark:bg-rose-950/40 dark:border-rose-700/40 dark:text-rose-200 text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{error}</span>
           </div>
         )}
@@ -23812,11 +23962,11 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {step === 'PHONE_INPUT' && (
           <form onSubmit={handleRequestOtp} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                 {userType === 'PARENT' ? "Parent's Mobile Number" : "Student's Mobile Number"}
               </label>
-              <div className="flex rounded-xl overflow-hidden border border-[#2A313D] focus-within:border-emerald-500 transition-colors bg-[#11141A]">
-                <span className="inline-flex items-center px-3.5 bg-[#1B202A] text-slate-300 text-xs font-semibold border-r border-[#2A313D]">
+              <div className="flex rounded-2xl overflow-hidden border border-slate-200 focus-within:border-[#4F46E5] transition-colors bg-[#F7F9FF] dark:border-[#2E3646] dark:bg-[#141821]">
+                <span className="inline-flex items-center px-3.5 bg-indigo-50/70 text-[#4F46E5] dark:bg-[#1E2430] dark:text-indigo-300 text-xs font-extrabold border-r border-slate-200 dark:border-[#2E3646]">
                   🇮🇳 +91
                 </span>
                 <input
@@ -23825,13 +23975,13 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
                   placeholder="98765 43210"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
-                  className="w-full px-3.5 py-2.5 bg-transparent text-white text-sm focus:outline-none placeholder-slate-500 font-mono"
+                  className="w-full px-3.5 py-2.5 bg-transparent text-slate-900 dark:text-white text-sm font-bold focus:outline-none placeholder-slate-400 font-mono"
                   autoFocus
                 />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1.5 flex items-center space-x-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Used strictly for transit updates, arrival alerts & emergency notices.</span>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 flex items-center space-x-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#06B6D4] shrink-0" />
+                <span>Used strictly for transit updates, arrival alerts &amp; emergency notices.</span>
               </p>
             </div>
 
@@ -23839,14 +23989,14 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-medium transition-colors"
+                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 dark:border-[#2E3646] dark:hover:bg-[#2E3646] dark:text-slate-300 text-xs font-bold transition-colors cursor-pointer"
               >
                 Later
               </button>
               <button
                 type="submit"
                 disabled={loading || phoneNumber.length !== 10}
-                className="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30 transition-all"
+                className="electric-cta w-2/3 py-2.5 px-4 rounded-xl disabled:opacity-50 text-white text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -23864,19 +24014,20 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {/* Step 2: OTP Verification */}
         {step === 'OTP_INPUT' && (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
-            {/* Simulated SMS banner (realistic e-commerce prompt) */}
             {simulatedOtp && (
-              <div className="p-3.5 rounded-xl bg-[#0F2D27] border border-emerald-500/40 text-emerald-200">
-                <div className="flex items-center justify-between text-xs font-semibold mb-1">
+              <div className="p-3.5 rounded-2xl bg-indigo-50/90 border border-indigo-200 text-indigo-950 dark:bg-indigo-950/40 dark:border-indigo-700/40 dark:text-indigo-200">
+                <div className="flex items-center justify-between text-xs font-bold mb-1">
                   <span className="flex items-center space-x-1.5">
-                    <Bell className="w-3.5 h-3.5 text-emerald-400" />
+                    <Bell className="w-3.5 h-3.5 text-[#4F46E5] dark:text-cyan-300" />
                     <span>SMS Simulation Gateway</span>
                   </span>
-                  <span className="text-[10px] text-emerald-400/80 bg-emerald-900/60 px-1.5 py-0.5 rounded">Just now</span>
+                  <span className="text-[10px] text-[#4F46E5] bg-white px-2 py-0.5 rounded-full border border-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-200">
+                    Just now
+                  </span>
                 </div>
                 <p className="text-xs font-mono">
-                  [Sreenidhi Express] Your transit alerts verification code is{' '}
-                  <strong className="text-white text-sm bg-emerald-700/60 px-1.5 py-0.5 rounded border border-emerald-400">
+                  [Sreenidhi Express] Verification code:{' '}
+                  <strong className="text-white text-sm bg-[#4F46E5] px-2 py-0.5 rounded-lg">
                     {simulatedOtp}
                   </strong>
                 </p>
@@ -23885,15 +24036,15 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-medium text-slate-300">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-300">
                   Enter 6-Digit Verification Code
                 </label>
                 <button
                   type="button"
                   onClick={() => setStep('PHONE_INPUT')}
-                  className="text-[11px] text-emerald-400 hover:underline"
+                  className="text-[11px] font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
                 >
-                  Change Number (+91 {phoneNumber})
+                  Change (+91 {phoneNumber})
                 </button>
               </div>
               <input
@@ -23902,7 +24053,7 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
                 placeholder="6-digit code"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                className="w-full px-4 py-2.5 bg-[#11141A] border border-[#2A313D] focus:border-emerald-500 text-center tracking-widest text-lg font-mono text-white rounded-xl focus:outline-none"
+                className="w-full px-4 py-2.5 bg-[#F7F9FF] border border-slate-200 focus:border-[#4F46E5] text-center tracking-widest text-lg font-mono font-bold text-slate-900 dark:bg-[#141821] dark:border-[#2E3646] dark:text-white rounded-2xl focus:outline-none"
                 autoFocus
               />
             </div>
@@ -23911,21 +24062,21 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
               <button
                 type="button"
                 onClick={() => setStep('PHONE_INPUT')}
-                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-medium transition-colors"
+                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 dark:border-[#2E3646] dark:hover:bg-[#2E3646] dark:text-slate-300 text-xs font-bold transition-colors cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30 transition-all"
+                className="electric-cta w-2/3 py-2.5 px-4 rounded-xl disabled:opacity-50 text-white text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4" />
-                    <span>Verify & Activate Alerts</span>
+                    <span>Verify &amp; Activate Alerts</span>
                   </>
                 )}
               </button>
@@ -23936,11 +24087,11 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {/* Step 3: Verified Success */}
         {step === 'VERIFIED' && (
           <div className="py-6 text-center space-y-3">
-            <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 animate-bounce">
+            <div className="w-14 h-14 mx-auto rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 dark:bg-emerald-950/60 dark:border-emerald-700 dark:text-emerald-400 animate-bounce">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-base font-bold text-white">Mobile Alerts Activated!</h4>
-            <p className="text-xs text-slate-300 max-w-xs mx-auto">
+            <h4 className="text-base font-extrabold text-slate-900 dark:text-white">Mobile Alerts Activated!</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
               +91 {phoneNumber} is now registered for live bus departure, 5m pickup alerts, and campus arrival updates.
             </p>
           </div>
@@ -24020,40 +24171,40 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
   const getCategoryBadge = (cat: string) => {
     switch (cat) {
       case 'TRIP_STARTED':
-        return { label: 'Dispatched', bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' };
+        return { label: 'Dispatched', bg: 'bg-indigo-50 text-[#4F46E5] border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-700/40' };
       case 'APPROACHING_STOP':
-        return { label: '5m ETA Warning', bg: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' };
+        return { label: '5m ETA Warning', bg: 'bg-cyan-50 text-cyan-800 border-cyan-200 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-700/40' };
       case 'BOARDED':
-        return { label: 'Passenger Boarded', bg: 'bg-teal-500/20 text-teal-400 border-teal-500/30' };
+        return { label: 'Passenger Boarded', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40' };
       case 'DELAY':
-        return { label: 'Traffic Delay', bg: 'bg-amber-500/20 text-amber-400 border-amber-500/30' };
+        return { label: 'Traffic Delay', bg: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-700/40' };
       case 'CAMPUS_ARRIVED':
-        return { label: 'Campus Arrival', bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' };
+        return { label: 'Campus Arrival', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700/40' };
       case 'EMERGENCY':
-        return { label: 'Urgent Announcement', bg: 'bg-red-500/20 text-red-400 border-red-500/30' };
+        return { label: 'Urgent Announcement', bg: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-700/40' };
       default:
-        return { label: 'Transit Notice', bg: 'bg-slate-700 text-slate-300 border-slate-600' };
+        return { label: 'Transit Notice', bg: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700' };
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md h-full bg-[#141820] border-l border-[#262C36] shadow-2xl flex flex-col text-[#E5E8EC]">
+    <div className="fixed inset-0 z-50 flex items-center justify-end bg-slate-900/35 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md h-full bg-white/95 border-l border-indigo-100 shadow-2xl backdrop-blur-2xl flex flex-col text-slate-900 dark:bg-[#141821]/95 dark:border-[#2E3646] dark:text-slate-100">
         {/* Drawer Header */}
-        <div className="p-4 bg-[#181C24] border-b border-[#262C36] flex items-center justify-between">
+        <div className="p-4 bg-white/90 border-b border-slate-200/80 dark:bg-[#1E2430] dark:border-[#2E3646] flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0D4B42]/50 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-xs">
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center space-x-1.5">
-                <span>Sreenidhi Express SMS Feed</span>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-1.5 py-0.2 rounded border border-emerald-600/30">
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center space-x-1.5">
+                <span>Sreenidhi Express Feed</span>
+                <span className="text-[10px] font-mono font-bold text-[#4F46E5] bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200 dark:bg-indigo-950/60 dark:text-cyan-300 dark:border-cyan-700/40">
                   LIVE
                 </span>
               </h3>
-              <p className="text-[11px] text-slate-400">
-                To: <strong className="text-white font-mono">{formatIndianPhone(phoneNumber) || '+91 98765 43210'}</strong>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                To: <strong className="text-slate-900 dark:text-white font-mono">{formatIndianPhone(phoneNumber) || '+91 98765 43210'}</strong>
               </p>
             </div>
           </div>
@@ -24061,14 +24212,14 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
             <button
               onClick={fetchFeed}
               disabled={loading}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#222834] transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-[#4F46E5] hover:bg-indigo-50 dark:hover:text-white dark:hover:bg-[#2E3646] transition-colors cursor-pointer"
               title="Refresh messages"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#222834] transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-[#2E3646] transition-colors cursor-pointer"
               title="Close drawer"
             >
               <X className="w-5 h-5" />
@@ -24077,12 +24228,12 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
         </div>
 
         {/* Message Feed Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#0F1217]">
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F7F9FF] dark:bg-[#0F1217]">
           {notifications.length === 0 ? (
             <div className="py-16 text-center space-y-2">
-              <Bell className="w-8 h-8 mx-auto text-slate-600" />
-              <p className="text-xs text-slate-400">No recent notifications yet.</p>
-              <p className="text-[11px] text-slate-500">Trip updates and delay alerts will appear here in real time.</p>
+              <Bell className="w-8 h-8 mx-auto text-indigo-300 dark:text-slate-600" />
+              <p className="text-xs font-bold text-slate-600 dark:text-slate-300">No recent notifications yet.</p>
+              <p className="text-[11px] text-slate-400 dark:text-slate-500">Trip updates and delay alerts will appear here in real time.</p>
             </div>
           ) : (
             notifications.map((n) => {
@@ -24095,15 +24246,15 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
               return (
                 <div
                   key={n.id}
-                  className="p-3.5 rounded-xl bg-[#181C24] border border-[#262C36] shadow-md space-y-2 hover:border-emerald-500/30 transition-all"
+                  className="prismatic-card p-3.5 rounded-2xl space-y-2"
                 >
                   {/* Sender & Badge */}
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center space-x-2">
-                      <span className="font-bold text-white font-mono tracking-tight text-[11px] bg-slate-800 px-1.5 py-0.5 rounded">
+                      <span className="font-bold text-[#4F46E5] dark:text-cyan-300 font-mono tracking-tight text-[11px] bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-lg">
                         SREENIDHI-EXP
                       </span>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badge.bg}`}>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${badge.bg}`}>
                         {badge.label}
                       </span>
                     </div>
@@ -24112,25 +24263,25 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
 
                   {/* Title & Body */}
                   <div>
-                    <h5 className="text-xs font-bold text-emerald-300 mb-1">{n.title}</h5>
-                    <p className="text-xs text-slate-300 leading-relaxed font-sans">{n.message}</p>
+                    <h5 className="text-xs font-extrabold text-slate-900 dark:text-cyan-200 mb-1">{n.title}</h5>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{n.message}</p>
                   </div>
 
                   {/* Delivery Status */}
-                  <div className="pt-2 border-t border-[#222834] flex items-center justify-between text-[10px] text-slate-400">
-                    <span className="text-slate-400 font-mono">Channel: {n.channel || 'In-App SMS'}</span>
+                  <div className="pt-2 border-t border-slate-100 dark:border-[#2E3646] flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
+                    <span className="font-mono">Channel: {n.channel || 'In-App SMS'}</span>
                     {n.status === 'FAILED' ? (
-                      <span className="flex items-center text-red-400">
+                      <span className="flex items-center text-rose-600 dark:text-rose-400 font-semibold">
                         <AlertTriangle className="w-3.5 h-3.5 mr-1" />
                         <span>Delivery Failed</span>
                       </span>
                     ) : n.status === 'PENDING' ? (
-                      <span className="flex items-center text-amber-400">
+                      <span className="flex items-center text-amber-600 dark:text-amber-400 font-semibold">
                         <Clock className="w-3.5 h-3.5 mr-1" />
                         <span>Queued</span>
                       </span>
                     ) : (
-                      <span className="flex items-center text-emerald-400">
+                      <span className="flex items-center text-emerald-600 dark:text-emerald-400 font-semibold">
                         <CheckCheck className="w-3.5 h-3.5 mr-1" />
                         <span>Confirmed Delivered</span>
                       </span>
@@ -24143,12 +24294,12 @@ export const SmsMessageDrawer: React.FC<SmsMessageDrawerProps> = ({
         </div>
 
         {/* Footer simulation indicator */}
-        <div className="p-3 bg-[#181C24] border-t border-[#262C36] text-[11px] text-slate-400 flex items-center justify-between">
+        <div className="p-3 bg-white/95 border-t border-slate-200/80 dark:bg-[#1E2430] dark:border-[#2E3646] text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
           <span className="flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-[#06B6D4] animate-pulse"></span>
             <span>Real-time Transit Alert Gateway</span>
           </span>
-          <span className="font-mono text-emerald-400">Sreenidhi Express v2.5</span>
+          <span className="font-mono font-bold text-[#4F46E5] dark:text-cyan-300">Sreenidhi Express</span>
         </div>
       </div>
     </div>
@@ -24234,36 +24385,36 @@ const LiveTransitTrackerComponent: React.FC<LiveTransitTrackerProps> = ({
   ];
 
   return (
-    <div className="bg-[#181C24] border border-[#262C36] rounded-2xl p-5 shadow-lg text-[#E5E8EC] transition-all">
+    <div className="prismatic-card animate-panel-in rounded-3xl p-5 text-slate-900 dark:text-slate-100 transition-all">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#262C36]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-[#2E3646]">
         <div className="flex items-center space-x-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-[#0D4B42]/50 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-sm shadow-indigo-500/25">
               <Bus className="w-5 h-5" />
             </div>
             {isTripStarted && (
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#06B6D4]"></span>
               </span>
             )}
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <h4 className="text-sm font-bold text-white tracking-wide uppercase">
+            <div className="flex items-center space-x-2 flex-wrap">
+              <h4 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-wide uppercase">
                 Live Ride Tracker · {routeId.replace('route-', 'Route ')}
               </h4>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${
                 isTripStarted 
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
-                  : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                  ? 'bg-cyan-50 text-cyan-800 border border-cyan-200 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-800/50' 
+                  : 'bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800/40'
               }`}>
                 {isTripStarted ? '● EN ROUTE' : '○ NOT STARTED'}
               </span>
             </div>
-            <p className="text-xs text-slate-400">
-              {routeName} · Pickup: <strong className="text-emerald-400">{pickupStop}</strong>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {routeName} · Pickup: <strong className="text-[#4F46E5] dark:text-cyan-300">{pickupStop}</strong>
             </p>
           </div>
         </div>
@@ -24271,19 +24422,19 @@ const LiveTransitTrackerComponent: React.FC<LiveTransitTrackerProps> = ({
         {/* Live countdown & delay tag */}
         <div className="flex items-center space-x-2">
           {delayMinutes > 0 && (
-            <div className="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-semibold flex items-center space-x-1">
+            <div className="px-2.5 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-950/50 dark:border-amber-800/50 dark:text-amber-300 text-xs font-semibold flex items-center space-x-1">
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>+{delayMinutes}m Traffic Delay</span>
             </div>
           )}
-          <div className="px-3 py-1 rounded-xl bg-[#11141A] border border-[#2A313D] text-xs font-mono">
-            <span className="text-slate-400">Arrival in: </span>
-            <span className="text-emerald-400 font-bold">{formattedCountdown}</span>
+          <div className="prismatic-subcard px-3 py-1 rounded-xl text-xs font-mono">
+            <span className="text-slate-500 dark:text-slate-400">Arrival in: </span>
+            <span className="text-[#4F46E5] dark:text-cyan-300 font-bold">{formattedCountdown}</span>
           </div>
         </div>
       </div>
 
-      {/* E-Commerce Milestone Stepper */}
+      {/* Interactive Milestone Stepper */}
       <div className="pt-5 pb-2">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {steps.map((st) => {
@@ -24294,30 +24445,30 @@ const LiveTransitTrackerComponent: React.FC<LiveTransitTrackerProps> = ({
             return (
               <div
                 key={st.id}
-                className={`p-3.5 rounded-xl border transition-all ${
+                className={`p-3.5 rounded-2xl border transition-all ${
                   isActive
-                    ? 'bg-[#0D4B42]/30 border-emerald-500/50 shadow-md shadow-emerald-950/40 ring-1 ring-emerald-500/40'
+                    ? 'bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/80 border-[#4F46E5]/45 shadow-md shadow-indigo-500/10 ring-1 ring-[#4F46E5]/20 dark:from-indigo-950/50 dark:via-[#1E2430] dark:to-cyan-950/40 dark:border-cyan-500/40'
                     : isCompleted
-                    ? 'bg-[#151921] border-[#2E3746]'
-                    : 'bg-[#11141A]/50 border-[#222834] opacity-70'
+                    ? 'bg-emerald-50/60 border-emerald-200/80 dark:bg-emerald-950/25 dark:border-emerald-800/40'
+                    : 'bg-[#F7F9FF]/80 border-slate-200/75 opacity-75 dark:bg-[#141821]/70 dark:border-[#2E3646]'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
+                    className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold ${
                       isActive
-                        ? 'bg-emerald-500 text-slate-950 animate-pulse'
+                        ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white shadow-xs animate-pulse'
                         : isCompleted
-                        ? 'bg-emerald-900/60 text-emerald-400 border border-emerald-500/40'
-                        : 'bg-slate-800 text-slate-400'
+                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/60 dark:text-emerald-300 dark:border-emerald-600/40'
+                        : 'bg-slate-200/80 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
                   </div>
-                  <span className="text-[10px] font-mono text-slate-400">{st.time}</span>
+                  <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400">{st.time}</span>
                 </div>
-                <h5 className="text-xs font-bold text-white mb-0.5">{st.title}</h5>
-                <p className="text-[11px] text-slate-400 truncate">{st.subtitle}</p>
+                <h5 className="text-xs font-extrabold text-slate-900 dark:text-white mb-0.5">{st.title}</h5>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{st.subtitle}</p>
               </div>
             );
           })}
@@ -24325,9 +24476,9 @@ const LiveTransitTrackerComponent: React.FC<LiveTransitTrackerProps> = ({
       </div>
 
       {/* Footer Info Strip */}
-      <div className="mt-4 pt-3 border-t border-[#222834] flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+      <div className="mt-4 pt-3 border-t border-slate-200/70 dark:border-[#2E3646] flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
         <div className="flex items-center space-x-2">
-          <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+          <Radio className="w-3.5 h-3.5 text-[#06B6D4] animate-pulse" />
           <span>
             {activeBus?.telemetrySource === 'DRIVER_PRIMARY'
               ? 'Live GPS + OSRM road-snapped tracking active'
@@ -24335,9 +24486,9 @@ const LiveTransitTrackerComponent: React.FC<LiveTransitTrackerProps> = ({
           </span>
         </div>
         <div className="flex items-center space-x-3 text-[11px]">
-          <span className="text-slate-300">Driver: {driver}</span>
-          <span className="text-slate-500">·</span>
-          <span className="text-emerald-400">Bus {plate}</span>
+          <span className="text-slate-700 dark:text-slate-300 font-medium">Driver: {driver}</span>
+          <span className="text-slate-300 dark:text-slate-600">·</span>
+          <span className="text-[#4F46E5] dark:text-cyan-300 font-bold">Bus {plate}</span>
         </div>
       </div>
     </div>
@@ -24624,42 +24775,46 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-slate-900/95 p-6 shadow-2xl backdrop-blur-xl text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/35 backdrop-blur-md animate-fade-in">
+      <div className="prismatic-card animate-panel-in relative w-full max-w-lg overflow-hidden rounded-3xl p-6 text-slate-900 dark:text-slate-100">
         {/* Glow Highlights */}
-        <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-cyan-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-cyan-400/15 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 rounded-xl p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition cursor-pointer"
+          className="absolute top-4 right-4 rounded-xl p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white transition cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3.5 pb-5 border-b border-white/10">
+        <div className="relative flex items-center gap-3.5 pb-5 border-b border-slate-200/75 dark:border-[#2E3646]">
           <SreenidhiLogo compact className="shrink-0" />
           <div className="min-w-0 flex-1 pr-8">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-white tracking-tight truncate">Install Sreenidhi Express</h2>
-              <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 border border-cyan-500/30 text-cyan-300">
+              <h2 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight truncate">
+                Install Sreenidhi Express
+              </h2>
+              <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 border border-cyan-200 text-cyan-700 dark:bg-cyan-500/20 dark:border-cyan-500/30 dark:text-cyan-300">
                 PWA / APP
               </span>
             </div>
-            <p className="text-xs text-slate-400 truncate">Add to your Home Screen for instant offline GPS tracking</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+              Add to your Home Screen for instant offline GPS tracking
+            </p>
           </div>
         </div>
 
         {/* Platform Switcher Tabs */}
-        <div className="flex items-center gap-1.5 my-5 p-1 rounded-xl bg-slate-950/70 border border-white/5">
+        <div className="prismatic-subcard flex items-center gap-1.5 my-5 p-1 rounded-2xl">
           <button
             onClick={() => setActivePlatform('ANDROID')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition cursor-pointer ${
               activePlatform === 'ANDROID'
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -24668,10 +24823,10 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
           <button
             onClick={() => setActivePlatform('IOS')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition cursor-pointer ${
               activePlatform === 'IOS'
-                ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             <Apple className="w-3.5 h-3.5" />
@@ -24680,10 +24835,10 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
           <button
             onClick={() => setActivePlatform('DESKTOP')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition cursor-pointer ${
               activePlatform === 'DESKTOP'
-                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -24693,39 +24848,39 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
         {/* Tab 1: Android Chrome */}
         {activePlatform === 'ANDROID' && (
-          <div className="space-y-3.5 animate-fade-in text-xs">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 font-bold font-mono text-xs">
+          <div className="space-y-3 animate-fade-in text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300 font-bold font-mono text-xs">
                 1
               </div>
               <div>
-                <p className="font-semibold text-white">Tap Browser Menu (⋮)</p>
-                <p className="text-slate-400 mt-0.5">
+                <p className="font-bold text-slate-900 dark:text-white">Tap Browser Menu (⋮)</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
                   Open Chrome or Edge on your phone and tap the three-dots menu icon in the top right.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 font-bold font-mono text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300 font-bold font-mono text-xs">
                 2
               </div>
               <div>
-                <p className="font-semibold text-white">Select "Install App" or "Add to Home Screen"</p>
-                <p className="text-slate-400 mt-0.5">
-                  Look for <span className="text-emerald-300 font-medium">Install Sreenidhi Express</span> or <span className="text-emerald-300 font-medium">Add to Home screen</span>.
+                <p className="font-bold text-slate-900 dark:text-white">Select &quot;Install App&quot; or &quot;Add to Home Screen&quot;</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                  Look for <span className="text-[#4F46E5] dark:text-cyan-300 font-semibold">Install Sreenidhi Express</span> or <span className="text-[#4F46E5] dark:text-cyan-300 font-semibold">Add to Home screen</span>.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 font-bold font-mono text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-indigo-300 font-bold font-mono text-xs">
                 3
               </div>
               <div>
-                <p className="font-semibold text-white">Confirm Installation</p>
-                <p className="text-slate-400 mt-0.5">
-                  Tap <span className="text-emerald-300 font-medium">Install</span>. The app icon will be added to your home screen with zero app store download needed.
+                <p className="font-bold text-slate-900 dark:text-white">Confirm Installation</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                  Tap <span className="text-[#4F46E5] dark:text-cyan-300 font-semibold">Install</span>. The app icon will be added to your home screen with zero app store download needed.
                 </p>
               </div>
             </div>
@@ -24734,44 +24889,44 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
         {/* Tab 2: iOS Safari */}
         {activePlatform === 'IOS' && (
-          <div className="space-y-3.5 animate-fade-in text-xs">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-400 font-bold font-mono text-xs">
+          <div className="space-y-3 animate-fade-in text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400 font-bold font-mono text-xs">
                 1
               </div>
               <div>
-                <div className="flex items-center gap-1.5 font-semibold text-white">
+                <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
                   <span>Tap the Share Button</span>
-                  <Share2 className="w-3.5 h-3.5 text-cyan-400" />
+                  <Share2 className="w-3.5 h-3.5 text-[#06B6D4]" />
                 </div>
-                <p className="text-slate-400 mt-0.5">
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
                   In Safari, tap the Share icon (square with arrow pointing up) in the bottom navigation bar.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-400 font-bold font-mono text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400 font-bold font-mono text-xs">
                 2
               </div>
               <div>
-                <div className="flex items-center gap-1.5 font-semibold text-white">
-                  <span>Scroll & Select "Add to Home Screen"</span>
-                  <PlusSquare className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                  <span>Scroll &amp; Select &quot;Add to Home Screen&quot;</span>
+                  <PlusSquare className="w-3.5 h-3.5 text-[#06B6D4]" />
                 </div>
-                <p className="text-slate-400 mt-0.5">
-                  Swipe down in the share sheet and tap <span className="text-cyan-300 font-medium">Add to Home Screen</span>.
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                  Swipe down in the share sheet and tap <span className="text-[#4F46E5] dark:text-cyan-300 font-semibold">Add to Home Screen</span>.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-400 font-bold font-mono text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400 font-bold font-mono text-xs">
                 3
               </div>
               <div>
-                <p className="font-semibold text-white">Tap "Add" in Top Right</p>
-                <p className="text-slate-400 mt-0.5">
+                <p className="font-bold text-slate-900 dark:text-white">Tap &quot;Add&quot; in Top Right</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
                   The Sreenidhi Express standalone web app will be pinned to your iPhone home screen.
                 </p>
               </div>
@@ -24781,27 +24936,27 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
         {/* Tab 3: Desktop */}
         {activePlatform === 'DESKTOP' && (
-          <div className="space-y-3.5 animate-fade-in text-xs">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-400 font-bold font-mono text-xs">
+          <div className="space-y-3 animate-fade-in text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-purple-500/20 dark:text-purple-300 font-bold font-mono text-xs">
                 1
               </div>
               <div>
-                <p className="font-semibold text-white">Click the Address Bar Install Icon</p>
-                <p className="text-slate-400 mt-0.5">
+                <p className="font-bold text-slate-900 dark:text-white">Click the Address Bar Install Icon</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
                   In Google Chrome or Microsoft Edge, look at the right end of the URL bar for the install computer badge.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-400 font-bold font-mono text-xs">
+            <div className="prismatic-subcard flex items-start gap-3 p-3.5 rounded-2xl">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-[#4F46E5] dark:bg-purple-500/20 dark:text-purple-300 font-bold font-mono text-xs">
                 2
               </div>
               <div>
-                <p className="font-semibold text-white">Run as Standalone Window</p>
-                <p className="text-slate-400 mt-0.5">
-                  Click <span className="text-purple-300 font-medium">Install</span>. The app launches in its own dedicated, distraction-free desktop window with keyboard shortcuts.
+                <p className="font-bold text-slate-900 dark:text-white">Run as Standalone Window</p>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                  Click <span className="text-[#4F46E5] dark:text-cyan-300 font-semibold">Install</span>. The app launches in its own dedicated, distraction-free window.
                 </p>
               </div>
             </div>
@@ -24809,16 +24964,16 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
         )}
 
         {/* Feature Badges */}
-        <div className="mt-5 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-          <div className="flex items-center gap-1.5 text-emerald-400">
+        <div className="mt-5 pt-4 border-t border-slate-200/75 dark:border-[#2E3646] flex flex-wrap items-center justify-between gap-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Zero App Store Download</span>
           </div>
-          <div className="flex items-center gap-1.5 text-cyan-400">
+          <div className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400">
             <WifiOff className="w-3.5 h-3.5" />
             <span>Offline Digital Bus Pass</span>
           </div>
-          <div className="flex items-center gap-1.5 text-purple-400">
+          <div className="flex items-center gap-1.5 text-[#4F46E5] dark:text-indigo-300">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Instant Updates</span>
           </div>

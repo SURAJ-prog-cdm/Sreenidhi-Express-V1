@@ -100,38 +100,38 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md bg-[#181C24] border border-[#262C36] rounded-2xl p-6 shadow-2xl text-[#E5E8EC]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/35 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="prismatic-card animate-panel-in relative w-full max-w-md rounded-3xl p-6 text-slate-900 dark:text-slate-100">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#222834] transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-indigo-50 dark:hover:text-white dark:hover:bg-[#2E3646] transition-colors cursor-pointer"
           title="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center space-x-3 mb-5">
-          <div className="w-12 h-12 rounded-xl bg-[#0D4B42]/40 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
+        <div className="flex items-center space-x-3 mb-5 pr-6">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] flex items-center justify-center text-white shadow-md shadow-indigo-500/20 shrink-0">
             <Smartphone className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+            <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2 flex-wrap">
               <span>{userType === 'PARENT' ? 'Parent Mobile Alerts' : 'Student Mobile Alerts'}</span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-[#4F46E5] border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-700/40">
                 Official
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
-              Get live bus tracking & arrival SMS like Swiggy & Uber
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Get live bus tracking &amp; arrival alerts on mobile
             </p>
           </div>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-red-900/30 border border-red-500/40 text-red-200 text-xs flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+          <div className="mb-4 p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 dark:bg-rose-950/40 dark:border-rose-700/40 dark:text-rose-200 text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{error}</span>
           </div>
         )}
@@ -140,11 +140,11 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {step === 'PHONE_INPUT' && (
           <form onSubmit={handleRequestOtp} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                 {userType === 'PARENT' ? "Parent's Mobile Number" : "Student's Mobile Number"}
               </label>
-              <div className="flex rounded-xl overflow-hidden border border-[#2A313D] focus-within:border-emerald-500 transition-colors bg-[#11141A]">
-                <span className="inline-flex items-center px-3.5 bg-[#1B202A] text-slate-300 text-xs font-semibold border-r border-[#2A313D]">
+              <div className="flex rounded-2xl overflow-hidden border border-slate-200 focus-within:border-[#4F46E5] transition-colors bg-[#F7F9FF] dark:border-[#2E3646] dark:bg-[#141821]">
+                <span className="inline-flex items-center px-3.5 bg-indigo-50/70 text-[#4F46E5] dark:bg-[#1E2430] dark:text-indigo-300 text-xs font-extrabold border-r border-slate-200 dark:border-[#2E3646]">
                   🇮🇳 +91
                 </span>
                 <input
@@ -153,13 +153,13 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
                   placeholder="98765 43210"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
-                  className="w-full px-3.5 py-2.5 bg-transparent text-white text-sm focus:outline-none placeholder-slate-500 font-mono"
+                  className="w-full px-3.5 py-2.5 bg-transparent text-slate-900 dark:text-white text-sm font-bold focus:outline-none placeholder-slate-400 font-mono"
                   autoFocus
                 />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1.5 flex items-center space-x-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Used strictly for transit updates, arrival alerts & emergency notices.</span>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 flex items-center space-x-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#06B6D4] shrink-0" />
+                <span>Used strictly for transit updates, arrival alerts &amp; emergency notices.</span>
               </p>
             </div>
 
@@ -167,14 +167,14 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-medium transition-colors"
+                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 dark:border-[#2E3646] dark:hover:bg-[#2E3646] dark:text-slate-300 text-xs font-bold transition-colors cursor-pointer"
               >
                 Later
               </button>
               <button
                 type="submit"
                 disabled={loading || phoneNumber.length !== 10}
-                className="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30 transition-all"
+                className="electric-cta w-2/3 py-2.5 px-4 rounded-xl disabled:opacity-50 text-white text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -192,19 +192,20 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {/* Step 2: OTP Verification */}
         {step === 'OTP_INPUT' && (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
-            {/* Simulated SMS banner (realistic e-commerce prompt) */}
             {simulatedOtp && (
-              <div className="p-3.5 rounded-xl bg-[#0F2D27] border border-emerald-500/40 text-emerald-200">
-                <div className="flex items-center justify-between text-xs font-semibold mb-1">
+              <div className="p-3.5 rounded-2xl bg-indigo-50/90 border border-indigo-200 text-indigo-950 dark:bg-indigo-950/40 dark:border-indigo-700/40 dark:text-indigo-200">
+                <div className="flex items-center justify-between text-xs font-bold mb-1">
                   <span className="flex items-center space-x-1.5">
-                    <Bell className="w-3.5 h-3.5 text-emerald-400" />
+                    <Bell className="w-3.5 h-3.5 text-[#4F46E5] dark:text-cyan-300" />
                     <span>SMS Simulation Gateway</span>
                   </span>
-                  <span className="text-[10px] text-emerald-400/80 bg-emerald-900/60 px-1.5 py-0.5 rounded">Just now</span>
+                  <span className="text-[10px] text-[#4F46E5] bg-white px-2 py-0.5 rounded-full border border-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-200">
+                    Just now
+                  </span>
                 </div>
                 <p className="text-xs font-mono">
-                  [Sreenidhi Express] Your transit alerts verification code is{' '}
-                  <strong className="text-white text-sm bg-emerald-700/60 px-1.5 py-0.5 rounded border border-emerald-400">
+                  [Sreenidhi Express] Verification code:{' '}
+                  <strong className="text-white text-sm bg-[#4F46E5] px-2 py-0.5 rounded-lg">
                     {simulatedOtp}
                   </strong>
                 </p>
@@ -213,15 +214,15 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-medium text-slate-300">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-300">
                   Enter 6-Digit Verification Code
                 </label>
                 <button
                   type="button"
                   onClick={() => setStep('PHONE_INPUT')}
-                  className="text-[11px] text-emerald-400 hover:underline"
+                  className="text-[11px] font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
                 >
-                  Change Number (+91 {phoneNumber})
+                  Change (+91 {phoneNumber})
                 </button>
               </div>
               <input
@@ -230,7 +231,7 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
                 placeholder="6-digit code"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                className="w-full px-4 py-2.5 bg-[#11141A] border border-[#2A313D] focus:border-emerald-500 text-center tracking-widest text-lg font-mono text-white rounded-xl focus:outline-none"
+                className="w-full px-4 py-2.5 bg-[#F7F9FF] border border-slate-200 focus:border-[#4F46E5] text-center tracking-widest text-lg font-mono font-bold text-slate-900 dark:bg-[#141821] dark:border-[#2E3646] dark:text-white rounded-2xl focus:outline-none"
                 autoFocus
               />
             </div>
@@ -239,21 +240,21 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
               <button
                 type="button"
                 onClick={() => setStep('PHONE_INPUT')}
-                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-medium transition-colors"
+                className="w-1/3 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 dark:border-[#2E3646] dark:hover:bg-[#2E3646] dark:text-slate-300 text-xs font-bold transition-colors cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="w-2/3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30 transition-all"
+                className="electric-cta w-2/3 py-2.5 px-4 rounded-xl disabled:opacity-50 text-white text-xs font-bold flex items-center justify-center space-x-2 cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4" />
-                    <span>Verify & Activate Alerts</span>
+                    <span>Verify &amp; Activate Alerts</span>
                   </>
                 )}
               </button>
@@ -264,11 +265,11 @@ export const PhoneOnboardingModal: React.FC<PhoneOnboardingModalProps> = ({
         {/* Step 3: Verified Success */}
         {step === 'VERIFIED' && (
           <div className="py-6 text-center space-y-3">
-            <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 animate-bounce">
+            <div className="w-14 h-14 mx-auto rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 dark:bg-emerald-950/60 dark:border-emerald-700 dark:text-emerald-400 animate-bounce">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-base font-bold text-white">Mobile Alerts Activated!</h4>
-            <p className="text-xs text-slate-300 max-w-xs mx-auto">
+            <h4 className="text-base font-extrabold text-slate-900 dark:text-white">Mobile Alerts Activated!</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
               +91 {phoneNumber} is now registered for live bus departure, 5m pickup alerts, and campus arrival updates.
             </p>
           </div>
