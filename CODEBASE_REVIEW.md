@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 27, 2026
-> **Build Status:** Production Prototype / v20.4 Multi-Admin Access & Live Reporting Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Diagnostics, Bus Pass UI Removed From Phase 1, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 38/38 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.4 Multi-Admin Access, GPS-Driven Schematic Map & ₹0 Forgot Password Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, GPS-Projected `MetroSchematicMap` Across All Portals Without Frontend Leaflet Dependencies, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 40/40 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 79 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 80 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 multi-admin RBAC enhancement, all 79 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 38/38 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 upgrades (Multi-Admin RBAC, GPS-Driven Live Schematic Map, Registration Stop Dropdown, and ₹0 Forgot Password), all 80 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 40/40 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -95,6 +95,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **77** | **P0** | v20.2 Mobile UX & Map Fix | **Mobile LAN CARTO Tiles, Unobstructed Map HUD, Granular Lock Feedback, 2-Row Student Header & Bus Pass UI Removal**: Switched `HybridTransitMap.tsx` tile base to `excelService.getServerBaseUrl()` for automatic LAN IP loading and moved route/OSRM/Google Maps bars above and below the map canvas; added `getPlanLockStatus` (`ADMIN_LOCKED` / `TRIP_RUNNING` / `CUTOFF_PASSED`) with matching captions/toasts; upgraded `StudentPortal.tsx` header to unclipped 2 rows; updated login role card to `Student / Faculty`; removed Bus Pass, Grace Pass, and Fee Simulator UI cleanly replacing the 3rd student tab with `Help`. | [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/modals/InstallAppModal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/modals/InstallAppModal.tsx) |
 | **78** | **P0** | v20.3 Reporting & Live Stop ETA | **Live Stop-by-Stop ETA, Admin Detailed Timestamps & Stop Duration Report & IST CSV Export**: Added IST formatting (`formatIstDateTime`, `formatIstTimeOnly`, `getIstDateKey`), `formatDwellDuration`, scheduled-vs-actual stop variance (`resolveScheduledStopInfo`), route/date filtering, summary KPIs, and `STOP_DWELL_RECORDED` SSE broadcasts across `server/index.js` (`/api/admin/driver-utility` and `/api/export?type=driver_utility`) and `excelService.ts`; added interactive Admin `Detailed Timestamps & Stop Duration Report` card with 4 KPI cards, Trip Starts strip, filters, and variance table in `AdminDashboard.tsx`; added `Live Stop-by-Stop ETA & Timestamps` sequence list on Student `Map` tab in `StudentPortal.tsx`; extended `tests/security.test.js` to 37/37 passing. | [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **79** | **P0** | v20.4 Multi-Admin Access | **Authorized Multi-Admin Credentials & Management UI**: Replaced single-`ADMIN_ID` bottleneck in `server/index.js` with constant-time multi-admin lookup across `ADMIN_ID`, optional `ADMIN_ACCOUNTS` JSON array, and SQLite `admin_users` table (`server/dbExtras.js`); added `GET /api/admin/admins`, `POST /api/admin/admins`, and `POST /api/admin/admins/:adminId/status` with `session_version` token revocation enforcement inside `setAccessTokenValidator`; added `Authorized Admin Access Accounts` card in `AdminDashboard.tsx` and updated `tests/security.test.js` to 38/38 passing. | [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
+| **80** | **P0** | v20.4 Live Schematic Map, Registration Dropdown & ₹0 Forgot Password | **GPS-Driven `MetroSchematicMap`, Frontend Leaflet Removal, Self-Register Stop `<select>` & ₹0 Forgot Password**: Replaced `HybridTransitMap` + frontend `leaflet` / `react-leaflet` packages with a single responsive GPS-projected `MetroSchematicMap` (`projectGpsOntoStops`, mobile vertical timeline with 4-stop compact window, smooth gliding desktop SVG corridor, Top/Bottom HUD bars, and free Google Maps Pin handoff) across all 4 portals while preserving backend tile/CSP tests; upgraded New Commuter Self-Registration Requested Pickup Stop to a grouped `<select>` populated from `INITIAL_BUS_FLEET`; added `POST /api/auth/forgot-password`, `POST /api/auth/reset-password` (timing-safe 6-digit codes, 5-attempt lockout, 15m TTL, optional Telegram alert, Admin Desk visibility via `GET /api/admin/password-reset-requests`); extended `tests/security.test.js` to 40/40 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 
 ---
 
@@ -111,14 +112,14 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 3. [`capacitor.config.ts`](#capacitorconfigts) — *Capacitor 8 Android and native mobile configuration for Sreenidhi Express (in.edu.suh.express).*
 4. [`index.html`](#indexhtml) — *HTML5 light-first application shell (#F7F9FF theme, electric pre-hydration splash, responsive mobile viewport, localhost SW cleanup).*
 5. [`public/sw.js`](#publicswjs) — *Self-cleaning and cache purge Service Worker with clean native network pass-through (no stream-locking fetch interception).*
-6. [`src/index.css`](#srcindexcss) — *Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), Leaflet tile styles, and pulse animations.*
+6. [`src/index.css`](#srcindexcss) — *Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), and pulse animations (Leaflet CSS stripped).*
 7. [`server/security.js`](#serversecurityjs) — *Hardened security engine: scrypt password hashing, RFC 7519 HS256 JWT sessions, brute-force IP rate-limiting, LAN & local CORS origin matching, DELETE method support, event allowlist validation, and time-skew gate tokens.*
 8. [`server/routeTopology.js`](#serverroutetopologyjs) — *Canonical transit route topology, area clusters, stop coordinates, and fuzzy student-stop matching engine for Route 51 & Route 14.*
 9. [`server/dbExtras.js`](#serverdbextrasjs) — *SQLite migration layer (verification_status, trip started_at, stop_dwell_logs, otp_verifications PK), prepared statement caching, student verification queue, 60-day dwell audit logs, Route 51 manifest seeding, and audit logging.*
 10. [`server/index.js`](#serverindexjs) — *Express 5 REST API server with timing-safe HMAC JWT auth, self-signup + 1-click admin verification, self-checkin boarding, stop dwell audit logging, 1-hour pre-departure absence cutoff, SSE live stream tickets, and CARTO tile proxy.*
 11. [`server/excelStorage.js`](#serverexcelstoragejs) — *Real-time Excel engine with SQLite WAL persistence, prepared statement cache, configurable DATA_DIR / DB_FILE_PATH / EXCEL_FILE_PATH, and atomic XLSX export.*
 12. [`server/telegramNotifier.js`](#servertelegramnotifierjs) — *Automated Telegram Bot safety alert integration for student transit events and driver dispatches.*
-13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin authentication & revocation (38/38 passing).*
+13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin auth, GPS schematic projection & forgot-password workflow (40/40 passing).*
 14. [`src/types/transit.ts`](#srctypestransitts) — *Complete TypeScript type contracts for buses, students, telemetry, geofences, and safety alerts.*
 15. [`src/config/apiConfig.ts`](#srcconfigapiconfigts) — *Environment variables, backend endpoints, and API client configuration.*
 16. [`src/data/sreenidhiData.ts`](#srcdatasreenidhidatats) — *Hyderabad NH-163 Warangal Highway transit network stops, student master roster, Route 51 manifest (18 students + 8 faculty), and fleet definitions.*
@@ -134,8 +135,8 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 26. [`src/components/portals/DriverConsole.tsx`](#srccomponentsportalsdriverconsoletsx) — *Prismatic Daylight 3-tab Driver Cockpit (Trip, Stops, Alerts) with electric live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.*
 27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
 28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.*
-29. [`src/components/map/HybridTransitMap.tsx`](#srccomponentsmaphybridtransitmaptsx) — *Interactive Leaflet GIS map with unobstructed canvas, above/below HUD telemetry & OSRM/Google Maps bars, dynamic LAN/origin CARTO tile loading, glowing route corridors, glassmorphic camera controls, and live SVG bus pill.*
-30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Isometric Metro-style corridor schematic illustrating the Hyderabad Blue Line & Campus Express alignment.*
+29. [`src/services/corridorProjection.ts`](#srcservicescorridorprojectionts) — *Pure equirectangular GPS-to-route segment projection engine and Haversine meter calculation driving live MetroSchematicMap positioning and off-route detour detection.*
+30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Responsive ₹0 GPS-Driven Live Schematic Map with external Top/Bottom HUD bars, mobile vertical timeline (with 4-stop compact preview mode), desktop gliding horizontal SVG corridor, and free Google Maps Pin link.*
 31. [`scripts/load-test.mjs`](#scriptsloadtestmjs) — *Zero-dependency concurrency and load benchmark validating SSE connections, sub-100ms latency, and 0% error rate.*
 32. [`src/services/eventQueue.ts`](#srcserviceseventqueuets) — *IndexedDB resilient offline event queue with priority eviction, backoff retry, and idempotency keys.*
 33. [`src/services/excelService.ts`](#srcservicesexcelservicets) — *Central API client handling authenticated JWT sessions, public getServerBaseUrl() / authHeaders(), gate check-in, and offline event synchronization.*
@@ -196,11 +197,9 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
     "cors": "^2.8.6",
     "express": "^5.3.0",
     "firebase": "^13.2.0",
-    "leaflet": "^1.9.4",
     "lucide-react": "^1.71.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-leaflet": "^5.0.0",
     "web-push": "^4.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
@@ -209,7 +208,6 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
     "@tailwindcss/vite": "^4.3.5",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/leaflet": "^1.9.22",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -256,9 +254,6 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             if (id.includes('react/') || id.includes('react-dom/')) {
               return 'vendor-react';
-            }
-            if (id.includes('leaflet') || id.includes('react-leaflet')) {
-              return 'vendor-leaflet';
             }
             if (id.includes('firebase')) {
               return 'vendor-firebase';
@@ -561,12 +556,11 @@ self.addEventListener('notificationclick', (event) => {
 
 ## 6. `src/index.css` <a id="srcindexcss"></a>
 
-**Description:** Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), Leaflet tile styles, and pulse animations.  
+**Description:** Tailwind CSS 4 setup, Prismatic Daylight Glass tokens (.bg-prismatic-canvas, .prismatic-card, .electric-hero, .electric-cta, .futuristic-tile), and pulse animations (Leaflet CSS stripped).  
 **File Path:** `sreenidhi-express/src/index.css`  
 
 ```css
 @import "tailwindcss";
-@import "leaflet/dist/leaflet.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -792,94 +786,6 @@ self.addEventListener('notificationclick', (event) => {
 .dark .glass-subcard {
   background: rgba(2, 6, 23, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* Leaflet map container + sleek dark cyber map tiles */
-.leaflet-container {
-  font-family: 'Inter', system-ui, sans-serif;
-  z-index: 1;
-  background: #E5E8EC;
-}
-
-.dark .leaflet-container {
-  background: #181C24;
-}
-
-.suh-bus-marker {
-  transition: transform 0.6s linear;
-}
-
-/* Glassmorphic Leaflet Map Controls */
-.leaflet-bar {
-  border: none !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22) !important;
-  border-radius: 12px !important;
-  overflow: hidden;
-}
-
-.leaflet-bar a {
-  background: rgba(255, 255, 255, 0.92) !important;
-  color: #0f172a !important;
-  border-color: rgba(15, 23, 42, 0.08) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.2s ease;
-}
-
-.leaflet-bar a:hover {
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-.dark .leaflet-bar a {
-  background: rgba(15, 23, 42, 0.88) !important;
-  color: #f8fafc !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-}
-
-.dark .leaflet-bar a:hover {
-  background: rgba(30, 41, 59, 0.95) !important;
-  color: #38bdf8 !important;
-}
-
-/* Dark-Mode Popups (Eliminate White Popup Flash) */
-.leaflet-popup-content-wrapper {
-  border-radius: 14px;
-  padding: 2px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-}
-
-.dark .leaflet-popup-content-wrapper,
-.dark .leaflet-popup-tip {
-  background: rgba(15, 23, 42, 0.96);
-  color: #f1f5f9;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.dark .leaflet-popup-close-button {
-  color: #94a3b8 !important;
-}
-
-.dark .leaflet-popup-close-button:hover {
-  color: #f8fafc !important;
-}
-
-/* Subtle Attribution Pill (CARTO Attribution Kept Visible) */
-.leaflet-control-attribution {
-  font-size: 10px;
-  border-top-left-radius: 10px;
-  padding: 2px 8px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.dark .leaflet-control-attribution {
-  background: rgba(15, 23, 42, 0.78) !important;
-  color: #94a3b8 !important;
-}
-
-.dark .leaflet-control-attribution a {
-  color: #38bdf8 !important;
 }
 
 /* Animated Bus Radar Ring Keyframe */
@@ -3336,6 +3242,78 @@ export function createExtras(db) {
     return false;
   };
 
+  /* Password Reset Codes (₹0 Self-Service + Admin Desk / Telegram) */
+  const savePasswordResetCode = (rollNumber, contactLabel, code, ttlMs = 15 * 60 * 1000) => {
+    const roll = String(rollNumber || '').trim().toUpperCase();
+    if (!roll) return false;
+    const nowMs = Date.now();
+    const expiresAt = nowMs + Math.max(60_000, Number(ttlMs) || 15 * 60 * 1000);
+    db.prepare(`
+      INSERT INTO otp_verifications
+        (account_roll, user_type, purpose, phone_number, otp, expires_at, created_at, attempts)
+      VALUES (?, 'STUDENT', 'PASSWORD_RESET', ?, ?, ?, ?, 0)
+      ON CONFLICT(account_roll, user_type, purpose) DO UPDATE SET
+        phone_number = excluded.phone_number,
+        otp = excluded.otp,
+        expires_at = excluded.expires_at,
+        created_at = excluded.created_at,
+        attempts = 0
+    `).run(roll, String(contactLabel || ''), String(code || '').trim(), expiresAt, nowMs);
+    return true;
+  };
+
+  const verifyPasswordResetCode = (rollNumber, code) => {
+    const roll = String(rollNumber || '').trim().toUpperCase();
+    const row = db.prepare(`
+      SELECT * FROM otp_verifications
+      WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'
+    `).get(roll);
+    if (!row) return { ok: false, reason: 'NOT_FOUND' };
+    if (Number(row.expires_at) < Date.now()) {
+      db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(roll);
+      return { ok: false, reason: 'EXPIRED' };
+    }
+    const prevAttempts = Number(row.attempts || 0);
+    if (prevAttempts >= 5) {
+      db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(roll);
+      return { ok: false, reason: 'MAX_ATTEMPTS' };
+    }
+    const expectedBuf = Buffer.from(String(row.otp || '').trim(), 'utf8');
+    const providedBuf = Buffer.from(String(code || '').trim(), 'utf8');
+    const match =
+      expectedBuf.length > 0 &&
+      expectedBuf.length === providedBuf.length &&
+      crypto.timingSafeEqual(expectedBuf, providedBuf);
+
+    if (!match) {
+      const nextAttempts = prevAttempts + 1;
+      if (nextAttempts >= 5) {
+        db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+          .run(roll);
+        return { ok: false, reason: 'MAX_ATTEMPTS' };
+      }
+      db.prepare("UPDATE otp_verifications SET attempts = ? WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(nextAttempts, roll);
+      return { ok: false, reason: 'INVALID_CODE' };
+    }
+
+    db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+      .run(roll);
+    return { ok: true };
+  };
+
+  const listActivePasswordResetRequests = () => {
+    return db.prepare(`
+      SELECT o.account_roll, COALESCE(s.name, '') AS name, o.phone_number, o.otp, o.expires_at, o.created_at
+      FROM otp_verifications o
+      LEFT JOIN students s ON UPPER(s.roll_number) = UPPER(o.account_roll)
+      WHERE o.user_type = 'STUDENT' AND o.purpose = 'PASSWORD_RESET' AND o.expires_at > ?
+      ORDER BY o.created_at DESC
+    `).all(Date.now());
+  };
+
   const updateStudentPhone = (roll, phone) => {
     return db.prepare('UPDATE students SET student_phone = ?, student_phone_verified = 1 WHERE roll_number = ?')
       .run(phone, roll).changes > 0;
@@ -4083,7 +4061,8 @@ export function createExtras(db) {
     getTripState, setTripState, setMustChangePassword, clearMustChangePassword,
     createIncident, listIncidents, resolveIncident, createAnnouncement, listAnnouncements, deleteAnnouncement,
     reportLostItem, listLostItems, resolveLostItem, saveFeedback, listFeedback,
-    saveOtp, verifyOtp, updateStudentPhone, updateParentPhone, updateStudentPhoneVerified, updateParentPhoneVerified, logNotification, listNotifications,
+    saveOtp, verifyOtp, savePasswordResetCode, verifyPasswordResetCode, listActivePasswordResetRequests,
+    updateStudentPhone, updateParentPhone, updateStudentPhoneVerified, updateParentPhoneVerified, logNotification, listNotifications,
     getNotificationPreferences, saveNotificationPreferences, resetBillingCycle,
     setStopTimer, getStopTimer, clearStopTimer, clearStopTimerIfNoPending, getPendingStopStudentCount, isBoardedToday, isOptedOutToday,
     computeRouteOptimization, setRoutePlanLock, setClusterOverride, getRoutePlan,
@@ -4279,6 +4258,7 @@ const apiLimiter = rateLimit({ windowMs: 60_000, max: 240, key: (r) => r.user?.s
 const telemetryLimiter = rateLimit({ windowMs: 60_000, max: 120, key: (r) => r.user?.sub ?? r.ip });
 const alertLimiter = rateLimit({ windowMs: 60_000, max: 10, key: (r) => r.user?.sub ?? r.ip, message: 'Alert rate limit reached' });
 const otpRequestLimiter = rateLimit({ windowMs: 10 * 60_000, max: 3, key: (r) => `${r.ip}|${r.user?.sub || 'anonymous'}|${r.body?.userType || ''}`, message: 'Too many OTP requests. Please wait 10 minutes.' });
+const authLimiter = rateLimit({ windowMs: 15 * 60_000, max: IS_PROD ? 10 : 120, key: loginKey, message: 'Too many password reset requests. Please try again later.' });
 const dispatchLimiter = rateLimit({ windowMs: 60_000, max: 5, key: (r) => r.user?.sub ?? r.ip, message: 'Too many notification dispatches' });
 const tileLimiter = rateLimit({ windowMs: 60_000, max: 600, key: (r) => r.ip });
 
@@ -4638,6 +4618,123 @@ app.post('/api/students/me/password', requireRole('STUDENT'), loginLimiter, asyn
     sessionVersion: extras.getSessionVersion(row.roll_number),
   });
   res.json({ success: true, token: refreshedToken });
+});
+
+/* ---------------- ₹0 Self-Service Forgot Password Flow ---------------- */
+app.post('/api/auth/forgot-password', authLimiter, async (req, res) => {
+  const rollNumber = str(req.body?.rollNumber, 32, 'rollNumber').toUpperCase();
+  const contact = str(req.body?.contact, 120, 'contact');
+  const safeResponse = {
+    success: true,
+    message: 'If your Roll/Employee ID and mobile/email match our records, a 6-digit reset code has been issued. Check Telegram (if linked) or ask the Transport Office desk.',
+  };
+
+  const row = extras.getStudentRow(rollNumber);
+  if (row && String(row.verification_status || 'VERIFIED').toUpperCase() !== 'REJECTED') {
+    const contactDigits = contact.replace(/\D/g, '').slice(-10);
+    const studentDigits = String(row.student_phone || '').replace(/\D/g, '').slice(-10);
+    const parentDigits = String(row.parent_phone || '').replace(/\D/g, '').slice(-10);
+    const contactEmail = contact.trim().toLowerCase();
+    const rowEmail = String(row.email || '').trim().toLowerCase();
+
+    const matchesPhone =
+      contactDigits.length === 10 &&
+      ((studentDigits.length === 10 && contactDigits === studentDigits) ||
+        (parentDigits.length === 10 && contactDigits === parentDigits));
+    const matchesEmail = Boolean(rowEmail && contactEmail.includes('@') && contactEmail === rowEmail);
+
+    if (matchesPhone || matchesEmail) {
+      const code = String(crypto.randomInt(100000, 1_000_000));
+      const storedContact = matchesPhone ? contactDigits : contactEmail;
+      extras.savePasswordResetCode(rollNumber, storedContact, code, 15 * 60 * 1000);
+
+      if (row.telegram_chat_id) {
+        const tgHtml = `🔐 <b>Sreenidhi Express Password Reset</b>\n\nAccount: <b>${escapeHtml(row.name)}</b> (${escapeHtml(rollNumber)})\nReset Code: <code>${code}</code>\n\nValid for 15 minutes.`;
+        await sendTelegramAlert(row.telegram_chat_id, tgHtml).catch(() => {});
+      }
+
+      try {
+        appendSheetRow('Alerts_Notifications', {
+          Timestamp: now(),
+          'Alert ID': `PWR-${Date.now()}`,
+          'Recipient Name': row.name || rollNumber,
+          Category: 'SECURITY',
+          Title: 'PASSWORD_RESET_REQUESTED',
+          Message: `Self-service 6-digit reset code issued for ${rollNumber} (valid 15m).`,
+          'Delivery Status': row.telegram_chat_id ? 'TELEGRAM_AND_DESK' : 'TRANSPORT_DESK',
+        });
+      } catch {}
+
+      try {
+        extras.logNotification({
+          recipient_type: 'STUDENT',
+          roll_number: rollNumber,
+          phone_number: studentDigits || parentDigits || storedContact,
+          category: 'SECURITY',
+          title: 'PASSWORD_RESET_REQUESTED',
+          message: `A 6-digit password reset code was requested for ${rollNumber}. Contact the Transport Office desk or check Telegram.`,
+          channel: 'IN_APP_SMS',
+          status: 'DELIVERED',
+        });
+      } catch {}
+    }
+  }
+
+  res.json(safeResponse);
+});
+
+app.post('/api/auth/reset-password', authLimiter, async (req, res) => {
+  const rollNumber = str(req.body?.rollNumber, 32, 'rollNumber').toUpperCase();
+  const code = String(req.body?.code || '').trim();
+  const newPassword = typeof req.body?.newPassword === 'string' ? req.body.newPassword : '';
+
+  if (!/^\d{6}$/.test(code)) {
+    throw new HttpError(400, 'Enter the valid 6-digit reset code');
+  }
+  if (newPassword.length < 8 || newPassword.length > 128) {
+    throw new HttpError(400, 'New password must be 8-128 characters');
+  }
+
+  const check = extras.verifyPasswordResetCode(rollNumber, code);
+  if (!check.ok) {
+    const msg =
+      check.reason === 'EXPIRED'
+        ? 'Reset code has expired. Please request a new 6-digit code.'
+        : check.reason === 'MAX_ATTEMPTS'
+          ? 'Too many invalid reset attempts. Request a new 6-digit code.'
+          : 'Invalid reset code. Check your 6-digit code and try again.';
+    throw new HttpError(400, msg);
+  }
+
+  const row = extras.getStudentRow(rollNumber);
+  if (!row) throw new HttpError(404, 'Student or faculty account not found');
+
+  const hashed = await hashPassword(newPassword);
+  extras.setPasswordHash(rollNumber, hashed);
+  extras.clearMustChangePassword(rollNumber);
+  extras.revokeStudentSessions(rollNumber);
+
+  try {
+    appendSheetRow('Alerts_Notifications', {
+      Timestamp: now(),
+      'Alert ID': `PWC-${Date.now()}`,
+      'Recipient Name': row.name || rollNumber,
+      Category: 'SECURITY',
+      Title: 'PASSWORD_RESET_COMPLETED',
+      Message: `${rollNumber} completed self-service password reset.`,
+      'Delivery Status': 'AUDIT',
+    });
+  } catch {}
+
+  res.json({
+    success: true,
+    message: 'Password updated. You can now sign in with your new password.',
+  });
+});
+
+app.get('/api/admin/password-reset-requests', requireRole('ADMIN'), apiLimiter, (_req, res) => {
+  const requests = extras.listActivePasswordResetRequests();
+  res.json({ success: true, requests });
 });
 
 /* ---------------- admin: provisioning (replaces the public /register that overwrote records) ---------------- */
@@ -7766,7 +7863,7 @@ export async function sendTelegramAlert(chatId, messageHtml) {
 
 ## 13. `tests/security.test.js` <a id="testssecuritytestjs"></a>
 
-**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin authentication & revocation (38/38 passing).  
+**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin auth, GPS schematic projection & forgot-password workflow (40/40 passing).  
 **File Path:** `sreenidhi-express/tests/security.test.js`  
 
 ```javascript
@@ -7780,6 +7877,7 @@ import {
 import { createExtras } from '../server/dbExtras.js';
 import { db } from '../server/excelStorage.js';
 import { app, isPlanLocked, getFirstDepartureUtcMs } from '../server/index.js';
+import { projectGpsOntoStops } from '../src/services/corridorProjection.ts';
 
 test('token: round trip, scope separation, tamper, expiry', () => {
   const t = signToken({ sub: 'X', role: 'STUDENT' });
@@ -8956,6 +9054,118 @@ test('v20.4 multi-admin access: authorized users with proper credentials can aut
     if (prevAdminAccounts === undefined) delete process.env.ADMIN_ACCOUNTS;
     else process.env.ADMIN_ACCOUNTS = prevAdminAccounts;
     db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
+  }
+});
+
+test('v20.4 gps-to-schematic projection: projects coordinates onto stops and detects off-route detours', () => {
+  const sampleStops = [
+    { id: 'r51-s1', name: 'Erragadda', shortName: 'Erragadda', lat: 17.4558, lng: 78.4294 },
+    { id: 'r51-s2', name: 'ESI-Erragadda', shortName: 'ESI-Erragadda', lat: 17.4475, lng: 78.4373 },
+    { id: 'r51-s3', name: 'Ameerpet', shortName: 'Ameerpet', lat: 17.4375, lng: 78.4483 },
+  ];
+
+  // Midpoint between Erragadda and ESI-Erragadda
+  const midLat = (17.4558 + 17.4475) / 2;
+  const midLng = (78.4294 + 78.4373) / 2;
+  const midProj = projectGpsOntoStops(midLat, midLng, sampleStops, 0, 0);
+  assert.equal(midProj.isGpsProjected, true);
+  assert.equal(midProj.segmentIndex, 0);
+  assert.ok(midProj.segmentProgress >= 0.45 && midProj.segmentProgress <= 0.55);
+  assert.ok(midProj.offRouteMeters < 100);
+
+  // Off-route point ~1 km perpendicular north-east from segment 0
+  const offRouteProj = projectGpsOntoStops(17.4585, 78.4410, sampleStops, 0, 0);
+  assert.equal(offRouteProj.isGpsProjected, true);
+  assert.ok(offRouteProj.offRouteMeters > 400);
+
+  // Invalid/missing GPS falls back cleanly
+  const fallbackProj = projectGpsOntoStops(0, 0, sampleStops, 1, 0.25);
+  assert.equal(fallbackProj.isGpsProjected, false);
+  assert.equal(fallbackProj.segmentIndex, 1);
+  assert.equal(fallbackProj.segmentProgress, 0.25);
+});
+
+test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
+  const roll = '26011CSEAI0109';
+  const origRow = db.prepare('SELECT password_hash, student_phone, must_change_password, session_version FROM students WHERE roll_number = ?').get(roll);
+  assert.ok(origRow);
+
+  const testPhone = '9876505109';
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const studentToken = signToken({ sub: roll, role: 'STUDENT', routeId: 'route-51', sessionVersion: Number(origRow.session_version || 0) });
+
+  db.prepare('UPDATE students SET student_phone = ? WHERE roll_number = ?').run(testPhone, roll);
+  db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'").run(roll);
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    // 1. Request password reset code
+    const forgotRes = await fetch(`${baseUrl}/api/auth/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, contact: testPhone }),
+    });
+    assert.equal(forgotRes.status, 200);
+    const forgotBody = await forgotRes.json();
+    assert.equal(forgotBody.success, true);
+
+    // 2. Non-admin cannot view admin password reset requests
+    const forbiddenRes = await fetch(`${baseUrl}/api/admin/password-reset-requests`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    });
+    assert.equal(forbiddenRes.status, 403);
+
+    // 3. Admin can see the issued 6-digit reset code
+    const adminListRes = await fetch(`${baseUrl}/api/admin/password-reset-requests`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(adminListRes.status, 200);
+    const adminListBody = await adminListRes.json();
+    const entry = adminListBody.requests.find((r) => r.account_roll === roll);
+    assert.ok(entry && /^\d{6}$/.test(entry.otp));
+
+    // 4. Wrong reset code is rejected cleanly
+    const wrongCode = entry.otp === '123456' ? '654321' : '123456';
+    const wrongResetRes = await fetch(`${baseUrl}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, code: wrongCode, newPassword: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(wrongResetRes.status, 400);
+
+    // 5. Valid reset code updates password cleanly
+    const goodResetRes = await fetch(`${baseUrl}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, code: entry.otp, newPassword: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(goodResetRes.status, 200);
+
+    // 6. User can log in with the new password and old password fails
+    const oldLoginRes = await fetch(`${baseUrl}/api/students/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, password: 'student123' }),
+    });
+    assert.equal(oldLoginRes.status, 401);
+
+    const newLoginRes = await fetch(`${baseUrl}/api/students/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, password: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(newLoginRes.status, 200);
+    const newLoginBody = await newLoginRes.json();
+    assert.equal(newLoginBody.success, true);
+    assert.ok(newLoginBody.token);
+  } finally {
+    server.close();
+    db.prepare('UPDATE students SET password_hash = ?, student_phone = ?, must_change_password = ?, session_version = ? WHERE roll_number = ?')
+      .run(origRow.password_hash, origRow.student_phone, origRow.must_change_password, origRow.session_version, roll);
+    db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'").run(roll);
   }
 });
 
@@ -14035,6 +14245,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
+import { INITIAL_BUS_FLEET } from '../../data/sreenidhiData';
 import { excelService } from '../../services/excelService';
 
 type AuthRole = 'PARENT' | 'STUDENT' | 'DRIVER' | 'ADMIN';
@@ -14066,14 +14277,23 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   const [studentRoll, setStudentRoll] = useState('');
   const [studentPassword, setStudentPassword] = useState('');
   const [showStudentPassword, setShowStudentPassword] = useState(false);
-  const [studentAuthMode, setStudentAuthMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
+  const [studentAuthMode, setStudentAuthMode] = useState<'LOGIN' | 'REGISTER' | 'FORGOT'>('LOGIN');
   const [regRoll, setRegRoll] = useState('');
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regPhone, setRegPhone] = useState('');
-  const [regPickupStop, setRegPickupStop] = useState('Erragadda');
+  const [regPickupStop, setRegPickupStop] = useState('');
   const [regSuccessMsg, setRegSuccessMsg] = useState<string | null>(null);
+
+  // Forgot password state (₹0 Self-Service + Admin Desk / Telegram)
+  const [resetRoll, setResetRoll] = useState('');
+  const [resetContact, setResetContact] = useState('');
+  const [resetCode, setResetCode] = useState('');
+  const [resetNewPassword, setResetNewPassword] = useState('');
+  const [resetConfirmPassword, setResetConfirmPassword] = useState('');
+  const [resetRequestedMsg, setResetRequestedMsg] = useState<string | null>(null);
+  const [loginSuccessMsg, setLoginSuccessMsg] = useState<string | null>(null);
 
   // Parent form state
   const [parentCode, setParentCode] = useState('');
@@ -14122,6 +14342,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
+    setLoginSuccessMsg(null);
     setIsSubmitting(true);
     try {
       const cleanRoll = studentRoll.trim().toUpperCase();
@@ -14190,6 +14411,67 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           'Registration submitted! Visit the Transport Office or wait for 1-click Admin verification before signing in.',
       );
       setRegPassword('');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRequestPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    setResetRequestedMsg(null);
+    const cleanRoll = resetRoll.trim().toUpperCase();
+    const cleanContact = resetContact.trim();
+    if (!cleanRoll || !cleanContact) {
+      setAuthError('Enter your Roll / Employee ID and registered mobile number or college email.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const res = await excelService.requestPasswordReset(cleanRoll, cleanContact);
+      if (!res.success) {
+        setAuthError(res.message);
+        return;
+      }
+      setResetRoll(cleanRoll);
+      setResetRequestedMsg(res.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirmPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    const cleanRoll = resetRoll.trim().toUpperCase();
+    const cleanCode = resetCode.trim();
+    if (!cleanRoll || !/^\d{6}$/.test(cleanCode)) {
+      setAuthError('Enter your Roll / Employee ID and valid 6-digit reset code.');
+      return;
+    }
+    if (resetNewPassword.length < 8) {
+      setAuthError('New password must be at least 8 characters long.');
+      return;
+    }
+    if (resetNewPassword !== resetConfirmPassword) {
+      setAuthError('New password and confirmation do not match.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const res = await excelService.confirmPasswordReset(cleanRoll, cleanCode, resetNewPassword);
+      if (!res.success) {
+        setAuthError(res.message);
+        return;
+      }
+      setStudentRoll(cleanRoll);
+      setStudentPassword('');
+      setResetCode('');
+      setResetNewPassword('');
+      setResetConfirmPassword('');
+      setResetRequestedMsg(null);
+      setLoginSuccessMsg(res.message || 'Password updated. You can now sign in with your new password.');
+      setStudentAuthMode('LOGIN');
     } finally {
       setIsSubmitting(false);
     }
@@ -14482,23 +14764,42 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold text-slate-900 dark:text-white">
-                {studentAuthMode === 'LOGIN' ? 'Student / Faculty Login' : 'New Commuter Self-Registration'}
+                {studentAuthMode === 'LOGIN'
+                  ? 'Student / Faculty Login'
+                  : studentAuthMode === 'REGISTER'
+                    ? 'New Commuter Self-Registration'
+                    : 'Reset Password (₹0 Self-Service)'}
               </span>
               <button
                 type="button"
                 onClick={() => {
-                  setStudentAuthMode((m) => (m === 'LOGIN' ? 'REGISTER' : 'LOGIN'));
+                  if (studentAuthMode === 'FORGOT') {
+                    setStudentAuthMode('LOGIN');
+                  } else {
+                    setStudentAuthMode((m) => (m === 'LOGIN' ? 'REGISTER' : 'LOGIN'));
+                  }
                   setAuthError(null);
                   setRegSuccessMsg(null);
+                  setResetRequestedMsg(null);
+                  setLoginSuccessMsg(null);
                 }}
                 className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-cyan-300 cursor-pointer"
               >
-                {studentAuthMode === 'LOGIN' ? 'New Commuter? Self-Register' : 'Already Verified? Sign In'}
+                {studentAuthMode === 'LOGIN'
+                  ? 'New Commuter? Self-Register'
+                  : studentAuthMode === 'FORGOT'
+                    ? 'Back to Sign In'
+                    : 'Already Verified? Sign In'}
               </button>
             </div>
 
             {studentAuthMode === 'LOGIN' ? (
               <form onSubmit={handleStudentSubmit} className="space-y-3">
+                {loginSuccessMsg && (
+                  <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-xs font-semibold text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200">
+                    {loginSuccessMsg}
+                  </div>
+                )}
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Roll Number / Employee ID
@@ -14513,9 +14814,24 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                    Password
-                  </label>
+                  <div className="flex items-center justify-between gap-2">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResetRoll(studentRoll.trim().toUpperCase());
+                        setAuthError(null);
+                        setLoginSuccessMsg(null);
+                        setResetRequestedMsg(null);
+                        setStudentAuthMode('FORGOT');
+                      }}
+                      className="text-[11px] font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
                   <div className="relative mt-1">
                     <input
                       type={showStudentPassword ? 'text' : 'password'}
@@ -14567,6 +14883,114 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </form>
+            ) : studentAuthMode === 'FORGOT' ? (
+              <div className="space-y-4">
+                {resetRequestedMsg && (
+                  <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-xs font-semibold text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200">
+                    {resetRequestedMsg}
+                  </div>
+                )}
+
+                <form onSubmit={handleRequestPasswordReset} className="space-y-2.5 rounded-2xl border border-slate-200/80 bg-white/80 p-3.5 dark:border-[#2E3646] dark:bg-[#141821]/80">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-cyan-300">
+                    Step 1: Verify Account Contact
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Roll / Employee ID
+                      </label>
+                      <input
+                        type="text"
+                        value={resetRoll}
+                        onChange={(e) => setResetRoll(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="26011CSEAI0109"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Registered Mobile or College Email
+                      </label>
+                      <input
+                        type="text"
+                        value={resetContact}
+                        onChange={(e) => setResetContact(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="9876543210 or @sreenidhi.edu.in"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="tactile-btn flex w-full items-center justify-center gap-2 rounded-xl border border-[#4F46E5]/30 bg-indigo-50 py-2 text-xs font-extrabold text-[#4F46E5] hover:bg-indigo-100 disabled:opacity-50 dark:border-cyan-500/30 dark:bg-indigo-950/60 dark:text-cyan-300 cursor-pointer"
+                  >
+                    <span>{isSubmitting ? 'Requesting Code...' : 'Request 6-Digit Reset Code'}</span>
+                  </button>
+                </form>
+
+                <form onSubmit={handleConfirmPasswordReset} className="space-y-2.5 rounded-2xl border border-slate-200/80 bg-white/80 p-3.5 dark:border-[#2E3646] dark:bg-[#141821]/80">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                    Step 2: Enter Code &amp; New Password
+                  </p>
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                      6-Digit Reset Code (from Telegram or Transport Office Desk)
+                    </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={resetCode}
+                      onChange={(e) => setResetCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm font-mono font-bold tracking-widest text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      placeholder="123456"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        New Password (min 8 chars)
+                      </label>
+                      <input
+                        type="password"
+                        value={resetNewPassword}
+                        onChange={(e) => setResetNewPassword(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="At least 8 characters"
+                        minLength={8}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Confirm New Password
+                      </label>
+                      <input
+                        type="password"
+                        value={resetConfirmPassword}
+                        onChange={(e) => setResetConfirmPassword(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="Re-enter password"
+                        minLength={8}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
+                  >
+                    <span>{isSubmitting ? 'Updating Password...' : 'Update Password'}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                </form>
+              </div>
             ) : (
               <form onSubmit={handleStudentRegister} className="space-y-2.5">
                 {regSuccessMsg && (
@@ -14649,28 +15073,48 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                     <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Requested Pickup Stop
                     </label>
-                    <input
-                      type="text"
-                      list="suh-register-stops"
+                    <select
+                      aria-label="Requested Pickup Stop"
                       value={regPickupStop}
                       onChange={(e) => setRegPickupStop(e.target.value)}
                       className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
-                      placeholder="Erragadda, KPHB, Miyapur..."
                       required
-                    />
-                    <datalist id="suh-register-stops">
-                      <option value="Miyapur X Roads" />
-                      <option value="KPHB Colony" />
-                      <option value="Kukatpally" />
-                      <option value="Balanagar" />
-                      <option value="Moosapet" />
-                      <option value="Erragadda" />
-                      <option value="SR Nagar" />
-                      <option value="Ameerpet" />
-                      <option value="Secunderabad" />
-                      <option value="Uppal X Roads" />
-                      <option value="Ghatkesar" />
-                    </datalist>
+                    >
+                      <option value="">Select your pickup stop…</option>
+                      {INITIAL_BUS_FLEET.map((bus) => {
+                        const pickupStops = bus.stops.filter(
+                          (s) =>
+                            s.areaClusterId !== 'cluster-campus' &&
+                            !/suh\s*campus/i.test(s.shortName || s.name)
+                        );
+                        if (pickupStops.length === 0) return null;
+                        const originLabel = pickupStops[0]?.shortName || pickupStops[0]?.name || 'Corridor';
+                        return (
+                          <optgroup
+                            key={bus.routeId}
+                            label={`${bus.routeNumber} — ${originLabel} to SUH Campus`}
+                          >
+                            {pickupStops.map((stop) => {
+                              const canonicalVal =
+                                stop.shortName && stop.shortName !== stop.name && stop.name.startsWith('Begumpet')
+                                  ? stop.shortName
+                                  : stop.name;
+                              const label =
+                                stop.shortName &&
+                                stop.shortName !== stop.name &&
+                                !stop.name.toLowerCase().includes(stop.shortName.toLowerCase())
+                                  ? `${stop.shortName} (${stop.name})`
+                                  : stop.name;
+                              return (
+                                <option key={stop.id} value={canonicalVal}>
+                                  {label}
+                                </option>
+                              );
+                            })}
+                          </optgroup>
+                        );
+                      })}
+                    </select>
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -15099,7 +15543,6 @@ import {
   MoreHorizontal,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
@@ -15153,7 +15596,6 @@ const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true
 
 export const StudentPortal: React.FC = () => {
   const {
-    buses,
     activeStudent,
     activeBus,
     currentUser,
@@ -15167,7 +15609,6 @@ export const StudentPortal: React.FC = () => {
     setAbsenceTomorrow,
   } = useCommuteSimulation();
 
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [applyServiceType, setApplyServiceType] = useState('ROUTE_CHANGE');
   const [applyReason, setApplyReason] = useState('Requesting route or drop stop update.');
@@ -15922,14 +16363,13 @@ export const StudentPortal: React.FC = () => {
             </div>
           )}
 
-          {/* Rounded Live Map Preview Card */}
+          {/* Rounded Live Route Schematic Preview Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              <HybridTransitMap
-                buses={buses}
-                focusedBus={activeBus}
-                highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                heightClass="h-48 sm:h-56 w-full"
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={studentStopObj?.id || activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+                compact
               />
             </div>
             <button
@@ -15937,7 +16377,7 @@ export const StudentPortal: React.FC = () => {
               onClick={() => setPortalTab('MAP')}
               className="electric-cta flex w-full items-center justify-center gap-1.5 py-2.5 text-xs font-extrabold text-white cursor-pointer"
             >
-              <span>View Full Map / Metro View →</span>
+              <span>View Full Route Schematic →</span>
             </button>
           </div>
 
@@ -15975,49 +16415,16 @@ export const StudentPortal: React.FC = () => {
                   Corridor Tracking • {routeNumber}
                 </span>
               </div>
-
-              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => setMapMode('INTERACTIVE')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'INTERACTIVE'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                  }`}
-                >
-                  Interactive Map
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMapMode('SCHEMATIC')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'SCHEMATIC'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                  }`}
-                >
-                  Metro Line
-                </button>
-              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                GPS Live Schematic
+              </span>
             </div>
 
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              {mapMode === 'INTERACTIVE' ? (
-                <HybridTransitMap
-                  buses={buses}
-                  focusedBus={activeBus}
-                  highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                  heightClass="h-80 sm:h-96 w-full"
-                />
-              ) : (
-                <div className="h-80 sm:h-96 w-full">
-                  <MetroSchematicMap
-                    activeBus={activeBus}
-                    highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                  />
-                </div>
-              )}
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={studentStopObj?.id || activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+              />
             </div>
           </div>
 
@@ -16654,7 +17061,6 @@ import {
   Navigation,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { audioSpeechService } from '../../services/audioSpeechService';
 import { excelService } from '../../services/excelService';
@@ -16695,9 +17101,6 @@ export const DriverConsole: React.FC = () => {
 
   // Quick Tap Headcount Stepper State
   const [manualPassengerCount, setManualPassengerCount] = useState<number>(0);
-
-  // Map Mode Toggle (Google Maps vs. Hyderabad Metro Schematic)
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
 
   // Stop-by-Stop Manifest State
   const [manifestExpanded, setManifestExpanded] = useState(true);
@@ -17339,7 +17742,7 @@ export const DriverConsole: React.FC = () => {
             </div>
           </div>
 
-          {/* Compact Live Map / Metro Line Radar Card */}
+          {/* Compact Live GPS Corridor Schematic Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
@@ -17348,47 +17751,14 @@ export const DriverConsole: React.FC = () => {
                   Live Corridor Radar • {activeBus.routeNumber}
                 </h4>
               </div>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="prismatic-subcard flex rounded-xl p-0.5">
-                  <button
-                    type="button"
-                    onClick={() => setMapMode('INTERACTIVE')}
-                    className={`rounded-lg px-2.5 py-1 text-[10px] font-bold transition cursor-pointer ${
-                      mapMode === 'INTERACTIVE'
-                        ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                        : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                    }`}
-                  >
-                    Google Maps
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMapMode('SCHEMATIC')}
-                    className={`rounded-lg px-2.5 py-1 text-[10px] font-bold transition cursor-pointer ${
-                      mapMode === 'SCHEMATIC'
-                        ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                        : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                    }`}
-                  >
-                    Metro Line
-                  </button>
-                </div>
-                <span className="prismatic-subcard rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-[#4F46E5] dark:text-cyan-300">
-                  {Math.round(activeBus.speedKmh)} km/h
-                </span>
-              </div>
+              <span className="prismatic-subcard rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold text-[#4F46E5] dark:text-cyan-300">
+                {Math.round(activeBus.speedKmh)} km/h
+              </span>
             </div>
 
-            {mapMode === 'INTERACTIVE' ? (
-              <HybridTransitMap
-                buses={buses}
-                focusedBus={activeBus}
-                useGoogleMaps={true}
-                heightClass="h-64 sm:h-72 w-full"
-              />
-            ) : (
-              <MetroSchematicMap activeBus={activeBus} />
-            )}
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap activeBus={activeBus} highlightStopId={currentStop?.id} />
+            </div>
           </div>
         </div>
       )}
@@ -17863,7 +18233,6 @@ import {
   Clock,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 
@@ -17902,7 +18271,6 @@ export const AdminDashboard: React.FC = () => {
   const avgFleetDelayMin = (totalDelayMinutes / totalFleetBuses).toFixed(1);
 
   const [adminTab, setAdminTab] = useState<'VERIFY' | 'FLEET' | 'LOGS'>('VERIFY');
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [applications, setApplications] = useState<ScrutinyApplication[]>([]);
   const [scrutinyLoadingId, setScrutinyLoadingId] = useState<string | null>(null);
 
@@ -17966,6 +18334,17 @@ export const AdminDashboard: React.FC = () => {
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [isGrantingAdmin, setIsGrantingAdmin] = useState(false);
   const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
+  const [passwordResetRequests, setPasswordResetRequests] = useState<
+    Array<{
+      account_roll: string;
+      name: string;
+      phone_number: string;
+      otp: string;
+      expires_at: number;
+      created_at: number;
+    }>
+  >([]);
+  const [isRefreshingResets, setIsRefreshingResets] = useState(false);
   const [driverUtilityReport, setDriverUtilityReport] = useState<Awaited<ReturnType<typeof excelService.getDriverUtilityLogs>>>({
     logs: [],
     tripStarts: [],
@@ -18051,6 +18430,18 @@ export const AdminDashboard: React.FC = () => {
     });
     const adminsList = await excelService.listAdminUsers();
     setAdminAccounts(adminsList);
+    const resetReqs = await excelService.getPasswordResetRequests();
+    setPasswordResetRequests(resetReqs);
+  };
+
+  const refreshPasswordResetRequests = async () => {
+    setIsRefreshingResets(true);
+    try {
+      const resetReqs = await excelService.getPasswordResetRequests();
+      setPasswordResetRequests(resetReqs);
+    } finally {
+      setIsRefreshingResets(false);
+    }
   };
 
   const handleGrantAdminAccess = async (e: React.FormEvent) => {
@@ -18533,6 +18924,54 @@ export const AdminDashboard: React.FC = () => {
                 ))
               )}
             </div>
+
+            {passwordResetRequests.length > 0 && (
+              <div className="mt-4 border-t border-slate-100 pt-3.5 dark:border-[#2E3646]">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Key className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
+                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                      Active Password Reset Codes
+                    </h4>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void refreshPasswordResetRequests()}
+                    disabled={isRefreshingResets}
+                    className="text-[11px] font-bold text-[#4F46E5] hover:underline disabled:opacity-50 dark:text-cyan-300 cursor-pointer"
+                  >
+                    {isRefreshingResets ? 'Refreshing…' : 'Refresh'}
+                  </button>
+                </div>
+
+                <div className="mt-2.5 space-y-2">
+                  {passwordResetRequests.map((req) => {
+                    const minsRemaining = Math.max(1, Math.ceil((req.expires_at - Date.now()) / 60000));
+                    return (
+                      <div
+                        key={req.account_roll}
+                        className="prismatic-subcard flex flex-wrap items-center justify-between gap-2.5 rounded-2xl px-3.5 py-2.5"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                            <span className="font-mono font-black text-[#4F46E5] dark:text-cyan-300">
+                              {req.account_roll}
+                            </span>
+                            {req.name ? ` • ${req.name}` : ''}
+                          </p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                            Expires in {minsRemaining} min • Verify ID before sharing
+                          </p>
+                        </div>
+                        <span className="rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-1 font-mono text-sm font-black tracking-widest text-[#4F46E5] dark:border-indigo-700/60 dark:bg-indigo-950/60 dark:text-cyan-300">
+                          {req.otp}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Detailed Timestamps & Stop Duration Report Panel */}
@@ -18967,55 +19406,22 @@ export const AdminDashboard: React.FC = () => {
 
       {adminTab === 'FLEET' && (
         <div className="animate-panel-in space-y-4">
-          {/* Dual Mode Fleet Radar Map */}
+          {/* Live GPS Fleet Radar Corridor Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                  Fleet Radar Overview
+                  Fleet Radar Overview • {activeBus.routeNumber}
                 </span>
               </div>
-
-              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => setMapMode('INTERACTIVE')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'INTERACTIVE'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-                  }`}
-                >
-                  Interactive Map
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMapMode('SCHEMATIC')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'SCHEMATIC'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-                  }`}
-                >
-                  Metro Line
-                </button>
-              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                GPS Live Schematic
+              </span>
             </div>
 
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              {mapMode === 'INTERACTIVE' ? (
-                <HybridTransitMap
-                  buses={buses}
-                  focusedBus={activeBus}
-                  showAllFleet={true}
-                  heightClass="h-72 w-full"
-                />
-              ) : (
-                <div className="h-72 w-full">
-                  <MetroSchematicMap activeBus={activeBus} />
-                </div>
-              )}
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap activeBus={activeBus} />
             </div>
           </div>
 
@@ -19670,7 +20076,6 @@ import {
   Bell,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
@@ -19681,7 +20086,6 @@ import { SmsMessageDrawer } from '../notifications/SmsMessageDrawer';
 
 export const ParentPortal: React.FC = () => {
   const {
-    buses,
     activeStudent,
     activeBus,
     currentUser,
@@ -19691,7 +20095,6 @@ export const ParentPortal: React.FC = () => {
     setAbsenceTomorrow,
   } = useCommuteSimulation();
 
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [isAbsentTomorrow, setIsAbsentTomorrow] = useState(false);
   const [isUpdatingAbsence, setIsUpdatingAbsence] = useState(false);
   const [openIncidents, setOpenIncidents] = useState<any[]>([]);
@@ -20117,58 +20520,25 @@ export const ParentPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* Dual Mode Map Selection Controls */}
+      {/* Live GPS Fleet Corridor Card */}
       <div className="prismatic-card overflow-hidden rounded-3xl">
         <div className="flex items-center justify-between border-b border-slate-100 p-3 dark:border-[#2E3646]">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-[#06B6D4] animate-pulse" />
             <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-              Live Fleet Map
+              Live Route Corridor • {routeNumber}
             </span>
           </div>
-
-          <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-            <button
-              type="button"
-              onClick={() => setMapMode('INTERACTIVE')}
-              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                mapMode === 'INTERACTIVE'
-                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-              }`}
-            >
-              Interactive Map
-            </button>
-            <button
-              type="button"
-              onClick={() => setMapMode('SCHEMATIC')}
-              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                mapMode === 'SCHEMATIC'
-                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-              }`}
-            >
-              Metro Line
-            </button>
-          </div>
+          <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+            GPS Live Schematic
+          </span>
         </div>
 
-        <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-          {mapMode === 'INTERACTIVE' ? (
-            <HybridTransitMap
-              buses={buses}
-              focusedBus={activeBus}
-              highlightStopId={highlightStopId}
-              heightClass="h-64 w-full"
-            />
-          ) : (
-            <div className="h-64 w-full">
-              <MetroSchematicMap
-                activeBus={activeBus}
-                highlightStopId={highlightStopId}
-              />
-            </div>
-          )}
+        <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+          <MetroSchematicMap
+            activeBus={activeBus}
+            highlightStopId={highlightStopId}
+          />
         </div>
       </div>
 
@@ -20327,656 +20697,159 @@ export const ParentPortal: React.FC = () => {
 
 ---
 
-## 29. `src/components/map/HybridTransitMap.tsx` <a id="srccomponentsmaphybridtransitmaptsx"></a>
+## 29. `src/services/corridorProjection.ts` <a id="srcservicescorridorprojectionts"></a>
 
-**Description:** Interactive Leaflet GIS map with unobstructed canvas, above/below HUD telemetry & OSRM/Google Maps bars, dynamic LAN/origin CARTO tile loading, glowing route corridors, glassmorphic camera controls, and live SVG bus pill.  
-**File Path:** `sreenidhi-express/src/components/map/HybridTransitMap.tsx`  
+**Description:** Pure equirectangular GPS-to-route segment projection engine and Haversine meter calculation driving live MetroSchematicMap positioning and off-route detour detection.  
+**File Path:** `sreenidhi-express/src/services/corridorProjection.ts`  
 
-```tsx
-import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
-import { ExternalLink, Navigation } from 'lucide-react';
-import {
-  Circle,
-  MapContainer,
-  Marker,
-  Polyline,
-  Popup,
-  TileLayer,
-  useMap,
-} from 'react-leaflet';
-import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
-import type { BusVehicle, RouteStop } from '../../types/transit';
-import { osrmRoutingService } from '../../services/osrmRoutingService';
-import { excelService } from '../../services/excelService';
-import { useCommuteSimulation } from '../../context/useCommuteSimulation';
+```typescript
+import type { RouteStop } from '../types/transit.ts';
 
-interface HybridTransitMapProps {
-  buses: BusVehicle[];
-  focusedBus: BusVehicle;
-  useGoogleMaps?: boolean;
-  showAllFleet?: boolean;
-  highlightStopId?: string;
-  heightClass?: string;
+export interface GpsProjectionResult {
+  segmentIndex: number;
+  segmentProgress: number;
+  offRouteMeters: number;
+  isGpsProjected: boolean;
+  nearestStopIndex: number;
 }
 
-const MapCameraController: React.FC<{
-  focusedBus: BusVehicle;
-  roadCoordinates: [number, number][];
-  followBus: boolean;
-  setFollowBus: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ focusedBus, roadCoordinates, followBus, setFollowBus }) => {
-  const map = useMap();
+/**
+ * Compute great-circle Haversine distance in meters between two lat/lng coordinates.
+ */
+export function haversineMeters(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371000;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
-  useEffect(() => {
-    if (followBus) {
-      map.panTo([focusedBus.currentLat, focusedBus.currentLng], { animate: true, duration: 0.7 });
-    }
-  }, [focusedBus.currentLat, focusedBus.currentLng, followBus, map]);
+function isValidGpsCoord(lat: number, lng: number): boolean {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return false;
+  if (Math.abs(lat) < 0.0001 && Math.abs(lng) < 0.0001) return false;
+  return Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
+}
 
-  useEffect(() => {
-    const onDragStart = () => setFollowBus(false);
-    map.on('dragstart', onDragStart);
-    return () => {
-      map.off('dragstart', onDragStart);
+/**
+ * Orthogonally project live GPS coordinates onto consecutive route stop segments
+ * using local flat-earth equirectangular scaling and clamped t in [0, 1].
+ */
+export function projectGpsOntoStops(
+  lat: number,
+  lng: number,
+  stops: RouteStop[],
+  fallbackIndex = 0,
+  fallbackProgress = 0
+): GpsProjectionResult {
+  if (!Array.isArray(stops) || stops.length === 0) {
+    return {
+      segmentIndex: 0,
+      segmentProgress: 0,
+      offRouteMeters: 0,
+      isGpsProjected: false,
+      nearestStopIndex: 0,
     };
-  }, [map, setFollowBus]);
-
-  const handleRecenter = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setFollowBus(true);
-    map.flyTo([focusedBus.currentLat, focusedBus.currentLng], 13, { duration: 0.8 });
-  };
-
-  const handleFitCorridor = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setFollowBus(false);
-    if (roadCoordinates.length > 1) {
-      map.fitBounds(roadCoordinates, { padding: [36, 36], maxZoom: 14 });
-    }
-  };
-
-  return (
-    <div className="leaflet-top leaflet-right pointer-events-none p-3 z-[400]">
-      <div className="pointer-events-auto flex flex-col gap-1.5">
-        <button
-          type="button"
-          onClick={handleRecenter}
-          title={followBus ? 'Following Bus (Auto-Pan Active)' : 'Recenter on Bus'}
-          aria-label="Recenter on Bus"
-          className={`tactile-btn flex h-8 w-8 items-center justify-center rounded-xl border shadow-lg backdrop-blur-md transition-all ${
-            followBus
-              ? 'border-indigo-500/60 bg-indigo-600 text-white shadow-indigo-500/25'
-              : 'border-slate-200/90 bg-white/90 text-slate-700 hover:bg-white dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:bg-slate-800'
-          }`}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="3" fill={followBus ? 'currentColor' : 'none'} />
-            <circle cx="12" cy="12" r="8" />
-            <line x1="12" y1="2" x2="12" y2="5" />
-            <line x1="12" y1="19" x2="12" y2="22" />
-            <line x1="2" y1="12" x2="5" y2="12" />
-            <line x1="19" y1="12" x2="22" y2="12" />
-          </svg>
-        </button>
-        <button
-          type="button"
-          onClick={handleFitCorridor}
-          title="Fit Entire Corridor"
-          aria-label="Fit Entire Corridor"
-          className="tactile-btn flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-700 shadow-lg backdrop-blur-md transition-all hover:bg-white dark:border-white/15 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:bg-slate-800"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="15 3 21 3 21 9" />
-            <polyline points="9 21 3 21 3 15" />
-            <line x1="21" y1="3" x2="14" y2="10" />
-            <line x1="3" y1="21" x2="10" y2="14" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-};
-
-function createBusDivIcon(bus: BusVehicle, isFocused: boolean): L.DivIcon {
-  const isBreakdown = bus.status === 'BREAKDOWN_RESCUE_ACTIVE';
-  const isRerouted = bus.status === 'REROUTED_SKIP_AREA' || bus.flyoverBypassActive;
-  const isCrowdSourced = bus.telemetrySource === 'CROWD_SOURCED_STUDENTS';
-
-  const gradient = isBreakdown
-    ? 'linear-gradient(135deg, #dc2626, #ef4444)'
-    : isRerouted
-      ? 'linear-gradient(135deg, #059669, #10b981)'
-      : isCrowdSourced
-        ? 'linear-gradient(135deg, #d97706, #f59e0b)'
-        : 'linear-gradient(135deg, #0d9488, #2563eb)';
-
-  const pulseColor = isBreakdown
-    ? 'rgba(239, 68, 68, 0.55)'
-    : isRerouted
-      ? 'rgba(16, 185, 129, 0.55)'
-      : isCrowdSourced
-        ? 'rgba(245, 158, 11, 0.55)'
-        : 'rgba(56, 189, 248, 0.65)';
-
-  const routeShort = bus.routeNumber.replace('Route ', 'R');
-  const speedDisplay = `${Math.round(bus.speedKmh)} km/h`;
-  const labelText = isFocused ? `${routeShort} · ${speedDisplay}` : routeShort;
-
-  const busSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;flex-shrink:0;">
-    <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10H4V6z"/>
-    <path d="M18 16H6"/>
-    <path d="M4 10h16"/>
-    <circle cx="7.5" cy="18.5" r="1.5" fill="#ffffff"/>
-    <circle cx="16.5" cy="18.5" r="1.5" fill="#ffffff"/>
-  </svg>`;
-
-  const haloHtml = isFocused
-    ? `<div class="animate-bus-pulse" style="position:absolute;inset:-6px;border-radius:9999px;background:${pulseColor};pointer-events:none;z-index:-1;"></div>`
-    : '';
-
-  const pillHtml = `<div style="position:relative;display:inline-flex;align-items:center;gap:5px;background:${gradient};color:#ffffff;padding:4px 9px;border-radius:9999px;font-family:'JetBrains Mono',monospace,sans-serif;font-weight:700;font-size:11px;line-height:1;border:2px solid #ffffff;box-shadow:0 4px 14px rgba(0,0,0,0.38);white-space:nowrap;transform:${isFocused ? 'scale(1.06)' : 'scale(0.92)'};">
-    ${haloHtml}
-    ${busSvg}
-    <span style="letter-spacing:-0.02em;">${labelText}</span>
-  </div>`;
-
-  const width = isFocused ? 112 : 68;
-  const height = 30;
-
-  return L.divIcon({
-    className: 'suh-bus-marker',
-    html: pillHtml,
-    iconSize: [width, height],
-    iconAnchor: [width / 2, height / 2],
-  });
-}
-
-function createStopDivIcon(
-  stop: RouteStop,
-  isCurrent: boolean,
-  isHighlighted: boolean,
-  isPassed: boolean,
-  isDark: boolean
-): L.DivIcon {
-  const isCampus = stop.areaClusterId === 'cluster-campus';
-  const seq = stop.sequence;
-
-  let badgeContent = '';
-  let badgeStyle = '';
-  let tagAbove = '';
-  let tagBelow = '';
-  let size = 18;
-
-  if (stop.isBypassed) {
-    size = 18;
-    badgeStyle = `width:18px;height:18px;border-radius:9999px;border:2px dashed #94a3b8;background:rgba(148,163,184,0.15);color:#94a3b8;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0.45;`;
-    badgeContent = `${seq}`;
-  } else if (isCampus) {
-    size = 24;
-    badgeStyle = `width:24px;height:24px;border-radius:9999px;background:#e53c2e;border:2.5px solid #ffffff;box-shadow:0 2px 8px rgba(229,60,46,0.5);display:flex;align-items:center;justify-content:center;`;
-    badgeContent = `<span style="width:7px;height:7px;border-radius:9999px;background:#ffffff;"></span>`;
-    tagBelow = `<span style="position:absolute;top:calc(100% + 1px);font-size:9px;font-weight:800;letter-spacing:0.04em;color:${isDark ? '#f87171' : '#dc2626'};background:${isDark ? 'rgba(15,23,42,0.85)' : 'rgba(255,255,255,0.9)'};padding:0.5px 4px;border-radius:4px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.25);">SUH</span>`;
-  } else if (isHighlighted) {
-    size = 22;
-    badgeStyle = `width:22px;height:22px;border-radius:9999px;background:#f59e0b;color:#ffffff;border:2px solid #ffffff;box-shadow:0 0 12px rgba(245,158,11,0.65),0 2px 6px rgba(0,0,0,0.3);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;`;
-    badgeContent = `${seq}`;
-    tagAbove = `<span style="position:absolute;bottom:calc(100% + 2px);font-size:8.5px;font-weight:800;letter-spacing:0.04em;background:#f59e0b;color:#000000;padding:1px 5px;border-radius:9999px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.35);line-height:1.2;">YOUR STOP</span>`;
-  } else if (isCurrent) {
-    size = 20;
-    badgeStyle = `width:20px;height:20px;border-radius:9999px;background:#10b981;color:#ffffff;border:2px solid #ffffff;box-shadow:0 0 0 3px rgba(16,185,129,0.45),0 2px 6px rgba(0,0,0,0.3);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;`;
-    badgeContent = `${seq}`;
-  } else if (isPassed) {
-    size = 16;
-    badgeStyle = `width:16px;height:16px;border-radius:9999px;background:#475569;color:#94a3b8;border:1.5px solid rgba(255,255,255,0.6);box-shadow:0 1px 4px rgba(0,0,0,0.25);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0.7;`;
-    badgeContent = `${seq}`;
-  } else {
-    size = 18;
-    const bg = isDark ? '#1e293b' : '#312e81';
-    const border = isDark ? '2px solid #38bdf8' : '2px solid #ffffff';
-    badgeStyle = `width:18px;height:18px;border-radius:9999px;background:${bg};color:#ffffff;border:${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;`;
-    badgeContent = `${seq}`;
   }
 
-  const containerHtml = `<div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:${size}px;height:${size}px;">
-    ${tagAbove}
-    <div style="${badgeStyle}">
-      ${badgeContent}
-    </div>
-    ${tagBelow}
-  </div>`;
+  const maxIdx = stops.length - 1;
+  const safeFallbackIdx = Math.min(Math.max(Math.round(fallbackIndex || 0), 0), maxIdx);
+  const safeFallbackProg = Number.isFinite(fallbackProgress)
+    ? Math.max(0, Math.min(1, fallbackProgress))
+    : 0;
 
-  return L.divIcon({
-    className: 'suh-stop-marker',
-    html: containerHtml,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
-}
-
-const GoogleMapsCanvas: React.FC<{
-  buses: BusVehicle[];
-  focusedBus: BusVehicle;
-  showAllFleet: boolean;
-}> = ({ buses, focusedBus, showAllFleet }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<any>(null);
-  const busMarkersRef = useRef<Map<string, any>>(new Map());
-  const stopMarkersRef = useRef<any[]>([]);
-  const polylinesRef = useRef<any[]>([]);
-
-  // 1. One-time Map Initialization
-  useEffect(() => {
-    const gm = window.google?.maps;
-    if (!gm || !containerRef.current || mapRef.current) return;
-
-    const map = new gm.Map(containerRef.current, {
-      center: { lat: focusedBus.currentLat, lng: focusedBus.currentLng },
-      zoom: showAllFleet ? 11 : 12,
-      mapTypeControl: false,
-      streetViewControl: false,
-    });
-
-    const trafficLayer = new gm.TrafficLayer();
-    trafficLayer.setMap(map);
-
-    mapRef.current = map;
-
-    return () => {
-      busMarkersRef.current.forEach((m) => m.setMap(null));
-      busMarkersRef.current.clear();
-      stopMarkersRef.current.forEach((m) => m.setMap(null));
-      stopMarkersRef.current = [];
-      polylinesRef.current.forEach((p) => p.setMap(null));
-      polylinesRef.current = [];
-      mapRef.current = null;
+  if (!isValidGpsCoord(lat, lng)) {
+    return {
+      segmentIndex: safeFallbackIdx,
+      segmentProgress: safeFallbackProg,
+      offRouteMeters: 0,
+      isGpsProjected: false,
+      nearestStopIndex: safeFallbackIdx,
     };
-  }, []);
+  }
 
-  // 2. Incremental Route & Stops Update (Runs only when route changes)
-  useEffect(() => {
-    const gm = window.google?.maps;
-    const map = mapRef.current;
-    if (!gm || !map) return;
+  let nearestStopIndex = 0;
+  let nearestStopDist = Infinity;
+  for (let i = 0; i < stops.length; i++) {
+    const s = stops[i];
+    if (!s || !isValidGpsCoord(s.lat, s.lng)) continue;
+    const dist = haversineMeters(lat, lng, s.lat, s.lng);
+    if (dist < nearestStopDist) {
+      nearestStopDist = dist;
+      nearestStopIndex = i;
+    }
+  }
 
-    polylinesRef.current.forEach((p) => p.setMap(null));
-    polylinesRef.current = [];
-    stopMarkersRef.current.forEach((m) => m.setMap(null));
-    stopMarkersRef.current = [];
+  if (stops.length === 1) {
+    return {
+      segmentIndex: 0,
+      segmentProgress: 0,
+      offRouteMeters: Number.isFinite(nearestStopDist) ? Math.round(nearestStopDist) : 0,
+      isGpsProjected: true,
+      nearestStopIndex: 0,
+    };
+  }
 
-    const activePath = focusedBus.stops.map((s) => ({ lat: s.lat, lng: s.lng }));
-    const mainLine = new gm.Polyline({
-      path: activePath,
-      strokeColor: '#4f46e5',
-      strokeOpacity: focusedBus.shortcutPath ? 0.35 : 0.9,
-      strokeWeight: 4,
-      map,
-    });
-    polylinesRef.current.push(mainLine);
+  let bestIndex = safeFallbackIdx;
+  let bestT = safeFallbackProg;
+  let minDistMeters = Infinity;
 
-    if (focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1) {
-      const shortcutLine = new gm.Polyline({
-        path: focusedBus.shortcutPath.map(([lat, lng]) => ({ lat, lng })),
-        strokeColor: '#10b981',
-        strokeOpacity: 0.95,
-        strokeWeight: 5,
-        map,
-      });
-      polylinesRef.current.push(shortcutLine);
+  for (let i = 0; i < stops.length - 1; i++) {
+    const a = stops[i];
+    const b = stops[i + 1];
+    if (!a || !b || !isValidGpsCoord(a.lat, a.lng) || !isValidGpsCoord(b.lat, b.lng)) {
+      continue;
     }
 
-    focusedBus.stops.forEach((s) => {
-      const stopMarker = new gm.Marker({
-        position: { lat: s.lat, lng: s.lng },
-        title: `${s.sequence}. ${s.name}${s.isBypassed ? ' (SKIPPED)' : ''}`,
-        map,
-      });
-      stopMarkersRef.current.push(stopMarker);
-    });
-  }, [focusedBus.routeId, focusedBus.stops, focusedBus.shortcutPath]);
+    const latMidRad = (((a.lat + b.lat) / 2) * Math.PI) / 180;
+    const cosLat = Math.cos(latMidRad);
 
-  // 3. Incremental Bus GPS Update (Runs on 3-second GPS ticks without destroying map!)
-  useEffect(() => {
-    const gm = window.google?.maps;
-    const map = mapRef.current;
-    if (!gm || !map) return;
+    const ax = a.lng * cosLat;
+    const ay = a.lat;
+    const bx = b.lng * cosLat;
+    const by = b.lat;
+    const px = lng * cosLat;
+    const py = lat;
 
-    const renderedBuses = showAllFleet ? buses : [focusedBus];
-    const activeRouteIds = new Set(renderedBuses.map((b) => b.routeId));
+    const dx = bx - ax;
+    const dy = by - ay;
+    const lenSq = dx * dx + dy * dy;
 
-    busMarkersRef.current.forEach((marker, routeId) => {
-      if (!activeRouteIds.has(routeId)) {
-        marker.setMap(null);
-        busMarkersRef.current.delete(routeId);
-      }
-    });
+    const rawT = lenSq > 1e-14 ? ((px - ax) * dx + (py - ay) * dy) / lenSq : 0;
+    const t = Math.max(0, Math.min(1, rawT));
 
-    renderedBuses.forEach((bus) => {
-      const existing = busMarkersRef.current.get(bus.routeId);
-      const position = { lat: bus.currentLat, lng: bus.currentLng };
-      const title = `${bus.routeNumber} (${bus.speedKmh} km/h)`;
+    const projLat = a.lat + (b.lat - a.lat) * t;
+    const projLng = a.lng + (b.lng - a.lng) * t;
+    const distMeters = haversineMeters(lat, lng, projLat, projLng);
 
-      if (existing) {
-        existing.setPosition(position);
-        existing.setTitle(title);
-      } else {
-        const marker = new gm.Marker({
-          position,
-          title,
-          label: {
-            text: bus.routeNumber.replace('Route ', 'R'),
-            color: '#ffffff',
-            fontWeight: 'bold',
-          },
-          map,
-        });
-        busMarkersRef.current.set(bus.routeId, marker);
-      }
-    });
-  }, [buses, focusedBus, showAllFleet]);
+    if (distMeters < minDistMeters) {
+      minDistMeters = distMeters;
+      bestIndex = i;
+      bestT = t;
+    }
+  }
 
-  return <div ref={containerRef} className="h-full w-full" />;
-};
-
-const HybridTransitMapComponent: React.FC<HybridTransitMapProps> = ({
-  buses,
-  focusedBus,
-  useGoogleMaps,
-  showAllFleet = false,
-  highlightStopId,
-  heightClass = 'h-72 sm:h-80',
-}) => {
-  const { isDark } = useCommuteSimulation();
-  const apiBase = excelService.getServerBaseUrl().replace(/\/+$/, '');
-  const renderedBuses = showAllFleet ? buses : [focusedBus];
-  const stopWaypoints = useRef<[number, number][]>([]);
-  stopWaypoints.current = focusedBus.stops.map((s) => [s.lat, s.lng]);
-
-  const [followBus, setFollowBus] = useState(true);
-  const [roadCoordinates, setRoadCoordinates] = useState<[number, number][]>(() =>
-    focusedBus.stops.map((s) => [s.lat, s.lng])
-  );
-  const [routingSource, setRoutingSource] = useState<'OSRM' | 'FALLBACK'>('FALLBACK');
-
-  const nextStop =
-    focusedBus.stops[focusedBus.currentStopIndex + 1] ||
-    focusedBus.stops[focusedBus.currentStopIndex] ||
-    null;
-
-  const targetStop =
-    focusedBus.stops.find((s) => s.id === highlightStopId) ||
-    focusedBus.stops[focusedBus.stops.length - 1];
-  const googleMapsTrafficUrl = targetStop
-    ? `https://www.google.com/maps/dir/?api=1&origin=${focusedBus.currentLat},${focusedBus.currentLng}&destination=${targetStop.lat},${targetStop.lng}&travelmode=driving`
-    : `https://www.google.com/maps/search/?api=1&query=${focusedBus.currentLat},${focusedBus.currentLng}`;
-
-  useEffect(() => {
-    let active = true;
-    const fetchRoadPath = async () => {
-      const activeStops = focusedBus.stops.filter((s) => !s.isBypassed);
-      const waypoints: [number, number][] = activeStops.map((s) => [s.lat, s.lng]);
-      if (waypoints.length < 2) return;
-
-      const res = await osrmRoutingService.getRouteGeometry(waypoints, {
-        useFlyoverBypass: focusedBus.flyoverBypassActive,
-        skippedClusters: focusedBus.skippedClusterIds,
-        routeId: focusedBus.routeId,
-      });
-
-      if (active && res.coordinates.length > 1) {
-        setRoadCoordinates(res.coordinates);
-        setRoutingSource(res.source === 'FALLBACK_INTERPOLATION' ? 'FALLBACK' : 'OSRM');
-      }
+  if (!Number.isFinite(minDistMeters)) {
+    return {
+      segmentIndex: safeFallbackIdx,
+      segmentProgress: safeFallbackProg,
+      offRouteMeters: 0,
+      isGpsProjected: false,
+      nearestStopIndex: safeFallbackIdx,
     };
+  }
 
-    void fetchRoadPath();
-    return () => {
-      active = false;
-    };
-  }, [focusedBus.routeId, focusedBus.flyoverBypassActive, focusedBus.skippedClusterIds?.length]);
-
-  return (
-    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 shadow-inner dark:border-white/[0.1] dark:bg-slate-900/90">
-      {/* Top Bar ABOVE the Map Canvas */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/75 px-3 py-2 text-[11px] sm:text-xs dark:border-white/10">
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          <span className="font-bold text-slate-800 dark:text-slate-100 shrink-0">
-            {focusedBus.routeNumber}
-          </span>
-          <span className="text-slate-300 dark:text-slate-600 shrink-0">•</span>
-          <span className="font-mono font-semibold text-indigo-600 dark:text-cyan-400 shrink-0">
-            {Math.round(focusedBus.speedKmh)} km/h
-          </span>
-        </div>
-        {nextStop && (
-          <div className="text-slate-600 dark:text-slate-300 leading-tight">
-            Next:{' '}
-            <span className="font-semibold text-slate-900 dark:text-white">
-              {nextStop.shortName || nextStop.name}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* Unobstructed Map Canvas */}
-      <div className={`relative w-full ${heightClass}`}>
-        {useGoogleMaps && window.google?.maps ? (
-          <GoogleMapsCanvas
-            buses={buses}
-            focusedBus={focusedBus}
-            showAllFleet={showAllFleet}
-          />
-        ) : (
-          <MapContainer
-            center={[focusedBus.currentLat, focusedBus.currentLng]}
-            zoom={showAllFleet ? 11 : 12}
-            className="h-full w-full"
-            scrollWheelZoom={true}
-          >
-            <TileLayer
-              key={isDark ? 'carto-dark' : 'carto-light'}
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-              url={
-                isDark
-                  ? `${apiBase}/api/tiles/dark_all/{z}/{x}/{y}`
-                  : `${apiBase}/api/tiles/voyager/{z}/{x}/{y}`
-              }
-              maxZoom={19}
-            />
-            <MapCameraController
-              focusedBus={focusedBus}
-              roadCoordinates={roadCoordinates}
-              followBus={followBus}
-              setFollowBus={setFollowBus}
-            />
-
-            {/* Dual-Layer Glowing OSRM Corridor Polyline */}
-            <Polyline
-              positions={roadCoordinates}
-              pathOptions={{
-                color: isDark ? '#38bdf8' : '#4f46e5',
-                weight: 11,
-                opacity: focusedBus.shortcutPath ? 0.12 : 0.22,
-                lineCap: 'round',
-                lineJoin: 'round',
-              }}
-            />
-            <Polyline
-              positions={roadCoordinates}
-              pathOptions={{
-                color: isDark ? '#38bdf8' : '#4f46e5',
-                weight: 4,
-                opacity: focusedBus.shortcutPath ? 0.35 : 0.95,
-                dashArray: focusedBus.shortcutPath ? '6 8' : undefined,
-              }}
-            />
-
-            {/* Shortcut Bypass Polyline when area is skipped */}
-            {focusedBus.shortcutPath && focusedBus.shortcutPath.length > 1 && (
-              <>
-                <Polyline
-                  positions={focusedBus.shortcutPath}
-                  pathOptions={{
-                    color: '#10b981',
-                    weight: 12,
-                    opacity: 0.24,
-                    lineCap: 'round',
-                    lineJoin: 'round',
-                  }}
-                />
-                <Polyline
-                  positions={focusedBus.shortcutPath}
-                  pathOptions={{
-                    color: '#10b981',
-                    weight: 4.5,
-                    opacity: 0.98,
-                  }}
-                />
-              </>
-            )}
-
-            {/* Stops & Geofences */}
-            {focusedBus.stops.map((stop, idx) => {
-              const isCurrent = idx === focusedBus.currentStopIndex;
-              const isHighlighted = stop.id === highlightStopId;
-              const isPassed = idx < focusedBus.currentStopIndex;
-              return (
-                <React.Fragment key={stop.id}>
-                  <Circle
-                    center={[stop.lat, stop.lng]}
-                    radius={stop.geofenceRadiusMeters}
-                    pathOptions={{
-                      color: stop.isBypassed
-                        ? '#64748b'
-                        : isHighlighted
-                          ? '#f59e0b'
-                          : '#4f46e5',
-                      fillOpacity: isHighlighted ? 0.2 : 0.08,
-                      weight: 1,
-                    }}
-                  />
-                  <Marker
-                    position={[stop.lat, stop.lng]}
-                    icon={createStopDivIcon(stop, isCurrent, isHighlighted, isPassed, isDark)}
-                  >
-                    <Popup>
-                      <div className="min-w-[175px] text-xs">
-                        <p className="font-bold text-slate-900 dark:text-slate-100">
-                          {stop.sequence}. {stop.name}
-                        </p>
-                        <p className="text-slate-600 dark:text-slate-400">{stop.areaClusterName}</p>
-                        <p className="mt-1 text-slate-700 dark:text-slate-300">
-                          AM: {stop.scheduledMorningTime} • PM: {stop.scheduledEveningTime}
-                        </p>
-                        {stop.metroInterchange && (
-                          <p className="mt-1 font-semibold text-indigo-600 dark:text-indigo-400">
-                            🚇 {stop.metroInterchange.stationName} ({stop.metroInterchange.line})
-                          </p>
-                        )}
-                        {stop.isBypassed && (
-                          <p className="mt-1 font-bold text-emerald-600 dark:text-emerald-400">
-                            ✓ SKIPPED BY BYPASS ROUTE
-                          </p>
-                        )}
-                      </div>
-                    </Popup>
-                  </Marker>
-                </React.Fragment>
-              );
-            })}
-
-            {/* Sreenidhi University Campus Beacon */}
-            <Circle
-              center={[SREENIDHI_CAMPUS.lat, SREENIDHI_CAMPUS.lng]}
-              radius={220}
-              pathOptions={{ color: '#e53c2e', fillOpacity: 0.16, weight: 1.5 }}
-            />
-
-            {/* Live Bus Markers */}
-            {renderedBuses.map((bus) => (
-              <Marker
-                key={bus.routeId}
-                position={[bus.currentLat, bus.currentLng]}
-                icon={createBusDivIcon(bus, bus.routeId === focusedBus.routeId)}
-              >
-                <Popup>
-                  <div className="min-w-[180px] text-xs">
-                    <p className="font-bold text-slate-900 dark:text-slate-100">
-                      {bus.routeNumber} — {bus.registrationNo}
-                    </p>
-                    <p className="text-slate-600 dark:text-slate-400">Driver: {bus.driverName}</p>
-                    <p className="mt-1 text-slate-700 dark:text-slate-300">
-                      Speed: <b className="text-slate-900 dark:text-white">{bus.speedKmh} km/h</b> • Delay: <b className="text-slate-900 dark:text-white">+{bus.trafficDelayMinutes}m</b>
-                    </p>
-                    <p className="mt-1 font-medium text-indigo-600 dark:text-indigo-400">
-                      GPS: {bus.telemetrySource === 'DRIVER_PRIMARY' ? 'Driver Primary' : 'Crowd-Sourced Students'}
-                    </p>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
-        )}
-      </div>
-
-      {/* Footer Bar BELOW the Map Canvas */}
-      <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-slate-200/75 px-3 py-2 dark:border-white/10">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/80 bg-indigo-50/70 px-2.5 py-1 text-[10px] font-bold tracking-wide text-slate-800 dark:border-white/15 dark:bg-slate-800/80 dark:text-slate-100">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4] shadow-[0_0_6px_rgba(6,182,212,0.9)]" />
-            {useGoogleMaps && window.google?.maps
-              ? 'Google Maps Live Traffic'
-              : routingSource === 'OSRM'
-                ? 'OSRM Road-Snapped Corridor (₹0)'
-                : 'OpenStreetMap / Leaflet Corridor'}
-          </span>
-          {focusedBus.shortcutPath && (
-            <span className="rounded-full border border-emerald-400/40 bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(16,185,129,0.35)]">
-              Bypass Route Active
-            </span>
-          )}
-        </div>
-        <a
-          href={googleMapsTrafficUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Open live Google Maps traffic directions from bus GPS to stop (₹0, no API key required)"
-          className="tactile-btn inline-flex items-center gap-1.5 rounded-full border border-indigo-200/90 bg-white px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-[#4F46E5] shadow-xs transition-all hover:border-[#4F46E5]/60 hover:bg-indigo-50/95 dark:border-cyan-400/35 dark:bg-slate-800/90 dark:text-cyan-200 dark:hover:bg-slate-800"
-        >
-          <Navigation className="h-3 w-3 shrink-0 text-[#06B6D4]" />
-          <span>Google Maps Traffic</span>
-          <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-75" />
-        </a>
-      </div>
-    </div>
-  );
-};
-
-export const HybridTransitMap = React.memo(HybridTransitMapComponent);
+  return {
+    segmentIndex: bestIndex,
+    segmentProgress: Number(bestT.toFixed(4)),
+    offRouteMeters: Math.round(minDistMeters),
+    isGpsProjected: true,
+    nearestStopIndex,
+  };
+}
 
 ```
 
@@ -20984,287 +20857,568 @@ export const HybridTransitMap = React.memo(HybridTransitMapComponent);
 
 ## 30. `src/components/map/MetroSchematicMap.tsx` <a id="srccomponentsmapmetroschematicmaptsx"></a>
 
-**Description:** Isometric Metro-style corridor schematic illustrating the Hyderabad Blue Line & Campus Express alignment.  
+**Description:** Responsive ₹0 GPS-Driven Live Schematic Map with external Top/Bottom HUD bars, mobile vertical timeline (with 4-stop compact preview mode), desktop gliding horizontal SVG corridor, and free Google Maps Pin link.  
 **File Path:** `sreenidhi-express/src/components/map/MetroSchematicMap.tsx`  
 
 ```tsx
-import React from 'react';
+import React, { useId } from 'react';
+import { Bus, ExternalLink, MapPin, Navigation } from 'lucide-react';
 import type { BusVehicle } from '../../types/transit';
+import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
+import { haversineMeters, projectGpsOntoStops } from '../../services/corridorProjection.ts';
+
+export { projectGpsOntoStops, haversineMeters, type GpsProjectionResult } from '../../services/corridorProjection.ts';
 
 interface MetroSchematicMapProps {
   activeBus: BusVehicle;
   highlightStopId?: string;
+  compact?: boolean;
   className?: string;
+}
+
+function isMorningShiftIst(): boolean {
+  const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
+  return istHour < 12;
 }
 
 const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
   activeBus,
   highlightStopId,
+  compact = false,
   className = '',
 }) => {
   const stops = activeBus.stops && activeBus.stops.length > 0 ? activeBus.stops : [];
-  const targetHighlightStopId = highlightStopId || stops[0]?.id || '';
+  const gradientId = useId().replace(/:/g, '');
+  const resolvedHighlightStop =
+    stops.find(
+      (s) =>
+        s.id === highlightStopId ||
+        s.name === highlightStopId ||
+        s.shortName === highlightStopId
+    ) || stops[0];
+  const targetHighlightStopId = resolvedHighlightStop?.id || '';
 
-  // Dynamic schematic layout computed directly from activeBus.stops (width: 725, height: 185)
+  const fallbackIdx = Math.min(
+    Math.max(activeBus.currentStopIndex ?? 0, 0),
+    Math.max(stops.length - 1, 0)
+  );
+  const projection = projectGpsOntoStops(
+    activeBus.currentLat,
+    activeBus.currentLng,
+    stops,
+    fallbackIdx,
+    activeBus.segmentProgress ?? 0
+  );
+
+  const isTripIdle = activeBus.status === 'DEPARTED';
+  const hasLiveGps = projection.isGpsProjected && !isTripIdle;
+  const isOffRoute = hasLiveGps && projection.offRouteMeters > 400;
+
+  const nextStopIndex = Math.min(
+    projection.segmentIndex + (projection.segmentProgress > 0.05 ? 1 : 0),
+    Math.max(stops.length - 1, 0)
+  );
+  const nextStop =
+    stops[Math.min(projection.segmentIndex + 1, Math.max(stops.length - 1, 0))] ||
+    stops[nextStopIndex] ||
+    stops[0];
+
+  const speedRounded = Math.round(activeBus.speedKmh || 0);
+  const shortBusNum = activeBus.routeNumber.replace(/^Route\s*/i, '').trim() || activeBus.routeNumber;
+  const progressPct = Math.round(projection.segmentProgress * 100);
+  const morningShift = isMorningShiftIst();
+
+  // Compute remaining distance to highlighted stop via Haversine
+  let distanceToHighlightText = '';
+  if (
+    resolvedHighlightStop &&
+    Number.isFinite(activeBus.currentLat) &&
+    Number.isFinite(activeBus.currentLng) &&
+    (Math.abs(activeBus.currentLat) > 0.0001 || Math.abs(activeBus.currentLng) > 0.0001)
+  ) {
+    const meters = haversineMeters(
+      activeBus.currentLat,
+      activeBus.currentLng,
+      resolvedHighlightStop.lat,
+      resolvedHighlightStop.lng
+    );
+    distanceToHighlightText =
+      meters < 1000
+        ? `${Math.round(meters)} m to ${resolvedHighlightStop.shortName || resolvedHighlightStop.name}`
+        : `${(meters / 1000).toFixed(1)} km to ${resolvedHighlightStop.shortName || resolvedHighlightStop.name}`;
+  }
+
+  // Free Google Maps live pin link (zero tile embedding cost)
+  const pinLat =
+    Number.isFinite(activeBus.currentLat) && Math.abs(activeBus.currentLat) > 0.0001
+      ? activeBus.currentLat
+      : SREENIDHI_CAMPUS.lat;
+  const pinLng =
+    Number.isFinite(activeBus.currentLng) && Math.abs(activeBus.currentLng) > 0.0001
+      ? activeBus.currentLng
+      : SREENIDHI_CAMPUS.lng;
+  const googleMapsPinUrl = `https://www.google.com/maps/search/?api=1&query=${pinLat},${pinLng}`;
+
+  // Mobile vertical list indices (compact mode shows focused 4-stop window around bus + highlighted stop)
+  const visibleMobileEntries = (() => {
+    if (!compact || stops.length <= 5) {
+      return stops.map((stop, idx) => ({ stop, idx, gapBefore: false }));
+    }
+    const minWindow = Math.max(0, Math.min(projection.segmentIndex - 1, stops.length - 4));
+    const maxWindow = Math.min(stops.length - 1, minWindow + 3);
+    const keepIndices = new Set<number>();
+    for (let i = minWindow; i <= maxWindow; i++) {
+      keepIndices.add(i);
+    }
+    const highlightIdx = stops.findIndex((s) => s.id === targetHighlightStopId);
+    if (highlightIdx >= 0) {
+      keepIndices.add(highlightIdx);
+    }
+    const sorted = Array.from(keepIndices).sort((a, b) => a - b);
+    return sorted.map((idx, pos) => ({
+      stop: stops[idx],
+      idx,
+      gapBefore: pos > 0 && sorted[pos - 1] < idx - 1,
+    }));
+  })();
+
+  // Desktop/Tablet horizontal SVG stations (viewBox 760 x 195)
   const metroStations = stops.map((stop, i, arr) => {
     const total = Math.max(arr.length - 1, 1);
-    const x = Math.round(45 + (i / total) * (680 - 45));
-    // Gentle alternating elevation so labels and markers remain crisp without collision
-    const y = i === total ? 95 : (i % 3 === 0 ? 115 : (i % 3 === 1 ? 80 : 60));
+    const x = Math.round(45 + (i / total) * (715 - 45));
+    const y = i === total ? 98 : i % 3 === 0 ? 118 : i % 3 === 1 ? 82 : 62;
     const isInterchange = Boolean(stop.metroInterchange);
-    const interchangeLine = typeof stop.metroInterchange === 'object' ? stop.metroInterchange.line : undefined;
     const isTerminus = stop.areaClusterId === 'cluster-campus' || i === total;
     const isBypassed = Boolean(stop.isBypassed);
 
     return {
       id: stop.id,
       name: stop.shortName || stop.name,
-      subtitle: typeof stop.metroInterchange === 'object' ? stop.metroInterchange.stationName : (isTerminus ? 'Campus Terminus' : stop.name),
+      subtitle:
+        typeof stop.metroInterchange === 'object'
+          ? stop.metroInterchange.stationName
+          : isTerminus
+            ? 'Campus Terminus'
+            : morningShift
+              ? stop.scheduledMorningTime
+              : stop.scheduledEveningTime,
       x,
       y,
       isInterchange,
-      interchangeLine,
       isTerminus,
       isBypassed,
-      sequence: i + 1,
     };
   });
 
-  const currentStopIndex = Math.min(
-    Math.max(activeBus.currentStopIndex ?? 0, 0),
-    Math.max(metroStations.length - 1, 0)
-  );
+  const segIdx = Math.min(projection.segmentIndex, Math.max(metroStations.length - 1, 0));
+  const segStartSt = metroStations[segIdx] || metroStations[0] || { x: 45, y: 98 };
+  const segEndSt = metroStations[Math.min(segIdx + 1, Math.max(metroStations.length - 1, 0))] || segStartSt;
+  const busX = segStartSt.x + (segEndSt.x - segStartSt.x) * projection.segmentProgress;
+  const busY = segStartSt.y + (segEndSt.y - segStartSt.y) * projection.segmentProgress;
 
-  // Calculate bus pin position on the track between current stop and next stop
-  const currentSt = metroStations[currentStopIndex] || metroStations[0] || { x: 45, y: 95 };
-  const nextSt = metroStations[currentStopIndex + 1] || currentSt;
-  const progress = activeBus.segmentProgress ?? 0.35;
-  const busX = currentSt.x + (nextSt.x - currentSt.x) * progress;
-  const busY = currentSt.y + (nextSt.y - currentSt.y) * progress;
+  const fullTrackPathD = metroStations
+    .map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`)
+    .join(' ');
+  const passedStopsPath = metroStations
+    .slice(0, segIdx + 1)
+    .map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`);
+  const passedTrackPathD =
+    passedStopsPath.length > 0 ? `${passedStopsPath.join(' ')} L ${busX.toFixed(1)} ${busY.toFixed(1)}` : '';
 
-  // Compute full polyline path
-  const fullTrackPathD = metroStations.map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`).join(' ');
-  // Compute passed segment path
-  const passedTrackPathD = metroStations.slice(0, currentStopIndex + 1).map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`).join(' ');
+  const showLiveBusAfterStop = (idx: number) =>
+    stops.length > 0 &&
+    ((stops.length === 1 && idx === 0) ||
+      idx === projection.segmentIndex ||
+      (projection.segmentIndex >= stops.length - 1 && idx === stops.length - 1));
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-2xl bg-[#F7F9FF] p-3.5 dark:bg-[#1E2430] ${className}`}>
-      {/* Metro Line Header Pill */}
-      <div className="mb-2 flex items-center justify-between px-1 text-[11px]">
-        <div className="flex items-center gap-2">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-[10px] font-black text-white shadow-xs">
-            M
-          </span>
-          <span className="font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-[#38BDF8]">
-            {activeBus.routeName || 'Hyderabad Metro Corridor • Campus Express'}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="rounded-full bg-cyan-50 border border-cyan-200 px-2.5 py-0.5 text-[10px] font-bold text-cyan-800 dark:bg-cyan-950/60 dark:border-cyan-800/50 dark:text-cyan-300">
-            {Math.round(activeBus.speedKmh)} km/h
-          </span>
-          <span className="rounded-full bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] px-2.5 py-0.5 text-[10px] font-bold text-white">
+    <div
+      className={`flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/95 dark:border-[#2E3646] dark:bg-[#1E2430]/95 ${className}`}
+    >
+      {/* Top External HUD Bar (Never overlaps schematic track) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 bg-[#F7F9FF] px-3.5 py-2.5 text-[11px] dark:border-[#2E3646] dark:bg-[#141821]">
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <span
+            className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+              !hasLiveGps
+                ? 'bg-slate-400'
+                : isOffRoute
+                  ? 'bg-amber-500 animate-pulse'
+                  : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.75)] animate-pulse'
+            }`}
+          />
+          <span className="font-extrabold text-slate-900 dark:text-white whitespace-nowrap">
             {activeBus.routeNumber}
           </span>
+          <span className="text-slate-300 dark:text-slate-600">•</span>
+          <span className="font-mono font-bold text-[#4F46E5] dark:text-cyan-300 whitespace-nowrap">
+            {speedRounded} km/h
+          </span>
+          {nextStop && (
+            <>
+              <span className="text-slate-300 dark:text-slate-600">•</span>
+              <span className="truncate font-semibold text-slate-700 dark:text-slate-200">
+                Next: <b className="text-slate-900 dark:text-white">{nextStop.shortName || nextStop.name}</b>
+              </span>
+            </>
+          )}
         </div>
-      </div>
 
-      {/* SVG Canvas for Isometric Metro Schematic */}
-      <div className="w-full overflow-x-auto">
-        <svg
-          viewBox="0 0 725 185"
-          className="min-w-[650px] w-full select-none"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <span
+          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shrink-0 ${
+            !hasLiveGps
+              ? 'bg-slate-200/90 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+              : isOffRoute
+                ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300'
+                : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300'
+          }`}
         >
-          {/* Outer glow background track */}
-          {fullTrackPathD && (
-            <path
-              d={fullTrackPathD}
-              stroke="#E2E8F0"
-              strokeWidth="10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="dark:stroke-[#374151]"
-            />
-          )}
-
-          {/* Core Electric Metro Line Track */}
-          {fullTrackPathD && (
-            <path
-              d={fullTrackPathD}
-              stroke="#06B6D4"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          )}
-
-          {/* Passed segment overlay (Electric Indigo #4F46E5) */}
-          {passedTrackPathD && (
-            <path
-              d={passedTrackPathD}
-              stroke="#4F46E5"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="dark:stroke-[#818CF8]"
-            />
-          )}
-
-          {/* Flyover Bypass Dash indicator */}
-          {activeBus.flyoverBypassActive && metroStations.length >= 4 && (
-            <path
-              d={`M ${metroStations[1]?.x || 120} ${(metroStations[1]?.y || 80) - 15} Q ${(metroStations[2]?.x || 250)} 20 ${metroStations[Math.min(4, metroStations.length - 1)]?.x || 450} ${(metroStations[Math.min(4, metroStations.length - 1)]?.y || 80) + 15}`}
-              stroke="#4F46E5"
-              strokeWidth="3.5"
-              strokeDasharray="4 4"
-              fill="none"
-            />
-          )}
-
-          {/* Render Metro Stations */}
-          {metroStations.map((st, idx) => {
-            const isPassed = idx < currentStopIndex;
-            const isCurrent = idx === currentStopIndex;
-            const isHighlighted = st.id === targetHighlightStopId;
-            const isBypassed = st.isBypassed;
-
-            return (
-              <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
-                {/* Station Node Marker */}
-                {st.isTerminus ? (
-                  <g transform={`translate(${st.x}, ${st.y})`}>
-                    <line x1="0" y1="-12" x2="0" y2="12" stroke="#4F46E5" strokeWidth="4" className="dark:stroke-[#818CF8]" />
-                    <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.5" className="dark:fill-[#818CF8]" />
-                  </g>
-                ) : st.isInterchange ? (
-                  <g transform={`translate(${st.x}, ${st.y})`}>
-                    <circle
-                      cx="0"
-                      cy="0"
-                      r="9"
-                      fill="#FFFFFF"
-                      stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#06B6D4'}
-                      strokeWidth="3.5"
-                      strokeDasharray={isBypassed ? '3 2' : undefined}
-                      className="dark:fill-[#1E2430]"
-                    />
-                    <circle
-                      cx="0"
-                      cy="0"
-                      r="4"
-                      fill={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#06B6D4'}
-                      className="dark:fill-[#38BDF8]"
-                    />
-                  </g>
-                ) : (
-                  <circle
-                    cx={st.x}
-                    cy={st.y}
-                    r="5.5"
-                    fill="#FFFFFF"
-                    stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#F97316' : isPassed ? '#4F46E5' : '#64748B'}
-                    strokeWidth="2.5"
-                    strokeDasharray={isBypassed ? '2 2' : undefined}
-                    className="dark:fill-[#1E2430]"
-                  />
-                )}
-
-                {/* Highlight Halo for Student Stop */}
-                {isHighlighted && !isBypassed && (
-                  <g transform={`translate(${st.x}, ${st.y})`}>
-                    <circle cx="0" cy="0" r="16" fill="none" stroke="#E65100" strokeWidth="2" strokeDasharray="3 3" className="animate-spin" />
-                    <rect x="-24" y="-32" width="48" height="14" rx="4" fill="#E65100" />
-                    <text x="0" y="-22" fill="#FFFFFF" fontSize="8" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
-                      YOUR STOP
-                    </text>
-                  </g>
-                )}
-
-                {/* Bypassed Badge */}
-                {isBypassed && (
-                  <g transform={`translate(${st.x - 20}, ${st.y - 28})`}>
-                    <rect x="0" y="0" width="40" height="11" rx="3" fill="#6B7280" opacity="0.9" />
-                    <text x="20" y="8" fill="#FFFFFF" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
-                      BYPASSED
-                    </text>
-                  </g>
-                )}
-
-                {/* Station Labels */}
-                <text
-                  x={st.x}
-                  y={st.y > 80 ? st.y + 18 : st.y - 14}
-                  textAnchor="middle"
-                  fill="#111827"
-                  fontSize="9.5"
-                  fontWeight="800"
-                  fontFamily="system-ui"
-                  className={isBypassed ? 'line-through text-slate-400 dark:fill-slate-500' : 'dark:fill-white'}
-                >
-                  {st.name}
-                </text>
-
-                <text
-                  x={st.x}
-                  y={st.y > 80 ? st.y + 28 : st.y - 25}
-                  textAnchor="middle"
-                  fill="#6B7280"
-                  fontSize="7.5"
-                  fontWeight="600"
-                  fontFamily="system-ui"
-                  className="dark:fill-[#9CA3AF]"
-                >
-                  {st.subtitle}
-                </text>
-
-                {/* Interchange Pill */}
-                {st.isInterchange && !isBypassed && (
-                  <g transform={`translate(${st.x - 14}, ${st.y > 80 ? st.y + 32 : st.y - 36})`}>
-                    <rect x="0" y="0" width="28" height="9" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
-                    <text x="14" y="7" textAnchor="middle" fill="#0369A1" fontSize="6.5" fontWeight="800" fontFamily="system-ui" className="dark:fill-sky-300">
-                      METRO
-                    </text>
-                  </g>
-                )}
-              </g>
-            );
-          })}
-
-          {/* Active Live Bus Marker on the Metro Line */}
-          <g transform={`translate(${busX}, ${busY})`}>
-            <circle cx="0" cy="0" r="14" fill="#4F46E5" opacity="0.28" className="animate-ping" />
-            <circle cx="0" cy="0" r="11" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2" />
-            <rect x="-5" y="-3.5" width="10" height="7" rx="1.5" fill="white" />
-            <circle cx="-2" cy="1.5" r="0.8" fill="#4F46E5" />
-            <circle cx="2" cy="1.5" r="0.8" fill="#4F46E5" />
-            <rect x="-3.5" y="-2.5" width="7" height="2" rx="0.5" fill="#4F46E5" />
-          </g>
-        </svg>
+          {!hasLiveGps
+            ? 'Scheduled'
+            : isOffRoute
+              ? `Detour / Off-Route (+${projection.offRouteMeters}m)`
+              : 'Live GPS'}
+        </span>
       </div>
 
-      {/* Corridor Legend Footer */}
-      <div className="mt-2 flex flex-wrap items-center justify-between border-t border-slate-200/80 pt-2 text-[10px] text-slate-600 dark:border-[#374151] dark:text-[#9CA3AF]">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#4F46E5]" />
-            Passed
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]" />
-            Live Bus Location
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full border border-[#06B6D4] bg-white" />
-            Metro Interchange
-          </span>
-          <span className="flex items-center gap-1.5 opacity-60">
-            <span className="h-2 w-2 rounded-full border border-dashed border-gray-500 bg-gray-200 dark:bg-gray-700" />
-            Bypassed Area Stop
-          </span>
+      {/* Middle Area — Responsive Dual Schematic Layout */}
+      <div className="bg-[#F7F9FF]/60 dark:bg-[#161B26]">
+        {/* Mobile (sm:hidden): Where is My Train-style Vertical Live Corridor */}
+        <div className="sm:hidden px-3.5 py-3">
+          {stops.length === 0 ? (
+            <p className="py-4 text-center text-xs italic text-slate-500 dark:text-slate-400">
+              No corridor stops configured for this route.
+            </p>
+          ) : (
+            <div className="space-y-0">
+              {visibleMobileEntries.map(({ stop, idx, gapBefore }, listPos) => {
+                const isLastRendered = listPos === visibleMobileEntries.length - 1;
+                const isPassed = idx < projection.segmentIndex || (idx === projection.segmentIndex && projection.segmentProgress > 0.15);
+                const isCurrentOrNext = idx === projection.segmentIndex || idx === projection.segmentIndex + 1;
+                const isYourStop = stop.id === targetHighlightStopId;
+                const isBypassed = Boolean(stop.isBypassed);
+                const schedTime = morningShift ? stop.scheduledMorningTime : stop.scheduledEveningTime;
+
+                return (
+                  <React.Fragment key={stop.id}>
+                    {gapBefore && (
+                      <div className="flex items-center gap-3 py-1.5 pl-2.5">
+                        <span className="h-4 w-0.5 border-l-2 border-dashed border-slate-300 dark:border-slate-600" />
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                          ••• Intermediate stops •••
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="relative flex items-start gap-3">
+                      {/* Left Rail Node + Vertical Track Line */}
+                      <div className="flex flex-col items-center self-stretch">
+                        <span
+                          className={`z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-black shadow-xs transition-colors ${
+                            isBypassed
+                              ? 'border border-dashed border-slate-400 bg-slate-100 text-slate-400 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-500'
+                              : isYourStop
+                                ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white ring-2 ring-amber-300/70'
+                                : isPassed
+                                  ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white'
+                                  : isCurrentOrNext
+                                    ? 'border-2 border-[#06B6D4] bg-white text-[#4F46E5] dark:bg-[#1E2430] dark:text-cyan-300'
+                                    : 'border border-slate-300 bg-white text-slate-500 dark:border-slate-600 dark:bg-[#1E2430] dark:text-slate-400'
+                          }`}
+                        >
+                          {stop.sequence || idx + 1}
+                        </span>
+                        {!isLastRendered && (
+                          <span
+                            className={`w-0.5 flex-1 min-h-4 ${
+                              idx < projection.segmentIndex
+                                ? 'bg-gradient-to-b from-[#4F46E5] to-[#06B6D4]'
+                                : 'bg-slate-200 dark:bg-slate-700'
+                            }`}
+                          />
+                        )}
+                      </div>
+
+                      {/* Stop Label & Meta */}
+                      <div className={`min-w-0 flex-1 pb-3 ${isBypassed ? 'opacity-55' : ''}`}>
+                        <div className="flex flex-wrap items-center justify-between gap-1.5">
+                          <span
+                            className={`text-xs font-bold leading-snug ${
+                              isBypassed
+                                ? 'line-through text-slate-400 dark:text-slate-500'
+                                : isYourStop
+                                  ? 'text-[#4F46E5] dark:text-cyan-300 font-extrabold'
+                                  : 'text-slate-900 dark:text-white'
+                            }`}
+                          >
+                            {stop.name}
+                          </span>
+                          <span className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                            {schedTime}
+                          </span>
+                        </div>
+
+                        <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                          {isYourStop && !isBypassed && (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-orange-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white shadow-xs">
+                              <MapPin className="h-2.5 w-2.5" />
+                              YOUR STOP
+                            </span>
+                          )}
+                          {isBypassed && (
+                            <span className="inline-flex items-center rounded-full bg-slate-500 px-2 py-0.5 text-[9px] font-extrabold uppercase text-white">
+                              Bypassed
+                            </span>
+                          )}
+                          {stop.metroInterchange && !isBypassed && (
+                            <span className="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] font-bold text-sky-800 dark:bg-sky-950/60 dark:text-sky-300">
+                              Metro: {stop.metroInterchange.stationName}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Smoothly Positioned Live Bus Pill Between Current & Next Stop */}
+                    {showLiveBusAfterStop(idx) && (
+                      <div className="relative flex items-center gap-3 py-1">
+                        <div className="flex flex-col items-center self-stretch">
+                          <span
+                            className={`w-0.5 flex-1 ${
+                              idx < stops.length - 1
+                                ? 'bg-gradient-to-b from-[#4F46E5] to-[#06B6D4]'
+                                : 'bg-transparent'
+                            }`}
+                          />
+                        </div>
+                        <div className="my-0.5 flex flex-1 items-center gap-2 rounded-xl bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] px-3 py-2 text-[11px] font-extrabold text-white shadow-sm transition-all duration-700 ease-out">
+                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20">
+                            <Bus className="h-3 w-3 text-white animate-pulse" />
+                          </span>
+                          <span className="truncate">
+                            Bus #{shortBusNum} • {speedRounded} km/h •{' '}
+                            {idx >= stops.length - 1
+                              ? `At ${stop.shortName || stop.name}`
+                              : `${progressPct}% to ${nextStop?.shortName || nextStop?.name || 'Campus'}`}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          )}
         </div>
-        <span className="font-medium truncate max-w-xs">{activeBus.corridorSummary || 'Direct connectivity via Sreenidhi Corridor'}</span>
+
+        {/* Tablet/Desktop (hidden sm:block): Horizontal SVG Metro Corridor */}
+        <div className="hidden sm:block p-3.5">
+          <div className="w-full overflow-x-auto">
+            <svg
+              viewBox="0 0 760 195"
+              className="min-w-[660px] w-full select-none"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#4F46E5" />
+                  <stop offset="100%" stopColor="#06B6D4" />
+                </linearGradient>
+              </defs>
+
+              {/* Outer Track Backing */}
+              {fullTrackPathD && (
+                <path
+                  d={fullTrackPathD}
+                  stroke="#E2E8F0"
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="dark:stroke-[#374151]"
+                />
+              )}
+
+              {/* Remaining Corridor Track (Muted Slate) */}
+              {fullTrackPathD && (
+                <path
+                  d={fullTrackPathD}
+                  stroke="#94A3B8"
+                  strokeOpacity="0.45"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="dark:stroke-[#64748B]"
+                />
+              )}
+
+              {/* Passed Segment Track Up To GPS Position (Indigo -> Cyan Gradient) */}
+              {passedTrackPathD && (
+                <path
+                  d={passedTrackPathD}
+                  stroke={`url(#${gradientId})`}
+                  strokeWidth="6.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-all duration-700 ease-out"
+                />
+              )}
+
+              {/* Flyover Bypass Indicator */}
+              {activeBus.flyoverBypassActive && metroStations.length >= 4 && (
+                <path
+                  d={`M ${metroStations[1]?.x || 120} ${(metroStations[1]?.y || 82) - 15} Q ${metroStations[2]?.x || 250} 20 ${metroStations[Math.min(4, metroStations.length - 1)]?.x || 450} ${(metroStations[Math.min(4, metroStations.length - 1)]?.y || 82) + 15}`}
+                  stroke="#4F46E5"
+                  strokeWidth="3.5"
+                  strokeDasharray="4 4"
+                  fill="none"
+                />
+              )}
+
+              {/* Station Nodes */}
+              {metroStations.map((st, idx) => {
+                const isPassed = idx <= segIdx && (idx < segIdx || projection.segmentProgress > 0.08);
+                const isCurrent = idx === segIdx;
+                const isHighlighted = st.id === targetHighlightStopId;
+                const isBypassed = st.isBypassed;
+
+                return (
+                  <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
+                    {st.isTerminus ? (
+                      <g transform={`translate(${st.x}, ${st.y})`}>
+                        <line x1="0" y1="-12" x2="0" y2="12" stroke="#4F46E5" strokeWidth="4" className="dark:stroke-[#818CF8]" />
+                        <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.5" className="dark:fill-[#818CF8]" />
+                      </g>
+                    ) : st.isInterchange ? (
+                      <g transform={`translate(${st.x}, ${st.y})`}>
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="9"
+                          fill="#FFFFFF"
+                          stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
+                          strokeWidth="3.5"
+                          strokeDasharray={isBypassed ? '3 2' : undefined}
+                          className="dark:fill-[#1E2430]"
+                        />
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="4"
+                          fill={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
+                          className="dark:fill-[#38BDF8]"
+                        />
+                      </g>
+                    ) : (
+                      <circle
+                        cx={st.x}
+                        cy={st.y}
+                        r="5.5"
+                        fill="#FFFFFF"
+                        stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#64748B'}
+                        strokeWidth="2.5"
+                        strokeDasharray={isBypassed ? '2 2' : undefined}
+                        className="dark:fill-[#1E2430]"
+                      />
+                    )}
+
+                    {isHighlighted && !isBypassed && (
+                      <g transform={`translate(${st.x}, ${st.y})`}>
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="#E65100" strokeWidth="2" strokeDasharray="3 3" />
+                        <rect x="-25" y="-32" width="50" height="14" rx="4" fill="#E65100" />
+                        <text x="0" y="-22" fill="#FFFFFF" fontSize="8" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
+                          YOUR STOP
+                        </text>
+                      </g>
+                    )}
+
+                    {isBypassed && (
+                      <g transform={`translate(${st.x - 20}, ${st.y - 28})`}>
+                        <rect x="0" y="0" width="40" height="11" rx="3" fill="#6B7280" opacity="0.9" />
+                        <text x="20" y="8" fill="#FFFFFF" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
+                          BYPASSED
+                        </text>
+                      </g>
+                    )}
+
+                    <text
+                      x={st.x}
+                      y={st.y > 82 ? st.y + 18 : st.y - 14}
+                      textAnchor="middle"
+                      fill="#111827"
+                      fontSize="9.5"
+                      fontWeight="800"
+                      fontFamily="system-ui"
+                      className={isBypassed ? 'line-through text-slate-400 dark:fill-slate-500' : 'dark:fill-white'}
+                    >
+                      {st.name}
+                    </text>
+
+                    <text
+                      x={st.x}
+                      y={st.y > 82 ? st.y + 28 : st.y - 25}
+                      textAnchor="middle"
+                      fill="#6B7280"
+                      fontSize="7.5"
+                      fontWeight="600"
+                      fontFamily="system-ui"
+                      className="dark:fill-[#9CA3AF]"
+                    >
+                      {st.subtitle}
+                    </text>
+
+                    {st.isInterchange && !isBypassed && (
+                      <g transform={`translate(${st.x - 14}, ${st.y > 82 ? st.y + 32 : st.y - 36})`}>
+                        <rect x="0" y="0" width="28" height="9" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
+                        <text x="14" y="7" textAnchor="middle" fill="#0369A1" fontSize="6.5" fontWeight="800" fontFamily="system-ui" className="dark:fill-sky-300">
+                          METRO
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+
+              {/* Smoothly Gliding GPS-Projected Bus Marker */}
+              <g
+                className="transition-all duration-700 ease-out"
+                style={{ transform: `translate(${busX}px, ${busY}px)` }}
+              >
+                <circle cx="0" cy="0" r="15" fill="#4F46E5" opacity="0.24" className="animate-ping" />
+                <circle cx="0" cy="0" r="11" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.2" />
+                <rect x="-5" y="-3.5" width="10" height="7" rx="1.5" fill="white" />
+                <circle cx="-2" cy="1.5" r="0.8" fill="#4F46E5" />
+                <circle cx="2" cy="1.5" r="0.8" fill="#4F46E5" />
+                <rect x="-3.5" y="-2.5" width="7" height="2" rx="0.5" fill="#4F46E5" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom External HUD Bar (Corridor Progress & Free Google Maps Pin) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-[#F7F9FF] px-3.5 py-2.5 text-[11px] dark:border-[#2E3646] dark:bg-[#141821]">
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-800/60 dark:bg-indigo-950/60 dark:text-cyan-300">
+            Stop {stops.length > 0 ? projection.segmentIndex + 1 : 0} of {stops.length}
+          </span>
+          {distanceToHighlightText && (
+            <span className="font-semibold text-slate-600 dark:text-slate-300 truncate">
+              {distanceToHighlightText}
+            </span>
+          )}
+        </div>
+
+        <a
+          href={googleMapsPinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-2xs transition hover:border-[#4F46E5] hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-slate-200 dark:hover:text-cyan-300"
+        >
+          <Navigation className="h-3 w-3 text-[#4F46E5] dark:text-cyan-300" />
+          <span>Open Live Pin in Google Maps</span>
+          <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+        </a>
       </div>
     </div>
   );
@@ -22212,6 +22366,80 @@ class ExcelService {
     }
   }
 
+  /* ---------------- ₹0 Forgot Password Flow ---------------- */
+  public async requestPasswordReset(
+    rollNumber: string,
+    contact: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rollNumber, contact }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, message: data.error || 'Could not process password reset request.' };
+      }
+      return {
+        success: true,
+        message:
+          data.message ||
+          'If your Roll/Employee ID and mobile/email match our records, a 6-digit reset code has been issued.',
+      };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error requesting reset code' };
+    }
+  }
+
+  public async confirmPasswordReset(
+    rollNumber: string,
+    code: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rollNumber, code, newPassword }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, message: data.error || 'Failed to reset password.' };
+      }
+      return {
+        success: true,
+        message: data.message || 'Password updated. You can now sign in with your new password.',
+      };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error updating password' };
+    }
+  }
+
+  public async getPasswordResetRequests(): Promise<
+    Array<{
+      account_roll: string;
+      name: string;
+      phone_number: string;
+      otp: string;
+      expires_at: number;
+      created_at: number;
+    }>
+  > {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/password-reset-requests`, {
+        headers: this.authHeaders(),
+      });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data.requests) ? data.requests : [];
+    } catch {
+      return [];
+    }
+  }
+
   /* ---------------- Multi-Admin Access Accounts ---------------- */
   public async listAdminUsers(): Promise<Array<{
     adminId: string;
@@ -23109,7 +23337,7 @@ export const excelService = new ExcelService();
 import { excelService } from './excelService';
 
 export interface OsrmRouteResult {
-  coordinates: [number, number][]; // [lat, lng] pairs for Leaflet Polyline
+  coordinates: [number, number][]; // [lat, lng] pairs for route geometry
   distanceKm: number;
   durationMinutes: number;
   source: 'OSRM_API' | 'LOCAL_CACHE' | 'FALLBACK_INTERPOLATION';
@@ -23224,15 +23452,15 @@ class OsrmRoutingService {
         const data = await res.json();
         if (data.routes && data.routes[0]) {
           const route = data.routes[0];
-          // GeoJSON coordinates are [lng, lat] -> convert to Leaflet [lat, lng]
-          const leafletCoords: [number, number][] = route.geometry.coordinates.map(
+          // GeoJSON coordinates are [lng, lat] -> convert to [lat, lng]
+          const routeCoords: [number, number][] = route.geometry.coordinates.map(
             (c: [number, number]) => [c[1], c[0]]
           );
           const distanceKm = Number((route.distance / 1000).toFixed(2));
           const durationMinutes = Math.round(route.duration / 60);
 
           const result: OsrmRouteResult = {
-            coordinates: leafletCoords,
+            coordinates: routeCoords,
             distanceKm,
             durationMinutes,
             source: 'OSRM_API',

@@ -24,7 +24,6 @@ import {
   Clock,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 
@@ -63,7 +62,6 @@ export const AdminDashboard: React.FC = () => {
   const avgFleetDelayMin = (totalDelayMinutes / totalFleetBuses).toFixed(1);
 
   const [adminTab, setAdminTab] = useState<'VERIFY' | 'FLEET' | 'LOGS'>('VERIFY');
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [applications, setApplications] = useState<ScrutinyApplication[]>([]);
   const [scrutinyLoadingId, setScrutinyLoadingId] = useState<string | null>(null);
 
@@ -127,6 +125,17 @@ export const AdminDashboard: React.FC = () => {
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [isGrantingAdmin, setIsGrantingAdmin] = useState(false);
   const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
+  const [passwordResetRequests, setPasswordResetRequests] = useState<
+    Array<{
+      account_roll: string;
+      name: string;
+      phone_number: string;
+      otp: string;
+      expires_at: number;
+      created_at: number;
+    }>
+  >([]);
+  const [isRefreshingResets, setIsRefreshingResets] = useState(false);
   const [driverUtilityReport, setDriverUtilityReport] = useState<Awaited<ReturnType<typeof excelService.getDriverUtilityLogs>>>({
     logs: [],
     tripStarts: [],
@@ -212,6 +221,18 @@ export const AdminDashboard: React.FC = () => {
     });
     const adminsList = await excelService.listAdminUsers();
     setAdminAccounts(adminsList);
+    const resetReqs = await excelService.getPasswordResetRequests();
+    setPasswordResetRequests(resetReqs);
+  };
+
+  const refreshPasswordResetRequests = async () => {
+    setIsRefreshingResets(true);
+    try {
+      const resetReqs = await excelService.getPasswordResetRequests();
+      setPasswordResetRequests(resetReqs);
+    } finally {
+      setIsRefreshingResets(false);
+    }
   };
 
   const handleGrantAdminAccess = async (e: React.FormEvent) => {
@@ -694,6 +715,54 @@ export const AdminDashboard: React.FC = () => {
                 ))
               )}
             </div>
+
+            {passwordResetRequests.length > 0 && (
+              <div className="mt-4 border-t border-slate-100 pt-3.5 dark:border-[#2E3646]">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Key className="h-3.5 w-3.5 text-[#4F46E5] dark:text-cyan-300" />
+                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                      Active Password Reset Codes
+                    </h4>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void refreshPasswordResetRequests()}
+                    disabled={isRefreshingResets}
+                    className="text-[11px] font-bold text-[#4F46E5] hover:underline disabled:opacity-50 dark:text-cyan-300 cursor-pointer"
+                  >
+                    {isRefreshingResets ? 'Refreshing…' : 'Refresh'}
+                  </button>
+                </div>
+
+                <div className="mt-2.5 space-y-2">
+                  {passwordResetRequests.map((req) => {
+                    const minsRemaining = Math.max(1, Math.ceil((req.expires_at - Date.now()) / 60000));
+                    return (
+                      <div
+                        key={req.account_roll}
+                        className="prismatic-subcard flex flex-wrap items-center justify-between gap-2.5 rounded-2xl px-3.5 py-2.5"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                            <span className="font-mono font-black text-[#4F46E5] dark:text-cyan-300">
+                              {req.account_roll}
+                            </span>
+                            {req.name ? ` • ${req.name}` : ''}
+                          </p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                            Expires in {minsRemaining} min • Verify ID before sharing
+                          </p>
+                        </div>
+                        <span className="rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-1 font-mono text-sm font-black tracking-widest text-[#4F46E5] dark:border-indigo-700/60 dark:bg-indigo-950/60 dark:text-cyan-300">
+                          {req.otp}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Detailed Timestamps & Stop Duration Report Panel */}
@@ -1128,55 +1197,22 @@ export const AdminDashboard: React.FC = () => {
 
       {adminTab === 'FLEET' && (
         <div className="animate-panel-in space-y-4">
-          {/* Dual Mode Fleet Radar Map */}
+          {/* Live GPS Fleet Radar Corridor Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="flex items-center justify-between border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 p-3.5 dark:border-[#2E3646]">
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_8px_rgba(6,182,212,0.85)] animate-pulse" />
                 <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                  Fleet Radar Overview
+                  Fleet Radar Overview • {activeBus.routeNumber}
                 </span>
               </div>
-
-              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => setMapMode('INTERACTIVE')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'INTERACTIVE'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-                  }`}
-                >
-                  Interactive Map
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMapMode('SCHEMATIC')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'SCHEMATIC'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-                  }`}
-                >
-                  Metro Line
-                </button>
-              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                GPS Live Schematic
+              </span>
             </div>
 
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              {mapMode === 'INTERACTIVE' ? (
-                <HybridTransitMap
-                  buses={buses}
-                  focusedBus={activeBus}
-                  showAllFleet={true}
-                  heightClass="h-72 w-full"
-                />
-              ) : (
-                <div className="h-72 w-full">
-                  <MetroSchematicMap activeBus={activeBus} />
-                </div>
-              )}
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap activeBus={activeBus} />
             </div>
           </div>
 

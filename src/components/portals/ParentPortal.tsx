@@ -10,7 +10,6 @@ import {
   Bell,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
@@ -21,7 +20,6 @@ import { SmsMessageDrawer } from '../notifications/SmsMessageDrawer';
 
 export const ParentPortal: React.FC = () => {
   const {
-    buses,
     activeStudent,
     activeBus,
     currentUser,
@@ -31,7 +29,6 @@ export const ParentPortal: React.FC = () => {
     setAbsenceTomorrow,
   } = useCommuteSimulation();
 
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [isAbsentTomorrow, setIsAbsentTomorrow] = useState(false);
   const [isUpdatingAbsence, setIsUpdatingAbsence] = useState(false);
   const [openIncidents, setOpenIncidents] = useState<any[]>([]);
@@ -457,58 +454,25 @@ export const ParentPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* Dual Mode Map Selection Controls */}
+      {/* Live GPS Fleet Corridor Card */}
       <div className="prismatic-card overflow-hidden rounded-3xl">
         <div className="flex items-center justify-between border-b border-slate-100 p-3 dark:border-[#2E3646]">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-[#06B6D4] animate-pulse" />
             <span className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-              Live Fleet Map
+              Live Route Corridor • {routeNumber}
             </span>
           </div>
-
-          <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-            <button
-              type="button"
-              onClick={() => setMapMode('INTERACTIVE')}
-              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                mapMode === 'INTERACTIVE'
-                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-              }`}
-            >
-              Interactive Map
-            </button>
-            <button
-              type="button"
-              onClick={() => setMapMode('SCHEMATIC')}
-              className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                mapMode === 'SCHEMATIC'
-                  ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
-              }`}
-            >
-              Metro Line
-            </button>
-          </div>
+          <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+            GPS Live Schematic
+          </span>
         </div>
 
-        <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-          {mapMode === 'INTERACTIVE' ? (
-            <HybridTransitMap
-              buses={buses}
-              focusedBus={activeBus}
-              highlightStopId={highlightStopId}
-              heightClass="h-64 w-full"
-            />
-          ) : (
-            <div className="h-64 w-full">
-              <MetroSchematicMap
-                activeBus={activeBus}
-                highlightStopId={highlightStopId}
-              />
-            </div>
-          )}
+        <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+          <MetroSchematicMap
+            activeBus={activeBus}
+            highlightStopId={highlightStopId}
+          />
         </div>
       </div>
 

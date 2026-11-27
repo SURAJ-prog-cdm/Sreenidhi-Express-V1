@@ -795,6 +795,78 @@ export function createExtras(db) {
     return false;
   };
 
+  /* Password Reset Codes (₹0 Self-Service + Admin Desk / Telegram) */
+  const savePasswordResetCode = (rollNumber, contactLabel, code, ttlMs = 15 * 60 * 1000) => {
+    const roll = String(rollNumber || '').trim().toUpperCase();
+    if (!roll) return false;
+    const nowMs = Date.now();
+    const expiresAt = nowMs + Math.max(60_000, Number(ttlMs) || 15 * 60 * 1000);
+    db.prepare(`
+      INSERT INTO otp_verifications
+        (account_roll, user_type, purpose, phone_number, otp, expires_at, created_at, attempts)
+      VALUES (?, 'STUDENT', 'PASSWORD_RESET', ?, ?, ?, ?, 0)
+      ON CONFLICT(account_roll, user_type, purpose) DO UPDATE SET
+        phone_number = excluded.phone_number,
+        otp = excluded.otp,
+        expires_at = excluded.expires_at,
+        created_at = excluded.created_at,
+        attempts = 0
+    `).run(roll, String(contactLabel || ''), String(code || '').trim(), expiresAt, nowMs);
+    return true;
+  };
+
+  const verifyPasswordResetCode = (rollNumber, code) => {
+    const roll = String(rollNumber || '').trim().toUpperCase();
+    const row = db.prepare(`
+      SELECT * FROM otp_verifications
+      WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'
+    `).get(roll);
+    if (!row) return { ok: false, reason: 'NOT_FOUND' };
+    if (Number(row.expires_at) < Date.now()) {
+      db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(roll);
+      return { ok: false, reason: 'EXPIRED' };
+    }
+    const prevAttempts = Number(row.attempts || 0);
+    if (prevAttempts >= 5) {
+      db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(roll);
+      return { ok: false, reason: 'MAX_ATTEMPTS' };
+    }
+    const expectedBuf = Buffer.from(String(row.otp || '').trim(), 'utf8');
+    const providedBuf = Buffer.from(String(code || '').trim(), 'utf8');
+    const match =
+      expectedBuf.length > 0 &&
+      expectedBuf.length === providedBuf.length &&
+      crypto.timingSafeEqual(expectedBuf, providedBuf);
+
+    if (!match) {
+      const nextAttempts = prevAttempts + 1;
+      if (nextAttempts >= 5) {
+        db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+          .run(roll);
+        return { ok: false, reason: 'MAX_ATTEMPTS' };
+      }
+      db.prepare("UPDATE otp_verifications SET attempts = ? WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+        .run(nextAttempts, roll);
+      return { ok: false, reason: 'INVALID_CODE' };
+    }
+
+    db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'")
+      .run(roll);
+    return { ok: true };
+  };
+
+  const listActivePasswordResetRequests = () => {
+    return db.prepare(`
+      SELECT o.account_roll, COALESCE(s.name, '') AS name, o.phone_number, o.otp, o.expires_at, o.created_at
+      FROM otp_verifications o
+      LEFT JOIN students s ON UPPER(s.roll_number) = UPPER(o.account_roll)
+      WHERE o.user_type = 'STUDENT' AND o.purpose = 'PASSWORD_RESET' AND o.expires_at > ?
+      ORDER BY o.created_at DESC
+    `).all(Date.now());
+  };
+
   const updateStudentPhone = (roll, phone) => {
     return db.prepare('UPDATE students SET student_phone = ?, student_phone_verified = 1 WHERE roll_number = ?')
       .run(phone, roll).changes > 0;
@@ -1542,7 +1614,8 @@ export function createExtras(db) {
     getTripState, setTripState, setMustChangePassword, clearMustChangePassword,
     createIncident, listIncidents, resolveIncident, createAnnouncement, listAnnouncements, deleteAnnouncement,
     reportLostItem, listLostItems, resolveLostItem, saveFeedback, listFeedback,
-    saveOtp, verifyOtp, updateStudentPhone, updateParentPhone, updateStudentPhoneVerified, updateParentPhoneVerified, logNotification, listNotifications,
+    saveOtp, verifyOtp, savePasswordResetCode, verifyPasswordResetCode, listActivePasswordResetRequests,
+    updateStudentPhone, updateParentPhone, updateStudentPhoneVerified, updateParentPhoneVerified, logNotification, listNotifications,
     getNotificationPreferences, saveNotificationPreferences, resetBillingCycle,
     setStopTimer, getStopTimer, clearStopTimer, clearStopTimerIfNoPending, getPendingStopStudentCount, isBoardedToday, isOptedOutToday,
     computeRouteOptimization, setRoutePlanLock, setClusterOverride, getRoutePlan,

@@ -603,6 +603,80 @@ class ExcelService {
     }
   }
 
+  /* ---------------- ₹0 Forgot Password Flow ---------------- */
+  public async requestPasswordReset(
+    rollNumber: string,
+    contact: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rollNumber, contact }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, message: data.error || 'Could not process password reset request.' };
+      }
+      return {
+        success: true,
+        message:
+          data.message ||
+          'If your Roll/Employee ID and mobile/email match our records, a 6-digit reset code has been issued.',
+      };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error requesting reset code' };
+    }
+  }
+
+  public async confirmPasswordReset(
+    rollNumber: string,
+    code: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rollNumber, code, newPassword }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, message: data.error || 'Failed to reset password.' };
+      }
+      return {
+        success: true,
+        message: data.message || 'Password updated. You can now sign in with your new password.',
+      };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error updating password' };
+    }
+  }
+
+  public async getPasswordResetRequests(): Promise<
+    Array<{
+      account_roll: string;
+      name: string;
+      phone_number: string;
+      otp: string;
+      expires_at: number;
+      created_at: number;
+    }>
+  > {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/password-reset-requests`, {
+        headers: this.authHeaders(),
+      });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data.requests) ? data.requests : [];
+    } catch {
+      return [];
+    }
+  }
+
   /* ---------------- Multi-Admin Access Accounts ---------------- */
   public async listAdminUsers(): Promise<Array<{
     adminId: string;

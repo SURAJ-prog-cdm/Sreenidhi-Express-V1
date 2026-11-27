@@ -9,6 +9,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
+import { INITIAL_BUS_FLEET } from '../../data/sreenidhiData';
 import { excelService } from '../../services/excelService';
 
 type AuthRole = 'PARENT' | 'STUDENT' | 'DRIVER' | 'ADMIN';
@@ -40,14 +41,23 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   const [studentRoll, setStudentRoll] = useState('');
   const [studentPassword, setStudentPassword] = useState('');
   const [showStudentPassword, setShowStudentPassword] = useState(false);
-  const [studentAuthMode, setStudentAuthMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
+  const [studentAuthMode, setStudentAuthMode] = useState<'LOGIN' | 'REGISTER' | 'FORGOT'>('LOGIN');
   const [regRoll, setRegRoll] = useState('');
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regPhone, setRegPhone] = useState('');
-  const [regPickupStop, setRegPickupStop] = useState('Erragadda');
+  const [regPickupStop, setRegPickupStop] = useState('');
   const [regSuccessMsg, setRegSuccessMsg] = useState<string | null>(null);
+
+  // Forgot password state (₹0 Self-Service + Admin Desk / Telegram)
+  const [resetRoll, setResetRoll] = useState('');
+  const [resetContact, setResetContact] = useState('');
+  const [resetCode, setResetCode] = useState('');
+  const [resetNewPassword, setResetNewPassword] = useState('');
+  const [resetConfirmPassword, setResetConfirmPassword] = useState('');
+  const [resetRequestedMsg, setResetRequestedMsg] = useState<string | null>(null);
+  const [loginSuccessMsg, setLoginSuccessMsg] = useState<string | null>(null);
 
   // Parent form state
   const [parentCode, setParentCode] = useState('');
@@ -96,6 +106,7 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
+    setLoginSuccessMsg(null);
     setIsSubmitting(true);
     try {
       const cleanRoll = studentRoll.trim().toUpperCase();
@@ -164,6 +175,67 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           'Registration submitted! Visit the Transport Office or wait for 1-click Admin verification before signing in.',
       );
       setRegPassword('');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRequestPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    setResetRequestedMsg(null);
+    const cleanRoll = resetRoll.trim().toUpperCase();
+    const cleanContact = resetContact.trim();
+    if (!cleanRoll || !cleanContact) {
+      setAuthError('Enter your Roll / Employee ID and registered mobile number or college email.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const res = await excelService.requestPasswordReset(cleanRoll, cleanContact);
+      if (!res.success) {
+        setAuthError(res.message);
+        return;
+      }
+      setResetRoll(cleanRoll);
+      setResetRequestedMsg(res.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirmPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    const cleanRoll = resetRoll.trim().toUpperCase();
+    const cleanCode = resetCode.trim();
+    if (!cleanRoll || !/^\d{6}$/.test(cleanCode)) {
+      setAuthError('Enter your Roll / Employee ID and valid 6-digit reset code.');
+      return;
+    }
+    if (resetNewPassword.length < 8) {
+      setAuthError('New password must be at least 8 characters long.');
+      return;
+    }
+    if (resetNewPassword !== resetConfirmPassword) {
+      setAuthError('New password and confirmation do not match.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const res = await excelService.confirmPasswordReset(cleanRoll, cleanCode, resetNewPassword);
+      if (!res.success) {
+        setAuthError(res.message);
+        return;
+      }
+      setStudentRoll(cleanRoll);
+      setStudentPassword('');
+      setResetCode('');
+      setResetNewPassword('');
+      setResetConfirmPassword('');
+      setResetRequestedMsg(null);
+      setLoginSuccessMsg(res.message || 'Password updated. You can now sign in with your new password.');
+      setStudentAuthMode('LOGIN');
     } finally {
       setIsSubmitting(false);
     }
@@ -456,23 +528,42 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
           <div className="prismatic-subcard animate-panel-in mt-5 space-y-3 rounded-3xl p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold text-slate-900 dark:text-white">
-                {studentAuthMode === 'LOGIN' ? 'Student / Faculty Login' : 'New Commuter Self-Registration'}
+                {studentAuthMode === 'LOGIN'
+                  ? 'Student / Faculty Login'
+                  : studentAuthMode === 'REGISTER'
+                    ? 'New Commuter Self-Registration'
+                    : 'Reset Password (₹0 Self-Service)'}
               </span>
               <button
                 type="button"
                 onClick={() => {
-                  setStudentAuthMode((m) => (m === 'LOGIN' ? 'REGISTER' : 'LOGIN'));
+                  if (studentAuthMode === 'FORGOT') {
+                    setStudentAuthMode('LOGIN');
+                  } else {
+                    setStudentAuthMode((m) => (m === 'LOGIN' ? 'REGISTER' : 'LOGIN'));
+                  }
                   setAuthError(null);
                   setRegSuccessMsg(null);
+                  setResetRequestedMsg(null);
+                  setLoginSuccessMsg(null);
                 }}
                 className="text-[11px] font-extrabold text-[#4F46E5] underline hover:opacity-80 dark:text-cyan-300 cursor-pointer"
               >
-                {studentAuthMode === 'LOGIN' ? 'New Commuter? Self-Register' : 'Already Verified? Sign In'}
+                {studentAuthMode === 'LOGIN'
+                  ? 'New Commuter? Self-Register'
+                  : studentAuthMode === 'FORGOT'
+                    ? 'Back to Sign In'
+                    : 'Already Verified? Sign In'}
               </button>
             </div>
 
             {studentAuthMode === 'LOGIN' ? (
               <form onSubmit={handleStudentSubmit} className="space-y-3">
+                {loginSuccessMsg && (
+                  <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-xs font-semibold text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200">
+                    {loginSuccessMsg}
+                  </div>
+                )}
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                     Roll Number / Employee ID
@@ -487,9 +578,24 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                    Password
-                  </label>
+                  <div className="flex items-center justify-between gap-2">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResetRoll(studentRoll.trim().toUpperCase());
+                        setAuthError(null);
+                        setLoginSuccessMsg(null);
+                        setResetRequestedMsg(null);
+                        setStudentAuthMode('FORGOT');
+                      }}
+                      className="text-[11px] font-bold text-[#4F46E5] hover:underline dark:text-cyan-300 cursor-pointer"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
                   <div className="relative mt-1">
                     <input
                       type={showStudentPassword ? 'text' : 'password'}
@@ -541,6 +647,114 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </form>
+            ) : studentAuthMode === 'FORGOT' ? (
+              <div className="space-y-4">
+                {resetRequestedMsg && (
+                  <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-xs font-semibold text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200">
+                    {resetRequestedMsg}
+                  </div>
+                )}
+
+                <form onSubmit={handleRequestPasswordReset} className="space-y-2.5 rounded-2xl border border-slate-200/80 bg-white/80 p-3.5 dark:border-[#2E3646] dark:bg-[#141821]/80">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#4F46E5] dark:text-cyan-300">
+                    Step 1: Verify Account Contact
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Roll / Employee ID
+                      </label>
+                      <input
+                        type="text"
+                        value={resetRoll}
+                        onChange={(e) => setResetRoll(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="26011CSEAI0109"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Registered Mobile or College Email
+                      </label>
+                      <input
+                        type="text"
+                        value={resetContact}
+                        onChange={(e) => setResetContact(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="9876543210 or @sreenidhi.edu.in"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="tactile-btn flex w-full items-center justify-center gap-2 rounded-xl border border-[#4F46E5]/30 bg-indigo-50 py-2 text-xs font-extrabold text-[#4F46E5] hover:bg-indigo-100 disabled:opacity-50 dark:border-cyan-500/30 dark:bg-indigo-950/60 dark:text-cyan-300 cursor-pointer"
+                  >
+                    <span>{isSubmitting ? 'Requesting Code...' : 'Request 6-Digit Reset Code'}</span>
+                  </button>
+                </form>
+
+                <form onSubmit={handleConfirmPasswordReset} className="space-y-2.5 rounded-2xl border border-slate-200/80 bg-white/80 p-3.5 dark:border-[#2E3646] dark:bg-[#141821]/80">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                    Step 2: Enter Code &amp; New Password
+                  </p>
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                      6-Digit Reset Code (from Telegram or Transport Office Desk)
+                    </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={resetCode}
+                      onChange={(e) => setResetCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm font-mono font-bold tracking-widest text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                      placeholder="123456"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        New Password (min 8 chars)
+                      </label>
+                      <input
+                        type="password"
+                        value={resetNewPassword}
+                        onChange={(e) => setResetNewPassword(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="At least 8 characters"
+                        minLength={8}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                        Confirm New Password
+                      </label>
+                      <input
+                        type="password"
+                        value={resetConfirmPassword}
+                        onChange={(e) => setResetConfirmPassword(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
+                        placeholder="Re-enter password"
+                        minLength={8}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="electric-cta animate-electric-sheen flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
+                  >
+                    <span>{isSubmitting ? 'Updating Password...' : 'Update Password'}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                </form>
+              </div>
             ) : (
               <form onSubmit={handleStudentRegister} className="space-y-2.5">
                 {regSuccessMsg && (
@@ -623,28 +837,48 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                     <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                       Requested Pickup Stop
                     </label>
-                    <input
-                      type="text"
-                      list="suh-register-stops"
+                    <select
+                      aria-label="Requested Pickup Stop"
                       value={regPickupStop}
                       onChange={(e) => setRegPickupStop(e.target.value)}
                       className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
-                      placeholder="Erragadda, KPHB, Miyapur..."
                       required
-                    />
-                    <datalist id="suh-register-stops">
-                      <option value="Miyapur X Roads" />
-                      <option value="KPHB Colony" />
-                      <option value="Kukatpally" />
-                      <option value="Balanagar" />
-                      <option value="Moosapet" />
-                      <option value="Erragadda" />
-                      <option value="SR Nagar" />
-                      <option value="Ameerpet" />
-                      <option value="Secunderabad" />
-                      <option value="Uppal X Roads" />
-                      <option value="Ghatkesar" />
-                    </datalist>
+                    >
+                      <option value="">Select your pickup stop…</option>
+                      {INITIAL_BUS_FLEET.map((bus) => {
+                        const pickupStops = bus.stops.filter(
+                          (s) =>
+                            s.areaClusterId !== 'cluster-campus' &&
+                            !/suh\s*campus/i.test(s.shortName || s.name)
+                        );
+                        if (pickupStops.length === 0) return null;
+                        const originLabel = pickupStops[0]?.shortName || pickupStops[0]?.name || 'Corridor';
+                        return (
+                          <optgroup
+                            key={bus.routeId}
+                            label={`${bus.routeNumber} — ${originLabel} to SUH Campus`}
+                          >
+                            {pickupStops.map((stop) => {
+                              const canonicalVal =
+                                stop.shortName && stop.shortName !== stop.name && stop.name.startsWith('Begumpet')
+                                  ? stop.shortName
+                                  : stop.name;
+                              const label =
+                                stop.shortName &&
+                                stop.shortName !== stop.name &&
+                                !stop.name.toLowerCase().includes(stop.shortName.toLowerCase())
+                                  ? `${stop.shortName} (${stop.name})`
+                                  : stop.name;
+                              return (
+                                <option key={stop.id} value={canonicalVal}>
+                                  {label}
+                                </option>
+                              );
+                            })}
+                          </optgroup>
+                        );
+                      })}
+                    </select>
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">

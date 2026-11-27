@@ -20,7 +20,6 @@ import {
   MoreHorizontal,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { HybridTransitMap } from '../map/HybridTransitMap';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
@@ -74,7 +73,6 @@ const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true
 
 export const StudentPortal: React.FC = () => {
   const {
-    buses,
     activeStudent,
     activeBus,
     currentUser,
@@ -88,7 +86,6 @@ export const StudentPortal: React.FC = () => {
     setAbsenceTomorrow,
   } = useCommuteSimulation();
 
-  const [mapMode, setMapMode] = useState<'INTERACTIVE' | 'SCHEMATIC'>('INTERACTIVE');
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [applyServiceType, setApplyServiceType] = useState('ROUTE_CHANGE');
   const [applyReason, setApplyReason] = useState('Requesting route or drop stop update.');
@@ -843,14 +840,13 @@ export const StudentPortal: React.FC = () => {
             </div>
           )}
 
-          {/* Rounded Live Map Preview Card */}
+          {/* Rounded Live Route Schematic Preview Card */}
           <div className="prismatic-card overflow-hidden rounded-3xl">
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              <HybridTransitMap
-                buses={buses}
-                focusedBus={activeBus}
-                highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                heightClass="h-48 sm:h-56 w-full"
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={studentStopObj?.id || activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+                compact
               />
             </div>
             <button
@@ -858,7 +854,7 @@ export const StudentPortal: React.FC = () => {
               onClick={() => setPortalTab('MAP')}
               className="electric-cta flex w-full items-center justify-center gap-1.5 py-2.5 text-xs font-extrabold text-white cursor-pointer"
             >
-              <span>View Full Map / Metro View →</span>
+              <span>View Full Route Schematic →</span>
             </button>
           </div>
 
@@ -896,49 +892,16 @@ export const StudentPortal: React.FC = () => {
                   Corridor Tracking • {routeNumber}
                 </span>
               </div>
-
-              <div className="prismatic-subcard flex items-center gap-1 rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => setMapMode('INTERACTIVE')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'INTERACTIVE'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                  }`}
-                >
-                  Interactive Map
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMapMode('SCHEMATIC')}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
-                    mapMode === 'SCHEMATIC'
-                      ? 'bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                  }`}
-                >
-                  Metro Line
-                </button>
-              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                GPS Live Schematic
+              </span>
             </div>
 
-            <div className="w-full bg-[#F7F9FF] dark:bg-[#141821]">
-              {mapMode === 'INTERACTIVE' ? (
-                <HybridTransitMap
-                  buses={buses}
-                  focusedBus={activeBus}
-                  highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                  heightClass="h-80 sm:h-96 w-full"
-                />
-              ) : (
-                <div className="h-80 sm:h-96 w-full">
-                  <MetroSchematicMap
-                    activeBus={activeBus}
-                    highlightStopId={activeStudent?.pickupStopId || activeBus.stops[0]?.id}
-                  />
-                </div>
-              )}
+            <div className="p-2.5 sm:p-3 bg-[#F7F9FF] dark:bg-[#141821]">
+              <MetroSchematicMap
+                activeBus={activeBus}
+                highlightStopId={studentStopObj?.id || activeStudent?.pickupStopId || activeBus.stops[0]?.id}
+              />
             </div>
           </div>
 

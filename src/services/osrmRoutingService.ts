@@ -4,7 +4,7 @@
 import { excelService } from './excelService';
 
 export interface OsrmRouteResult {
-  coordinates: [number, number][]; // [lat, lng] pairs for Leaflet Polyline
+  coordinates: [number, number][]; // [lat, lng] pairs for route geometry
   distanceKm: number;
   durationMinutes: number;
   source: 'OSRM_API' | 'LOCAL_CACHE' | 'FALLBACK_INTERPOLATION';
@@ -119,15 +119,15 @@ class OsrmRoutingService {
         const data = await res.json();
         if (data.routes && data.routes[0]) {
           const route = data.routes[0];
-          // GeoJSON coordinates are [lng, lat] -> convert to Leaflet [lat, lng]
-          const leafletCoords: [number, number][] = route.geometry.coordinates.map(
+          // GeoJSON coordinates are [lng, lat] -> convert to [lat, lng]
+          const routeCoords: [number, number][] = route.geometry.coordinates.map(
             (c: [number, number]) => [c[1], c[0]]
           );
           const distanceKm = Number((route.distance / 1000).toFixed(2));
           const durationMinutes = Math.round(route.duration / 60);
 
           const result: OsrmRouteResult = {
-            coordinates: leafletCoords,
+            coordinates: routeCoords,
             distanceKm,
             durationMinutes,
             source: 'OSRM_API',

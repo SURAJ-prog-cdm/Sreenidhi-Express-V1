@@ -8,6 +8,7 @@ import {
 import { createExtras } from '../server/dbExtras.js';
 import { db } from '../server/excelStorage.js';
 import { app, isPlanLocked, getFirstDepartureUtcMs } from '../server/index.js';
+import { projectGpsOntoStops } from '../src/services/corridorProjection.ts';
 
 test('token: round trip, scope separation, tamper, expiry', () => {
   const t = signToken({ sub: 'X', role: 'STUDENT' });
@@ -1184,6 +1185,118 @@ test('v20.4 multi-admin access: authorized users with proper credentials can aut
     if (prevAdminAccounts === undefined) delete process.env.ADMIN_ACCOUNTS;
     else process.env.ADMIN_ACCOUNTS = prevAdminAccounts;
     db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
+  }
+});
+
+test('v20.4 gps-to-schematic projection: projects coordinates onto stops and detects off-route detours', () => {
+  const sampleStops = [
+    { id: 'r51-s1', name: 'Erragadda', shortName: 'Erragadda', lat: 17.4558, lng: 78.4294 },
+    { id: 'r51-s2', name: 'ESI-Erragadda', shortName: 'ESI-Erragadda', lat: 17.4475, lng: 78.4373 },
+    { id: 'r51-s3', name: 'Ameerpet', shortName: 'Ameerpet', lat: 17.4375, lng: 78.4483 },
+  ];
+
+  // Midpoint between Erragadda and ESI-Erragadda
+  const midLat = (17.4558 + 17.4475) / 2;
+  const midLng = (78.4294 + 78.4373) / 2;
+  const midProj = projectGpsOntoStops(midLat, midLng, sampleStops, 0, 0);
+  assert.equal(midProj.isGpsProjected, true);
+  assert.equal(midProj.segmentIndex, 0);
+  assert.ok(midProj.segmentProgress >= 0.45 && midProj.segmentProgress <= 0.55);
+  assert.ok(midProj.offRouteMeters < 100);
+
+  // Off-route point ~1 km perpendicular north-east from segment 0
+  const offRouteProj = projectGpsOntoStops(17.4585, 78.4410, sampleStops, 0, 0);
+  assert.equal(offRouteProj.isGpsProjected, true);
+  assert.ok(offRouteProj.offRouteMeters > 400);
+
+  // Invalid/missing GPS falls back cleanly
+  const fallbackProj = projectGpsOntoStops(0, 0, sampleStops, 1, 0.25);
+  assert.equal(fallbackProj.isGpsProjected, false);
+  assert.equal(fallbackProj.segmentIndex, 1);
+  assert.equal(fallbackProj.segmentProgress, 0.25);
+});
+
+test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
+  const roll = '26011CSEAI0109';
+  const origRow = db.prepare('SELECT password_hash, student_phone, must_change_password, session_version FROM students WHERE roll_number = ?').get(roll);
+  assert.ok(origRow);
+
+  const testPhone = '9876505109';
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const studentToken = signToken({ sub: roll, role: 'STUDENT', routeId: 'route-51', sessionVersion: Number(origRow.session_version || 0) });
+
+  db.prepare('UPDATE students SET student_phone = ? WHERE roll_number = ?').run(testPhone, roll);
+  db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'").run(roll);
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    // 1. Request password reset code
+    const forgotRes = await fetch(`${baseUrl}/api/auth/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, contact: testPhone }),
+    });
+    assert.equal(forgotRes.status, 200);
+    const forgotBody = await forgotRes.json();
+    assert.equal(forgotBody.success, true);
+
+    // 2. Non-admin cannot view admin password reset requests
+    const forbiddenRes = await fetch(`${baseUrl}/api/admin/password-reset-requests`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    });
+    assert.equal(forbiddenRes.status, 403);
+
+    // 3. Admin can see the issued 6-digit reset code
+    const adminListRes = await fetch(`${baseUrl}/api/admin/password-reset-requests`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(adminListRes.status, 200);
+    const adminListBody = await adminListRes.json();
+    const entry = adminListBody.requests.find((r) => r.account_roll === roll);
+    assert.ok(entry && /^\d{6}$/.test(entry.otp));
+
+    // 4. Wrong reset code is rejected cleanly
+    const wrongCode = entry.otp === '123456' ? '654321' : '123456';
+    const wrongResetRes = await fetch(`${baseUrl}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, code: wrongCode, newPassword: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(wrongResetRes.status, 400);
+
+    // 5. Valid reset code updates password cleanly
+    const goodResetRes = await fetch(`${baseUrl}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, code: entry.otp, newPassword: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(goodResetRes.status, 200);
+
+    // 6. User can log in with the new password and old password fails
+    const oldLoginRes = await fetch(`${baseUrl}/api/students/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, password: 'student123' }),
+    });
+    assert.equal(oldLoginRes.status, 401);
+
+    const newLoginRes = await fetch(`${baseUrl}/api/students/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rollNumber: roll, password: 'NewSecurePassword#2026' }),
+    });
+    assert.equal(newLoginRes.status, 200);
+    const newLoginBody = await newLoginRes.json();
+    assert.equal(newLoginBody.success, true);
+    assert.ok(newLoginBody.token);
+  } finally {
+    server.close();
+    db.prepare('UPDATE students SET password_hash = ?, student_phone = ?, must_change_password = ?, session_version = ? WHERE roll_number = ?')
+      .run(origRow.password_hash, origRow.student_phone, origRow.must_change_password, origRow.session_version, roll);
+    db.prepare("DELETE FROM otp_verifications WHERE account_roll = ? AND user_type = 'STUDENT' AND purpose = 'PASSWORD_RESET'").run(roll);
   }
 });
 

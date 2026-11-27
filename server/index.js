@@ -172,6 +172,7 @@ const apiLimiter = rateLimit({ windowMs: 60_000, max: 240, key: (r) => r.user?.s
 const telemetryLimiter = rateLimit({ windowMs: 60_000, max: 120, key: (r) => r.user?.sub ?? r.ip });
 const alertLimiter = rateLimit({ windowMs: 60_000, max: 10, key: (r) => r.user?.sub ?? r.ip, message: 'Alert rate limit reached' });
 const otpRequestLimiter = rateLimit({ windowMs: 10 * 60_000, max: 3, key: (r) => `${r.ip}|${r.user?.sub || 'anonymous'}|${r.body?.userType || ''}`, message: 'Too many OTP requests. Please wait 10 minutes.' });
+const authLimiter = rateLimit({ windowMs: 15 * 60_000, max: IS_PROD ? 10 : 120, key: loginKey, message: 'Too many password reset requests. Please try again later.' });
 const dispatchLimiter = rateLimit({ windowMs: 60_000, max: 5, key: (r) => r.user?.sub ?? r.ip, message: 'Too many notification dispatches' });
 const tileLimiter = rateLimit({ windowMs: 60_000, max: 600, key: (r) => r.ip });
 
@@ -531,6 +532,123 @@ app.post('/api/students/me/password', requireRole('STUDENT'), loginLimiter, asyn
     sessionVersion: extras.getSessionVersion(row.roll_number),
   });
   res.json({ success: true, token: refreshedToken });
+});
+
+/* ---------------- ₹0 Self-Service Forgot Password Flow ---------------- */
+app.post('/api/auth/forgot-password', authLimiter, async (req, res) => {
+  const rollNumber = str(req.body?.rollNumber, 32, 'rollNumber').toUpperCase();
+  const contact = str(req.body?.contact, 120, 'contact');
+  const safeResponse = {
+    success: true,
+    message: 'If your Roll/Employee ID and mobile/email match our records, a 6-digit reset code has been issued. Check Telegram (if linked) or ask the Transport Office desk.',
+  };
+
+  const row = extras.getStudentRow(rollNumber);
+  if (row && String(row.verification_status || 'VERIFIED').toUpperCase() !== 'REJECTED') {
+    const contactDigits = contact.replace(/\D/g, '').slice(-10);
+    const studentDigits = String(row.student_phone || '').replace(/\D/g, '').slice(-10);
+    const parentDigits = String(row.parent_phone || '').replace(/\D/g, '').slice(-10);
+    const contactEmail = contact.trim().toLowerCase();
+    const rowEmail = String(row.email || '').trim().toLowerCase();
+
+    const matchesPhone =
+      contactDigits.length === 10 &&
+      ((studentDigits.length === 10 && contactDigits === studentDigits) ||
+        (parentDigits.length === 10 && contactDigits === parentDigits));
+    const matchesEmail = Boolean(rowEmail && contactEmail.includes('@') && contactEmail === rowEmail);
+
+    if (matchesPhone || matchesEmail) {
+      const code = String(crypto.randomInt(100000, 1_000_000));
+      const storedContact = matchesPhone ? contactDigits : contactEmail;
+      extras.savePasswordResetCode(rollNumber, storedContact, code, 15 * 60 * 1000);
+
+      if (row.telegram_chat_id) {
+        const tgHtml = `🔐 <b>Sreenidhi Express Password Reset</b>\n\nAccount: <b>${escapeHtml(row.name)}</b> (${escapeHtml(rollNumber)})\nReset Code: <code>${code}</code>\n\nValid for 15 minutes.`;
+        await sendTelegramAlert(row.telegram_chat_id, tgHtml).catch(() => {});
+      }
+
+      try {
+        appendSheetRow('Alerts_Notifications', {
+          Timestamp: now(),
+          'Alert ID': `PWR-${Date.now()}`,
+          'Recipient Name': row.name || rollNumber,
+          Category: 'SECURITY',
+          Title: 'PASSWORD_RESET_REQUESTED',
+          Message: `Self-service 6-digit reset code issued for ${rollNumber} (valid 15m).`,
+          'Delivery Status': row.telegram_chat_id ? 'TELEGRAM_AND_DESK' : 'TRANSPORT_DESK',
+        });
+      } catch {}
+
+      try {
+        extras.logNotification({
+          recipient_type: 'STUDENT',
+          roll_number: rollNumber,
+          phone_number: studentDigits || parentDigits || storedContact,
+          category: 'SECURITY',
+          title: 'PASSWORD_RESET_REQUESTED',
+          message: `A 6-digit password reset code was requested for ${rollNumber}. Contact the Transport Office desk or check Telegram.`,
+          channel: 'IN_APP_SMS',
+          status: 'DELIVERED',
+        });
+      } catch {}
+    }
+  }
+
+  res.json(safeResponse);
+});
+
+app.post('/api/auth/reset-password', authLimiter, async (req, res) => {
+  const rollNumber = str(req.body?.rollNumber, 32, 'rollNumber').toUpperCase();
+  const code = String(req.body?.code || '').trim();
+  const newPassword = typeof req.body?.newPassword === 'string' ? req.body.newPassword : '';
+
+  if (!/^\d{6}$/.test(code)) {
+    throw new HttpError(400, 'Enter the valid 6-digit reset code');
+  }
+  if (newPassword.length < 8 || newPassword.length > 128) {
+    throw new HttpError(400, 'New password must be 8-128 characters');
+  }
+
+  const check = extras.verifyPasswordResetCode(rollNumber, code);
+  if (!check.ok) {
+    const msg =
+      check.reason === 'EXPIRED'
+        ? 'Reset code has expired. Please request a new 6-digit code.'
+        : check.reason === 'MAX_ATTEMPTS'
+          ? 'Too many invalid reset attempts. Request a new 6-digit code.'
+          : 'Invalid reset code. Check your 6-digit code and try again.';
+    throw new HttpError(400, msg);
+  }
+
+  const row = extras.getStudentRow(rollNumber);
+  if (!row) throw new HttpError(404, 'Student or faculty account not found');
+
+  const hashed = await hashPassword(newPassword);
+  extras.setPasswordHash(rollNumber, hashed);
+  extras.clearMustChangePassword(rollNumber);
+  extras.revokeStudentSessions(rollNumber);
+
+  try {
+    appendSheetRow('Alerts_Notifications', {
+      Timestamp: now(),
+      'Alert ID': `PWC-${Date.now()}`,
+      'Recipient Name': row.name || rollNumber,
+      Category: 'SECURITY',
+      Title: 'PASSWORD_RESET_COMPLETED',
+      Message: `${rollNumber} completed self-service password reset.`,
+      'Delivery Status': 'AUDIT',
+    });
+  } catch {}
+
+  res.json({
+    success: true,
+    message: 'Password updated. You can now sign in with your new password.',
+  });
+});
+
+app.get('/api/admin/password-reset-requests', requireRole('ADMIN'), apiLimiter, (_req, res) => {
+  const requests = extras.listActivePasswordResetRequests();
+  res.json({ success: true, requests });
 });
 
 /* ---------------- admin: provisioning (replaces the public /register that overwrote records) ---------------- */
