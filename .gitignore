@@ -1,8 +1,7 @@
 # Environment & secrets (NEVER commit)
 .env
-.env.local
-.env.*.local
-.env.production
+.env.*
+!.env.example
 *.local
 initial-passwords.csv
 
@@ -17,6 +16,8 @@ android/.gradle/
 *.db
 *.db-wal
 *.db-shm
+data/*.sqlite*
+server/data/*.sqlite*
 server/data/
 server/data/*.db
 server/data/*.db-wal
@@ -24,7 +25,6 @@ server/data/*.db-shm
 server/data/*.xlsx
 server/data/backups/
 server/data_pilot_test/
-initial-passwords.csv
 
 # Android signing keystores
 *.jks

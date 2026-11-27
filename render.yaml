@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: sreenidhi-express
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: TRUST_PROXY
+        value: "1"
+      - key: VITE_ENABLE_AREA_SKIPPING
+        value: "false"
+      - key: VITE_ENABLE_PARENT_PORTAL
+        value: "false"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GATE_SECRET
+        generateValue: true
+      - key: VAPID_SUBJECT
+        value: mailto:transport@sreenidhi.edu.in
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: ADMIN_NAME
+        value: Transport Incharge
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: DRIVER_PIN_HASHES
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
