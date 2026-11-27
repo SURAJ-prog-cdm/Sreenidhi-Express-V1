@@ -1028,5 +1028,70 @@ test('v20 transport office verification: self-signup stays 403 PENDING until 1-c
   }
 });
 
+test('v20.3 driver utility report: IST formatting, scheduled variance, summary KPIs & CSV export headers', async () => {
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const driverToken = signToken({ sub: 'driver-route-51', role: 'DRIVER', routeId: 'route-51' });
+  const arrivedAt = '2026-11-27T01:47:00.000Z'; // 07:17:00 AM IST (Scheduled r51-s2: 07:15 AM => +2 min)
+  const departedAt = '2026-11-27T01:48:48.000Z'; // 07:18:48 AM IST (108s => 1m 48s)
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    const postDwell = await fetch(`${baseUrl}/api/bus/stop-dwell`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${driverToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        stopId: 'r51-s2',
+        stopName: 'ESI-Erragadda',
+        arrivedAt,
+        departedAt,
+        dwellSec: 108,
+      }),
+    });
+    assert.equal(postDwell.status, 200);
+    const dwellRes = await postDwell.json();
+    assert.equal(dwellRes.success, true);
+    assert.equal(dwellRes.flag, 'NORMAL');
+    assert.equal(dwellRes.dwellSec, 108);
+
+    const utilRes = await fetch(`${baseUrl}/api/admin/driver-utility?routeId=route-51&date=2026-11-27`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(utilRes.status, 200);
+    const utilBody = await utilRes.json();
+    assert.equal(utilBody.success, true);
+    assert.ok(Array.isArray(utilBody.logs) && utilBody.logs.length >= 1);
+    assert.ok(utilBody.summary && utilBody.summary.totalStopsLogged >= 1);
+    assert.equal(typeof utilBody.summary.avgDwellFormatted, 'string');
+
+    const matchingLog = utilBody.logs.find(
+      (l) => l.stop_id === 'r51-s2' && l.arrived_at === arrivedAt && l.departed_at === departedAt
+    );
+    assert.ok(matchingLog, 'Expected enriched dwell row in GET /api/admin/driver-utility');
+    assert.ok(matchingLog.arrived_at_ist && matchingLog.arrived_at_ist.includes('27 Nov 2026'));
+    assert.ok(matchingLog.departed_at_ist && matchingLog.departed_at_ist.includes('07:18:48'));
+    assert.equal(matchingLog.dwell_formatted, '1m 48s');
+    assert.equal(matchingLog.scheduled_time, '07:15 AM');
+    assert.equal(matchingLog.delay_minutes, 2);
+
+    const csvRes = await fetch(`${baseUrl}/api/export?type=driver_utility&routeId=route-51&date=2026-11-27`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(csvRes.status, 200);
+    const csvText = await csvRes.text();
+    const headerLine = csvText.split(/\r?\n/)[0] || '';
+    assert.ok(headerLine.includes('Scheduled Time (IST)'));
+    assert.ok(headerLine.includes('Arrived At (IST)'));
+    assert.ok(headerLine.includes('Departed At (IST)'));
+    assert.ok(headerLine.includes('Stopping Duration'));
+    assert.ok(csvText.includes('1m 48s'));
+  } finally {
+    server.close();
+    db.prepare('DELETE FROM stop_dwell_logs WHERE route_id = ? AND arrived_at = ?').run('route-51', arrivedAt);
+  }
+});
+
 
 

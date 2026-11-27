@@ -3,14 +3,14 @@
 > **Project Name:** Sreenidhi Express (Smart Campus Bus & Student Safety Platform)
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
-> **Date of Compilation:** November 26, 2026
-> **Build Status:** Production Prototype / v20.2 Prismatic Daylight Glass UI & Pilot Hardening Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Reason Diagnostics, Bus Pass / Grace Pass / Fee Simulator Removed From Phase 1 UI, Clean 4-Tab Student `Home | Map | Help | More` / 3-Tab Driver / 3-Tab Admin Navigation, 36/36 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Date of Compilation:** November 27, 2026
+> **Build Status:** Production Prototype / v20.3 Live Stop-by-Stop ETA & Detailed IST Timestamp Report Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Diagnostics, Bus Pass UI Removed From Phase 1, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 37/37 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 77 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 78 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, and v20.2 mobile UX/map/opt-out polish pass, all 77 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 36/36 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, and v20.3 live stop-by-stop ETA & timestamp reporting release, all 78 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 37/37 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -93,6 +93,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **75** | **P1** | Prismatic Daylight UI | **Prismatic Daylight Glass Design System & Light-First Boot**: Switched default boot state to Light Mode (`index.html` & `CommuteSimulationContext.tsx`), created cohesive pearl-white aurora canvas (`.bg-prismatic-canvas`), frosted porcelain glass surfaces (`.prismatic-card`, `.prismatic-subcard`), electric indigo-to-cyan gradients (`.electric-hero`, `.electric-cta`), tactile micro-interactions (`.futuristic-tile`, `.tactile-btn`, `.animate-electric-sheen`, `.animate-panel-in`), and purged all remaining hardcoded dark-only slabs and legacy `#0D4B42` accents across modals, drawers, maps, login, and all portals while preserving optional `dark:` fallback parity. | [`index.html`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/index.html), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css), [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
 | **76** | **P1** | Mobile Polish & CSS Hygiene | **Phase 1 Bottom-Bar Collision Fix & Duplicate CSS Cleanup**: Suppressed redundant `<MobileBottomNav />` in `src/App.tsx` when `activeView` is `'STUDENT'`, `'DRIVER'`, or `'ADMIN'` (preventing overlap over `StudentPortal.tsx`'s fixed `bottom-3` 4-tab pill bar), shifted Student mobile floating theme toggle to `bottom-20`, and deleted duplicate legacy emerald `.futuristic-tile` / `.futuristic-tile-active` overrides in `src/index.css` so indigo/cyan tile styling applies cleanly. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css) |
 | **77** | **P0** | v20.2 Mobile UX & Map Fix | **Mobile LAN CARTO Tiles, Unobstructed Map HUD, Granular Lock Feedback, 2-Row Student Header & Bus Pass UI Removal**: Switched `HybridTransitMap.tsx` tile base to `excelService.getServerBaseUrl()` for automatic LAN IP loading and moved route/OSRM/Google Maps bars above and below the map canvas; added `getPlanLockStatus` (`ADMIN_LOCKED` / `TRIP_RUNNING` / `CUTOFF_PASSED`) with matching captions/toasts; upgraded `StudentPortal.tsx` header to unclipped 2 rows; updated login role card to `Student / Faculty`; removed Bus Pass, Grace Pass, and Fee Simulator UI cleanly replacing the 3rd student tab with `Help`. | [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/modals/InstallAppModal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/modals/InstallAppModal.tsx) |
+| **78** | **P0** | v20.3 Reporting & Live Stop ETA | **Live Stop-by-Stop ETA, Admin Detailed Timestamps & Stop Duration Report & IST CSV Export**: Added IST formatting (`formatIstDateTime`, `formatIstTimeOnly`, `getIstDateKey`), `formatDwellDuration`, scheduled-vs-actual stop variance (`resolveScheduledStopInfo`), route/date filtering, summary KPIs, and `STOP_DWELL_RECORDED` SSE broadcasts across `server/index.js` (`/api/admin/driver-utility` and `/api/export?type=driver_utility`) and `excelService.ts`; added interactive Admin `Detailed Timestamps & Stop Duration Report` card with 4 KPI cards, Trip Starts strip, filters, and variance table in `AdminDashboard.tsx`; added `Live Stop-by-Stop ETA & Timestamps` sequence list on Student `Map` tab in `StudentPortal.tsx`; extended `tests/security.test.js` to 37/37 passing. | [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 
 ---
 
@@ -116,7 +117,7 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 10. [`server/index.js`](#serverindexjs) — *Express 5 REST API server with timing-safe HMAC JWT auth, self-signup + 1-click admin verification, self-checkin boarding, stop dwell audit logging, 1-hour pre-departure absence cutoff, SSE live stream tickets, and CARTO tile proxy.*
 11. [`server/excelStorage.js`](#serverexcelstoragejs) — *Real-time Excel engine with SQLite WAL persistence, prepared statement cache, configurable DATA_DIR / DB_FILE_PATH / EXCEL_FILE_PATH, and atomic XLSX export.*
 12. [`server/telegramNotifier.js`](#servertelegramnotifierjs) — *Automated Telegram Bot safety alert integration for student transit events and driver dispatches.*
-13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, and v20 pilot hardening & verification (36/36 passing).*
+13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, and v20.3 timestamp report & CSV headers (37/37 passing).*
 14. [`src/types/transit.ts`](#srctypestransitts) — *Complete TypeScript type contracts for buses, students, telemetry, geofences, and safety alerts.*
 15. [`src/config/apiConfig.ts`](#srcconfigapiconfigts) — *Environment variables, backend endpoints, and API client configuration.*
 16. [`src/data/sreenidhiData.ts`](#srcdatasreenidhidatats) — *Hyderabad NH-163 Warangal Highway transit network stops, student master roster, Route 51 manifest (18 students + 8 faculty), and fleet definitions.*
@@ -4958,6 +4959,169 @@ app.post('/api/telegram/webhook', async (req, res) => {
   res.json({ ok: true });
 });
 
+function formatIstDateTime(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return d
+    .toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
+function formatIstTimeOnly(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return d
+    .toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
+function getIstDateKey(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return new Date(d.getTime() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+}
+
+function formatDwellDuration(sec) {
+  const total = Math.max(0, Math.round(Number(sec) || 0));
+  const mins = Math.floor(total / 60);
+  const rem = total % 60;
+  if (mins <= 0) return `${rem}s`;
+  return `${mins}m ${rem}s`;
+}
+
+function resolveScheduledStopInfo(routeId, stopId, arrivedAtIso) {
+  const normRoute = normalizeRoute(routeId);
+  const stops = ROUTE_TOPOLOGY[normRoute]?.stops || [];
+  const targetId = String(stopId || '').trim().toLowerCase();
+  const stop = stops.find((s) => String(s.id || '').toLowerCase() === targetId);
+  if (!stop) return { scheduledTime: null, delayMinutes: null };
+
+  const arrivedDate = arrivedAtIso ? new Date(String(arrivedAtIso)) : null;
+  if (!arrivedDate || Number.isNaN(arrivedDate.getTime())) {
+    return { scheduledTime: null, delayMinutes: null };
+  }
+
+  const istDate = new Date(arrivedDate.getTime() + 5.5 * 3600 * 1000);
+  const istHour = istDate.getUTCHours();
+  const istMin = istDate.getUTCMinutes();
+  const actualMinutesOfDay = istHour * 60 + istMin;
+
+  const scheduledStr = istHour < 12 ? stop.scheduledMorningTime : stop.scheduledEveningTime;
+  if (typeof scheduledStr !== 'string') {
+    return { scheduledTime: null, delayMinutes: null };
+  }
+  const match = scheduledStr.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if (!match) {
+    return { scheduledTime: scheduledStr, delayMinutes: null };
+  }
+  let schedH = Number(match[1]);
+  const schedM = Number(match[2]);
+  const meridiem = (match[3] || '').toUpperCase();
+  if (meridiem === 'PM' && schedH < 12) schedH += 12;
+  if (meridiem === 'AM' && schedH === 12) schedH = 0;
+  if (!Number.isFinite(schedH) || !Number.isFinite(schedM)) {
+    return { scheduledTime: scheduledStr, delayMinutes: null };
+  }
+  const scheduledMinutesOfDay = schedH * 60 + schedM;
+  return {
+    scheduledTime: scheduledStr,
+    delayMinutes: Math.round(actualMinutesOfDay - scheduledMinutesOfDay),
+  };
+}
+
+function buildDriverUtilityReport(routeFilterRaw = null, dateFilterRaw = null, limitRaw = 200, maxCap = 500) {
+  const routeId = routeFilterRaw ? normalizeRoute(String(routeFilterRaw)) : null;
+  const dateFilter =
+    typeof dateFilterRaw === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateFilterRaw.trim())
+      ? dateFilterRaw.trim()
+      : null;
+  const limit = Math.max(1, Math.min(maxCap, Math.round(Number(limitRaw) || 200)));
+  const fetchLimit = dateFilter ? Math.max(limit, maxCap) : limit;
+
+  let rawLogs = extras.getDriverUtilityLogs(routeId, fetchLimit);
+  if (dateFilter) {
+    rawLogs = rawLogs.filter((r) => getIstDateKey(r.arrived_at || r.recorded_at) === dateFilter);
+  }
+  rawLogs = rawLogs.slice(0, limit);
+
+  const logs = rawLogs.map((r) => {
+    const { scheduledTime, delayMinutes } = resolveScheduledStopInfo(r.route_id, r.stop_id, r.arrived_at);
+    return {
+      ...r,
+      arrived_at_ist: formatIstDateTime(r.arrived_at),
+      arrived_time_ist: formatIstTimeOnly(r.arrived_at),
+      departed_at_ist: formatIstDateTime(r.departed_at),
+      departed_time_ist: formatIstTimeOnly(r.departed_at),
+      date_ist: getIstDateKey(r.arrived_at || r.recorded_at),
+      dwell_formatted: formatDwellDuration(r.dwell_sec),
+      scheduled_time: scheduledTime,
+      delay_minutes: delayMinutes,
+    };
+  });
+
+  const rawTrips = routeId
+    ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(routeId)
+    : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all();
+  const filteredTrips = dateFilter
+    ? rawTrips.filter((t) => getIstDateKey(t.started_at) === dateFilter)
+    : rawTrips;
+  const tripStarts = filteredTrips.map((t) => ({
+    ...t,
+    started_at_ist: formatIstDateTime(t.started_at),
+  }));
+
+  const totalStopsLogged = logs.length;
+  let totalDwellSec = 0;
+  let maxDwellSec = 0;
+  let longestStopName = null;
+  let tooShortCount = 0;
+  let tooLongCount = 0;
+
+  for (const row of logs) {
+    const sec = Number(row.dwell_sec) || 0;
+    totalDwellSec += sec;
+    if (sec >= maxDwellSec && totalStopsLogged > 0) {
+      if (sec > maxDwellSec || longestStopName === null) {
+        maxDwellSec = sec;
+        longestStopName = row.stop_name || null;
+      }
+    }
+    if (row.flag === 'TOO_SHORT') tooShortCount += 1;
+    if (row.flag === 'TOO_LONG') tooLongCount += 1;
+  }
+
+  const avgDwellSec = totalStopsLogged > 0 ? Math.round(totalDwellSec / totalStopsLogged) : 0;
+  const summary = {
+    totalStopsLogged,
+    avgDwellSec,
+    avgDwellFormatted: formatDwellDuration(avgDwellSec),
+    maxDwellSec,
+    longestStopName,
+    tooShortCount,
+    tooLongCount,
+  };
+
+  return { logs, tripStarts, summary };
+}
+
 /* ---------------- Trip State Machine & Driver Quick Delay ---------------- */
 function getTodayStr() {
   // Explicit Asia/Kolkata date policy (UTC + 5:30)
@@ -5037,6 +5201,19 @@ app.post('/api/bus/stop-dwell', requireRole('DRIVER'), telemetryLimiter, (req, r
   }
   const routeKey = normalizeRoute(req.user.routeId || 'route-51');
   const saved = extras.recordStopDwell(routeKey, stopId, stopName, arrivedAt, departedAt, dwellSec);
+  broadcast(
+    'STOP_DWELL_RECORDED',
+    {
+      routeId: routeKey,
+      stopId,
+      stopName,
+      arrivedAt,
+      departedAt,
+      dwellSec: saved.dwellSec,
+      flag: saved.flag,
+    },
+    routeKey
+  );
   res.json({ success: true, flag: saved.flag, dwellSec: saved.dwellSec });
 });
 
@@ -5870,30 +6047,44 @@ app.get('/api/export', requireRole('ADMIN'), (req, res) => {
     ]);
     csvContent = toCsvString(['Reported At (IST)', 'Reported By', 'Contact', 'Item Description', 'Status'], rows);
   } else if (type === 'driver_utility') {
-    const rFilter = req.query?.routeId ? normalizeRoute(String(req.query.routeId)) : null;
-    const dwellRows = extras.getDriverUtilityLogs(rFilter, 5000).map((r) => [
+    const report = buildDriverUtilityReport(req.query?.routeId || null, req.query?.date || null, 5000, 5000);
+    const dwellRows = report.logs.map((r) => [
       r.route_id,
       r.stop_id,
       r.stop_name,
-      r.arrived_at,
-      r.departed_at,
+      r.scheduled_time || '',
+      r.arrived_at_ist || formatIstDateTime(r.arrived_at) || r.arrived_at,
+      r.departed_at_ist || formatIstDateTime(r.departed_at) || r.departed_at,
+      r.dwell_formatted || formatDwellDuration(r.dwell_sec),
       r.dwell_sec,
+      r.delay_minutes === null || r.delay_minutes === undefined ? '' : r.delay_minutes,
       r.flag,
     ]);
-    const tripRows = (rFilter
-      ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(rFilter)
-      : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all()
-    ).map((r) => [
+    const tripRows = report.tripStarts.map((r) => [
       r.route_id,
       'TRIP_START',
       'DRIVER',
-      r.started_at,
       '',
+      r.started_at_ist || formatIstDateTime(r.started_at),
+      '',
+      '0s',
       0,
+      '',
       r.running ? `ACTIVE (Headcount: ${r.headcount || 0})` : `COMPLETED (Headcount: ${r.headcount || 0})`,
     ]);
     csvContent = toCsvString(
-      ['Route ID', 'Stop ID', 'Stop Name', 'Arrived At', 'Departed At', 'Dwell Sec', 'Flag / Notes'],
+      [
+        'Route ID',
+        'Stop ID',
+        'Stop Name',
+        'Scheduled Time (IST)',
+        'Arrived At (IST)',
+        'Departed At (IST)',
+        'Stopping Duration',
+        'Dwell Sec',
+        'Delay (min)',
+        'Flag / Notes',
+      ],
       [...tripRows, ...dwellRows]
     );
     filename = 'driver_utility_audit.csv';
@@ -6036,13 +6227,13 @@ app.post('/api/routes/:routeId/geometry', requireAuth, apiLimiter, async (req, r
 
 /* ---------------- Driver Utility & Transport Office Verification (v20) ---------------- */
 app.get('/api/admin/driver-utility', requireRole('ADMIN'), (req, res) => {
-  const routeId = req.query?.routeId ? normalizeRoute(String(req.query.routeId)) : null;
-  const limit = Number(req.query?.limit) || 200;
-  const logs = extras.getDriverUtilityLogs(routeId, limit);
-  const tripStarts = routeId
-    ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(routeId)
-    : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all();
-  res.json({ success: true, logs, tripStarts });
+  const { logs, tripStarts, summary } = buildDriverUtilityReport(
+    req.query?.routeId || null,
+    req.query?.date || null,
+    req.query?.limit || 200,
+    500
+  );
+  res.json({ success: true, logs, tripStarts, summary });
 });
 
 app.get('/api/admin/pending-verifications', requireRole('ADMIN'), (_req, res) => {
@@ -7279,7 +7470,7 @@ export async function sendTelegramAlert(chatId, messageHtml) {
 
 ## 13. `tests/security.test.js` <a id="testssecuritytestjs"></a>
 
-**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, and v20 pilot hardening & verification (36/36 passing).  
+**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, and v20.3 timestamp report & CSV headers (37/37 passing).  
 **File Path:** `sreenidhi-express/tests/security.test.js`  
 
 ```javascript
@@ -8310,6 +8501,71 @@ test('v20 transport office verification: self-signup stays 403 PENDING until 1-c
   } finally {
     server.close();
     db.prepare('DELETE FROM students WHERE roll_number IN (?, ?)').run(testRoll, rejectRoll);
+  }
+});
+
+test('v20.3 driver utility report: IST formatting, scheduled variance, summary KPIs & CSV export headers', async () => {
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const driverToken = signToken({ sub: 'driver-route-51', role: 'DRIVER', routeId: 'route-51' });
+  const arrivedAt = '2026-11-27T01:47:00.000Z'; // 07:17:00 AM IST (Scheduled r51-s2: 07:15 AM => +2 min)
+  const departedAt = '2026-11-27T01:48:48.000Z'; // 07:18:48 AM IST (108s => 1m 48s)
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    const postDwell = await fetch(`${baseUrl}/api/bus/stop-dwell`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${driverToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        stopId: 'r51-s2',
+        stopName: 'ESI-Erragadda',
+        arrivedAt,
+        departedAt,
+        dwellSec: 108,
+      }),
+    });
+    assert.equal(postDwell.status, 200);
+    const dwellRes = await postDwell.json();
+    assert.equal(dwellRes.success, true);
+    assert.equal(dwellRes.flag, 'NORMAL');
+    assert.equal(dwellRes.dwellSec, 108);
+
+    const utilRes = await fetch(`${baseUrl}/api/admin/driver-utility?routeId=route-51&date=2026-11-27`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(utilRes.status, 200);
+    const utilBody = await utilRes.json();
+    assert.equal(utilBody.success, true);
+    assert.ok(Array.isArray(utilBody.logs) && utilBody.logs.length >= 1);
+    assert.ok(utilBody.summary && utilBody.summary.totalStopsLogged >= 1);
+    assert.equal(typeof utilBody.summary.avgDwellFormatted, 'string');
+
+    const matchingLog = utilBody.logs.find(
+      (l) => l.stop_id === 'r51-s2' && l.arrived_at === arrivedAt && l.departed_at === departedAt
+    );
+    assert.ok(matchingLog, 'Expected enriched dwell row in GET /api/admin/driver-utility');
+    assert.ok(matchingLog.arrived_at_ist && matchingLog.arrived_at_ist.includes('27 Nov 2026'));
+    assert.ok(matchingLog.departed_at_ist && matchingLog.departed_at_ist.includes('07:18:48'));
+    assert.equal(matchingLog.dwell_formatted, '1m 48s');
+    assert.equal(matchingLog.scheduled_time, '07:15 AM');
+    assert.equal(matchingLog.delay_minutes, 2);
+
+    const csvRes = await fetch(`${baseUrl}/api/export?type=driver_utility&routeId=route-51&date=2026-11-27`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert.equal(csvRes.status, 200);
+    const csvText = await csvRes.text();
+    const headerLine = csvText.split(/\r?\n/)[0] || '';
+    assert.ok(headerLine.includes('Scheduled Time (IST)'));
+    assert.ok(headerLine.includes('Arrived At (IST)'));
+    assert.ok(headerLine.includes('Departed At (IST)'));
+    assert.ok(headerLine.includes('Stopping Duration'));
+    assert.ok(csvText.includes('1m 48s'));
+  } finally {
+    server.close();
+    db.prepare('DELETE FROM stop_dwell_logs WHERE route_id = ? AND arrived_at = ?').run('route-51', arrivedAt);
   }
 });
 
@@ -14486,6 +14742,23 @@ function formatArrivalClockWindow(totalSec: number): string {
   return `${fmt(start)} – ${fmt(end)}`;
 }
 
+function isMorningIstShift(): boolean {
+  const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
+  return istHour < 12;
+}
+
+function formatProjectedIstClock(etaSec: number): string {
+  const arrival = new Date(Date.now() + Math.max(0, etaSec) * 1000);
+  return arrival
+    .toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
 
 export const StudentPortal: React.FC = () => {
@@ -15355,6 +15628,119 @@ export const StudentPortal: React.FC = () => {
                   />
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Live Stop-by-Stop ETA & Projected Arrival Timestamps (Map Tab Only) */}
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5 overflow-hidden">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
+              <div className="flex items-center gap-2 min-w-0">
+                <Clock className="h-4 w-4 shrink-0 text-[#4F46E5] dark:text-cyan-300" />
+                <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                  Live Stop-by-Stop ETA &amp; Timestamps
+                </h2>
+              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300 shrink-0">
+                {activeBus.stops.length} Stops • {isMorningIstShift() ? 'Morning Shift' : 'Evening Shift'}
+              </span>
+            </div>
+
+            <div className="mt-3 space-y-2">
+              {activeBus.stops.map((stop, idx) => {
+                const isYourStop = stop.id === (activeStudent?.pickupStopId || activeBus.stops[0]?.id);
+                const isNextStop = idx === activeBus.currentStopIndex;
+                const isPassed = idx < activeBus.currentStopIndex;
+                const scheduledStr = isMorningIstShift()
+                  ? stop.scheduledMorningTime
+                  : stop.scheduledEveningTime;
+                const stopEtaSec = isPassed
+                  ? 0
+                  : calculateStopEtaSeconds(
+                      activeBus.currentLat,
+                      activeBus.currentLng,
+                      activeBus.stops,
+                      activeBus.currentStopIndex,
+                      idx,
+                      activeBus.speedKmh,
+                      activeBus.trafficDelayMinutes,
+                      learnedMedians
+                    );
+                const countdownText =
+                  stopEtaSec <= 45
+                    ? isNextStop
+                      ? 'At Stop'
+                      : 'Due now'
+                    : `in ${Math.max(1, Math.round(stopEtaSec / 60))} min`;
+
+                return (
+                  <div
+                    key={stop.id}
+                    className={`prismatic-subcard flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 transition ${
+                      isYourStop
+                        ? 'ring-2 ring-[#4F46E5]/35 bg-indigo-50/75 dark:bg-indigo-950/35'
+                        : isNextStop
+                        ? 'ring-1 ring-[#06B6D4]/50 bg-cyan-50/50 dark:bg-cyan-950/25'
+                        : isPassed
+                        ? 'opacity-70'
+                        : ''
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                      <span
+                        className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-extrabold ${
+                          isNextStop
+                            ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
+                            : isYourStop
+                            ? 'bg-[#4F46E5] text-white'
+                            : isPassed
+                            ? 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                            : 'bg-indigo-100 text-[#4F46E5] dark:bg-indigo-950/70 dark:text-cyan-300'
+                        }`}
+                      >
+                        {stop.sequence}
+                      </span>
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-xs font-extrabold text-slate-900 dark:text-white break-words">
+                            {stop.name}
+                          </span>
+                          {isYourStop && (
+                            <span className="rounded-full bg-[#4F46E5] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">
+                              YOUR STOP
+                            </span>
+                          )}
+                          {isNextStop && (
+                            <span className="rounded-full bg-[#06B6D4] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">
+                              NEXT
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                          Scheduled: <span className="font-mono text-slate-700 dark:text-slate-300">{scheduledStr || '—'}</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0 text-right">
+                      {isPassed ? (
+                        <span className="inline-flex items-center rounded-full bg-slate-200/80 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                          Passed
+                        </span>
+                      ) : (
+                        <>
+                          <p className="font-mono-timer text-xs font-black text-[#4F46E5] dark:text-cyan-300">
+                            {countdownText}
+                          </p>
+                          <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                            ~{formatProjectedIstClock(stopEtaSec)}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -17084,6 +17470,7 @@ import {
   Activity,
   Radio,
   HardDrive,
+  Clock,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 import { HybridTransitMap } from '../map/HybridTransitMap';
@@ -17173,7 +17560,43 @@ export const AdminDashboard: React.FC = () => {
     memoryMb: number;
   } | null>(null);
   const [isHealthRefreshing, setIsHealthRefreshing] = useState(false);
+  const [reportRouteFilter, setReportRouteFilter] = useState('');
+  const [reportDateFilter, setReportDateFilter] = useState('');
+  const [isReportLoading, setIsReportLoading] = useState(false);
+  const [driverUtilityReport, setDriverUtilityReport] = useState<Awaited<ReturnType<typeof excelService.getDriverUtilityLogs>>>({
+    logs: [],
+    tripStarts: [],
+    summary: {
+      totalStopsLogged: 0,
+      avgDwellSec: 0,
+      avgDwellFormatted: '0s',
+      maxDwellSec: 0,
+      longestStopName: null,
+      tooShortCount: 0,
+      tooLongCount: 0,
+    },
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const formatDwellText = (sec: number) => {
+    const total = Math.max(0, Math.round(Number(sec) || 0));
+    const mins = Math.floor(total / 60);
+    const rem = total % 60;
+    return mins > 0 ? `${mins}m ${rem}s` : `${rem}s`;
+  };
+
+  const fetchDriverUtilityReport = async (routeOverride = reportRouteFilter, dateOverride = reportDateFilter) => {
+    setIsReportLoading(true);
+    try {
+      const report = await excelService.getDriverUtilityLogs(
+        routeOverride || undefined,
+        dateOverride || undefined
+      );
+      setDriverUtilityReport(report);
+    } finally {
+      setIsReportLoading(false);
+    }
+  };
 
   const fetchHealth = async () => {
     setIsHealthRefreshing(true);
@@ -17254,6 +17677,26 @@ export const AdminDashboard: React.FC = () => {
     void reloadData();
   }, []);
 
+  useEffect(() => {
+    let active = true;
+    const loadReport = async () => {
+      setIsReportLoading(true);
+      try {
+        const report = await excelService.getDriverUtilityLogs(
+          reportRouteFilter || undefined,
+          reportDateFilter || undefined
+        );
+        if (active) setDriverUtilityReport(report);
+      } finally {
+        if (active) setIsReportLoading(false);
+      }
+    };
+    void loadReport();
+    return () => {
+      active = false;
+    };
+  }, [reportRouteFilter, reportDateFilter]);
+
   const handleResolveIncident = async (id: number) => {
     const ok = await excelService.resolveIncident(id);
     if (ok) {
@@ -17291,9 +17734,12 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleDownloadCsv = async (type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility') => {
+  const handleDownloadCsv = async (
+    type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility',
+    filters?: { routeId?: string; date?: string }
+  ) => {
     try {
-      await excelService.downloadCsvExport(type);
+      await excelService.downloadCsvExport(type, filters);
       pushToast('success', 'CSV Downloaded', `${type.toUpperCase()} records exported for Excel.`);
     } catch (err: any) {
       pushToast('danger', 'Export Failed', err?.message || 'Could not download CSV export.');
@@ -17543,7 +17989,12 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => handleDownloadCsv('driver_utility')}
+              onClick={() =>
+                void handleDownloadCsv('driver_utility', {
+                  routeId: reportRouteFilter || undefined,
+                  date: reportDateFilter || undefined,
+                })
+              }
               className="animate-electric-sheen tactile-btn relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white py-2.5 text-xs font-extrabold text-[#4F46E5] shadow-md transition hover:bg-indigo-50 cursor-pointer"
             >
               <Download className="h-4 w-4" />
@@ -17632,6 +18083,238 @@ export const AdminDashboard: React.FC = () => {
                 ))
               )}
             </div>
+          </div>
+
+          {/* Detailed Timestamps & Stop Duration Report Panel */}
+          <div className="prismatic-card rounded-3xl p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                    Detailed Timestamps &amp; Stop Duration Report
+                  </h3>
+                </div>
+                <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                  Live stop arrivals, departures, scheduled-vs-actual variance &amp; stopping durations (IST).
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  aria-label="Filter report by route"
+                  value={reportRouteFilter}
+                  onChange={(e) => setReportRouteFilter(e.target.value)}
+                  className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-2.5 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                >
+                  <option value="">All Routes</option>
+                  <option value="route-51">Route 51</option>
+                  <option value="route-14">Route 14</option>
+                </select>
+
+                <input
+                  aria-label="Filter report by date"
+                  type="date"
+                  value={reportDateFilter}
+                  onChange={(e) => setReportDateFilter(e.target.value)}
+                  className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-2.5 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                />
+
+                {reportDateFilter && (
+                  <button
+                    type="button"
+                    onClick={() => setReportDateFilter('')}
+                    className="tactile-btn rounded-xl border border-indigo-200 bg-indigo-50 px-2.5 py-1.5 text-[11px] font-bold text-[#4F46E5] hover:bg-indigo-100 dark:border-indigo-800 dark:bg-indigo-950/60 dark:text-cyan-300 cursor-pointer"
+                  >
+                    All Dates
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => void fetchDriverUtilityReport()}
+                  disabled={isReportLoading}
+                  className="tactile-btn inline-flex items-center gap-1 rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-2.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-[#4F46E5] disabled:opacity-50 dark:border-[#2E3646] dark:bg-[#141821] dark:text-slate-200 cursor-pointer"
+                >
+                  <RotateCcw className={`h-3.5 w-3.5 ${isReportLoading ? 'animate-spin' : ''}`} />
+                  <span>Refresh</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    void handleDownloadCsv('driver_utility', {
+                      routeId: reportRouteFilter || undefined,
+                      date: reportDateFilter || undefined,
+                    })
+                  }
+                  className="electric-cta inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span>Export Timestamp CSV</span>
+                </button>
+              </div>
+            </div>
+
+            {/* 4 Compact KPI Summary Cards */}
+            <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              <div className="prismatic-subcard rounded-2xl p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Stops Logged
+                </p>
+                <p className="font-mono-timer mt-1 text-lg font-black text-slate-900 dark:text-white">
+                  {driverUtilityReport.summary.totalStopsLogged}
+                </p>
+              </div>
+
+              <div className="prismatic-subcard rounded-2xl p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Avg Stop Duration
+                </p>
+                <p className="font-mono-timer mt-1 text-lg font-black text-[#4F46E5] dark:text-cyan-300">
+                  {driverUtilityReport.summary.avgDwellFormatted}
+                </p>
+              </div>
+
+              <div className="prismatic-subcard rounded-2xl p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Longest Stop
+                </p>
+                <p className="mt-1 truncate text-xs font-extrabold text-slate-900 dark:text-white">
+                  {driverUtilityReport.summary.longestStopName
+                    ? `${driverUtilityReport.summary.longestStopName} (${formatDwellText(driverUtilityReport.summary.maxDwellSec)})`
+                    : '—'}
+                </p>
+              </div>
+
+              <div className="prismatic-subcard rounded-2xl p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Flagged Stops
+                </p>
+                <p className="mt-1 text-xs font-extrabold text-slate-800 dark:text-slate-200">
+                  Too Short: <span className="text-amber-600 dark:text-amber-400">{driverUtilityReport.summary.tooShortCount}</span> • Too Long:{' '}
+                  <span className="text-rose-600 dark:text-rose-400">{driverUtilityReport.summary.tooLongCount}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Latest Trip Starts Strip */}
+            {driverUtilityReport.tripStarts.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {driverUtilityReport.tripStarts.map((trip) => (
+                  <div
+                    key={trip.route_id}
+                    className="prismatic-subcard inline-flex flex-wrap items-center gap-2 rounded-2xl px-3 py-1.5 text-[11px]"
+                  >
+                    <span className="font-mono font-black uppercase text-[#4F46E5] dark:text-cyan-300">
+                      {trip.route_id}
+                    </span>
+                    <span className="text-slate-600 dark:text-slate-300">
+                      Started at <b>{trip.started_at_ist || trip.started_at}</b>
+                    </span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
+                        trip.running
+                          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                          : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                      }`}
+                    >
+                      {trip.running ? 'ACTIVE' : 'COMPLETED'}
+                    </span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">
+                      Headcount: {trip.headcount || 0}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Detailed Timestamp & Stopping Duration Table */}
+            {driverUtilityReport.logs.length === 0 ? (
+              <p className="mt-4 rounded-2xl border border-dashed border-indigo-200/80 p-4 text-center text-xs italic text-slate-500 dark:border-[#2E3646] dark:text-slate-400">
+                No stop timestamps recorded for this filter yet. Start a trip in the Driver Console and pass a stop geofence (or tap Depart Stop) to log live arrival, departure, and stopping duration.
+              </p>
+            ) : (
+              <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-[#2E3646]">
+                <table className="w-full min-w-[740px] text-left text-xs">
+                  <thead className="bg-[#F7F9FF] text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:bg-[#141821] dark:text-slate-300 border-b border-slate-200/80 dark:border-[#2E3646]">
+                    <tr>
+                      <th className="px-3 py-2.5">Route</th>
+                      <th className="px-3 py-2.5">Stop</th>
+                      <th className="px-3 py-2.5">Scheduled (IST)</th>
+                      <th className="px-3 py-2.5">Arrived (IST)</th>
+                      <th className="px-3 py-2.5">Departed (IST)</th>
+                      <th className="px-3 py-2.5">Stop Duration</th>
+                      <th className="px-3 py-2.5">Variance</th>
+                      <th className="px-3 py-2.5">Flag</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 bg-white dark:divide-[#2E3646] dark:bg-[#1E2430]">
+                    {driverUtilityReport.logs.map((row) => {
+                      const delay = row.delay_minutes;
+                      const varianceBadge =
+                        delay === null || delay === undefined ? (
+                          <span className="text-slate-400">—</span>
+                        ) : delay >= -2 && delay <= 2 ? (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+                            On Time
+                          </span>
+                        ) : delay > 2 ? (
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
+                              delay > 10
+                                ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300'
+                                : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
+                            }`}
+                          >
+                            +{delay} min
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+                            {delay} min
+                          </span>
+                        );
+
+                      const flagClass =
+                        row.flag === 'TOO_SHORT'
+                          ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
+                          : row.flag === 'TOO_LONG'
+                          ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
+                          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300';
+
+                      return (
+                        <tr key={row.id} className="hover:bg-[#F7F9FF]/70 dark:hover:bg-[#242B38]/60">
+                          <td className="px-3 py-2 font-mono font-bold uppercase text-[#4F46E5] dark:text-cyan-300 whitespace-nowrap">
+                            {row.route_id}
+                          </td>
+                          <td className="px-3 py-2 font-bold text-slate-900 dark:text-white">
+                            {row.stop_name}
+                          </td>
+                          <td className="px-3 py-2 font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                            {row.scheduled_time || '—'}
+                          </td>
+                          <td className="px-3 py-2 font-mono text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                            {row.arrived_at_ist || row.arrived_at}
+                          </td>
+                          <td className="px-3 py-2 font-mono text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                            {row.departed_at_ist || row.departed_at}
+                          </td>
+                          <td className="px-3 py-2 font-mono font-extrabold text-slate-900 dark:text-white whitespace-nowrap">
+                            {row.dwell_formatted || formatDwellText(row.dwell_sec)}
+                          </td>
+                          <td className="px-3 py-2 whitespace-nowrap">{varianceBadge}</td>
+                          <td className="px-3 py-2 whitespace-nowrap">
+                            <span className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${flagClass}`}>
+                              {row.flag}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* Master Scrutiny & Approval Workflow */}
@@ -18305,7 +18988,12 @@ export const AdminDashboard: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => handleDownloadCsv('driver_utility')}
+                onClick={() =>
+                  void handleDownloadCsv('driver_utility', {
+                    routeId: reportRouteFilter || undefined,
+                    date: reportDateFilter || undefined,
+                  })
+                }
                 className="electric-cta rounded-xl px-3 py-1.5 text-xs font-bold text-white cursor-pointer"
               >
                 Export Driver Utility CSV
@@ -20870,23 +21558,69 @@ class ExcelService {
     }
   }
 
-  public async getDriverUtilityLogs(routeId?: string): Promise<{
-    logs: Array<{ id: number; route_id: string; stop_id: string; stop_name: string; arrived_at: string; departed_at: string; dwell_sec: number; flag: string; recorded_at: number }>;
-    tripStarts: Array<{ timestamp: string; actor_id: string; route_id: string; details: string }>;
+  public async getDriverUtilityLogs(routeId?: string, date?: string): Promise<{
+    logs: Array<{
+      id: number;
+      route_id: string;
+      stop_id: string;
+      stop_name: string;
+      arrived_at: string;
+      departed_at: string;
+      dwell_sec: number;
+      flag: string;
+      recorded_at: number;
+      arrived_at_ist?: string;
+      arrived_time_ist?: string;
+      departed_at_ist?: string;
+      departed_time_ist?: string;
+      date_ist?: string;
+      dwell_formatted?: string;
+      scheduled_time?: string | null;
+      delay_minutes?: number | null;
+    }>;
+    tripStarts: Array<{
+      route_id: string;
+      started_at: string;
+      started_at_ist?: string;
+      running: number;
+      headcount: number;
+    }>;
+    summary: {
+      totalStopsLogged: number;
+      avgDwellSec: number;
+      avgDwellFormatted: string;
+      maxDwellSec: number;
+      longestStopName: string | null;
+      tooShortCount: number;
+      tooLongCount: number;
+    };
   }> {
+    const emptySummary = {
+      totalStopsLogged: 0,
+      avgDwellSec: 0,
+      avgDwellFormatted: '0s',
+      maxDwellSec: 0,
+      longestStopName: null,
+      tooShortCount: 0,
+      tooLongCount: 0,
+    };
     try {
-      const qs = routeId ? `?routeId=${encodeURIComponent(routeId)}` : '';
+      const params = new URLSearchParams();
+      if (routeId) params.set('routeId', routeId);
+      if (date) params.set('date', date);
+      const qs = params.toString() ? `?${params.toString()}` : '';
       const res = await fetch(`${this.serverBaseUrl}/api/admin/driver-utility${qs}`, {
         headers: this.authHeaders(),
       });
-      if (!res.ok) return { logs: [], tripStarts: [] };
+      if (!res.ok) return { logs: [], tripStarts: [], summary: emptySummary };
       const data = await res.json();
       return {
         logs: Array.isArray(data.logs) ? data.logs : [],
         tripStarts: Array.isArray(data.tripStarts) ? data.tripStarts : [],
+        summary: data.summary || emptySummary,
       };
     } catch {
-      return { logs: [], tripStarts: [] };
+      return { logs: [], tripStarts: [], summary: emptySummary };
     }
   }
 
@@ -21222,8 +21956,14 @@ class ExcelService {
   }
 
   /* ---------------- CSV Exports ---------------- */
-  public async downloadCsvExport(type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility'): Promise<void> {
-    const res = await fetch(`${this.serverBaseUrl}/api/export?type=${encodeURIComponent(type)}`, {
+  public async downloadCsvExport(
+    type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility',
+    filters?: { routeId?: string; date?: string }
+  ): Promise<void> {
+    const params = new URLSearchParams({ type });
+    if (filters?.routeId) params.set('routeId', filters.routeId);
+    if (filters?.date) params.set('date', filters.date);
+    const res = await fetch(`${this.serverBaseUrl}/api/export?${params.toString()}`, {
       headers: this.authHeaders(),
       signal: AbortSignal.timeout(30000),
     });

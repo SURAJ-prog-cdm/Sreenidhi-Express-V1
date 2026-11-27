@@ -931,6 +931,169 @@ app.post('/api/telegram/webhook', async (req, res) => {
   res.json({ ok: true });
 });
 
+function formatIstDateTime(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return d
+    .toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
+function formatIstTimeOnly(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return d
+    .toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
+function getIstDateKey(isoOrMs) {
+  if (isoOrMs === null || isoOrMs === undefined || isoOrMs === '') return '';
+  const d = typeof isoOrMs === 'number' ? new Date(isoOrMs) : new Date(String(isoOrMs));
+  if (Number.isNaN(d.getTime())) return '';
+  return new Date(d.getTime() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+}
+
+function formatDwellDuration(sec) {
+  const total = Math.max(0, Math.round(Number(sec) || 0));
+  const mins = Math.floor(total / 60);
+  const rem = total % 60;
+  if (mins <= 0) return `${rem}s`;
+  return `${mins}m ${rem}s`;
+}
+
+function resolveScheduledStopInfo(routeId, stopId, arrivedAtIso) {
+  const normRoute = normalizeRoute(routeId);
+  const stops = ROUTE_TOPOLOGY[normRoute]?.stops || [];
+  const targetId = String(stopId || '').trim().toLowerCase();
+  const stop = stops.find((s) => String(s.id || '').toLowerCase() === targetId);
+  if (!stop) return { scheduledTime: null, delayMinutes: null };
+
+  const arrivedDate = arrivedAtIso ? new Date(String(arrivedAtIso)) : null;
+  if (!arrivedDate || Number.isNaN(arrivedDate.getTime())) {
+    return { scheduledTime: null, delayMinutes: null };
+  }
+
+  const istDate = new Date(arrivedDate.getTime() + 5.5 * 3600 * 1000);
+  const istHour = istDate.getUTCHours();
+  const istMin = istDate.getUTCMinutes();
+  const actualMinutesOfDay = istHour * 60 + istMin;
+
+  const scheduledStr = istHour < 12 ? stop.scheduledMorningTime : stop.scheduledEveningTime;
+  if (typeof scheduledStr !== 'string') {
+    return { scheduledTime: null, delayMinutes: null };
+  }
+  const match = scheduledStr.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if (!match) {
+    return { scheduledTime: scheduledStr, delayMinutes: null };
+  }
+  let schedH = Number(match[1]);
+  const schedM = Number(match[2]);
+  const meridiem = (match[3] || '').toUpperCase();
+  if (meridiem === 'PM' && schedH < 12) schedH += 12;
+  if (meridiem === 'AM' && schedH === 12) schedH = 0;
+  if (!Number.isFinite(schedH) || !Number.isFinite(schedM)) {
+    return { scheduledTime: scheduledStr, delayMinutes: null };
+  }
+  const scheduledMinutesOfDay = schedH * 60 + schedM;
+  return {
+    scheduledTime: scheduledStr,
+    delayMinutes: Math.round(actualMinutesOfDay - scheduledMinutesOfDay),
+  };
+}
+
+function buildDriverUtilityReport(routeFilterRaw = null, dateFilterRaw = null, limitRaw = 200, maxCap = 500) {
+  const routeId = routeFilterRaw ? normalizeRoute(String(routeFilterRaw)) : null;
+  const dateFilter =
+    typeof dateFilterRaw === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateFilterRaw.trim())
+      ? dateFilterRaw.trim()
+      : null;
+  const limit = Math.max(1, Math.min(maxCap, Math.round(Number(limitRaw) || 200)));
+  const fetchLimit = dateFilter ? Math.max(limit, maxCap) : limit;
+
+  let rawLogs = extras.getDriverUtilityLogs(routeId, fetchLimit);
+  if (dateFilter) {
+    rawLogs = rawLogs.filter((r) => getIstDateKey(r.arrived_at || r.recorded_at) === dateFilter);
+  }
+  rawLogs = rawLogs.slice(0, limit);
+
+  const logs = rawLogs.map((r) => {
+    const { scheduledTime, delayMinutes } = resolveScheduledStopInfo(r.route_id, r.stop_id, r.arrived_at);
+    return {
+      ...r,
+      arrived_at_ist: formatIstDateTime(r.arrived_at),
+      arrived_time_ist: formatIstTimeOnly(r.arrived_at),
+      departed_at_ist: formatIstDateTime(r.departed_at),
+      departed_time_ist: formatIstTimeOnly(r.departed_at),
+      date_ist: getIstDateKey(r.arrived_at || r.recorded_at),
+      dwell_formatted: formatDwellDuration(r.dwell_sec),
+      scheduled_time: scheduledTime,
+      delay_minutes: delayMinutes,
+    };
+  });
+
+  const rawTrips = routeId
+    ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(routeId)
+    : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all();
+  const filteredTrips = dateFilter
+    ? rawTrips.filter((t) => getIstDateKey(t.started_at) === dateFilter)
+    : rawTrips;
+  const tripStarts = filteredTrips.map((t) => ({
+    ...t,
+    started_at_ist: formatIstDateTime(t.started_at),
+  }));
+
+  const totalStopsLogged = logs.length;
+  let totalDwellSec = 0;
+  let maxDwellSec = 0;
+  let longestStopName = null;
+  let tooShortCount = 0;
+  let tooLongCount = 0;
+
+  for (const row of logs) {
+    const sec = Number(row.dwell_sec) || 0;
+    totalDwellSec += sec;
+    if (sec >= maxDwellSec && totalStopsLogged > 0) {
+      if (sec > maxDwellSec || longestStopName === null) {
+        maxDwellSec = sec;
+        longestStopName = row.stop_name || null;
+      }
+    }
+    if (row.flag === 'TOO_SHORT') tooShortCount += 1;
+    if (row.flag === 'TOO_LONG') tooLongCount += 1;
+  }
+
+  const avgDwellSec = totalStopsLogged > 0 ? Math.round(totalDwellSec / totalStopsLogged) : 0;
+  const summary = {
+    totalStopsLogged,
+    avgDwellSec,
+    avgDwellFormatted: formatDwellDuration(avgDwellSec),
+    maxDwellSec,
+    longestStopName,
+    tooShortCount,
+    tooLongCount,
+  };
+
+  return { logs, tripStarts, summary };
+}
+
 /* ---------------- Trip State Machine & Driver Quick Delay ---------------- */
 function getTodayStr() {
   // Explicit Asia/Kolkata date policy (UTC + 5:30)
@@ -1010,6 +1173,19 @@ app.post('/api/bus/stop-dwell', requireRole('DRIVER'), telemetryLimiter, (req, r
   }
   const routeKey = normalizeRoute(req.user.routeId || 'route-51');
   const saved = extras.recordStopDwell(routeKey, stopId, stopName, arrivedAt, departedAt, dwellSec);
+  broadcast(
+    'STOP_DWELL_RECORDED',
+    {
+      routeId: routeKey,
+      stopId,
+      stopName,
+      arrivedAt,
+      departedAt,
+      dwellSec: saved.dwellSec,
+      flag: saved.flag,
+    },
+    routeKey
+  );
   res.json({ success: true, flag: saved.flag, dwellSec: saved.dwellSec });
 });
 
@@ -1843,30 +2019,44 @@ app.get('/api/export', requireRole('ADMIN'), (req, res) => {
     ]);
     csvContent = toCsvString(['Reported At (IST)', 'Reported By', 'Contact', 'Item Description', 'Status'], rows);
   } else if (type === 'driver_utility') {
-    const rFilter = req.query?.routeId ? normalizeRoute(String(req.query.routeId)) : null;
-    const dwellRows = extras.getDriverUtilityLogs(rFilter, 5000).map((r) => [
+    const report = buildDriverUtilityReport(req.query?.routeId || null, req.query?.date || null, 5000, 5000);
+    const dwellRows = report.logs.map((r) => [
       r.route_id,
       r.stop_id,
       r.stop_name,
-      r.arrived_at,
-      r.departed_at,
+      r.scheduled_time || '',
+      r.arrived_at_ist || formatIstDateTime(r.arrived_at) || r.arrived_at,
+      r.departed_at_ist || formatIstDateTime(r.departed_at) || r.departed_at,
+      r.dwell_formatted || formatDwellDuration(r.dwell_sec),
       r.dwell_sec,
+      r.delay_minutes === null || r.delay_minutes === undefined ? '' : r.delay_minutes,
       r.flag,
     ]);
-    const tripRows = (rFilter
-      ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(rFilter)
-      : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all()
-    ).map((r) => [
+    const tripRows = report.tripStarts.map((r) => [
       r.route_id,
       'TRIP_START',
       'DRIVER',
-      r.started_at,
       '',
+      r.started_at_ist || formatIstDateTime(r.started_at),
+      '',
+      '0s',
       0,
+      '',
       r.running ? `ACTIVE (Headcount: ${r.headcount || 0})` : `COMPLETED (Headcount: ${r.headcount || 0})`,
     ]);
     csvContent = toCsvString(
-      ['Route ID', 'Stop ID', 'Stop Name', 'Arrived At', 'Departed At', 'Dwell Sec', 'Flag / Notes'],
+      [
+        'Route ID',
+        'Stop ID',
+        'Stop Name',
+        'Scheduled Time (IST)',
+        'Arrived At (IST)',
+        'Departed At (IST)',
+        'Stopping Duration',
+        'Dwell Sec',
+        'Delay (min)',
+        'Flag / Notes',
+      ],
       [...tripRows, ...dwellRows]
     );
     filename = 'driver_utility_audit.csv';
@@ -2009,13 +2199,13 @@ app.post('/api/routes/:routeId/geometry', requireAuth, apiLimiter, async (req, r
 
 /* ---------------- Driver Utility & Transport Office Verification (v20) ---------------- */
 app.get('/api/admin/driver-utility', requireRole('ADMIN'), (req, res) => {
-  const routeId = req.query?.routeId ? normalizeRoute(String(req.query.routeId)) : null;
-  const limit = Number(req.query?.limit) || 200;
-  const logs = extras.getDriverUtilityLogs(routeId, limit);
-  const tripStarts = routeId
-    ? db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE route_id = ? AND started_at IS NOT NULL').all(routeId)
-    : db.prepare('SELECT route_id, started_at, running, headcount FROM trip_states WHERE started_at IS NOT NULL ORDER BY route_id ASC').all();
-  res.json({ success: true, logs, tripStarts });
+  const { logs, tripStarts, summary } = buildDriverUtilityReport(
+    req.query?.routeId || null,
+    req.query?.date || null,
+    req.query?.limit || 200,
+    500
+  );
+  res.json({ success: true, logs, tripStarts, summary });
 });
 
 app.get('/api/admin/pending-verifications', requireRole('ADMIN'), (_req, res) => {

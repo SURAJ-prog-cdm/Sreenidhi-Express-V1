@@ -53,6 +53,23 @@ function formatArrivalClockWindow(totalSec: number): string {
   return `${fmt(start)} – ${fmt(end)}`;
 }
 
+function isMorningIstShift(): boolean {
+  const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
+  return istHour < 12;
+}
+
+function formatProjectedIstClock(etaSec: number): string {
+  const arrival = new Date(Date.now() + Math.max(0, etaSec) * 1000);
+  return arrival
+    .toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })
+    .replace(/\b(am|pm)\b/i, (m) => m.toUpperCase());
+}
+
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
 
 export const StudentPortal: React.FC = () => {
@@ -922,6 +939,119 @@ export const StudentPortal: React.FC = () => {
                   />
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Live Stop-by-Stop ETA & Projected Arrival Timestamps (Map Tab Only) */}
+          <div className="prismatic-card rounded-3xl p-4 sm:p-5 overflow-hidden">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 dark:border-[#2E3646]">
+              <div className="flex items-center gap-2 min-w-0">
+                <Clock className="h-4 w-4 shrink-0 text-[#4F46E5] dark:text-cyan-300" />
+                <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                  Live Stop-by-Stop ETA &amp; Timestamps
+                </h2>
+              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300 shrink-0">
+                {activeBus.stops.length} Stops • {isMorningIstShift() ? 'Morning Shift' : 'Evening Shift'}
+              </span>
+            </div>
+
+            <div className="mt-3 space-y-2">
+              {activeBus.stops.map((stop, idx) => {
+                const isYourStop = stop.id === (activeStudent?.pickupStopId || activeBus.stops[0]?.id);
+                const isNextStop = idx === activeBus.currentStopIndex;
+                const isPassed = idx < activeBus.currentStopIndex;
+                const scheduledStr = isMorningIstShift()
+                  ? stop.scheduledMorningTime
+                  : stop.scheduledEveningTime;
+                const stopEtaSec = isPassed
+                  ? 0
+                  : calculateStopEtaSeconds(
+                      activeBus.currentLat,
+                      activeBus.currentLng,
+                      activeBus.stops,
+                      activeBus.currentStopIndex,
+                      idx,
+                      activeBus.speedKmh,
+                      activeBus.trafficDelayMinutes,
+                      learnedMedians
+                    );
+                const countdownText =
+                  stopEtaSec <= 45
+                    ? isNextStop
+                      ? 'At Stop'
+                      : 'Due now'
+                    : `in ${Math.max(1, Math.round(stopEtaSec / 60))} min`;
+
+                return (
+                  <div
+                    key={stop.id}
+                    className={`prismatic-subcard flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 transition ${
+                      isYourStop
+                        ? 'ring-2 ring-[#4F46E5]/35 bg-indigo-50/75 dark:bg-indigo-950/35'
+                        : isNextStop
+                        ? 'ring-1 ring-[#06B6D4]/50 bg-cyan-50/50 dark:bg-cyan-950/25'
+                        : isPassed
+                        ? 'opacity-70'
+                        : ''
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                      <span
+                        className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-extrabold ${
+                          isNextStop
+                            ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white shadow-xs'
+                            : isYourStop
+                            ? 'bg-[#4F46E5] text-white'
+                            : isPassed
+                            ? 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                            : 'bg-indigo-100 text-[#4F46E5] dark:bg-indigo-950/70 dark:text-cyan-300'
+                        }`}
+                      >
+                        {stop.sequence}
+                      </span>
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-xs font-extrabold text-slate-900 dark:text-white break-words">
+                            {stop.name}
+                          </span>
+                          {isYourStop && (
+                            <span className="rounded-full bg-[#4F46E5] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">
+                              YOUR STOP
+                            </span>
+                          )}
+                          {isNextStop && (
+                            <span className="rounded-full bg-[#06B6D4] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">
+                              NEXT
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                          Scheduled: <span className="font-mono text-slate-700 dark:text-slate-300">{scheduledStr || '—'}</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0 text-right">
+                      {isPassed ? (
+                        <span className="inline-flex items-center rounded-full bg-slate-200/80 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                          Passed
+                        </span>
+                      ) : (
+                        <>
+                          <p className="font-mono-timer text-xs font-black text-[#4F46E5] dark:text-cyan-300">
+                            {countdownText}
+                          </p>
+                          <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                            ~{formatProjectedIstClock(stopEtaSec)}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

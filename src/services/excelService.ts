@@ -512,23 +512,69 @@ class ExcelService {
     }
   }
 
-  public async getDriverUtilityLogs(routeId?: string): Promise<{
-    logs: Array<{ id: number; route_id: string; stop_id: string; stop_name: string; arrived_at: string; departed_at: string; dwell_sec: number; flag: string; recorded_at: number }>;
-    tripStarts: Array<{ timestamp: string; actor_id: string; route_id: string; details: string }>;
+  public async getDriverUtilityLogs(routeId?: string, date?: string): Promise<{
+    logs: Array<{
+      id: number;
+      route_id: string;
+      stop_id: string;
+      stop_name: string;
+      arrived_at: string;
+      departed_at: string;
+      dwell_sec: number;
+      flag: string;
+      recorded_at: number;
+      arrived_at_ist?: string;
+      arrived_time_ist?: string;
+      departed_at_ist?: string;
+      departed_time_ist?: string;
+      date_ist?: string;
+      dwell_formatted?: string;
+      scheduled_time?: string | null;
+      delay_minutes?: number | null;
+    }>;
+    tripStarts: Array<{
+      route_id: string;
+      started_at: string;
+      started_at_ist?: string;
+      running: number;
+      headcount: number;
+    }>;
+    summary: {
+      totalStopsLogged: number;
+      avgDwellSec: number;
+      avgDwellFormatted: string;
+      maxDwellSec: number;
+      longestStopName: string | null;
+      tooShortCount: number;
+      tooLongCount: number;
+    };
   }> {
+    const emptySummary = {
+      totalStopsLogged: 0,
+      avgDwellSec: 0,
+      avgDwellFormatted: '0s',
+      maxDwellSec: 0,
+      longestStopName: null,
+      tooShortCount: 0,
+      tooLongCount: 0,
+    };
     try {
-      const qs = routeId ? `?routeId=${encodeURIComponent(routeId)}` : '';
+      const params = new URLSearchParams();
+      if (routeId) params.set('routeId', routeId);
+      if (date) params.set('date', date);
+      const qs = params.toString() ? `?${params.toString()}` : '';
       const res = await fetch(`${this.serverBaseUrl}/api/admin/driver-utility${qs}`, {
         headers: this.authHeaders(),
       });
-      if (!res.ok) return { logs: [], tripStarts: [] };
+      if (!res.ok) return { logs: [], tripStarts: [], summary: emptySummary };
       const data = await res.json();
       return {
         logs: Array.isArray(data.logs) ? data.logs : [],
         tripStarts: Array.isArray(data.tripStarts) ? data.tripStarts : [],
+        summary: data.summary || emptySummary,
       };
     } catch {
-      return { logs: [], tripStarts: [] };
+      return { logs: [], tripStarts: [], summary: emptySummary };
     }
   }
 
@@ -864,8 +910,14 @@ class ExcelService {
   }
 
   /* ---------------- CSV Exports ---------------- */
-  public async downloadCsvExport(type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility'): Promise<void> {
-    const res = await fetch(`${this.serverBaseUrl}/api/export?type=${encodeURIComponent(type)}`, {
+  public async downloadCsvExport(
+    type: 'incidents' | 'feedback' | 'absences' | 'lost' | 'boardings' | 'driver_utility',
+    filters?: { routeId?: string; date?: string }
+  ): Promise<void> {
+    const params = new URLSearchParams({ type });
+    if (filters?.routeId) params.set('routeId', filters.routeId);
+    if (filters?.date) params.set('date', filters.date);
+    const res = await fetch(`${this.serverBaseUrl}/api/export?${params.toString()}`, {
       headers: this.authHeaders(),
       signal: AbortSignal.timeout(30000),
     });
