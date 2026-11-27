@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 27, 2026
-> **Build Status:** Production Prototype / v20.3 Live Stop-by-Stop ETA & Detailed IST Timestamp Report Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Diagnostics, Bus Pass UI Removed From Phase 1, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 37/37 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.4 Multi-Admin Access & Live Reporting Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unobstructed HybridTransitMap with Header/Footer HUD Bars & Dynamic LAN/Origin Tile Proxy, Non-Truncated 2-Row Student Header, Granular Absence Lock Diagnostics, Bus Pass UI Removed From Phase 1, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 38/38 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 78 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 79 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, and v20.3 live stop-by-stop ETA & timestamp reporting release, all 78 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 37/37 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 multi-admin RBAC enhancement, all 79 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 38/38 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -94,6 +94,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **76** | **P1** | Mobile Polish & CSS Hygiene | **Phase 1 Bottom-Bar Collision Fix & Duplicate CSS Cleanup**: Suppressed redundant `<MobileBottomNav />` in `src/App.tsx` when `activeView` is `'STUDENT'`, `'DRIVER'`, or `'ADMIN'` (preventing overlap over `StudentPortal.tsx`'s fixed `bottom-3` 4-tab pill bar), shifted Student mobile floating theme toggle to `bottom-20`, and deleted duplicate legacy emerald `.futuristic-tile` / `.futuristic-tile-active` overrides in `src/index.css` so indigo/cyan tile styling applies cleanly. | [`src/App.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/App.tsx), [`src/index.css`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/index.css) |
 | **77** | **P0** | v20.2 Mobile UX & Map Fix | **Mobile LAN CARTO Tiles, Unobstructed Map HUD, Granular Lock Feedback, 2-Row Student Header & Bus Pass UI Removal**: Switched `HybridTransitMap.tsx` tile base to `excelService.getServerBaseUrl()` for automatic LAN IP loading and moved route/OSRM/Google Maps bars above and below the map canvas; added `getPlanLockStatus` (`ADMIN_LOCKED` / `TRIP_RUNNING` / `CUTOFF_PASSED`) with matching captions/toasts; upgraded `StudentPortal.tsx` header to unclipped 2 rows; updated login role card to `Student / Faculty`; removed Bus Pass, Grace Pass, and Fee Simulator UI cleanly replacing the 3rd student tab with `Help`. | [`src/components/map/HybridTransitMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/HybridTransitMap.tsx), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`src/components/modals/InstallAppModal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/modals/InstallAppModal.tsx) |
 | **78** | **P0** | v20.3 Reporting & Live Stop ETA | **Live Stop-by-Stop ETA, Admin Detailed Timestamps & Stop Duration Report & IST CSV Export**: Added IST formatting (`formatIstDateTime`, `formatIstTimeOnly`, `getIstDateKey`), `formatDwellDuration`, scheduled-vs-actual stop variance (`resolveScheduledStopInfo`), route/date filtering, summary KPIs, and `STOP_DWELL_RECORDED` SSE broadcasts across `server/index.js` (`/api/admin/driver-utility` and `/api/export?type=driver_utility`) and `excelService.ts`; added interactive Admin `Detailed Timestamps & Stop Duration Report` card with 4 KPI cards, Trip Starts strip, filters, and variance table in `AdminDashboard.tsx`; added `Live Stop-by-Stop ETA & Timestamps` sequence list on Student `Map` tab in `StudentPortal.tsx`; extended `tests/security.test.js` to 37/37 passing. | [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
+| **79** | **P0** | v20.4 Multi-Admin Access | **Authorized Multi-Admin Credentials & Management UI**: Replaced single-`ADMIN_ID` bottleneck in `server/index.js` with constant-time multi-admin lookup across `ADMIN_ID`, optional `ADMIN_ACCOUNTS` JSON array, and SQLite `admin_users` table (`server/dbExtras.js`); added `GET /api/admin/admins`, `POST /api/admin/admins`, and `POST /api/admin/admins/:adminId/status` with `session_version` token revocation enforcement inside `setAccessTokenValidator`; added `Authorized Admin Access Accounts` card in `AdminDashboard.tsx` and updated `tests/security.test.js` to 38/38 passing. | [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 
 ---
 
@@ -117,7 +118,7 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 10. [`server/index.js`](#serverindexjs) — *Express 5 REST API server with timing-safe HMAC JWT auth, self-signup + 1-click admin verification, self-checkin boarding, stop dwell audit logging, 1-hour pre-departure absence cutoff, SSE live stream tickets, and CARTO tile proxy.*
 11. [`server/excelStorage.js`](#serverexcelstoragejs) — *Real-time Excel engine with SQLite WAL persistence, prepared statement cache, configurable DATA_DIR / DB_FILE_PATH / EXCEL_FILE_PATH, and atomic XLSX export.*
 12. [`server/telegramNotifier.js`](#servertelegramnotifierjs) — *Automated Telegram Bot safety alert integration for student transit events and driver dispatches.*
-13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, and v20.3 timestamp report & CSV headers (37/37 passing).*
+13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin authentication & revocation (38/38 passing).*
 14. [`src/types/transit.ts`](#srctypestransitts) — *Complete TypeScript type contracts for buses, students, telemetry, geofences, and safety alerts.*
 15. [`src/config/apiConfig.ts`](#srcconfigapiconfigts) — *Environment variables, backend endpoints, and API client configuration.*
 16. [`src/data/sreenidhiData.ts`](#srcdatasreenidhidatats) — *Hyderabad NH-163 Warangal Highway transit network stops, student master roster, Route 51 manifest (18 students + 8 faculty), and fleet definitions.*
@@ -2677,6 +2678,16 @@ export function createExtras(db) {
         flag TEXT NOT NULL DEFAULT 'NORMAL',
         recorded_at INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS admin_users (
+        admin_id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        password_hash TEXT NOT NULL,
+        active INTEGER NOT NULL DEFAULT 1,
+        session_version INTEGER NOT NULL DEFAULT 0,
+        created_by TEXT,
+        created_at TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS idx_admin_users_active ON admin_users(active);
       CREATE INDEX IF NOT EXISTS idx_dwell_route_ts ON stop_dwell_logs(route_id, recorded_at);
       CREATE INDEX IF NOT EXISTS idx_route_geom_route ON route_geometry_cache(route_id, updated_at);
       CREATE INDEX IF NOT EXISTS idx_push_sub_roll ON push_subscriptions(roll_number, user_type);
@@ -3999,6 +4010,73 @@ export function createExtras(db) {
     };
   }
 
+  /* ---------------- Multi-Admin Access Accounts ---------------- */
+  function getAdminUser(adminId) {
+    const cleanId = String(adminId || '').trim();
+    if (!cleanId) return null;
+    return db.prepare('SELECT * FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').get(cleanId) || null;
+  }
+
+  function hasAnyActiveAdmin() {
+    return Boolean(db.prepare('SELECT 1 FROM admin_users WHERE active = 1 LIMIT 1').get());
+  }
+
+  function listAdminUsers() {
+    return db
+      .prepare('SELECT admin_id, name, active, session_version, created_by, created_at FROM admin_users ORDER BY created_at ASC, admin_id ASC')
+      .all();
+  }
+
+  function createAdminUser({ adminId, name, passwordHash, createdBy }) {
+    const cleanId = String(adminId || '').trim();
+    const cleanName = String(name || '').trim() || cleanId;
+    if (!cleanId || !passwordHash) return null;
+    if (getAdminUser(cleanId)) return null;
+    const createdAt = new Date().toISOString();
+    db.prepare(`
+      INSERT INTO admin_users (admin_id, name, password_hash, active, session_version, created_by, created_at)
+      VALUES (?, ?, ?, 1, 0, ?, ?)
+    `).run(cleanId, cleanName, passwordHash, createdBy ? String(createdBy).trim() : null, createdAt);
+    return {
+      admin_id: cleanId,
+      name: cleanName,
+      active: 1,
+      session_version: 0,
+      created_by: createdBy ? String(createdBy).trim() : null,
+      created_at: createdAt,
+    };
+  }
+
+  function setAdminUserActive(adminId, active) {
+    const existing = getAdminUser(adminId);
+    if (!existing) return null;
+    const nextActive = active ? 1 : 0;
+    const bumpSession = nextActive === 0 ? 1 : 0;
+    db.prepare(`
+      UPDATE admin_users
+      SET active = ?, session_version = session_version + ?
+      WHERE LOWER(admin_id) = LOWER(?)
+    `).run(nextActive, bumpSession, existing.admin_id);
+    const updated = getAdminUser(existing.admin_id);
+    if (!updated) return null;
+    return {
+      admin_id: updated.admin_id,
+      name: updated.name,
+      active: updated.active,
+      session_version: updated.session_version,
+      created_by: updated.created_by,
+      created_at: updated.created_at,
+    };
+  }
+
+  function setAdminPasswordHash(adminId, passwordHash) {
+    const existing = getAdminUser(adminId);
+    if (!existing) return false;
+    db.prepare('UPDATE admin_users SET password_hash = ?, session_version = session_version + 1 WHERE LOWER(admin_id) = LOWER(?)')
+      .run(passwordHash, existing.admin_id);
+    return true;
+  }
+
   return { migrate, tx, getStudentRow, setPasswordHash, touchLastActive, getSessionVersion, isSessionCurrent, revokeStudentSessions, createStudent, claimEvent, pruneEvents, recentCheckIn,
     saveApplication, listApplications, getApplication, reviewApplication, createLinkCode, consumeLinkCode, createParentCode, redeemParentCode,
     activateGracePass, setFeeStatus, canStudentTravel, setAbsence, isAbsent, listAbsences, countAbsencesForRoute, getAssignedStudentCount, listStudentsForRoute,
@@ -4013,7 +4091,8 @@ export function createExtras(db) {
     recordStopSegmentDuration, getHistoricalSegmentMedians, bulkImportRiders,
     getCachedRouteGeometry, saveCachedRouteGeometry,
     recordStopDwell, getDriverUtilityLogs,
-    createPendingStudent, listPendingVerifications, verifyStudentRegistration };
+    createPendingStudent, listPendingVerifications, verifyStudentRegistration,
+    getAdminUser, hasAnyActiveAdmin, listAdminUsers, createAdminUser, setAdminUserActive, setAdminPasswordHash };
 }
 
 ```
@@ -4104,6 +4183,12 @@ async function sendWebPush({ roll, routeId, userType, title, body, url = '/' } =
 }
 
 setAccessTokenValidator((user) => {
+  if (user.role === 'ADMIN' && user.adminSource === 'DATABASE') {
+    const adminRow = extras.getAdminUser(user.sub);
+    if (!adminRow || !adminRow.active) return false;
+    if (adminRow.session_version !== Number(user.sessionVersion || 0)) return false;
+    return true;
+  }
   if (user.role !== 'STUDENT') return true;
   const row = extras.getStudentRow(user.sub);
   if (!row) return false;
@@ -4392,18 +4477,98 @@ app.get('/api/students/me', requireRole('STUDENT', 'PARENT'), (req, res) => {
   res.json({ success: true, student: studentData });
 });
 
+function getConfiguredEnvAdmins() {
+  const admins = [];
+  if (process.env.ADMIN_ID && process.env.ADMIN_PASSWORD_HASH) {
+    admins.push({
+      id: String(process.env.ADMIN_ID).trim(),
+      name: process.env.ADMIN_NAME || 'Transport Incharge',
+      passwordHash: process.env.ADMIN_PASSWORD_HASH,
+      source: 'ENV',
+    });
+  }
+  if (process.env.ADMIN_ACCOUNTS) {
+    try {
+      const parsed = JSON.parse(process.env.ADMIN_ACCOUNTS);
+      if (Array.isArray(parsed)) {
+        for (const entry of parsed) {
+          const eid = typeof entry?.id === 'string' ? entry.id.trim() : '';
+          const ehash = typeof entry?.passwordHash === 'string' ? entry.passwordHash.trim() : '';
+          if (eid && ehash && !admins.some((a) => a.id.toUpperCase() === eid.toUpperCase())) {
+            admins.push({
+              id: eid,
+              name: typeof entry?.name === 'string' && entry.name.trim() ? entry.name.trim() : eid,
+              passwordHash: ehash,
+              source: 'ENV',
+            });
+          }
+        }
+      }
+    } catch {
+      console.warn('[admin] Ignoring malformed ADMIN_ACCOUNTS JSON');
+    }
+  }
+  return admins;
+}
+
 app.post('/api/admin/login', ipLoginLimiter, loginLimiter, async (req, res) => {
-  const hash = process.env.ADMIN_PASSWORD_HASH, adminId = process.env.ADMIN_ID;
-  if (!hash || !adminId) return res.status(503).json({ error: 'Admin login is not configured on this server' });
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.length === 0 && !extras.hasAnyActiveAdmin()) {
+    return res.status(503).json({ error: 'Admin login is not configured on this server' });
+  }
   const id = str(req.body?.adminId, 80, 'adminId');
   const password = typeof req.body?.password === 'string' ? req.body.password : '';
-  const idOk = id.length === adminId.length && crypto.timingSafeEqual(Buffer.from(id.toUpperCase()), Buffer.from(adminId.toUpperCase()));
-  const pwOk = await verifyPassword(password, hash); // always run, so timing doesn't leak whether the ID matched
-  if (!idOk || !pwOk) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+  const idUpperBuf = Buffer.from(id.toUpperCase());
+
+  let candidate = null;
+  for (const envAdmin of envAdmins) {
+    const targetBuf = Buffer.from(envAdmin.id.toUpperCase());
+    if (idUpperBuf.length === targetBuf.length && crypto.timingSafeEqual(idUpperBuf, targetBuf)) {
+      candidate = envAdmin;
+      break;
+    }
+  }
+
+  if (!candidate) {
+    const dbAdmin = extras.getAdminUser(id);
+    if (dbAdmin && dbAdmin.active === 1) {
+      candidate = {
+        id: dbAdmin.admin_id,
+        name: dbAdmin.name,
+        passwordHash: dbAdmin.password_hash,
+        source: 'DATABASE',
+        sessionVersion: dbAdmin.session_version || 0,
+      };
+    }
+  }
+
+  // Always verify against a real or dummy scrypt hash so timing doesn't leak whether ID matched
+  const pwOk = candidate ? await verifyPassword(password, candidate.passwordHash) : await verifyDummy(password);
+  if (!candidate || !pwOk) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+
   loginLimiter.reset(loginKey(req));
-  const admin = { id: adminId, name: process.env.ADMIN_NAME || 'Transport Incharge', role: 'ADMIN' };
-  appendSheetRow('Alerts_Notifications', { Timestamp: now(), 'Alert ID': `ADM-${Date.now()}`, 'Recipient Name': admin.name, Category: 'SECURITY', Title: 'Admin login', Message: `Admin login from ${req.ip}`, 'Delivery Status': 'AUDIT' });
-  res.json({ success: true, admin, token: signToken({ sub: admin.id, name: admin.name, role: 'ADMIN' }, { ttlSec: 2 * 3600 }) });
+  const admin = { id: candidate.id, name: candidate.name, role: 'ADMIN' };
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-${Date.now()}`,
+    'Recipient Name': admin.name,
+    Category: 'SECURITY',
+    Title: 'Admin login',
+    Message: `Admin login (${admin.id}) from ${req.ip}`,
+    'Delivery Status': 'AUDIT',
+  });
+  const token = signToken(
+    {
+      sub: admin.id,
+      name: admin.name,
+      role: 'ADMIN',
+      ...(candidate.source === 'DATABASE'
+        ? { adminSource: 'DATABASE', sessionVersion: candidate.sessionVersion || 0 }
+        : {}),
+    },
+    { ttlSec: 2 * 3600 }
+  );
+  res.json({ success: true, admin, token });
 });
 
 // DRIVER_PIN_HASHES='{"route-51":"scrypt$...","route-14":"scrypt$...","route-15":"scrypt$..."}'  (one hash per bus; generate with scripts/generate-env.js; use 6+ digits)
@@ -6275,6 +6440,137 @@ app.post('/api/admin/students/bulk-import', requireRole('ADMIN'), express.json({
   res.json(result);
 });
 
+/* ---------------- Multi-Admin Access Management ---------------- */
+app.get('/api/admin/admins', requireRole('ADMIN'), apiLimiter, (_req, res) => {
+  const envAdmins = getConfiguredEnvAdmins().map((a) => ({
+    adminId: a.id,
+    name: a.name,
+    active: true,
+    source: 'ENV',
+    createdBy: 'Environment Config',
+    createdAt: null,
+  }));
+  const dbAdmins = extras.listAdminUsers().map((a) => ({
+    adminId: a.admin_id,
+    name: a.name,
+    active: Boolean(a.active),
+    source: 'DATABASE',
+    createdBy: a.created_by || null,
+    createdAt: a.created_at,
+  }));
+  res.json({ success: true, admins: [...envAdmins, ...dbAdmins] });
+});
+
+app.post('/api/admin/admins', requireRole('ADMIN'), apiLimiter, async (req, res) => {
+  const b = req.body ?? {};
+  const adminId = str(b.adminId, 80, 'adminId');
+  if (!/^[a-zA-Z0-9._@+-]{3,80}$/.test(adminId)) {
+    throw new HttpError(400, 'adminId must be 3–80 valid characters (email or staff ID)');
+  }
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.some((e) => e.id.toUpperCase() === adminId.toUpperCase())) {
+    throw new HttpError(409, 'An environment-configured admin with this ID already exists');
+  }
+  if (extras.getAdminUser(adminId)) {
+    throw new HttpError(409, 'An admin account with this ID already exists');
+  }
+
+  let finalName = typeof b.name === 'string' && b.name.trim() ? str(b.name, 80, 'name') : '';
+  let passwordHash = '';
+  const rawPassword = typeof b.password === 'string' ? b.password : '';
+  const linkExisting = Boolean(b.linkExistingVerified);
+
+  if (rawPassword) {
+    if (rawPassword.length < 8 || rawPassword.length > 128) {
+      throw new HttpError(400, 'Admin password must be 8–128 characters');
+    }
+    if (!finalName) finalName = adminId;
+    passwordHash = await hashPassword(rawPassword);
+  } else if (linkExisting) {
+    const existing = extras.getStudentRow(adminId.toUpperCase());
+    if (!existing || !existing.password_hash) {
+      throw new HttpError(400, 'No existing registered campus account found to reuse credentials');
+    }
+    if (existing.verification_status && existing.verification_status !== 'VERIFIED') {
+      throw new HttpError(400, 'Account must be verified before promoting to admin');
+    }
+    if (existing.must_change_password) {
+      throw new HttpError(400, 'User must replace their temporary password before promoting to admin');
+    }
+    if (!finalName) finalName = existing.name || adminId;
+    passwordHash = existing.password_hash;
+  } else {
+    throw new HttpError(400, 'Admin password must be at least 8 characters');
+  }
+
+  const created = extras.createAdminUser({
+    adminId,
+    name: finalName,
+    passwordHash,
+    createdBy: String(req.user?.sub || 'ADMIN'),
+  });
+  if (!created) throw new HttpError(409, 'An admin account with this ID already exists');
+
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-GRANT-${Date.now()}`,
+    'Recipient Name': created.name,
+    Category: 'SECURITY',
+    Title: 'Admin access granted',
+    Message: `${req.user?.sub || 'ADMIN'} granted admin access to ${created.admin_id}`,
+    'Delivery Status': 'AUDIT',
+  });
+
+  res.status(201).json({
+    success: true,
+    admin: {
+      adminId: created.admin_id,
+      name: created.name,
+      active: Boolean(created.active),
+      source: 'DATABASE',
+      createdBy: created.created_by,
+      createdAt: created.created_at,
+    },
+  });
+});
+
+app.post('/api/admin/admins/:adminId/status', requireRole('ADMIN'), apiLimiter, (req, res) => {
+  const targetId = str(decodeURIComponent(req.params.adminId || ''), 80, 'adminId');
+  const active = Boolean(req.body?.active);
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.some((e) => e.id.toUpperCase() === targetId.toUpperCase())) {
+    throw new HttpError(400, 'Environment-configured primary admins cannot be modified at runtime');
+  }
+  if (!active && targetId.toUpperCase() === String(req.user?.sub || '').toUpperCase()) {
+    throw new HttpError(400, 'Cannot revoke your own active admin access');
+  }
+
+  const updated = extras.setAdminUserActive(targetId, active);
+  if (!updated) throw new HttpError(404, 'Admin account not found');
+
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-STAT-${Date.now()}`,
+    'Recipient Name': updated.name,
+    Category: 'SECURITY',
+    Title: active ? 'Admin access restored' : 'Admin access revoked',
+    Message: `${req.user?.sub || 'ADMIN'} set ${updated.admin_id} active=${active}`,
+    'Delivery Status': 'AUDIT',
+  });
+
+  res.json({
+    success: true,
+    admin: {
+      adminId: updated.admin_id,
+      name: updated.name,
+      active: Boolean(updated.active),
+      source: 'DATABASE',
+      createdBy: updated.created_by,
+      createdAt: updated.created_at,
+    },
+  });
+});
+
 /* ---------------- Live SQLite Backup (VACUUM INTO) ---------------- */
 app.post('/api/admin/db/backup', requireRole('ADMIN'), (req, res) => {
   const result = createSqliteBackup();
@@ -7470,7 +7766,7 @@ export async function sendTelegramAlert(chatId, messageHtml) {
 
 ## 13. `tests/security.test.js` <a id="testssecuritytestjs"></a>
 
-**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, and v20.3 timestamp report & CSV headers (37/37 passing).  
+**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, CARTO map security, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin authentication & revocation (38/38 passing).  
 **File Path:** `sreenidhi-express/tests/security.test.js`  
 
 ```javascript
@@ -8566,6 +8862,100 @@ test('v20.3 driver utility report: IST formatting, scheduled variance, summary K
   } finally {
     server.close();
     db.prepare('DELETE FROM stop_dwell_logs WHERE route_id = ? AND arrived_at = ?').run('route-51', arrivedAt);
+  }
+});
+
+test('v20.4 multi-admin access: authorized users with proper credentials can authenticate and revocation invalidates sessions', async () => {
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const studentToken = signToken({ sub: '26011CSEAI0109', role: 'STUDENT', routeId: 'route-51', sessionVersion: 0 });
+  const coAdminId = 'hod.aiml.test@sreenidhi.edu.in';
+  const envAdminId = 'coord.env.test@sreenidhi.edu.in';
+  const prevAdminAccounts = process.env.ADMIN_ACCOUNTS;
+  db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    // 1. Student token cannot list or create admins
+    const forbiddenList = await fetch(`${baseUrl}/api/admin/admins`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    });
+    assert.equal(forbiddenList.status, 403);
+
+    // 2. Existing admin grants access to HOD account
+    const grantRes = await fetch(`${baseUrl}/api/admin/admins`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, name: 'HOD CSE AI/ML', password: 'HodPassword#2026' }),
+    });
+    assert.equal(grantRes.status, 201);
+    const grantBody = await grantRes.json();
+    assert.equal(grantBody.success, true);
+    assert.equal(grantBody.admin.adminId, coAdminId);
+
+    // 3. Wrong password fails cleanly with 401
+    const badLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, password: 'WrongPassword123' }),
+    });
+    assert.equal(badLogin.status, 401);
+
+    // 4. Co-admin signs in with proper credentials (case-insensitive ID lookup) and uses Admin APIs
+    const goodLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId.toUpperCase(), password: 'HodPassword#2026' }),
+    });
+    assert.equal(goodLogin.status, 200);
+    const loginBody = await goodLogin.json();
+    assert.equal(loginBody.success, true);
+    assert.equal(loginBody.admin.role, 'ADMIN');
+    assert.ok(loginBody.token);
+
+    const coAdminUtil = await fetch(`${baseUrl}/api/admin/driver-utility`, {
+      headers: { Authorization: `Bearer ${loginBody.token}` },
+    });
+    assert.equal(coAdminUtil.status, 200);
+
+    // 5. Env-configured ADMIN_ACCOUNTS co-admin also logs in cleanly
+    const envHash = await hashPassword('EnvCoAdmin#2026');
+    process.env.ADMIN_ACCOUNTS = JSON.stringify([{ id: envAdminId, name: 'Env Coordinator', passwordHash: envHash }]);
+    const envLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: envAdminId, password: 'EnvCoAdmin#2026' }),
+    });
+    assert.equal(envLogin.status, 200);
+    const envLoginBody = await envLogin.json();
+    assert.equal(envLoginBody.admin.name, 'Env Coordinator');
+
+    // 6. Revoking DB co-admin immediately blocks existing token AND future login
+    const revokeRes = await fetch(`${baseUrl}/api/admin/admins/${encodeURIComponent(coAdminId)}/status`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: false }),
+    });
+    assert.equal(revokeRes.status, 200);
+
+    const staleTokenCheck = await fetch(`${baseUrl}/api/admin/admins`, {
+      headers: { Authorization: `Bearer ${loginBody.token}` },
+    });
+    assert.equal(staleTokenCheck.status, 401);
+
+    const blockedLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, password: 'HodPassword#2026' }),
+    });
+    assert.equal(blockedLogin.status, 401);
+  } finally {
+    server.close();
+    if (prevAdminAccounts === undefined) delete process.env.ADMIN_ACCOUNTS;
+    else process.env.ADMIN_ACCOUNTS = prevAdminAccounts;
+    db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
   }
 });
 
@@ -14371,19 +14761,19 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 Transport Office Admin
               </span>
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                Official admin ID
+                Authorized admin credentials
               </span>
             </div>
             <div>
               <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                Admin ID
+                Admin ID / Email
               </label>
               <input
                 type="text"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
                 className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
-                placeholder="Admin ID"
+                placeholder="Admin ID or official email"
                 required
               />
             </div>
@@ -17563,6 +17953,19 @@ export const AdminDashboard: React.FC = () => {
   const [reportRouteFilter, setReportRouteFilter] = useState('');
   const [reportDateFilter, setReportDateFilter] = useState('');
   const [isReportLoading, setIsReportLoading] = useState(false);
+  const [adminAccounts, setAdminAccounts] = useState<Array<{
+    adminId: string;
+    name: string;
+    active: boolean;
+    source: 'ENV' | 'DATABASE';
+    createdBy: string | null;
+    createdAt: string | null;
+  }>>([]);
+  const [newAdminId, setNewAdminId] = useState('');
+  const [newAdminName, setNewAdminName] = useState('');
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [isGrantingAdmin, setIsGrantingAdmin] = useState(false);
+  const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
   const [driverUtilityReport, setDriverUtilityReport] = useState<Awaited<ReturnType<typeof excelService.getDriverUtilityLogs>>>({
     logs: [],
     tripStarts: [],
@@ -17646,6 +18049,53 @@ export const AdminDashboard: React.FC = () => {
       }
       return next;
     });
+    const adminsList = await excelService.listAdminUsers();
+    setAdminAccounts(adminsList);
+  };
+
+  const handleGrantAdminAccess = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdminId.trim() || !newAdminPassword) return;
+    setIsGrantingAdmin(true);
+    try {
+      const res = await excelService.grantAdminAccess({
+        adminId: newAdminId.trim(),
+        name: newAdminName.trim() || newAdminId.trim(),
+        password: newAdminPassword,
+      });
+      if (res.success && res.admin) {
+        pushToast('success', 'Admin Access Granted', `${res.admin.adminId} can now sign in with their credentials.`);
+        setNewAdminId('');
+        setNewAdminName('');
+        setNewAdminPassword('');
+        const adminsList = await excelService.listAdminUsers();
+        setAdminAccounts(adminsList);
+      } else {
+        pushToast('danger', 'Grant Failed', res.message || 'Could not create admin access account.');
+      }
+    } finally {
+      setIsGrantingAdmin(false);
+    }
+  };
+
+  const handleToggleAdminStatus = async (adminId: string, nextActive: boolean) => {
+    setTogglingAdminId(adminId);
+    try {
+      const res = await excelService.setAdminAccessStatus(adminId, nextActive);
+      if (res.success) {
+        pushToast(
+          nextActive ? 'success' : 'warning',
+          nextActive ? 'Admin Restored' : 'Admin Revoked',
+          `${adminId} access has been ${nextActive ? 'restored' : 'revoked'}.`
+        );
+        const adminsList = await excelService.listAdminUsers();
+        setAdminAccounts(adminsList);
+      } else {
+        pushToast('danger', 'Update Failed', res.message || 'Could not update admin access status.');
+      }
+    } finally {
+      setTogglingAdminId(null);
+    }
   };
 
   const handleVerifyRegistration = async (rollNumber: string, approved: boolean) => {
@@ -17912,7 +18362,7 @@ export const AdminDashboard: React.FC = () => {
               </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-              Officer: <b>{currentUser?.name || 'Transport Incharge'}</b> • <code className="font-mono">SNIST-ADM-01</code>
+              Officer: <b>{currentUser?.name || 'Transport Incharge'}</b> • <code className="font-mono">{currentUser?.id || 'SNIST-ADM-01'}</code>
             </p>
           </div>
         </div>
@@ -18398,6 +18848,119 @@ export const AdminDashboard: React.FC = () => {
                 ))
               )}
             </div>
+          </div>
+
+          {/* Authorized Admin Access Management */}
+          <div className="prismatic-card rounded-3xl p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Key className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                    Authorized Admin Access Accounts
+                  </h3>
+                </div>
+                <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                  Grant Admin portal login credentials to additional HODs, supervisors, or coordinators.
+                </p>
+              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                {adminAccounts.filter((a) => a.active).length} Active
+              </span>
+            </div>
+
+            <form onSubmit={handleGrantAdminAccess} className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-4">
+              <input
+                type="text"
+                value={newAdminId}
+                onChange={(e) => setNewAdminId(e.target.value)}
+                placeholder="Admin ID / Email"
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <input
+                type="text"
+                value={newAdminName}
+                onChange={(e) => setNewAdminName(e.target.value)}
+                placeholder="Full Name (e.g. HOD CSE)"
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <input
+                type="password"
+                value={newAdminPassword}
+                onChange={(e) => setNewAdminPassword(e.target.value)}
+                placeholder="Password (min 8 chars)"
+                minLength={8}
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <button
+                type="submit"
+                disabled={isGrantingAdmin}
+                className="electric-cta rounded-xl px-3.5 py-2 text-xs font-extrabold text-white disabled:opacity-50 cursor-pointer"
+              >
+                {isGrantingAdmin ? 'Granting...' : 'Grant Admin Access'}
+              </button>
+            </form>
+
+            {adminAccounts.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {adminAccounts.map((adm) => {
+                  const isSelf =
+                    adm.adminId.toUpperCase() === String(currentUser?.id || '').toUpperCase();
+                  return (
+                    <div
+                      key={`${adm.source}-${adm.adminId}`}
+                      className="prismatic-subcard flex flex-wrap items-center justify-between gap-2.5 rounded-2xl px-3.5 py-2.5"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300">
+                            {adm.adminId}
+                          </span>
+                          <span className="text-xs font-bold text-slate-900 dark:text-white">
+                            {adm.name}
+                          </span>
+                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            {adm.source}
+                          </span>
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
+                              adm.active
+                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                                : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
+                            }`}
+                          >
+                            {adm.active ? 'ACTIVE' : 'REVOKED'}
+                          </span>
+                        </div>
+                        {adm.createdBy && (
+                          <p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+                            Granted by {adm.createdBy}
+                          </p>
+                        )}
+                      </div>
+
+                      {adm.source === 'DATABASE' && (
+                        <button
+                          type="button"
+                          disabled={togglingAdminId === adm.adminId || (adm.active && isSelf)}
+                          onClick={() => void handleToggleAdminStatus(adm.adminId, !adm.active)}
+                          className={`tactile-btn rounded-xl px-3 py-1 text-[11px] font-extrabold disabled:opacity-45 cursor-pointer ${
+                            adm.active
+                              ? 'border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300'
+                              : 'border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
+                          }`}
+                        >
+                          {adm.active ? (isSelf ? 'Current Session' : 'Revoke') : 'Restore'}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -21646,6 +22209,65 @@ class ExcelService {
       return { success: true, message: data.message, status: data.status };
     } catch (err: any) {
       return { success: false, message: err?.message || 'Network error during registration' };
+    }
+  }
+
+  /* ---------------- Multi-Admin Access Accounts ---------------- */
+  public async listAdminUsers(): Promise<Array<{
+    adminId: string;
+    name: string;
+    active: boolean;
+    source: 'ENV' | 'DATABASE';
+    createdBy: string | null;
+    createdAt: string | null;
+  }>> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins`, {
+        headers: this.authHeaders(),
+      });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data.admins) ? data.admins : [];
+    } catch {
+      return [];
+    }
+  }
+
+  public async grantAdminAccess(payload: {
+    adminId: string;
+    name: string;
+    password?: string;
+    linkExistingVerified?: boolean;
+  }): Promise<{ success: boolean; admin?: any; message?: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins`, {
+        method: 'POST',
+        headers: this.authHeaders(),
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok) return { success: false, message: data.error || 'Could not grant admin access' };
+      return { success: true, admin: data.admin };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error' };
+    }
+  }
+
+  public async setAdminAccessStatus(
+    adminId: string,
+    active: boolean
+  ): Promise<{ success: boolean; admin?: any; message?: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins/${encodeURIComponent(adminId)}/status`, {
+        method: 'POST',
+        headers: this.authHeaders(),
+        body: JSON.stringify({ active }),
+      });
+      const data = await res.json();
+      if (!res.ok) return { success: false, message: data.error || 'Could not update admin access' };
+      return { success: true, admin: data.admin };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error' };
     }
   }
 

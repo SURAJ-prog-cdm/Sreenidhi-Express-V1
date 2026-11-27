@@ -76,6 +76,12 @@ async function sendWebPush({ roll, routeId, userType, title, body, url = '/' } =
 }
 
 setAccessTokenValidator((user) => {
+  if (user.role === 'ADMIN' && user.adminSource === 'DATABASE') {
+    const adminRow = extras.getAdminUser(user.sub);
+    if (!adminRow || !adminRow.active) return false;
+    if (adminRow.session_version !== Number(user.sessionVersion || 0)) return false;
+    return true;
+  }
   if (user.role !== 'STUDENT') return true;
   const row = extras.getStudentRow(user.sub);
   if (!row) return false;
@@ -364,18 +370,98 @@ app.get('/api/students/me', requireRole('STUDENT', 'PARENT'), (req, res) => {
   res.json({ success: true, student: studentData });
 });
 
+function getConfiguredEnvAdmins() {
+  const admins = [];
+  if (process.env.ADMIN_ID && process.env.ADMIN_PASSWORD_HASH) {
+    admins.push({
+      id: String(process.env.ADMIN_ID).trim(),
+      name: process.env.ADMIN_NAME || 'Transport Incharge',
+      passwordHash: process.env.ADMIN_PASSWORD_HASH,
+      source: 'ENV',
+    });
+  }
+  if (process.env.ADMIN_ACCOUNTS) {
+    try {
+      const parsed = JSON.parse(process.env.ADMIN_ACCOUNTS);
+      if (Array.isArray(parsed)) {
+        for (const entry of parsed) {
+          const eid = typeof entry?.id === 'string' ? entry.id.trim() : '';
+          const ehash = typeof entry?.passwordHash === 'string' ? entry.passwordHash.trim() : '';
+          if (eid && ehash && !admins.some((a) => a.id.toUpperCase() === eid.toUpperCase())) {
+            admins.push({
+              id: eid,
+              name: typeof entry?.name === 'string' && entry.name.trim() ? entry.name.trim() : eid,
+              passwordHash: ehash,
+              source: 'ENV',
+            });
+          }
+        }
+      }
+    } catch {
+      console.warn('[admin] Ignoring malformed ADMIN_ACCOUNTS JSON');
+    }
+  }
+  return admins;
+}
+
 app.post('/api/admin/login', ipLoginLimiter, loginLimiter, async (req, res) => {
-  const hash = process.env.ADMIN_PASSWORD_HASH, adminId = process.env.ADMIN_ID;
-  if (!hash || !adminId) return res.status(503).json({ error: 'Admin login is not configured on this server' });
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.length === 0 && !extras.hasAnyActiveAdmin()) {
+    return res.status(503).json({ error: 'Admin login is not configured on this server' });
+  }
   const id = str(req.body?.adminId, 80, 'adminId');
   const password = typeof req.body?.password === 'string' ? req.body.password : '';
-  const idOk = id.length === adminId.length && crypto.timingSafeEqual(Buffer.from(id.toUpperCase()), Buffer.from(adminId.toUpperCase()));
-  const pwOk = await verifyPassword(password, hash); // always run, so timing doesn't leak whether the ID matched
-  if (!idOk || !pwOk) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+  const idUpperBuf = Buffer.from(id.toUpperCase());
+
+  let candidate = null;
+  for (const envAdmin of envAdmins) {
+    const targetBuf = Buffer.from(envAdmin.id.toUpperCase());
+    if (idUpperBuf.length === targetBuf.length && crypto.timingSafeEqual(idUpperBuf, targetBuf)) {
+      candidate = envAdmin;
+      break;
+    }
+  }
+
+  if (!candidate) {
+    const dbAdmin = extras.getAdminUser(id);
+    if (dbAdmin && dbAdmin.active === 1) {
+      candidate = {
+        id: dbAdmin.admin_id,
+        name: dbAdmin.name,
+        passwordHash: dbAdmin.password_hash,
+        source: 'DATABASE',
+        sessionVersion: dbAdmin.session_version || 0,
+      };
+    }
+  }
+
+  // Always verify against a real or dummy scrypt hash so timing doesn't leak whether ID matched
+  const pwOk = candidate ? await verifyPassword(password, candidate.passwordHash) : await verifyDummy(password);
+  if (!candidate || !pwOk) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+
   loginLimiter.reset(loginKey(req));
-  const admin = { id: adminId, name: process.env.ADMIN_NAME || 'Transport Incharge', role: 'ADMIN' };
-  appendSheetRow('Alerts_Notifications', { Timestamp: now(), 'Alert ID': `ADM-${Date.now()}`, 'Recipient Name': admin.name, Category: 'SECURITY', Title: 'Admin login', Message: `Admin login from ${req.ip}`, 'Delivery Status': 'AUDIT' });
-  res.json({ success: true, admin, token: signToken({ sub: admin.id, name: admin.name, role: 'ADMIN' }, { ttlSec: 2 * 3600 }) });
+  const admin = { id: candidate.id, name: candidate.name, role: 'ADMIN' };
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-${Date.now()}`,
+    'Recipient Name': admin.name,
+    Category: 'SECURITY',
+    Title: 'Admin login',
+    Message: `Admin login (${admin.id}) from ${req.ip}`,
+    'Delivery Status': 'AUDIT',
+  });
+  const token = signToken(
+    {
+      sub: admin.id,
+      name: admin.name,
+      role: 'ADMIN',
+      ...(candidate.source === 'DATABASE'
+        ? { adminSource: 'DATABASE', sessionVersion: candidate.sessionVersion || 0 }
+        : {}),
+    },
+    { ttlSec: 2 * 3600 }
+  );
+  res.json({ success: true, admin, token });
 });
 
 // DRIVER_PIN_HASHES='{"route-51":"scrypt$...","route-14":"scrypt$...","route-15":"scrypt$..."}'  (one hash per bus; generate with scripts/generate-env.js; use 6+ digits)
@@ -2245,6 +2331,137 @@ app.post('/api/admin/students/bulk-import', requireRole('ADMIN'), express.json({
   if (riders.length > 500) throw new HttpError(400, 'Maximum 500 riders per bulk import');
   const result = extras.bulkImportRiders(riders);
   res.json(result);
+});
+
+/* ---------------- Multi-Admin Access Management ---------------- */
+app.get('/api/admin/admins', requireRole('ADMIN'), apiLimiter, (_req, res) => {
+  const envAdmins = getConfiguredEnvAdmins().map((a) => ({
+    adminId: a.id,
+    name: a.name,
+    active: true,
+    source: 'ENV',
+    createdBy: 'Environment Config',
+    createdAt: null,
+  }));
+  const dbAdmins = extras.listAdminUsers().map((a) => ({
+    adminId: a.admin_id,
+    name: a.name,
+    active: Boolean(a.active),
+    source: 'DATABASE',
+    createdBy: a.created_by || null,
+    createdAt: a.created_at,
+  }));
+  res.json({ success: true, admins: [...envAdmins, ...dbAdmins] });
+});
+
+app.post('/api/admin/admins', requireRole('ADMIN'), apiLimiter, async (req, res) => {
+  const b = req.body ?? {};
+  const adminId = str(b.adminId, 80, 'adminId');
+  if (!/^[a-zA-Z0-9._@+-]{3,80}$/.test(adminId)) {
+    throw new HttpError(400, 'adminId must be 3–80 valid characters (email or staff ID)');
+  }
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.some((e) => e.id.toUpperCase() === adminId.toUpperCase())) {
+    throw new HttpError(409, 'An environment-configured admin with this ID already exists');
+  }
+  if (extras.getAdminUser(adminId)) {
+    throw new HttpError(409, 'An admin account with this ID already exists');
+  }
+
+  let finalName = typeof b.name === 'string' && b.name.trim() ? str(b.name, 80, 'name') : '';
+  let passwordHash = '';
+  const rawPassword = typeof b.password === 'string' ? b.password : '';
+  const linkExisting = Boolean(b.linkExistingVerified);
+
+  if (rawPassword) {
+    if (rawPassword.length < 8 || rawPassword.length > 128) {
+      throw new HttpError(400, 'Admin password must be 8–128 characters');
+    }
+    if (!finalName) finalName = adminId;
+    passwordHash = await hashPassword(rawPassword);
+  } else if (linkExisting) {
+    const existing = extras.getStudentRow(adminId.toUpperCase());
+    if (!existing || !existing.password_hash) {
+      throw new HttpError(400, 'No existing registered campus account found to reuse credentials');
+    }
+    if (existing.verification_status && existing.verification_status !== 'VERIFIED') {
+      throw new HttpError(400, 'Account must be verified before promoting to admin');
+    }
+    if (existing.must_change_password) {
+      throw new HttpError(400, 'User must replace their temporary password before promoting to admin');
+    }
+    if (!finalName) finalName = existing.name || adminId;
+    passwordHash = existing.password_hash;
+  } else {
+    throw new HttpError(400, 'Admin password must be at least 8 characters');
+  }
+
+  const created = extras.createAdminUser({
+    adminId,
+    name: finalName,
+    passwordHash,
+    createdBy: String(req.user?.sub || 'ADMIN'),
+  });
+  if (!created) throw new HttpError(409, 'An admin account with this ID already exists');
+
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-GRANT-${Date.now()}`,
+    'Recipient Name': created.name,
+    Category: 'SECURITY',
+    Title: 'Admin access granted',
+    Message: `${req.user?.sub || 'ADMIN'} granted admin access to ${created.admin_id}`,
+    'Delivery Status': 'AUDIT',
+  });
+
+  res.status(201).json({
+    success: true,
+    admin: {
+      adminId: created.admin_id,
+      name: created.name,
+      active: Boolean(created.active),
+      source: 'DATABASE',
+      createdBy: created.created_by,
+      createdAt: created.created_at,
+    },
+  });
+});
+
+app.post('/api/admin/admins/:adminId/status', requireRole('ADMIN'), apiLimiter, (req, res) => {
+  const targetId = str(decodeURIComponent(req.params.adminId || ''), 80, 'adminId');
+  const active = Boolean(req.body?.active);
+  const envAdmins = getConfiguredEnvAdmins();
+  if (envAdmins.some((e) => e.id.toUpperCase() === targetId.toUpperCase())) {
+    throw new HttpError(400, 'Environment-configured primary admins cannot be modified at runtime');
+  }
+  if (!active && targetId.toUpperCase() === String(req.user?.sub || '').toUpperCase()) {
+    throw new HttpError(400, 'Cannot revoke your own active admin access');
+  }
+
+  const updated = extras.setAdminUserActive(targetId, active);
+  if (!updated) throw new HttpError(404, 'Admin account not found');
+
+  appendSheetRow('Alerts_Notifications', {
+    Timestamp: now(),
+    'Alert ID': `ADM-STAT-${Date.now()}`,
+    'Recipient Name': updated.name,
+    Category: 'SECURITY',
+    Title: active ? 'Admin access restored' : 'Admin access revoked',
+    Message: `${req.user?.sub || 'ADMIN'} set ${updated.admin_id} active=${active}`,
+    'Delivery Status': 'AUDIT',
+  });
+
+  res.json({
+    success: true,
+    admin: {
+      adminId: updated.admin_id,
+      name: updated.name,
+      active: Boolean(updated.active),
+      source: 'DATABASE',
+      createdBy: updated.created_by,
+      createdAt: updated.created_at,
+    },
+  });
 });
 
 /* ---------------- Live SQLite Backup (VACUUM INTO) ---------------- */

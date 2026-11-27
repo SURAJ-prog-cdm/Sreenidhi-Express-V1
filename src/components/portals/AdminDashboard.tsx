@@ -114,6 +114,19 @@ export const AdminDashboard: React.FC = () => {
   const [reportRouteFilter, setReportRouteFilter] = useState('');
   const [reportDateFilter, setReportDateFilter] = useState('');
   const [isReportLoading, setIsReportLoading] = useState(false);
+  const [adminAccounts, setAdminAccounts] = useState<Array<{
+    adminId: string;
+    name: string;
+    active: boolean;
+    source: 'ENV' | 'DATABASE';
+    createdBy: string | null;
+    createdAt: string | null;
+  }>>([]);
+  const [newAdminId, setNewAdminId] = useState('');
+  const [newAdminName, setNewAdminName] = useState('');
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [isGrantingAdmin, setIsGrantingAdmin] = useState(false);
+  const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
   const [driverUtilityReport, setDriverUtilityReport] = useState<Awaited<ReturnType<typeof excelService.getDriverUtilityLogs>>>({
     logs: [],
     tripStarts: [],
@@ -197,6 +210,53 @@ export const AdminDashboard: React.FC = () => {
       }
       return next;
     });
+    const adminsList = await excelService.listAdminUsers();
+    setAdminAccounts(adminsList);
+  };
+
+  const handleGrantAdminAccess = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdminId.trim() || !newAdminPassword) return;
+    setIsGrantingAdmin(true);
+    try {
+      const res = await excelService.grantAdminAccess({
+        adminId: newAdminId.trim(),
+        name: newAdminName.trim() || newAdminId.trim(),
+        password: newAdminPassword,
+      });
+      if (res.success && res.admin) {
+        pushToast('success', 'Admin Access Granted', `${res.admin.adminId} can now sign in with their credentials.`);
+        setNewAdminId('');
+        setNewAdminName('');
+        setNewAdminPassword('');
+        const adminsList = await excelService.listAdminUsers();
+        setAdminAccounts(adminsList);
+      } else {
+        pushToast('danger', 'Grant Failed', res.message || 'Could not create admin access account.');
+      }
+    } finally {
+      setIsGrantingAdmin(false);
+    }
+  };
+
+  const handleToggleAdminStatus = async (adminId: string, nextActive: boolean) => {
+    setTogglingAdminId(adminId);
+    try {
+      const res = await excelService.setAdminAccessStatus(adminId, nextActive);
+      if (res.success) {
+        pushToast(
+          nextActive ? 'success' : 'warning',
+          nextActive ? 'Admin Restored' : 'Admin Revoked',
+          `${adminId} access has been ${nextActive ? 'restored' : 'revoked'}.`
+        );
+        const adminsList = await excelService.listAdminUsers();
+        setAdminAccounts(adminsList);
+      } else {
+        pushToast('danger', 'Update Failed', res.message || 'Could not update admin access status.');
+      }
+    } finally {
+      setTogglingAdminId(null);
+    }
   };
 
   const handleVerifyRegistration = async (rollNumber: string, approved: boolean) => {
@@ -463,7 +523,7 @@ export const AdminDashboard: React.FC = () => {
               </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-              Officer: <b>{currentUser?.name || 'Transport Incharge'}</b> • <code className="font-mono">SNIST-ADM-01</code>
+              Officer: <b>{currentUser?.name || 'Transport Incharge'}</b> • <code className="font-mono">{currentUser?.id || 'SNIST-ADM-01'}</code>
             </p>
           </div>
         </div>
@@ -949,6 +1009,119 @@ export const AdminDashboard: React.FC = () => {
                 ))
               )}
             </div>
+          </div>
+
+          {/* Authorized Admin Access Management */}
+          <div className="prismatic-card rounded-3xl p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3.5 dark:border-[#2E3646]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Key className="h-4 w-4 text-[#4F46E5] dark:text-cyan-300" />
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                    Authorized Admin Access Accounts
+                  </h3>
+                </div>
+                <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                  Grant Admin portal login credentials to additional HODs, supervisors, or coordinators.
+                </p>
+              </div>
+              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                {adminAccounts.filter((a) => a.active).length} Active
+              </span>
+            </div>
+
+            <form onSubmit={handleGrantAdminAccess} className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-4">
+              <input
+                type="text"
+                value={newAdminId}
+                onChange={(e) => setNewAdminId(e.target.value)}
+                placeholder="Admin ID / Email"
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <input
+                type="text"
+                value={newAdminName}
+                onChange={(e) => setNewAdminName(e.target.value)}
+                placeholder="Full Name (e.g. HOD CSE)"
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <input
+                type="password"
+                value={newAdminPassword}
+                onChange={(e) => setNewAdminPassword(e.target.value)}
+                placeholder="Password (min 8 chars)"
+                minLength={8}
+                className="rounded-xl border border-slate-200/80 bg-[#F7F9FF] px-3 py-2 text-xs font-semibold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                required
+              />
+              <button
+                type="submit"
+                disabled={isGrantingAdmin}
+                className="electric-cta rounded-xl px-3.5 py-2 text-xs font-extrabold text-white disabled:opacity-50 cursor-pointer"
+              >
+                {isGrantingAdmin ? 'Granting...' : 'Grant Admin Access'}
+              </button>
+            </form>
+
+            {adminAccounts.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {adminAccounts.map((adm) => {
+                  const isSelf =
+                    adm.adminId.toUpperCase() === String(currentUser?.id || '').toUpperCase();
+                  return (
+                    <div
+                      key={`${adm.source}-${adm.adminId}`}
+                      className="prismatic-subcard flex flex-wrap items-center justify-between gap-2.5 rounded-2xl px-3.5 py-2.5"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-mono text-xs font-black text-[#4F46E5] dark:text-cyan-300">
+                            {adm.adminId}
+                          </span>
+                          <span className="text-xs font-bold text-slate-900 dark:text-white">
+                            {adm.name}
+                          </span>
+                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            {adm.source}
+                          </span>
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
+                              adm.active
+                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                                : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
+                            }`}
+                          >
+                            {adm.active ? 'ACTIVE' : 'REVOKED'}
+                          </span>
+                        </div>
+                        {adm.createdBy && (
+                          <p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+                            Granted by {adm.createdBy}
+                          </p>
+                        )}
+                      </div>
+
+                      {adm.source === 'DATABASE' && (
+                        <button
+                          type="button"
+                          disabled={togglingAdminId === adm.adminId || (adm.active && isSelf)}
+                          onClick={() => void handleToggleAdminStatus(adm.adminId, !adm.active)}
+                          className={`tactile-btn rounded-xl px-3 py-1 text-[11px] font-extrabold disabled:opacity-45 cursor-pointer ${
+                            adm.active
+                              ? 'border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300'
+                              : 'border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
+                          }`}
+                        >
+                          {adm.active ? (isSelf ? 'Current Session' : 'Revoke') : 'Restore'}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -603,6 +603,65 @@ class ExcelService {
     }
   }
 
+  /* ---------------- Multi-Admin Access Accounts ---------------- */
+  public async listAdminUsers(): Promise<Array<{
+    adminId: string;
+    name: string;
+    active: boolean;
+    source: 'ENV' | 'DATABASE';
+    createdBy: string | null;
+    createdAt: string | null;
+  }>> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins`, {
+        headers: this.authHeaders(),
+      });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data.admins) ? data.admins : [];
+    } catch {
+      return [];
+    }
+  }
+
+  public async grantAdminAccess(payload: {
+    adminId: string;
+    name: string;
+    password?: string;
+    linkExistingVerified?: boolean;
+  }): Promise<{ success: boolean; admin?: any; message?: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins`, {
+        method: 'POST',
+        headers: this.authHeaders(),
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok) return { success: false, message: data.error || 'Could not grant admin access' };
+      return { success: true, admin: data.admin };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error' };
+    }
+  }
+
+  public async setAdminAccessStatus(
+    adminId: string,
+    active: boolean
+  ): Promise<{ success: boolean; admin?: any; message?: string }> {
+    try {
+      const res = await fetch(`${this.serverBaseUrl}/api/admin/admins/${encodeURIComponent(adminId)}/status`, {
+        method: 'POST',
+        headers: this.authHeaders(),
+        body: JSON.stringify({ active }),
+      });
+      const data = await res.json();
+      if (!res.ok) return { success: false, message: data.error || 'Could not update admin access' };
+      return { success: true, admin: data.admin };
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error' };
+    }
+  }
+
   public async listPendingVerifications(): Promise<Array<{
     roll_number: string;
     name: string;

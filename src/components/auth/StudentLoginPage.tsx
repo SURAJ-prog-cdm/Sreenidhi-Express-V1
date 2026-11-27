@@ -735,19 +735,19 @@ const StudentLoginPageComponent: React.FC<StudentLoginPageProps> = ({ initialRol
                 Transport Office Admin
               </span>
               <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                Official admin ID
+                Authorized admin credentials
               </span>
             </div>
             <div>
               <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                Admin ID
+                Admin ID / Email
               </label>
               <input
                 type="text"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
                 className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-white"
-                placeholder="Admin ID"
+                placeholder="Admin ID or official email"
                 required
               />
             </div>

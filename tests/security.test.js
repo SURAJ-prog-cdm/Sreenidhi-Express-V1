@@ -1093,5 +1093,99 @@ test('v20.3 driver utility report: IST formatting, scheduled variance, summary K
   }
 });
 
+test('v20.4 multi-admin access: authorized users with proper credentials can authenticate and revocation invalidates sessions', async () => {
+  const adminToken = signToken({ sub: 'TRANSPORT_ADMIN', role: 'ADMIN' });
+  const studentToken = signToken({ sub: '26011CSEAI0109', role: 'STUDENT', routeId: 'route-51', sessionVersion: 0 });
+  const coAdminId = 'hod.aiml.test@sreenidhi.edu.in';
+  const envAdminId = 'coord.env.test@sreenidhi.edu.in';
+  const prevAdminAccounts = process.env.ADMIN_ACCOUNTS;
+  db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
+
+  const server = app.listen(0);
+  try {
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}`;
+
+    // 1. Student token cannot list or create admins
+    const forbiddenList = await fetch(`${baseUrl}/api/admin/admins`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    });
+    assert.equal(forbiddenList.status, 403);
+
+    // 2. Existing admin grants access to HOD account
+    const grantRes = await fetch(`${baseUrl}/api/admin/admins`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, name: 'HOD CSE AI/ML', password: 'HodPassword#2026' }),
+    });
+    assert.equal(grantRes.status, 201);
+    const grantBody = await grantRes.json();
+    assert.equal(grantBody.success, true);
+    assert.equal(grantBody.admin.adminId, coAdminId);
+
+    // 3. Wrong password fails cleanly with 401
+    const badLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, password: 'WrongPassword123' }),
+    });
+    assert.equal(badLogin.status, 401);
+
+    // 4. Co-admin signs in with proper credentials (case-insensitive ID lookup) and uses Admin APIs
+    const goodLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId.toUpperCase(), password: 'HodPassword#2026' }),
+    });
+    assert.equal(goodLogin.status, 200);
+    const loginBody = await goodLogin.json();
+    assert.equal(loginBody.success, true);
+    assert.equal(loginBody.admin.role, 'ADMIN');
+    assert.ok(loginBody.token);
+
+    const coAdminUtil = await fetch(`${baseUrl}/api/admin/driver-utility`, {
+      headers: { Authorization: `Bearer ${loginBody.token}` },
+    });
+    assert.equal(coAdminUtil.status, 200);
+
+    // 5. Env-configured ADMIN_ACCOUNTS co-admin also logs in cleanly
+    const envHash = await hashPassword('EnvCoAdmin#2026');
+    process.env.ADMIN_ACCOUNTS = JSON.stringify([{ id: envAdminId, name: 'Env Coordinator', passwordHash: envHash }]);
+    const envLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: envAdminId, password: 'EnvCoAdmin#2026' }),
+    });
+    assert.equal(envLogin.status, 200);
+    const envLoginBody = await envLogin.json();
+    assert.equal(envLoginBody.admin.name, 'Env Coordinator');
+
+    // 6. Revoking DB co-admin immediately blocks existing token AND future login
+    const revokeRes = await fetch(`${baseUrl}/api/admin/admins/${encodeURIComponent(coAdminId)}/status`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: false }),
+    });
+    assert.equal(revokeRes.status, 200);
+
+    const staleTokenCheck = await fetch(`${baseUrl}/api/admin/admins`, {
+      headers: { Authorization: `Bearer ${loginBody.token}` },
+    });
+    assert.equal(staleTokenCheck.status, 401);
+
+    const blockedLogin = await fetch(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: coAdminId, password: 'HodPassword#2026' }),
+    });
+    assert.equal(blockedLogin.status, 401);
+  } finally {
+    server.close();
+    if (prevAdminAccounts === undefined) delete process.env.ADMIN_ACCOUNTS;
+    else process.env.ADMIN_ACCOUNTS = prevAdminAccounts;
+    db.prepare('DELETE FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').run(coAdminId);
+  }
+});
+
 
 

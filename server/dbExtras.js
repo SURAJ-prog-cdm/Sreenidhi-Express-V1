@@ -137,6 +137,16 @@ export function createExtras(db) {
         flag TEXT NOT NULL DEFAULT 'NORMAL',
         recorded_at INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS admin_users (
+        admin_id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        password_hash TEXT NOT NULL,
+        active INTEGER NOT NULL DEFAULT 1,
+        session_version INTEGER NOT NULL DEFAULT 0,
+        created_by TEXT,
+        created_at TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS idx_admin_users_active ON admin_users(active);
       CREATE INDEX IF NOT EXISTS idx_dwell_route_ts ON stop_dwell_logs(route_id, recorded_at);
       CREATE INDEX IF NOT EXISTS idx_route_geom_route ON route_geometry_cache(route_id, updated_at);
       CREATE INDEX IF NOT EXISTS idx_push_sub_roll ON push_subscriptions(roll_number, user_type);
@@ -1459,6 +1469,73 @@ export function createExtras(db) {
     };
   }
 
+  /* ---------------- Multi-Admin Access Accounts ---------------- */
+  function getAdminUser(adminId) {
+    const cleanId = String(adminId || '').trim();
+    if (!cleanId) return null;
+    return db.prepare('SELECT * FROM admin_users WHERE LOWER(admin_id) = LOWER(?)').get(cleanId) || null;
+  }
+
+  function hasAnyActiveAdmin() {
+    return Boolean(db.prepare('SELECT 1 FROM admin_users WHERE active = 1 LIMIT 1').get());
+  }
+
+  function listAdminUsers() {
+    return db
+      .prepare('SELECT admin_id, name, active, session_version, created_by, created_at FROM admin_users ORDER BY created_at ASC, admin_id ASC')
+      .all();
+  }
+
+  function createAdminUser({ adminId, name, passwordHash, createdBy }) {
+    const cleanId = String(adminId || '').trim();
+    const cleanName = String(name || '').trim() || cleanId;
+    if (!cleanId || !passwordHash) return null;
+    if (getAdminUser(cleanId)) return null;
+    const createdAt = new Date().toISOString();
+    db.prepare(`
+      INSERT INTO admin_users (admin_id, name, password_hash, active, session_version, created_by, created_at)
+      VALUES (?, ?, ?, 1, 0, ?, ?)
+    `).run(cleanId, cleanName, passwordHash, createdBy ? String(createdBy).trim() : null, createdAt);
+    return {
+      admin_id: cleanId,
+      name: cleanName,
+      active: 1,
+      session_version: 0,
+      created_by: createdBy ? String(createdBy).trim() : null,
+      created_at: createdAt,
+    };
+  }
+
+  function setAdminUserActive(adminId, active) {
+    const existing = getAdminUser(adminId);
+    if (!existing) return null;
+    const nextActive = active ? 1 : 0;
+    const bumpSession = nextActive === 0 ? 1 : 0;
+    db.prepare(`
+      UPDATE admin_users
+      SET active = ?, session_version = session_version + ?
+      WHERE LOWER(admin_id) = LOWER(?)
+    `).run(nextActive, bumpSession, existing.admin_id);
+    const updated = getAdminUser(existing.admin_id);
+    if (!updated) return null;
+    return {
+      admin_id: updated.admin_id,
+      name: updated.name,
+      active: updated.active,
+      session_version: updated.session_version,
+      created_by: updated.created_by,
+      created_at: updated.created_at,
+    };
+  }
+
+  function setAdminPasswordHash(adminId, passwordHash) {
+    const existing = getAdminUser(adminId);
+    if (!existing) return false;
+    db.prepare('UPDATE admin_users SET password_hash = ?, session_version = session_version + 1 WHERE LOWER(admin_id) = LOWER(?)')
+      .run(passwordHash, existing.admin_id);
+    return true;
+  }
+
   return { migrate, tx, getStudentRow, setPasswordHash, touchLastActive, getSessionVersion, isSessionCurrent, revokeStudentSessions, createStudent, claimEvent, pruneEvents, recentCheckIn,
     saveApplication, listApplications, getApplication, reviewApplication, createLinkCode, consumeLinkCode, createParentCode, redeemParentCode,
     activateGracePass, setFeeStatus, canStudentTravel, setAbsence, isAbsent, listAbsences, countAbsencesForRoute, getAssignedStudentCount, listStudentsForRoute,
@@ -1473,5 +1550,6 @@ export function createExtras(db) {
     recordStopSegmentDuration, getHistoricalSegmentMedians, bulkImportRiders,
     getCachedRouteGeometry, saveCachedRouteGeometry,
     recordStopDwell, getDriverUtilityLogs,
-    createPendingStudent, listPendingVerifications, verifyStudentRegistration };
+    createPendingStudent, listPendingVerifications, verifyStudentRegistration,
+    getAdminUser, hasAnyActiveAdmin, listAdminUsers, createAdminUser, setAdminUserActive, setAdminPasswordHash };
 }
