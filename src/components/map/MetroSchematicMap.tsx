@@ -1,10 +1,19 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { ExternalLink, Navigation } from 'lucide-react';
 import type { BusVehicle } from '../../types/transit';
 import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
-import { haversineMeters, projectGpsOntoStops } from '../../services/corridorProjection.ts';
+import {
+  buildGoogleMapsRouteUrl,
+  haversineMeters,
+  projectGpsOntoStops,
+} from '../../services/corridorProjection.ts';
 
-export { projectGpsOntoStops, haversineMeters, type GpsProjectionResult } from '../../services/corridorProjection.ts';
+export {
+  buildGoogleMapsRouteUrl,
+  projectGpsOntoStops,
+  haversineMeters,
+  type GpsProjectionResult,
+} from '../../services/corridorProjection.ts';
 
 interface MetroSchematicMapProps {
   activeBus: BusVehicle;
@@ -84,6 +93,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
   const stops = activeBus.stops && activeBus.stops.length > 0 ? activeBus.stops : [];
   const gradientId = useId().replace(/:/g, '');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userScrolledAtRef = useRef<number>(0);
+  const isProgrammaticScrollRef = useRef<boolean>(false);
+  const didInitialCenterRef = useRef<boolean>(false);
+  const lastRouteIdRef = useRef<string>(activeBus.routeId);
+  const [hasOverflow, setHasOverflow] = useState<boolean>(stops.length > 5);
 
   const resolvedHighlightStop =
     stops.find(
@@ -93,7 +107,6 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         s.shortName === highlightStopId
     ) || stops[0];
   const targetHighlightStopId = resolvedHighlightStop?.id || '';
-  const highlightStopIdx = stops.findIndex((s) => s.id === targetHighlightStopId);
 
   const fallbackIdx = Math.min(
     Math.max(activeBus.currentStopIndex ?? 0, 0),
@@ -139,104 +152,41 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         : `${(meters / 1000).toFixed(1)} km to ${resolvedHighlightStop.shortName || resolvedHighlightStop.name}`;
   }
 
-  // Free Google Maps live pin link (zero tile embedding cost)
-  const pinLat =
+  // Free multi-stop Google Maps Directions URL (/maps/dir/?api=1)
+  const fallbackLat =
     Number.isFinite(activeBus.currentLat) && Math.abs(activeBus.currentLat) > 0.0001
       ? activeBus.currentLat
       : SREENIDHI_CAMPUS.lat;
-  const pinLng =
+  const fallbackLng =
     Number.isFinite(activeBus.currentLng) && Math.abs(activeBus.currentLng) > 0.0001
       ? activeBus.currentLng
       : SREENIDHI_CAMPUS.lng;
-  const googleMapsPinUrl = `https://www.google.com/maps/search/?api=1&query=${pinLat},${pinLng}`;
+  const googleMapsRouteUrl = buildGoogleMapsRouteUrl(stops, { lat: fallbackLat, lng: fallbackLng });
 
-  // Determine stops rendered inside SVG:
-  // compact={true}: focused 4-to-5 stop window centered around current projection.segmentIndex
-  // compact={false}: full corridor (scrollable horizontally on phones)
-  const { slicedStops, sliceStart, hasLeadingMore, hasTrailingMore, aheadHighlightName } = (() => {
-    if (!compact || stops.length <= 5) {
-      return {
-        slicedStops: stops,
-        sliceStart: 0,
-        hasLeadingMore: false,
-        hasTrailingMore: false,
-        aheadHighlightName: '',
-      };
-    }
+  // Render all stops across the full scrollable curved corridor (no 4-stop crop in compact mode)
+  const viewWidth = Math.max(760, 112 + Math.max(stops.length - 1, 1) * 88);
+  const viewHeight = compact ? 214 : 224;
+  const svgMinWidthPx = Math.max(660, stops.length >= 12 ? 920 : stops.length * 68);
 
-    let start = Math.max(0, Math.min(projection.segmentIndex - 1, stops.length - 4));
-    let end = Math.min(stops.length - 1, start + 3);
-
-    // Ensure next segment endpoint is always included
-    if (projection.segmentIndex + 1 > end && end < stops.length - 1) {
-      end = Math.min(stops.length - 1, projection.segmentIndex + 1);
-      start = Math.max(0, end - 4);
-    }
-
-    // Include YOUR STOP within up to a 5-stop window if adjacent
-    if (highlightStopIdx >= 0) {
-      if (highlightStopIdx === end + 1 && end - start + 1 < 5) {
-        end = highlightStopIdx;
-      } else if (highlightStopIdx === start - 1 && end - start + 1 < 5) {
-        start = highlightStopIdx;
-      } else if (highlightStopIdx >= Math.max(0, start - 1) && highlightStopIdx <= Math.min(stops.length - 1, end + 1)) {
-        start = Math.min(start, highlightStopIdx);
-        end = Math.max(end, highlightStopIdx);
-      }
-    }
-
-    const slice = stops.slice(start, end + 1);
-    const trailingStopAhead =
-      highlightStopIdx > end ? stops[highlightStopIdx]?.shortName || stops[highlightStopIdx]?.name || '' : '';
-
-    return {
-      slicedStops: slice,
-      sliceStart: start,
-      hasLeadingMore: start > 0,
-      hasTrailingMore: end < stops.length - 1,
-      aheadHighlightName: trailingStopAhead,
-    };
-  })();
-
-  // SVG viewport & smooth curved metro geometry
-  const compactViewWidth = 380;
-  const compactViewHeight = 185;
-  const fullViewHeight = 210;
-  const viewWidth = compact
-    ? compactViewWidth
-    : Math.max(760, 112 + Math.max(slicedStops.length - 1, 1) * 88);
-  const viewHeight = compact ? compactViewHeight : fullViewHeight;
-
-  const padX = compact ? 48 : 56;
-  const metroStations = slicedStops.map((stop, i, arr) => {
+  const padX = 56;
+  const metroStations = stops.map((stop, i, arr) => {
     const total = Math.max(arr.length - 1, 1);
     const x =
       arr.length === 1
         ? Math.round(viewWidth / 2)
         : Math.round(padX + (i / total) * (viewWidth - padX * 2));
 
-    const globalIdx = sliceStart + i;
-    const isTerminus = stop.areaClusterId === 'cluster-campus' || globalIdx === stops.length - 1;
-    // Alternating lower/upper tiers with gentle wave variation so adjacent labels never collide
-    const y = compact
-      ? isTerminus
-        ? 98
-        : i % 2 === 0
-          ? i % 4 === 0
-            ? 120
-            : 112
-          : i % 4 === 1
-            ? 78
-            : 86
-      : isTerminus
-        ? 106
-        : i % 2 === 0
-          ? i % 4 === 0
-            ? 136
-            : 124
-          : i % 4 === 1
-            ? 78
-            : 90;
+    const isTerminus = stop.areaClusterId === 'cluster-campus' || i === stops.length - 1;
+    // Lower nodes stay around 120–132 with +27px below-curve label clearance so the bus pin never covers stop names
+    const y = isTerminus
+      ? 104
+      : i % 2 === 0
+        ? i % 4 === 0
+          ? 130
+          : 118
+        : i % 4 === 1
+          ? 76
+          : 88;
 
     const isUpper = !isTerminus && i % 2 === 1;
     const isInterchange = Boolean(stop.metroInterchange);
@@ -244,11 +194,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
     return {
       id: stop.id,
-      globalIdx,
-      name: truncateLabel(stop.shortName || stop.name, compact ? 15 : 18),
+      globalIdx: i,
+      name: truncateLabel(stop.shortName || stop.name, 18),
       subtitle:
         typeof stop.metroInterchange === 'object'
-          ? truncateLabel(stop.metroInterchange.stationName, compact ? 16 : 20)
+          ? truncateLabel(stop.metroInterchange.stationName, 20)
           : isTerminus
             ? 'Campus Terminus'
             : morningShift
@@ -281,14 +231,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
       : '';
 
   const localSegIdx = Math.min(
-    Math.max(projection.segmentIndex - sliceStart, 0),
+    Math.max(projection.segmentIndex, 0),
     Math.max(metroStations.length - 1, 0)
   );
-  const segProg = projection.segmentIndex >= sliceStart && projection.segmentIndex < sliceStart + slicedStops.length - 1
-    ? projection.segmentProgress
-    : projection.segmentIndex < sliceStart
-      ? 0
-      : 1;
+  const segProg =
+    localSegIdx < bezierSegments.length ? projection.segmentProgress : 1;
 
   // Evaluate exact bus point on the curved Bézier segment at t = segProg
   const busPt: Pt = (() => {
@@ -300,7 +247,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
     return { x: last.x, y: last.y };
   })();
 
-  // Build exact curved passed track path from start of view up to (busPt.x, busPt.y)
+  // Build exact curved passed track path from start of route up to (busPt.x, busPt.y)
   const passedTrackPathD = (() => {
     if (metroStations.length === 0) return '';
     const parts: string[] = [`M ${metroStations[0].x} ${metroStations[0].y}`];
@@ -319,34 +266,81 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
     return parts.join(' ');
   })();
 
-  // Clamp bus pin icon and speed callout inside SVG safe bounds so nothing clips on 360px screens
+  // Clamp bus pin icon and speed callout inside SVG safe bounds
   const busX = Math.max(18, Math.min(viewWidth - 18, busPt.x));
-  const busY = Math.max(36, Math.min(viewHeight - 24, busPt.y));
+  const busY = Math.max(36, Math.min(viewHeight - 28, busPt.y));
   const pillCenterX = Math.max(38, Math.min(viewWidth - 38, busPt.x));
   const pillY = Math.max(15, busY - 26);
 
-  // Keep latest busX/viewWidth in refs so auto-centering only fires on mount / route / segmentIndex changes
+  // Measure horizontal overflow dynamically for responsive scroll hint visibility
+  useEffect(() => {
+    const checkOverflow = () => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+      setHasOverflow(el.scrollWidth > el.clientWidth + 4);
+    };
+    checkOverflow();
+    if (typeof ResizeObserver !== 'undefined' && scrollContainerRef.current) {
+      const ro = new ResizeObserver(checkOverflow);
+      ro.observe(scrollContainerRef.current);
+      return () => ro.disconnect();
+    }
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [stops.length, viewWidth]);
+
+  // Keep latest busX/viewWidth in refs so auto-centering fires cleanly on mount, route change, and stop changes
+  // without snapping back if the user has manually scrolled within the last 4 seconds
   const scrollTargetRef = useRef({ busX, viewWidth });
   scrollTargetRef.current = { busX, viewWidth };
 
   useEffect(() => {
-    if (compact) return;
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const recenter = () => {
+    const routeChanged = lastRouteIdRef.current !== activeBus.routeId;
+    if (routeChanged) {
+      lastRouteIdRef.current = activeBus.routeId;
+      userScrolledAtRef.current = 0;
+    }
+
+    const recentlyScrolledByUser =
+      didInitialCenterRef.current && Date.now() - userScrolledAtRef.current < 4000;
+    if (recentlyScrolledByUser) return;
+
+    let clearTimer: number | undefined;
+    const rafId = window.requestAnimationFrame(() => {
       const el = scrollContainerRef.current;
       if (!el) return;
       const { busX: currentBusX, viewWidth: currentSvgWidth } = scrollTargetRef.current;
-      if (el.scrollWidth <= el.clientWidth + 4 || currentSvgWidth <= 0) return;
+      if (el.scrollWidth <= el.clientWidth + 4 || currentSvgWidth <= 0) {
+        didInitialCenterRef.current = true;
+        return;
+      }
       const targetPx = (currentBusX / currentSvgWidth) * el.scrollWidth - el.clientWidth / 2;
       const clampedLeft = Math.max(0, Math.min(el.scrollWidth - el.clientWidth, targetPx));
-      el.scrollTo({ left: clampedLeft, behavior: 'smooth' });
-    };
+      isProgrammaticScrollRef.current = true;
+      el.scrollTo({
+        left: clampedLeft,
+        behavior: didInitialCenterRef.current ? 'smooth' : 'auto',
+      });
+      didInitialCenterRef.current = true;
+      clearTimer = window.setTimeout(() => {
+        isProgrammaticScrollRef.current = false;
+      }, 750);
+    });
 
-    const rafId = window.requestAnimationFrame(recenter);
-    return () => window.cancelAnimationFrame(rafId);
-  }, [compact, activeBus.routeId, projection.segmentIndex, stops.length]);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      if (clearTimer !== undefined) window.clearTimeout(clearTimer);
+    };
+  }, [activeBus.routeId, activeBus.currentStopIndex, projection.segmentIndex, stops.length]);
+
+  const markUserInteraction = () => {
+    if (!isProgrammaticScrollRef.current) {
+      userScrolledAtRef.current = Date.now();
+    }
+  };
 
   return (
     <div
@@ -398,19 +392,26 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </span>
       </div>
 
-      {/* Unified Curved Metro-Style SVG Schematic (Mobile, Tablet & Desktop) */}
-      <div className="bg-[#F7F9FF]/75 px-2.5 py-2.5 sm:p-3.5 dark:bg-[#161B26]">
-        {!compact && stops.length > 5 && (
-          <div className="mb-1 flex items-center justify-center sm:hidden">
+      {/* Unified Curved Scrollable Metro-Style SVG Schematic (Both Home Compact & Full Views) */}
+      <div
+        className={`bg-[#F7F9FF]/75 dark:bg-[#161B26] ${
+          compact ? 'px-2 py-2' : 'px-2.5 py-2.5 sm:p-3.5'
+        }`}
+      >
+        {(hasOverflow || stops.length > 5) && (
+          <div className={`mb-1 flex items-center justify-center ${hasOverflow ? '' : 'sm:hidden'}`}>
             <span className="rounded-full bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
-              ← Swipe schematic corridor →
+              ← Swipe / Scroll route →
             </span>
           </div>
         )}
 
         <div
           ref={scrollContainerRef}
-          className={compact ? 'w-full overflow-hidden' : 'w-full overflow-x-auto touch-pan-x'}
+          onScroll={markUserInteraction}
+          onPointerDown={markUserInteraction}
+          onTouchStart={markUserInteraction}
+          className="w-full overflow-x-auto overscroll-x-contain touch-pan-x pb-1"
         >
           {stops.length === 0 ? (
             <p className="py-6 text-center text-xs italic text-slate-500 dark:text-slate-400">
@@ -419,12 +420,8 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
           ) : (
             <svg
               viewBox={`0 0 ${viewWidth} ${viewHeight}`}
-              className="w-full select-none"
-              style={
-                compact
-                  ? undefined
-                  : { minWidth: `${Math.max(660, stops.length >= 12 ? 920 : stops.length * 68)}px` }
-              }
+              className={`w-full select-none ${compact ? 'max-h-[178px]' : ''}`}
+              style={{ minWidth: `${svgMinWidthPx}px` }}
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -435,79 +432,12 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 </linearGradient>
               </defs>
 
-              {/* Continuation Markers in Compact Window */}
-              {compact && hasLeadingMore && metroStations[0] && (
-                <g opacity={0.75}>
-                  <line
-                    x1="12"
-                    y1={metroStations[0].y}
-                    x2={metroStations[0].x}
-                    y2={metroStations[0].y}
-                    stroke="#94A3B8"
-                    strokeWidth="4"
-                    strokeDasharray="4 4"
-                    strokeLinecap="round"
-                  />
-                  <text
-                    x="18"
-                    y={metroStations[0].y - 8}
-                    fill="#64748B"
-                    fontSize="10"
-                    fontWeight="800"
-                    textAnchor="middle"
-                    fontFamily="system-ui"
-                  >
-                    •••
-                  </text>
-                </g>
-              )}
-
-              {compact && hasTrailingMore && metroStations[metroStations.length - 1] && (
-                <g opacity={0.85}>
-                  <line
-                    x1={metroStations[metroStations.length - 1].x}
-                    y1={metroStations[metroStations.length - 1].y}
-                    x2={viewWidth - 14}
-                    y2={metroStations[metroStations.length - 1].y}
-                    stroke="#94A3B8"
-                    strokeWidth="4"
-                    strokeDasharray="4 4"
-                    strokeLinecap="round"
-                  />
-                  <text
-                    x={viewWidth - 20}
-                    y={metroStations[metroStations.length - 1].y - 8}
-                    fill="#4F46E5"
-                    fontSize="10"
-                    fontWeight="800"
-                    textAnchor="middle"
-                    fontFamily="system-ui"
-                    className="dark:fill-cyan-300"
-                  >
-                    •••
-                  </text>
-                  {aheadHighlightName && (
-                    <text
-                      x={viewWidth - 6}
-                      y={metroStations[metroStations.length - 1].y + 15}
-                      fill="#E65100"
-                      fontSize="7.5"
-                      fontWeight="800"
-                      textAnchor="end"
-                      fontFamily="system-ui"
-                    >
-                      → {truncateLabel(aheadHighlightName, 12)}
-                    </text>
-                  )}
-                </g>
-              )}
-
               {/* Outer Curved Track Backing */}
               {fullTrackPathD && (
                 <path
                   d={fullTrackPathD}
                   stroke="#E2E8F0"
-                  strokeWidth={compact ? '11' : '12'}
+                  strokeWidth="12"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#374151]"
@@ -520,7 +450,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                   d={fullTrackPathD}
                   stroke="#94A3B8"
                   strokeOpacity="0.45"
-                  strokeWidth={compact ? '6' : '6.5'}
+                  strokeWidth="6.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#64748B]"
@@ -532,7 +462,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 <path
                   d={passedTrackPathD}
                   stroke={`url(#${gradientId})`}
-                  strokeWidth={compact ? '6.5' : '7'}
+                  strokeWidth="7"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="transition-all duration-700 ease-out"
@@ -550,7 +480,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 />
               )}
 
-              {/* Station Nodes & Alternating Labels */}
+              {/* Station Nodes & Alternating Labels (+8px lower label clearance against bus pin) */}
               {metroStations.map((st) => {
                 const isPassed =
                   st.globalIdx < projection.segmentIndex ||
@@ -559,9 +489,9 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 const isHighlighted = st.id === targetHighlightStopId;
                 const isBypassed = st.isBypassed;
 
-                const nameY = st.isUpper ? st.y - 15 : st.y + 18;
-                const subY = st.isUpper ? st.y - 26 : st.y + 28.5;
-                const tagY = st.isUpper ? st.y - 39 : st.y + 34;
+                const nameY = st.isUpper ? st.y - 16 : st.y + 27;
+                const subY = st.isUpper ? st.y - 27 : st.y + 38;
+                const tagY = st.isUpper ? st.y - 40 : st.y + 44;
 
                 return (
                   <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
@@ -593,7 +523,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                         <circle
                           cx="0"
                           cy="0"
-                          r={compact ? '8.5' : '9'}
+                          r="9"
                           fill="#FFFFFF"
                           stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
                           strokeWidth="3.5"
@@ -612,7 +542,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                       <circle
                         cx={st.x}
                         cy={st.y}
-                        r={compact ? '5.5' : '6'}
+                        r="6"
                         fill="#FFFFFF"
                         stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#64748B'}
                         strokeWidth="2.5"
@@ -633,7 +563,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                           strokeWidth="2"
                           strokeDasharray="3 3"
                         />
-                        <g transform={`translate(${Math.max(28, Math.min(viewWidth - 28, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 16, tagY + 3)})`}>
+                        <g transform={`translate(${Math.max(28, Math.min(viewWidth - 28, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 14, tagY + 4)})`}>
                           <rect x="-25" y="-5" width="50" height="13" rx="4" fill="#E65100" />
                           <text
                             x="0"
@@ -652,7 +582,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
                     {/* BYPASSED Badge */}
                     {isBypassed && (
-                      <g transform={`translate(${Math.max(24, Math.min(viewWidth - 24, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 15, tagY + 3)})`}>
+                      <g transform={`translate(${Math.max(24, Math.min(viewWidth - 24, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 14, tagY + 4)})`}>
                         <rect x="-21" y="-5" width="42" height="11" rx="3" fill="#6B7280" opacity="0.92" />
                         <text
                           x="0"
@@ -698,7 +628,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
                     {/* Metro Tag when not covered by YOUR STOP or BYPASSED badge */}
                     {st.isInterchange && !isBypassed && !isHighlighted && (
-                      <g transform={`translate(${Math.max(20, Math.min(viewWidth - 20, st.x))}, ${st.isUpper ? Math.max(11, tagY) : Math.min(viewHeight - 14, tagY + 2)})`}>
+                      <g transform={`translate(${Math.max(20, Math.min(viewWidth - 20, st.x))}, ${st.isUpper ? Math.max(11, tagY) : Math.min(viewHeight - 12, tagY + 3)})`}>
                         <rect x="-15" y="-4" width="30" height="9.5" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
                         <text
                           x="0"
@@ -763,7 +693,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </div>
       </div>
 
-      {/* Bottom External HUD Bar (Corridor Progress & Free Google Maps Pin) */}
+      {/* Bottom External HUD Bar (Corridor Progress & Free Multi-Stop Google Maps Route) */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-[#F7F9FF] px-3.5 py-2.5 text-[11px] dark:border-[#2E3646] dark:bg-[#141821]">
         <div className="flex flex-wrap items-center gap-2 min-w-0">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-800/60 dark:bg-indigo-950/60 dark:text-cyan-300">
@@ -777,13 +707,13 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </div>
 
         <a
-          href={googleMapsPinUrl}
+          href={googleMapsRouteUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-2xs transition hover:border-[#4F46E5] hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-slate-200 dark:hover:text-cyan-300"
         >
           <Navigation className="h-3 w-3 text-[#4F46E5] dark:text-cyan-300" />
-          <span>Open Live Pin in Google Maps</span>
+          <span>Open Full Route in Google Maps</span>
           <ExternalLink className="h-2.5 w-2.5 opacity-70" />
         </a>
       </div>

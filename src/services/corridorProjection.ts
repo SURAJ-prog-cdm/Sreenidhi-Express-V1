@@ -145,3 +145,43 @@ export function projectGpsOntoStops(
     nearestStopIndex,
   };
 }
+
+/**
+ * Build a zero-cost multi-stop Google Maps Directions URL (/maps/dir/?api=1)
+ * showing the driving polyline and waypoint stop sidebar across Hyderabad.
+ */
+export function buildGoogleMapsRouteUrl(
+  stops: Array<{ lat: number; lng: number }>,
+  fallbackCoords?: { lat: number; lng: number } | null
+): string {
+  const validStops = Array.isArray(stops)
+    ? stops.filter((s) => s && isValidGpsCoord(s.lat, s.lng))
+    : [];
+
+  if (validStops.length >= 2) {
+    const origin = validStops[0];
+    const destination = validStops[validStops.length - 1];
+    const intermediateWaypoints = validStops
+      .slice(1, -1)
+      .map((s) => `${s.lat},${s.lng}`)
+      .join('|');
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}${
+      intermediateWaypoints ? `&waypoints=${encodeURIComponent(intermediateWaypoints)}` : ''
+    }&travelmode=driving`;
+  }
+
+  if (validStops.length === 1) {
+    const only = validStops[0];
+    return `https://www.google.com/maps/dir/?api=1&destination=${only.lat},${only.lng}&travelmode=driving`;
+  }
+
+  if (
+    fallbackCoords &&
+    Number.isFinite(fallbackCoords.lat) &&
+    Number.isFinite(fallbackCoords.lng)
+  ) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${fallbackCoords.lat},${fallbackCoords.lng}&travelmode=driving`;
+  }
+
+  return 'https://www.google.com/maps/dir/?api=1&travelmode=driving';
+}

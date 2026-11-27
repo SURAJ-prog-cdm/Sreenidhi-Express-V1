@@ -22,7 +22,7 @@ import {
   Navigation,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { MetroSchematicMap } from '../map/MetroSchematicMap';
+import { buildGoogleMapsRouteUrl, MetroSchematicMap } from '../map/MetroSchematicMap';
 import { audioSpeechService } from '../../services/audioSpeechService';
 import { excelService } from '../../services/excelService';
 import { nativeDeviceService } from '../../services/nativeDeviceService';
@@ -925,10 +925,10 @@ export const DriverConsole: React.FC = () => {
 
               {(() => {
                 const activeStops = activeBus.stops.filter((s) => !s.isBypassed);
-                const originStop = activeStops[0] || activeBus.stops[0];
-                const destStop = activeStops[activeStops.length - 1] || activeBus.stops[activeBus.stops.length - 1];
-                const intermediateWaypoints = activeStops.slice(1, -1).map((s) => `${s.lat},${s.lng}`).join('|');
-                const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originStop.lat},${originStop.lng}&destination=${destStop.lat},${destStop.lng}${intermediateWaypoints ? `&waypoints=${encodeURIComponent(intermediateWaypoints)}` : ''}&travelmode=driving`;
+                const googleMapsUrl = buildGoogleMapsRouteUrl(
+                  activeStops.length > 0 ? activeStops : activeBus.stops,
+                  { lat: activeBus.currentLat, lng: activeBus.currentLng }
+                );
 
                 return (
                   <a

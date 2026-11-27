@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 27, 2026
-> **Build Status:** Production Prototype / v20.4.1 Multi-Admin Access, Unified Curved Metro-Style SVG Schematic Map & ₹0 Forgot Password Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unified Curved Cubic-Bézier `MetroSchematicMap` Across Mobile & Desktop Without Frontend Leaflet Dependencies, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 40/40 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.4.2 Multi-Admin Access, Scrollable Full-Corridor Curved Metro SVG & Unified Multi-Stop Google Maps Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Full-Corridor Scrollable Curved Cubic-Bézier `MetroSchematicMap` Across Student Home Preview & All Portals Without Frontend Leaflet Dependencies, Shared `buildGoogleMapsRouteUrl` Multi-Stop Directions Across All Portals, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 41/41 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 81 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 82 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 / v20.4.1 upgrades (Multi-Admin RBAC, Unified Curved GPS-Driven Live Schematic SVG Map, Registration Stop Dropdown, and ₹0 Forgot Password), all 81 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 40/40 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 / v20.4.2 upgrades (Multi-Admin RBAC, Full-Corridor Scrollable Curved GPS Schematic Map, Unified Multi-Stop Google Maps Directions, Registration Stop Dropdown, and ₹0 Forgot Password), all 82 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 41/41 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -97,6 +97,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **79** | **P0** | v20.4 Multi-Admin Access | **Authorized Multi-Admin Credentials & Management UI**: Replaced single-`ADMIN_ID` bottleneck in `server/index.js` with constant-time multi-admin lookup across `ADMIN_ID`, optional `ADMIN_ACCOUNTS` JSON array, and SQLite `admin_users` table (`server/dbExtras.js`); added `GET /api/admin/admins`, `POST /api/admin/admins`, and `POST /api/admin/admins/:adminId/status` with `session_version` token revocation enforcement inside `setAccessTokenValidator`; added `Authorized Admin Access Accounts` card in `AdminDashboard.tsx` and updated `tests/security.test.js` to 38/38 passing. | [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **80** | **P0** | v20.4 Live Schematic Map, Registration Dropdown & ₹0 Forgot Password | **GPS-Driven `MetroSchematicMap`, Frontend Leaflet Removal, Self-Register Stop `<select>` & ₹0 Forgot Password**: Replaced `HybridTransitMap` + frontend `leaflet` / `react-leaflet` packages with a single responsive GPS-projected `MetroSchematicMap` (`projectGpsOntoStops`, mobile vertical timeline with 4-stop compact window, smooth gliding desktop SVG corridor, Top/Bottom HUD bars, and free Google Maps Pin handoff) across all 4 portals while preserving backend tile/CSP tests; upgraded New Commuter Self-Registration Requested Pickup Stop to a grouped `<select>` populated from `INITIAL_BUS_FLEET`; added `POST /api/auth/forgot-password`, `POST /api/auth/reset-password` (timing-safe 6-digit codes, 5-attempt lockout, 15m TTL, optional Telegram alert, Admin Desk visibility via `GET /api/admin/password-reset-requests`); extended `tests/security.test.js` to 40/40 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **81** | **P1** | v20.4.1 Curved Metro SVG Schematic | **Unified Curved Cubic-Bézier Metro SVG Across Mobile & Desktop**: Removed straight-line vertical mobile stop list in `MetroSchematicMap.tsx` and unified all viewports onto a curved C1-continuous cubic Bézier Metro corridor with exact De Casteljau partial passed-track gradient shading, phone-safe 4–5 stop `compact` `viewBox="0 0 380 185"` preview with clamped `R51 • km/h` callout pill, swipeable full route corridor with auto-centering onto `busX`, and external Top/Bottom HUD bars while preserving `projectGpsOntoStops` & `haversineMeters` exports and 40/40 tests. | [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
+| **82** | **P1** | v20.4.2 Full-Corridor Home Scroll & Multi-Stop Directions | **Scrollable Full-Corridor Home Preview, Lower-Label Clearance & Unified Multi-Stop Google Maps Directions**: Removed the 4-stop crop in `MetroSchematicMap.tsx` `compact` mode so Student/Faculty Home previews expose the complete scrollable curved corridor with `← Swipe / Scroll route →` overflow hint and 4-second manual-scroll cooldown before auto-centering; increased bottom-curve stop label clearance (+9px to `st.y + 27`) so the bus beacon never overlaps Erragadda/bottom stop names; added `buildGoogleMapsRouteUrl` in `corridorProjection.ts` and unified `Open Full Route in Google Maps` & Driver `Navigate Optimized Route` onto multi-stop `/maps/dir/?api=1` Directions URLs; expanded `tests/security.test.js` to 41/41 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 
 ---
 
@@ -120,7 +121,7 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 10. [`server/index.js`](#serverindexjs) — *Express 5 REST API server with timing-safe HMAC JWT auth, self-signup + 1-click admin verification, self-checkin boarding, stop dwell audit logging, 1-hour pre-departure absence cutoff, SSE live stream tickets, and CARTO tile proxy.*
 11. [`server/excelStorage.js`](#serverexcelstoragejs) — *Real-time Excel engine with SQLite WAL persistence, prepared statement cache, configurable DATA_DIR / DB_FILE_PATH / EXCEL_FILE_PATH, and atomic XLSX export.*
 12. [`server/telegramNotifier.js`](#servertelegramnotifierjs) — *Automated Telegram Bot safety alert integration for student transit events and driver dispatches.*
-13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin auth, GPS schematic projection & forgot-password workflow (40/40 passing).*
+13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.2 multi-admin auth, GPS schematic projection, multi-stop Google Maps route URL & forgot-password workflow (41/41 passing).*
 14. [`src/types/transit.ts`](#srctypestransitts) — *Complete TypeScript type contracts for buses, students, telemetry, geofences, and safety alerts.*
 15. [`src/config/apiConfig.ts`](#srcconfigapiconfigts) — *Environment variables, backend endpoints, and API client configuration.*
 16. [`src/data/sreenidhiData.ts`](#srcdatasreenidhidatats) — *Hyderabad NH-163 Warangal Highway transit network stops, student master roster, Route 51 manifest (18 students + 8 faculty), and fleet definitions.*
@@ -136,8 +137,8 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 26. [`src/components/portals/DriverConsole.tsx`](#srccomponentsportalsdriverconsoletsx) — *Prismatic Daylight 3-tab Driver Cockpit (Trip, Stops, Alerts) with electric live headcount hero card, trip start IST timer, next stop & delay broadcaster, and geofence controls.*
 27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
 28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.*
-29. [`src/services/corridorProjection.ts`](#srcservicescorridorprojectionts) — *Pure equirectangular GPS-to-route segment projection engine and Haversine meter calculation driving live MetroSchematicMap positioning and off-route detour detection.*
-30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map (mobile, tablet & desktop) using C1 cubic Bézier track geometry, De Casteljau passed-segment shading, 4–5 stop compact Home preview, swipeable auto-centered full corridor, external Top/Bottom HUD bars, clamped speed callout pill, and free Google Maps Pin link.*
+29. [`src/services/corridorProjection.ts`](#srcservicescorridorprojectionts) — *Pure equirectangular GPS-to-route segment projection engine, Haversine meter calculation, and zero-cost buildGoogleMapsRouteUrl multi-stop Directions URL helper shared across portals.*
+30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map rendered with all stops inside a horizontally scrollable track on Home compact preview and Map/Driver/Admin/Parent views, smart user-scroll-respecting auto-centering, +8px lower-label bus pin clearance, external HUD bars, and Open Full Route in Google Maps multi-stop Directions link.*
 31. [`scripts/load-test.mjs`](#scriptsloadtestmjs) — *Zero-dependency concurrency and load benchmark validating SSE connections, sub-100ms latency, and 0% error rate.*
 32. [`src/services/eventQueue.ts`](#srcserviceseventqueuets) — *IndexedDB resilient offline event queue with priority eviction, backoff retry, and idempotency keys.*
 33. [`src/services/excelService.ts`](#srcservicesexcelservicets) — *Central API client handling authenticated JWT sessions, public getServerBaseUrl() / authHeaders(), gate check-in, and offline event synchronization.*
@@ -7864,7 +7865,7 @@ export async function sendTelegramAlert(chatId, messageHtml) {
 
 ## 13. `tests/security.test.js` <a id="testssecuritytestjs"></a>
 
-**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 multi-admin auth, GPS schematic projection & forgot-password workflow (40/40 passing).  
+**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.2 multi-admin auth, GPS schematic projection, multi-stop Google Maps route URL & forgot-password workflow (41/41 passing).  
 **File Path:** `sreenidhi-express/tests/security.test.js`  
 
 ```javascript
@@ -7878,7 +7879,7 @@ import {
 import { createExtras } from '../server/dbExtras.js';
 import { db } from '../server/excelStorage.js';
 import { app, isPlanLocked, getFirstDepartureUtcMs } from '../server/index.js';
-import { projectGpsOntoStops } from '../src/services/corridorProjection.ts';
+import { buildGoogleMapsRouteUrl, projectGpsOntoStops } from '../src/services/corridorProjection.ts';
 
 test('token: round trip, scope separation, tamper, expiry', () => {
   const t = signToken({ sub: 'X', role: 'STUDENT' });
@@ -9084,6 +9085,31 @@ test('v20.4 gps-to-schematic projection: projects coordinates onto stops and det
   assert.equal(fallbackProj.isGpsProjected, false);
   assert.equal(fallbackProj.segmentIndex, 1);
   assert.equal(fallbackProj.segmentProgress, 0.25);
+});
+
+test('v20.4.2 google maps route url: builds multi-stop directions url with waypoints and handles edge fallbacks', () => {
+  const route51Subset = [
+    { lat: 17.4558, lng: 78.4294 },
+    { lat: 17.4475, lng: 78.4373 },
+    { lat: 17.4375, lng: 78.4483 },
+    { lat: 17.4571986, lng: 78.6652322 },
+  ];
+
+  const multiUrl = buildGoogleMapsRouteUrl(route51Subset);
+  assert.ok(multiUrl.startsWith('https://www.google.com/maps/dir/?api=1&'));
+  assert.ok(multiUrl.includes('origin=17.4558,78.4294'));
+  assert.ok(multiUrl.includes('destination=17.4571986,78.6652322'));
+  assert.ok(multiUrl.includes(`waypoints=${encodeURIComponent('17.4475,78.4373|17.4375,78.4483')}`));
+  assert.ok(multiUrl.includes('travelmode=driving'));
+
+  const singleUrl = buildGoogleMapsRouteUrl([{ lat: 17.4558, lng: 78.4294 }]);
+  assert.equal(singleUrl, 'https://www.google.com/maps/dir/?api=1&destination=17.4558,78.4294&travelmode=driving');
+
+  const fallbackUrl = buildGoogleMapsRouteUrl([], { lat: 17.4572, lng: 78.6652 });
+  assert.equal(fallbackUrl, 'https://www.google.com/maps/dir/?api=1&destination=17.4572,78.6652&travelmode=driving');
+
+  const emptyUrl = buildGoogleMapsRouteUrl([]);
+  assert.equal(emptyUrl, 'https://www.google.com/maps/dir/?api=1&travelmode=driving');
 });
 
 test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
@@ -17062,7 +17088,7 @@ import {
   Navigation,
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
-import { MetroSchematicMap } from '../map/MetroSchematicMap';
+import { buildGoogleMapsRouteUrl, MetroSchematicMap } from '../map/MetroSchematicMap';
 import { audioSpeechService } from '../../services/audioSpeechService';
 import { excelService } from '../../services/excelService';
 import { nativeDeviceService } from '../../services/nativeDeviceService';
@@ -17965,10 +17991,10 @@ export const DriverConsole: React.FC = () => {
 
               {(() => {
                 const activeStops = activeBus.stops.filter((s) => !s.isBypassed);
-                const originStop = activeStops[0] || activeBus.stops[0];
-                const destStop = activeStops[activeStops.length - 1] || activeBus.stops[activeBus.stops.length - 1];
-                const intermediateWaypoints = activeStops.slice(1, -1).map((s) => `${s.lat},${s.lng}`).join('|');
-                const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originStop.lat},${originStop.lng}&destination=${destStop.lat},${destStop.lng}${intermediateWaypoints ? `&waypoints=${encodeURIComponent(intermediateWaypoints)}` : ''}&travelmode=driving`;
+                const googleMapsUrl = buildGoogleMapsRouteUrl(
+                  activeStops.length > 0 ? activeStops : activeBus.stops,
+                  { lat: activeBus.currentLat, lng: activeBus.currentLng }
+                );
 
                 return (
                   <a
@@ -20700,7 +20726,7 @@ export const ParentPortal: React.FC = () => {
 
 ## 29. `src/services/corridorProjection.ts` <a id="srcservicescorridorprojectionts"></a>
 
-**Description:** Pure equirectangular GPS-to-route segment projection engine and Haversine meter calculation driving live MetroSchematicMap positioning and off-route detour detection.  
+**Description:** Pure equirectangular GPS-to-route segment projection engine, Haversine meter calculation, and zero-cost buildGoogleMapsRouteUrl multi-stop Directions URL helper shared across portals.  
 **File Path:** `sreenidhi-express/src/services/corridorProjection.ts`  
 
 ```typescript
@@ -20852,23 +20878,72 @@ export function projectGpsOntoStops(
   };
 }
 
+/**
+ * Build a zero-cost multi-stop Google Maps Directions URL (/maps/dir/?api=1)
+ * showing the driving polyline and waypoint stop sidebar across Hyderabad.
+ */
+export function buildGoogleMapsRouteUrl(
+  stops: Array<{ lat: number; lng: number }>,
+  fallbackCoords?: { lat: number; lng: number } | null
+): string {
+  const validStops = Array.isArray(stops)
+    ? stops.filter((s) => s && isValidGpsCoord(s.lat, s.lng))
+    : [];
+
+  if (validStops.length >= 2) {
+    const origin = validStops[0];
+    const destination = validStops[validStops.length - 1];
+    const intermediateWaypoints = validStops
+      .slice(1, -1)
+      .map((s) => `${s.lat},${s.lng}`)
+      .join('|');
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}${
+      intermediateWaypoints ? `&waypoints=${encodeURIComponent(intermediateWaypoints)}` : ''
+    }&travelmode=driving`;
+  }
+
+  if (validStops.length === 1) {
+    const only = validStops[0];
+    return `https://www.google.com/maps/dir/?api=1&destination=${only.lat},${only.lng}&travelmode=driving`;
+  }
+
+  if (
+    fallbackCoords &&
+    Number.isFinite(fallbackCoords.lat) &&
+    Number.isFinite(fallbackCoords.lng)
+  ) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${fallbackCoords.lat},${fallbackCoords.lng}&travelmode=driving`;
+  }
+
+  return 'https://www.google.com/maps/dir/?api=1&travelmode=driving';
+}
+
 ```
 
 ---
 
 ## 30. `src/components/map/MetroSchematicMap.tsx` <a id="srccomponentsmapmetroschematicmaptsx"></a>
 
-**Description:** Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map (mobile, tablet & desktop) using C1 cubic Bézier track geometry, De Casteljau passed-segment shading, 4–5 stop compact Home preview, swipeable auto-centered full corridor, external Top/Bottom HUD bars, clamped speed callout pill, and free Google Maps Pin link.  
+**Description:** Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map rendered with all stops inside a horizontally scrollable track on Home compact preview and Map/Driver/Admin/Parent views, smart user-scroll-respecting auto-centering, +8px lower-label bus pin clearance, external HUD bars, and Open Full Route in Google Maps multi-stop Directions link.  
 **File Path:** `sreenidhi-express/src/components/map/MetroSchematicMap.tsx`  
 
 ```tsx
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { ExternalLink, Navigation } from 'lucide-react';
 import type { BusVehicle } from '../../types/transit';
 import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
-import { haversineMeters, projectGpsOntoStops } from '../../services/corridorProjection.ts';
+import {
+  buildGoogleMapsRouteUrl,
+  haversineMeters,
+  projectGpsOntoStops,
+} from '../../services/corridorProjection.ts';
 
-export { projectGpsOntoStops, haversineMeters, type GpsProjectionResult } from '../../services/corridorProjection.ts';
+export {
+  buildGoogleMapsRouteUrl,
+  projectGpsOntoStops,
+  haversineMeters,
+  type GpsProjectionResult,
+} from '../../services/corridorProjection.ts';
 
 interface MetroSchematicMapProps {
   activeBus: BusVehicle;
@@ -20948,6 +21023,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
   const stops = activeBus.stops && activeBus.stops.length > 0 ? activeBus.stops : [];
   const gradientId = useId().replace(/:/g, '');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userScrolledAtRef = useRef<number>(0);
+  const isProgrammaticScrollRef = useRef<boolean>(false);
+  const didInitialCenterRef = useRef<boolean>(false);
+  const lastRouteIdRef = useRef<string>(activeBus.routeId);
+  const [hasOverflow, setHasOverflow] = useState<boolean>(stops.length > 5);
 
   const resolvedHighlightStop =
     stops.find(
@@ -20957,7 +21037,6 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         s.shortName === highlightStopId
     ) || stops[0];
   const targetHighlightStopId = resolvedHighlightStop?.id || '';
-  const highlightStopIdx = stops.findIndex((s) => s.id === targetHighlightStopId);
 
   const fallbackIdx = Math.min(
     Math.max(activeBus.currentStopIndex ?? 0, 0),
@@ -21003,104 +21082,41 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         : `${(meters / 1000).toFixed(1)} km to ${resolvedHighlightStop.shortName || resolvedHighlightStop.name}`;
   }
 
-  // Free Google Maps live pin link (zero tile embedding cost)
-  const pinLat =
+  // Free multi-stop Google Maps Directions URL (/maps/dir/?api=1)
+  const fallbackLat =
     Number.isFinite(activeBus.currentLat) && Math.abs(activeBus.currentLat) > 0.0001
       ? activeBus.currentLat
       : SREENIDHI_CAMPUS.lat;
-  const pinLng =
+  const fallbackLng =
     Number.isFinite(activeBus.currentLng) && Math.abs(activeBus.currentLng) > 0.0001
       ? activeBus.currentLng
       : SREENIDHI_CAMPUS.lng;
-  const googleMapsPinUrl = `https://www.google.com/maps/search/?api=1&query=${pinLat},${pinLng}`;
+  const googleMapsRouteUrl = buildGoogleMapsRouteUrl(stops, { lat: fallbackLat, lng: fallbackLng });
 
-  // Determine stops rendered inside SVG:
-  // compact={true}: focused 4-to-5 stop window centered around current projection.segmentIndex
-  // compact={false}: full corridor (scrollable horizontally on phones)
-  const { slicedStops, sliceStart, hasLeadingMore, hasTrailingMore, aheadHighlightName } = (() => {
-    if (!compact || stops.length <= 5) {
-      return {
-        slicedStops: stops,
-        sliceStart: 0,
-        hasLeadingMore: false,
-        hasTrailingMore: false,
-        aheadHighlightName: '',
-      };
-    }
+  // Render all stops across the full scrollable curved corridor (no 4-stop crop in compact mode)
+  const viewWidth = Math.max(760, 112 + Math.max(stops.length - 1, 1) * 88);
+  const viewHeight = compact ? 214 : 224;
+  const svgMinWidthPx = Math.max(660, stops.length >= 12 ? 920 : stops.length * 68);
 
-    let start = Math.max(0, Math.min(projection.segmentIndex - 1, stops.length - 4));
-    let end = Math.min(stops.length - 1, start + 3);
-
-    // Ensure next segment endpoint is always included
-    if (projection.segmentIndex + 1 > end && end < stops.length - 1) {
-      end = Math.min(stops.length - 1, projection.segmentIndex + 1);
-      start = Math.max(0, end - 4);
-    }
-
-    // Include YOUR STOP within up to a 5-stop window if adjacent
-    if (highlightStopIdx >= 0) {
-      if (highlightStopIdx === end + 1 && end - start + 1 < 5) {
-        end = highlightStopIdx;
-      } else if (highlightStopIdx === start - 1 && end - start + 1 < 5) {
-        start = highlightStopIdx;
-      } else if (highlightStopIdx >= Math.max(0, start - 1) && highlightStopIdx <= Math.min(stops.length - 1, end + 1)) {
-        start = Math.min(start, highlightStopIdx);
-        end = Math.max(end, highlightStopIdx);
-      }
-    }
-
-    const slice = stops.slice(start, end + 1);
-    const trailingStopAhead =
-      highlightStopIdx > end ? stops[highlightStopIdx]?.shortName || stops[highlightStopIdx]?.name || '' : '';
-
-    return {
-      slicedStops: slice,
-      sliceStart: start,
-      hasLeadingMore: start > 0,
-      hasTrailingMore: end < stops.length - 1,
-      aheadHighlightName: trailingStopAhead,
-    };
-  })();
-
-  // SVG viewport & smooth curved metro geometry
-  const compactViewWidth = 380;
-  const compactViewHeight = 185;
-  const fullViewHeight = 210;
-  const viewWidth = compact
-    ? compactViewWidth
-    : Math.max(760, 112 + Math.max(slicedStops.length - 1, 1) * 88);
-  const viewHeight = compact ? compactViewHeight : fullViewHeight;
-
-  const padX = compact ? 48 : 56;
-  const metroStations = slicedStops.map((stop, i, arr) => {
+  const padX = 56;
+  const metroStations = stops.map((stop, i, arr) => {
     const total = Math.max(arr.length - 1, 1);
     const x =
       arr.length === 1
         ? Math.round(viewWidth / 2)
         : Math.round(padX + (i / total) * (viewWidth - padX * 2));
 
-    const globalIdx = sliceStart + i;
-    const isTerminus = stop.areaClusterId === 'cluster-campus' || globalIdx === stops.length - 1;
-    // Alternating lower/upper tiers with gentle wave variation so adjacent labels never collide
-    const y = compact
-      ? isTerminus
-        ? 98
-        : i % 2 === 0
-          ? i % 4 === 0
-            ? 120
-            : 112
-          : i % 4 === 1
-            ? 78
-            : 86
-      : isTerminus
-        ? 106
-        : i % 2 === 0
-          ? i % 4 === 0
-            ? 136
-            : 124
-          : i % 4 === 1
-            ? 78
-            : 90;
+    const isTerminus = stop.areaClusterId === 'cluster-campus' || i === stops.length - 1;
+    // Lower nodes stay around 120–132 with +27px below-curve label clearance so the bus pin never covers stop names
+    const y = isTerminus
+      ? 104
+      : i % 2 === 0
+        ? i % 4 === 0
+          ? 130
+          : 118
+        : i % 4 === 1
+          ? 76
+          : 88;
 
     const isUpper = !isTerminus && i % 2 === 1;
     const isInterchange = Boolean(stop.metroInterchange);
@@ -21108,11 +21124,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
     return {
       id: stop.id,
-      globalIdx,
-      name: truncateLabel(stop.shortName || stop.name, compact ? 15 : 18),
+      globalIdx: i,
+      name: truncateLabel(stop.shortName || stop.name, 18),
       subtitle:
         typeof stop.metroInterchange === 'object'
-          ? truncateLabel(stop.metroInterchange.stationName, compact ? 16 : 20)
+          ? truncateLabel(stop.metroInterchange.stationName, 20)
           : isTerminus
             ? 'Campus Terminus'
             : morningShift
@@ -21145,14 +21161,11 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
       : '';
 
   const localSegIdx = Math.min(
-    Math.max(projection.segmentIndex - sliceStart, 0),
+    Math.max(projection.segmentIndex, 0),
     Math.max(metroStations.length - 1, 0)
   );
-  const segProg = projection.segmentIndex >= sliceStart && projection.segmentIndex < sliceStart + slicedStops.length - 1
-    ? projection.segmentProgress
-    : projection.segmentIndex < sliceStart
-      ? 0
-      : 1;
+  const segProg =
+    localSegIdx < bezierSegments.length ? projection.segmentProgress : 1;
 
   // Evaluate exact bus point on the curved Bézier segment at t = segProg
   const busPt: Pt = (() => {
@@ -21164,7 +21177,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
     return { x: last.x, y: last.y };
   })();
 
-  // Build exact curved passed track path from start of view up to (busPt.x, busPt.y)
+  // Build exact curved passed track path from start of route up to (busPt.x, busPt.y)
   const passedTrackPathD = (() => {
     if (metroStations.length === 0) return '';
     const parts: string[] = [`M ${metroStations[0].x} ${metroStations[0].y}`];
@@ -21183,34 +21196,81 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
     return parts.join(' ');
   })();
 
-  // Clamp bus pin icon and speed callout inside SVG safe bounds so nothing clips on 360px screens
+  // Clamp bus pin icon and speed callout inside SVG safe bounds
   const busX = Math.max(18, Math.min(viewWidth - 18, busPt.x));
-  const busY = Math.max(36, Math.min(viewHeight - 24, busPt.y));
+  const busY = Math.max(36, Math.min(viewHeight - 28, busPt.y));
   const pillCenterX = Math.max(38, Math.min(viewWidth - 38, busPt.x));
   const pillY = Math.max(15, busY - 26);
 
-  // Keep latest busX/viewWidth in refs so auto-centering only fires on mount / route / segmentIndex changes
+  // Measure horizontal overflow dynamically for responsive scroll hint visibility
+  useEffect(() => {
+    const checkOverflow = () => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+      setHasOverflow(el.scrollWidth > el.clientWidth + 4);
+    };
+    checkOverflow();
+    if (typeof ResizeObserver !== 'undefined' && scrollContainerRef.current) {
+      const ro = new ResizeObserver(checkOverflow);
+      ro.observe(scrollContainerRef.current);
+      return () => ro.disconnect();
+    }
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [stops.length, viewWidth]);
+
+  // Keep latest busX/viewWidth in refs so auto-centering fires cleanly on mount, route change, and stop changes
+  // without snapping back if the user has manually scrolled within the last 4 seconds
   const scrollTargetRef = useRef({ busX, viewWidth });
   scrollTargetRef.current = { busX, viewWidth };
 
   useEffect(() => {
-    if (compact) return;
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const recenter = () => {
+    const routeChanged = lastRouteIdRef.current !== activeBus.routeId;
+    if (routeChanged) {
+      lastRouteIdRef.current = activeBus.routeId;
+      userScrolledAtRef.current = 0;
+    }
+
+    const recentlyScrolledByUser =
+      didInitialCenterRef.current && Date.now() - userScrolledAtRef.current < 4000;
+    if (recentlyScrolledByUser) return;
+
+    let clearTimer: number | undefined;
+    const rafId = window.requestAnimationFrame(() => {
       const el = scrollContainerRef.current;
       if (!el) return;
       const { busX: currentBusX, viewWidth: currentSvgWidth } = scrollTargetRef.current;
-      if (el.scrollWidth <= el.clientWidth + 4 || currentSvgWidth <= 0) return;
+      if (el.scrollWidth <= el.clientWidth + 4 || currentSvgWidth <= 0) {
+        didInitialCenterRef.current = true;
+        return;
+      }
       const targetPx = (currentBusX / currentSvgWidth) * el.scrollWidth - el.clientWidth / 2;
       const clampedLeft = Math.max(0, Math.min(el.scrollWidth - el.clientWidth, targetPx));
-      el.scrollTo({ left: clampedLeft, behavior: 'smooth' });
-    };
+      isProgrammaticScrollRef.current = true;
+      el.scrollTo({
+        left: clampedLeft,
+        behavior: didInitialCenterRef.current ? 'smooth' : 'auto',
+      });
+      didInitialCenterRef.current = true;
+      clearTimer = window.setTimeout(() => {
+        isProgrammaticScrollRef.current = false;
+      }, 750);
+    });
 
-    const rafId = window.requestAnimationFrame(recenter);
-    return () => window.cancelAnimationFrame(rafId);
-  }, [compact, activeBus.routeId, projection.segmentIndex, stops.length]);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      if (clearTimer !== undefined) window.clearTimeout(clearTimer);
+    };
+  }, [activeBus.routeId, activeBus.currentStopIndex, projection.segmentIndex, stops.length]);
+
+  const markUserInteraction = () => {
+    if (!isProgrammaticScrollRef.current) {
+      userScrolledAtRef.current = Date.now();
+    }
+  };
 
   return (
     <div
@@ -21262,19 +21322,26 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </span>
       </div>
 
-      {/* Unified Curved Metro-Style SVG Schematic (Mobile, Tablet & Desktop) */}
-      <div className="bg-[#F7F9FF]/75 px-2.5 py-2.5 sm:p-3.5 dark:bg-[#161B26]">
-        {!compact && stops.length > 5 && (
-          <div className="mb-1 flex items-center justify-center sm:hidden">
+      {/* Unified Curved Scrollable Metro-Style SVG Schematic (Both Home Compact & Full Views) */}
+      <div
+        className={`bg-[#F7F9FF]/75 dark:bg-[#161B26] ${
+          compact ? 'px-2 py-2' : 'px-2.5 py-2.5 sm:p-3.5'
+        }`}
+      >
+        {(hasOverflow || stops.length > 5) && (
+          <div className={`mb-1 flex items-center justify-center ${hasOverflow ? '' : 'sm:hidden'}`}>
             <span className="rounded-full bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
-              ← Swipe schematic corridor →
+              ← Swipe / Scroll route →
             </span>
           </div>
         )}
 
         <div
           ref={scrollContainerRef}
-          className={compact ? 'w-full overflow-hidden' : 'w-full overflow-x-auto touch-pan-x'}
+          onScroll={markUserInteraction}
+          onPointerDown={markUserInteraction}
+          onTouchStart={markUserInteraction}
+          className="w-full overflow-x-auto overscroll-x-contain touch-pan-x pb-1"
         >
           {stops.length === 0 ? (
             <p className="py-6 text-center text-xs italic text-slate-500 dark:text-slate-400">
@@ -21283,12 +21350,8 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
           ) : (
             <svg
               viewBox={`0 0 ${viewWidth} ${viewHeight}`}
-              className="w-full select-none"
-              style={
-                compact
-                  ? undefined
-                  : { minWidth: `${Math.max(660, stops.length >= 12 ? 920 : stops.length * 68)}px` }
-              }
+              className={`w-full select-none ${compact ? 'max-h-[178px]' : ''}`}
+              style={{ minWidth: `${svgMinWidthPx}px` }}
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -21299,79 +21362,12 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 </linearGradient>
               </defs>
 
-              {/* Continuation Markers in Compact Window */}
-              {compact && hasLeadingMore && metroStations[0] && (
-                <g opacity={0.75}>
-                  <line
-                    x1="12"
-                    y1={metroStations[0].y}
-                    x2={metroStations[0].x}
-                    y2={metroStations[0].y}
-                    stroke="#94A3B8"
-                    strokeWidth="4"
-                    strokeDasharray="4 4"
-                    strokeLinecap="round"
-                  />
-                  <text
-                    x="18"
-                    y={metroStations[0].y - 8}
-                    fill="#64748B"
-                    fontSize="10"
-                    fontWeight="800"
-                    textAnchor="middle"
-                    fontFamily="system-ui"
-                  >
-                    •••
-                  </text>
-                </g>
-              )}
-
-              {compact && hasTrailingMore && metroStations[metroStations.length - 1] && (
-                <g opacity={0.85}>
-                  <line
-                    x1={metroStations[metroStations.length - 1].x}
-                    y1={metroStations[metroStations.length - 1].y}
-                    x2={viewWidth - 14}
-                    y2={metroStations[metroStations.length - 1].y}
-                    stroke="#94A3B8"
-                    strokeWidth="4"
-                    strokeDasharray="4 4"
-                    strokeLinecap="round"
-                  />
-                  <text
-                    x={viewWidth - 20}
-                    y={metroStations[metroStations.length - 1].y - 8}
-                    fill="#4F46E5"
-                    fontSize="10"
-                    fontWeight="800"
-                    textAnchor="middle"
-                    fontFamily="system-ui"
-                    className="dark:fill-cyan-300"
-                  >
-                    •••
-                  </text>
-                  {aheadHighlightName && (
-                    <text
-                      x={viewWidth - 6}
-                      y={metroStations[metroStations.length - 1].y + 15}
-                      fill="#E65100"
-                      fontSize="7.5"
-                      fontWeight="800"
-                      textAnchor="end"
-                      fontFamily="system-ui"
-                    >
-                      → {truncateLabel(aheadHighlightName, 12)}
-                    </text>
-                  )}
-                </g>
-              )}
-
               {/* Outer Curved Track Backing */}
               {fullTrackPathD && (
                 <path
                   d={fullTrackPathD}
                   stroke="#E2E8F0"
-                  strokeWidth={compact ? '11' : '12'}
+                  strokeWidth="12"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#374151]"
@@ -21384,7 +21380,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                   d={fullTrackPathD}
                   stroke="#94A3B8"
                   strokeOpacity="0.45"
-                  strokeWidth={compact ? '6' : '6.5'}
+                  strokeWidth="6.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#64748B]"
@@ -21396,7 +21392,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 <path
                   d={passedTrackPathD}
                   stroke={`url(#${gradientId})`}
-                  strokeWidth={compact ? '6.5' : '7'}
+                  strokeWidth="7"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="transition-all duration-700 ease-out"
@@ -21414,7 +21410,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 />
               )}
 
-              {/* Station Nodes & Alternating Labels */}
+              {/* Station Nodes & Alternating Labels (+8px lower label clearance against bus pin) */}
               {metroStations.map((st) => {
                 const isPassed =
                   st.globalIdx < projection.segmentIndex ||
@@ -21423,9 +21419,9 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 const isHighlighted = st.id === targetHighlightStopId;
                 const isBypassed = st.isBypassed;
 
-                const nameY = st.isUpper ? st.y - 15 : st.y + 18;
-                const subY = st.isUpper ? st.y - 26 : st.y + 28.5;
-                const tagY = st.isUpper ? st.y - 39 : st.y + 34;
+                const nameY = st.isUpper ? st.y - 16 : st.y + 27;
+                const subY = st.isUpper ? st.y - 27 : st.y + 38;
+                const tagY = st.isUpper ? st.y - 40 : st.y + 44;
 
                 return (
                   <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
@@ -21457,7 +21453,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                         <circle
                           cx="0"
                           cy="0"
-                          r={compact ? '8.5' : '9'}
+                          r="9"
                           fill="#FFFFFF"
                           stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
                           strokeWidth="3.5"
@@ -21476,7 +21472,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                       <circle
                         cx={st.x}
                         cy={st.y}
-                        r={compact ? '5.5' : '6'}
+                        r="6"
                         fill="#FFFFFF"
                         stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#64748B'}
                         strokeWidth="2.5"
@@ -21497,7 +21493,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                           strokeWidth="2"
                           strokeDasharray="3 3"
                         />
-                        <g transform={`translate(${Math.max(28, Math.min(viewWidth - 28, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 16, tagY + 3)})`}>
+                        <g transform={`translate(${Math.max(28, Math.min(viewWidth - 28, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 14, tagY + 4)})`}>
                           <rect x="-25" y="-5" width="50" height="13" rx="4" fill="#E65100" />
                           <text
                             x="0"
@@ -21516,7 +21512,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
                     {/* BYPASSED Badge */}
                     {isBypassed && (
-                      <g transform={`translate(${Math.max(24, Math.min(viewWidth - 24, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 15, tagY + 3)})`}>
+                      <g transform={`translate(${Math.max(24, Math.min(viewWidth - 24, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 14, tagY + 4)})`}>
                         <rect x="-21" y="-5" width="42" height="11" rx="3" fill="#6B7280" opacity="0.92" />
                         <text
                           x="0"
@@ -21562,7 +21558,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 
                     {/* Metro Tag when not covered by YOUR STOP or BYPASSED badge */}
                     {st.isInterchange && !isBypassed && !isHighlighted && (
-                      <g transform={`translate(${Math.max(20, Math.min(viewWidth - 20, st.x))}, ${st.isUpper ? Math.max(11, tagY) : Math.min(viewHeight - 14, tagY + 2)})`}>
+                      <g transform={`translate(${Math.max(20, Math.min(viewWidth - 20, st.x))}, ${st.isUpper ? Math.max(11, tagY) : Math.min(viewHeight - 12, tagY + 3)})`}>
                         <rect x="-15" y="-4" width="30" height="9.5" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
                         <text
                           x="0"
@@ -21627,7 +21623,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </div>
       </div>
 
-      {/* Bottom External HUD Bar (Corridor Progress & Free Google Maps Pin) */}
+      {/* Bottom External HUD Bar (Corridor Progress & Free Multi-Stop Google Maps Route) */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-[#F7F9FF] px-3.5 py-2.5 text-[11px] dark:border-[#2E3646] dark:bg-[#141821]">
         <div className="flex flex-wrap items-center gap-2 min-w-0">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 px-2.5 py-0.5 text-[10px] font-extrabold text-[#4F46E5] dark:border-indigo-800/60 dark:bg-indigo-950/60 dark:text-cyan-300">
@@ -21641,13 +21637,13 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </div>
 
         <a
-          href={googleMapsPinUrl}
+          href={googleMapsRouteUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-2xs transition hover:border-[#4F46E5] hover:text-[#4F46E5] dark:border-[#2E3646] dark:bg-[#1E2430] dark:text-slate-200 dark:hover:text-cyan-300"
         >
           <Navigation className="h-3 w-3 text-[#4F46E5] dark:text-cyan-300" />
-          <span>Open Live Pin in Google Maps</span>
+          <span>Open Full Route in Google Maps</span>
           <ExternalLink className="h-2.5 w-2.5 opacity-70" />
         </a>
       </div>

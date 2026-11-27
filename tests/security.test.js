@@ -8,7 +8,7 @@ import {
 import { createExtras } from '../server/dbExtras.js';
 import { db } from '../server/excelStorage.js';
 import { app, isPlanLocked, getFirstDepartureUtcMs } from '../server/index.js';
-import { projectGpsOntoStops } from '../src/services/corridorProjection.ts';
+import { buildGoogleMapsRouteUrl, projectGpsOntoStops } from '../src/services/corridorProjection.ts';
 
 test('token: round trip, scope separation, tamper, expiry', () => {
   const t = signToken({ sub: 'X', role: 'STUDENT' });
@@ -1214,6 +1214,31 @@ test('v20.4 gps-to-schematic projection: projects coordinates onto stops and det
   assert.equal(fallbackProj.isGpsProjected, false);
   assert.equal(fallbackProj.segmentIndex, 1);
   assert.equal(fallbackProj.segmentProgress, 0.25);
+});
+
+test('v20.4.2 google maps route url: builds multi-stop directions url with waypoints and handles edge fallbacks', () => {
+  const route51Subset = [
+    { lat: 17.4558, lng: 78.4294 },
+    { lat: 17.4475, lng: 78.4373 },
+    { lat: 17.4375, lng: 78.4483 },
+    { lat: 17.4571986, lng: 78.6652322 },
+  ];
+
+  const multiUrl = buildGoogleMapsRouteUrl(route51Subset);
+  assert.ok(multiUrl.startsWith('https://www.google.com/maps/dir/?api=1&'));
+  assert.ok(multiUrl.includes('origin=17.4558,78.4294'));
+  assert.ok(multiUrl.includes('destination=17.4571986,78.6652322'));
+  assert.ok(multiUrl.includes(`waypoints=${encodeURIComponent('17.4475,78.4373|17.4375,78.4483')}`));
+  assert.ok(multiUrl.includes('travelmode=driving'));
+
+  const singleUrl = buildGoogleMapsRouteUrl([{ lat: 17.4558, lng: 78.4294 }]);
+  assert.equal(singleUrl, 'https://www.google.com/maps/dir/?api=1&destination=17.4558,78.4294&travelmode=driving');
+
+  const fallbackUrl = buildGoogleMapsRouteUrl([], { lat: 17.4572, lng: 78.6652 });
+  assert.equal(fallbackUrl, 'https://www.google.com/maps/dir/?api=1&destination=17.4572,78.6652&travelmode=driving');
+
+  const emptyUrl = buildGoogleMapsRouteUrl([]);
+  assert.equal(emptyUrl, 'https://www.google.com/maps/dir/?api=1&travelmode=driving');
 });
 
 test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
