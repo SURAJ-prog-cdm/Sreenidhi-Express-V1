@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 27, 2026
-> **Build Status:** Production Prototype / v20.4 Multi-Admin Access, GPS-Driven Schematic Map & ₹0 Forgot Password Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, GPS-Projected `MetroSchematicMap` Across All Portals Without Frontend Leaflet Dependencies, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 40/40 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.4.1 Multi-Admin Access, Unified Curved Metro-Style SVG Schematic Map & ₹0 Forgot Password Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Unified Curved Cubic-Bézier `MetroSchematicMap` Across Mobile & Desktop Without Frontend Leaflet Dependencies, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 40/40 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 80 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 81 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 upgrades (Multi-Admin RBAC, GPS-Driven Live Schematic Map, Registration Stop Dropdown, and ₹0 Forgot Password), all 80 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 40/40 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 / v20.4.1 upgrades (Multi-Admin RBAC, Unified Curved GPS-Driven Live Schematic SVG Map, Registration Stop Dropdown, and ₹0 Forgot Password), all 81 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 40/40 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -96,6 +96,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **78** | **P0** | v20.3 Reporting & Live Stop ETA | **Live Stop-by-Stop ETA, Admin Detailed Timestamps & Stop Duration Report & IST CSV Export**: Added IST formatting (`formatIstDateTime`, `formatIstTimeOnly`, `getIstDateKey`), `formatDwellDuration`, scheduled-vs-actual stop variance (`resolveScheduledStopInfo`), route/date filtering, summary KPIs, and `STOP_DWELL_RECORDED` SSE broadcasts across `server/index.js` (`/api/admin/driver-utility` and `/api/export?type=driver_utility`) and `excelService.ts`; added interactive Admin `Detailed Timestamps & Stop Duration Report` card with 4 KPI cards, Trip Starts strip, filters, and variance table in `AdminDashboard.tsx`; added `Live Stop-by-Stop ETA & Timestamps` sequence list on Student `Map` tab in `StudentPortal.tsx`; extended `tests/security.test.js` to 37/37 passing. | [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **79** | **P0** | v20.4 Multi-Admin Access | **Authorized Multi-Admin Credentials & Management UI**: Replaced single-`ADMIN_ID` bottleneck in `server/index.js` with constant-time multi-admin lookup across `ADMIN_ID`, optional `ADMIN_ACCOUNTS` JSON array, and SQLite `admin_users` table (`server/dbExtras.js`); added `GET /api/admin/admins`, `POST /api/admin/admins`, and `POST /api/admin/admins/:adminId/status` with `session_version` token revocation enforcement inside `setAccessTokenValidator`; added `Authorized Admin Access Accounts` card in `AdminDashboard.tsx` and updated `tests/security.test.js` to 38/38 passing. | [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`src/services/excelService.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/excelService.ts), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **80** | **P0** | v20.4 Live Schematic Map, Registration Dropdown & ₹0 Forgot Password | **GPS-Driven `MetroSchematicMap`, Frontend Leaflet Removal, Self-Register Stop `<select>` & ₹0 Forgot Password**: Replaced `HybridTransitMap` + frontend `leaflet` / `react-leaflet` packages with a single responsive GPS-projected `MetroSchematicMap` (`projectGpsOntoStops`, mobile vertical timeline with 4-stop compact window, smooth gliding desktop SVG corridor, Top/Bottom HUD bars, and free Google Maps Pin handoff) across all 4 portals while preserving backend tile/CSP tests; upgraded New Commuter Self-Registration Requested Pickup Stop to a grouped `<select>` populated from `INITIAL_BUS_FLEET`; added `POST /api/auth/forgot-password`, `POST /api/auth/reset-password` (timing-safe 6-digit codes, 5-attempt lockout, 15m TTL, optional Telegram alert, Admin Desk visibility via `GET /api/admin/password-reset-requests`); extended `tests/security.test.js` to 40/40 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
+| **81** | **P1** | v20.4.1 Curved Metro SVG Schematic | **Unified Curved Cubic-Bézier Metro SVG Across Mobile & Desktop**: Removed straight-line vertical mobile stop list in `MetroSchematicMap.tsx` and unified all viewports onto a curved C1-continuous cubic Bézier Metro corridor with exact De Casteljau partial passed-track gradient shading, phone-safe 4–5 stop `compact` `viewBox="0 0 380 185"` preview with clamped `R51 • km/h` callout pill, swipeable full route corridor with auto-centering onto `busX`, and external Top/Bottom HUD bars while preserving `projectGpsOntoStops` & `haversineMeters` exports and 40/40 tests. | [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
 
 ---
 
@@ -136,7 +137,7 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 27. [`src/components/portals/AdminDashboard.tsx`](#srccomponentsportalsadmindashboardtsx) — *Prismatic Daylight 3-tab Transport Admin Desk (Verify, Fleet, Logs) with electric pending approvals hero card, 1-click verification queue, fleet matrix, and health/CSV tools.*
 28. [`src/components/portals/ParentPortal.tsx`](#srccomponentsportalsparentportaltsx) — *Prismatic Daylight Parent oversight portal (feature-gated via VITE_ENABLE_PARENT_PORTAL) for tracking child bus arrival, lost item reporting, and WhatsApp/in-app safety alerts.*
 29. [`src/services/corridorProjection.ts`](#srcservicescorridorprojectionts) — *Pure equirectangular GPS-to-route segment projection engine and Haversine meter calculation driving live MetroSchematicMap positioning and off-route detour detection.*
-30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Responsive ₹0 GPS-Driven Live Schematic Map with external Top/Bottom HUD bars, mobile vertical timeline (with 4-stop compact preview mode), desktop gliding horizontal SVG corridor, and free Google Maps Pin link.*
+30. [`src/components/map/MetroSchematicMap.tsx`](#srccomponentsmapmetroschematicmaptsx) — *Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map (mobile, tablet & desktop) using C1 cubic Bézier track geometry, De Casteljau passed-segment shading, 4–5 stop compact Home preview, swipeable auto-centered full corridor, external Top/Bottom HUD bars, clamped speed callout pill, and free Google Maps Pin link.*
 31. [`scripts/load-test.mjs`](#scriptsloadtestmjs) — *Zero-dependency concurrency and load benchmark validating SSE connections, sub-100ms latency, and 0% error rate.*
 32. [`src/services/eventQueue.ts`](#srcserviceseventqueuets) — *IndexedDB resilient offline event queue with priority eviction, backoff retry, and idempotency keys.*
 33. [`src/services/excelService.ts`](#srcservicesexcelservicets) — *Central API client handling authenticated JWT sessions, public getServerBaseUrl() / authHeaders(), gate check-in, and offline event synchronization.*
@@ -20857,12 +20858,12 @@ export function projectGpsOntoStops(
 
 ## 30. `src/components/map/MetroSchematicMap.tsx` <a id="srccomponentsmapmetroschematicmaptsx"></a>
 
-**Description:** Responsive ₹0 GPS-Driven Live Schematic Map with external Top/Bottom HUD bars, mobile vertical timeline (with 4-stop compact preview mode), desktop gliding horizontal SVG corridor, and free Google Maps Pin link.  
+**Description:** Unified responsive ₹0 GPS-Driven Curved Metro-Style SVG Schematic Map (mobile, tablet & desktop) using C1 cubic Bézier track geometry, De Casteljau passed-segment shading, 4–5 stop compact Home preview, swipeable auto-centered full corridor, external Top/Bottom HUD bars, clamped speed callout pill, and free Google Maps Pin link.  
 **File Path:** `sreenidhi-express/src/components/map/MetroSchematicMap.tsx`  
 
 ```tsx
-import React, { useId } from 'react';
-import { Bus, ExternalLink, MapPin, Navigation } from 'lucide-react';
+import React, { useEffect, useId, useRef } from 'react';
+import { ExternalLink, Navigation } from 'lucide-react';
 import type { BusVehicle } from '../../types/transit';
 import { SREENIDHI_CAMPUS } from '../../data/sreenidhiData';
 import { haversineMeters, projectGpsOntoStops } from '../../services/corridorProjection.ts';
@@ -20876,9 +20877,66 @@ interface MetroSchematicMapProps {
   className?: string;
 }
 
+interface Pt {
+  x: number;
+  y: number;
+}
+
+interface CubicSeg {
+  p0: Pt;
+  cp1: Pt;
+  cp2: Pt;
+  p3: Pt;
+}
+
 function isMorningShiftIst(): boolean {
   const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
   return istHour < 12;
+}
+
+function truncateLabel(text: string, maxLen: number): string {
+  const clean = text.trim();
+  if (clean.length <= maxLen) return clean;
+  return `${clean.slice(0, maxLen - 1)}…`;
+}
+
+function lerpPt(a: Pt, b: Pt, t: number): Pt {
+  return {
+    x: a.x + (b.x - a.x) * t,
+    y: a.y + (b.y - a.y) * t,
+  };
+}
+
+function buildSegmentBezier(a: Pt, b: Pt): CubicSeg {
+  const midX = (a.x + b.x) / 2;
+  return {
+    p0: a,
+    cp1: { x: midX, y: a.y },
+    cp2: { x: midX, y: b.y },
+    p3: b,
+  };
+}
+
+function evalCubicBezier(seg: CubicSeg, t: number): Pt {
+  const u = Math.max(0, Math.min(1, t));
+  const mt = 1 - u;
+  const mt2 = mt * mt;
+  const u2 = u * u;
+  return {
+    x: mt2 * mt * seg.p0.x + 3 * mt2 * u * seg.cp1.x + 3 * mt * u2 * seg.cp2.x + u2 * u * seg.p3.x,
+    y: mt2 * mt * seg.p0.y + 3 * mt2 * u * seg.cp1.y + 3 * mt * u2 * seg.cp2.y + u2 * u * seg.p3.y,
+  };
+}
+
+function splitCubicPrefix(seg: CubicSeg, t: number): CubicSeg {
+  const u = Math.max(0, Math.min(1, t));
+  const q0 = lerpPt(seg.p0, seg.cp1, u);
+  const q1 = lerpPt(seg.cp1, seg.cp2, u);
+  const q2 = lerpPt(seg.cp2, seg.p3, u);
+  const r0 = lerpPt(q0, q1, u);
+  const r1 = lerpPt(q1, q2, u);
+  const s = lerpPt(r0, r1, u);
+  return { p0: seg.p0, cp1: q0, cp2: r0, p3: s };
 }
 
 const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
@@ -20889,6 +20947,8 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
 }) => {
   const stops = activeBus.stops && activeBus.stops.length > 0 ? activeBus.stops : [];
   const gradientId = useId().replace(/:/g, '');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const resolvedHighlightStop =
     stops.find(
       (s) =>
@@ -20897,6 +20957,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         s.shortName === highlightStopId
     ) || stops[0];
   const targetHighlightStopId = resolvedHighlightStop?.id || '';
+  const highlightStopIdx = stops.findIndex((s) => s.id === targetHighlightStopId);
 
   const fallbackIdx = Math.min(
     Math.max(activeBus.currentStopIndex ?? 0, 0),
@@ -20914,18 +20975,12 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
   const hasLiveGps = projection.isGpsProjected && !isTripIdle;
   const isOffRoute = hasLiveGps && projection.offRouteMeters > 400;
 
-  const nextStopIndex = Math.min(
-    projection.segmentIndex + (projection.segmentProgress > 0.05 ? 1 : 0),
-    Math.max(stops.length - 1, 0)
-  );
   const nextStop =
-    stops[Math.min(projection.segmentIndex + 1, Math.max(stops.length - 1, 0))] ||
-    stops[nextStopIndex] ||
-    stops[0];
+    stops[Math.min(projection.segmentIndex + 1, Math.max(stops.length - 1, 0))] || stops[0];
 
   const speedRounded = Math.round(activeBus.speedKmh || 0);
-  const shortBusNum = activeBus.routeNumber.replace(/^Route\s*/i, '').trim() || activeBus.routeNumber;
-  const progressPct = Math.round(projection.segmentProgress * 100);
+  const routeCodeMatch = activeBus.routeNumber.match(/\d+/);
+  const routeShortCode = routeCodeMatch ? `R${routeCodeMatch[0]}` : activeBus.routeNumber.slice(0, 5);
   const morningShift = isMorningShiftIst();
 
   // Compute remaining distance to highlighted stop via Haversine
@@ -20959,44 +21014,105 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
       : SREENIDHI_CAMPUS.lng;
   const googleMapsPinUrl = `https://www.google.com/maps/search/?api=1&query=${pinLat},${pinLng}`;
 
-  // Mobile vertical list indices (compact mode shows focused 4-stop window around bus + highlighted stop)
-  const visibleMobileEntries = (() => {
+  // Determine stops rendered inside SVG:
+  // compact={true}: focused 4-to-5 stop window centered around current projection.segmentIndex
+  // compact={false}: full corridor (scrollable horizontally on phones)
+  const { slicedStops, sliceStart, hasLeadingMore, hasTrailingMore, aheadHighlightName } = (() => {
     if (!compact || stops.length <= 5) {
-      return stops.map((stop, idx) => ({ stop, idx, gapBefore: false }));
+      return {
+        slicedStops: stops,
+        sliceStart: 0,
+        hasLeadingMore: false,
+        hasTrailingMore: false,
+        aheadHighlightName: '',
+      };
     }
-    const minWindow = Math.max(0, Math.min(projection.segmentIndex - 1, stops.length - 4));
-    const maxWindow = Math.min(stops.length - 1, minWindow + 3);
-    const keepIndices = new Set<number>();
-    for (let i = minWindow; i <= maxWindow; i++) {
-      keepIndices.add(i);
+
+    let start = Math.max(0, Math.min(projection.segmentIndex - 1, stops.length - 4));
+    let end = Math.min(stops.length - 1, start + 3);
+
+    // Ensure next segment endpoint is always included
+    if (projection.segmentIndex + 1 > end && end < stops.length - 1) {
+      end = Math.min(stops.length - 1, projection.segmentIndex + 1);
+      start = Math.max(0, end - 4);
     }
-    const highlightIdx = stops.findIndex((s) => s.id === targetHighlightStopId);
-    if (highlightIdx >= 0) {
-      keepIndices.add(highlightIdx);
+
+    // Include YOUR STOP within up to a 5-stop window if adjacent
+    if (highlightStopIdx >= 0) {
+      if (highlightStopIdx === end + 1 && end - start + 1 < 5) {
+        end = highlightStopIdx;
+      } else if (highlightStopIdx === start - 1 && end - start + 1 < 5) {
+        start = highlightStopIdx;
+      } else if (highlightStopIdx >= Math.max(0, start - 1) && highlightStopIdx <= Math.min(stops.length - 1, end + 1)) {
+        start = Math.min(start, highlightStopIdx);
+        end = Math.max(end, highlightStopIdx);
+      }
     }
-    const sorted = Array.from(keepIndices).sort((a, b) => a - b);
-    return sorted.map((idx, pos) => ({
-      stop: stops[idx],
-      idx,
-      gapBefore: pos > 0 && sorted[pos - 1] < idx - 1,
-    }));
+
+    const slice = stops.slice(start, end + 1);
+    const trailingStopAhead =
+      highlightStopIdx > end ? stops[highlightStopIdx]?.shortName || stops[highlightStopIdx]?.name || '' : '';
+
+    return {
+      slicedStops: slice,
+      sliceStart: start,
+      hasLeadingMore: start > 0,
+      hasTrailingMore: end < stops.length - 1,
+      aheadHighlightName: trailingStopAhead,
+    };
   })();
 
-  // Desktop/Tablet horizontal SVG stations (viewBox 760 x 195)
-  const metroStations = stops.map((stop, i, arr) => {
+  // SVG viewport & smooth curved metro geometry
+  const compactViewWidth = 380;
+  const compactViewHeight = 185;
+  const fullViewHeight = 210;
+  const viewWidth = compact
+    ? compactViewWidth
+    : Math.max(760, 112 + Math.max(slicedStops.length - 1, 1) * 88);
+  const viewHeight = compact ? compactViewHeight : fullViewHeight;
+
+  const padX = compact ? 48 : 56;
+  const metroStations = slicedStops.map((stop, i, arr) => {
     const total = Math.max(arr.length - 1, 1);
-    const x = Math.round(45 + (i / total) * (715 - 45));
-    const y = i === total ? 98 : i % 3 === 0 ? 118 : i % 3 === 1 ? 82 : 62;
+    const x =
+      arr.length === 1
+        ? Math.round(viewWidth / 2)
+        : Math.round(padX + (i / total) * (viewWidth - padX * 2));
+
+    const globalIdx = sliceStart + i;
+    const isTerminus = stop.areaClusterId === 'cluster-campus' || globalIdx === stops.length - 1;
+    // Alternating lower/upper tiers with gentle wave variation so adjacent labels never collide
+    const y = compact
+      ? isTerminus
+        ? 98
+        : i % 2 === 0
+          ? i % 4 === 0
+            ? 120
+            : 112
+          : i % 4 === 1
+            ? 78
+            : 86
+      : isTerminus
+        ? 106
+        : i % 2 === 0
+          ? i % 4 === 0
+            ? 136
+            : 124
+          : i % 4 === 1
+            ? 78
+            : 90;
+
+    const isUpper = !isTerminus && i % 2 === 1;
     const isInterchange = Boolean(stop.metroInterchange);
-    const isTerminus = stop.areaClusterId === 'cluster-campus' || i === total;
     const isBypassed = Boolean(stop.isBypassed);
 
     return {
       id: stop.id,
-      name: stop.shortName || stop.name,
+      globalIdx,
+      name: truncateLabel(stop.shortName || stop.name, compact ? 15 : 18),
       subtitle:
         typeof stop.metroInterchange === 'object'
-          ? stop.metroInterchange.stationName
+          ? truncateLabel(stop.metroInterchange.stationName, compact ? 16 : 20)
           : isTerminus
             ? 'Campus Terminus'
             : morningShift
@@ -21004,32 +21120,97 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
               : stop.scheduledEveningTime,
       x,
       y,
+      isUpper,
       isInterchange,
       isTerminus,
       isBypassed,
     };
   });
 
-  const segIdx = Math.min(projection.segmentIndex, Math.max(metroStations.length - 1, 0));
-  const segStartSt = metroStations[segIdx] || metroStations[0] || { x: 45, y: 98 };
-  const segEndSt = metroStations[Math.min(segIdx + 1, Math.max(metroStations.length - 1, 0))] || segStartSt;
-  const busX = segStartSt.x + (segEndSt.x - segStartSt.x) * projection.segmentProgress;
-  const busY = segStartSt.y + (segEndSt.y - segStartSt.y) * projection.segmentProgress;
+  // Compute smooth cubic Bézier segments connecting consecutive stations
+  const bezierSegments: CubicSeg[] = [];
+  for (let i = 0; i < metroStations.length - 1; i++) {
+    bezierSegments.push(buildSegmentBezier(metroStations[i], metroStations[i + 1]));
+  }
 
-  const fullTrackPathD = metroStations
-    .map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`)
-    .join(' ');
-  const passedStopsPath = metroStations
-    .slice(0, segIdx + 1)
-    .map((st, i) => `${i === 0 ? 'M' : 'L'} ${st.x} ${st.y}`);
-  const passedTrackPathD =
-    passedStopsPath.length > 0 ? `${passedStopsPath.join(' ')} L ${busX.toFixed(1)} ${busY.toFixed(1)}` : '';
+  const fullTrackPathD =
+    metroStations.length > 0
+      ? [
+          `M ${metroStations[0].x} ${metroStations[0].y}`,
+          ...bezierSegments.map(
+            (s) =>
+              `C ${s.cp1.x.toFixed(1)} ${s.cp1.y.toFixed(1)}, ${s.cp2.x.toFixed(1)} ${s.cp2.y.toFixed(1)}, ${s.p3.x.toFixed(1)} ${s.p3.y.toFixed(1)}`
+          ),
+        ].join(' ')
+      : '';
 
-  const showLiveBusAfterStop = (idx: number) =>
-    stops.length > 0 &&
-    ((stops.length === 1 && idx === 0) ||
-      idx === projection.segmentIndex ||
-      (projection.segmentIndex >= stops.length - 1 && idx === stops.length - 1));
+  const localSegIdx = Math.min(
+    Math.max(projection.segmentIndex - sliceStart, 0),
+    Math.max(metroStations.length - 1, 0)
+  );
+  const segProg = projection.segmentIndex >= sliceStart && projection.segmentIndex < sliceStart + slicedStops.length - 1
+    ? projection.segmentProgress
+    : projection.segmentIndex < sliceStart
+      ? 0
+      : 1;
+
+  // Evaluate exact bus point on the curved Bézier segment at t = segProg
+  const busPt: Pt = (() => {
+    if (metroStations.length === 0) return { x: viewWidth / 2, y: viewHeight / 2 };
+    if (localSegIdx < bezierSegments.length) {
+      return evalCubicBezier(bezierSegments[localSegIdx], segProg);
+    }
+    const last = metroStations[metroStations.length - 1];
+    return { x: last.x, y: last.y };
+  })();
+
+  // Build exact curved passed track path from start of view up to (busPt.x, busPt.y)
+  const passedTrackPathD = (() => {
+    if (metroStations.length === 0) return '';
+    const parts: string[] = [`M ${metroStations[0].x} ${metroStations[0].y}`];
+    for (let i = 0; i < localSegIdx && i < bezierSegments.length; i++) {
+      const s = bezierSegments[i];
+      parts.push(
+        `C ${s.cp1.x.toFixed(1)} ${s.cp1.y.toFixed(1)}, ${s.cp2.x.toFixed(1)} ${s.cp2.y.toFixed(1)}, ${s.p3.x.toFixed(1)} ${s.p3.y.toFixed(1)}`
+      );
+    }
+    if (localSegIdx < bezierSegments.length && segProg > 0.005) {
+      const partial = splitCubicPrefix(bezierSegments[localSegIdx], segProg);
+      parts.push(
+        `C ${partial.cp1.x.toFixed(1)} ${partial.cp1.y.toFixed(1)}, ${partial.cp2.x.toFixed(1)} ${partial.cp2.y.toFixed(1)}, ${partial.p3.x.toFixed(1)} ${partial.p3.y.toFixed(1)}`
+      );
+    }
+    return parts.join(' ');
+  })();
+
+  // Clamp bus pin icon and speed callout inside SVG safe bounds so nothing clips on 360px screens
+  const busX = Math.max(18, Math.min(viewWidth - 18, busPt.x));
+  const busY = Math.max(36, Math.min(viewHeight - 24, busPt.y));
+  const pillCenterX = Math.max(38, Math.min(viewWidth - 38, busPt.x));
+  const pillY = Math.max(15, busY - 26);
+
+  // Keep latest busX/viewWidth in refs so auto-centering only fires on mount / route / segmentIndex changes
+  const scrollTargetRef = useRef({ busX, viewWidth });
+  scrollTargetRef.current = { busX, viewWidth };
+
+  useEffect(() => {
+    if (compact) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const recenter = () => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+      const { busX: currentBusX, viewWidth: currentSvgWidth } = scrollTargetRef.current;
+      if (el.scrollWidth <= el.clientWidth + 4 || currentSvgWidth <= 0) return;
+      const targetPx = (currentBusX / currentSvgWidth) * el.scrollWidth - el.clientWidth / 2;
+      const clampedLeft = Math.max(0, Math.min(el.scrollWidth - el.clientWidth, targetPx));
+      el.scrollTo({ left: clampedLeft, behavior: 'smooth' });
+    };
+
+    const rafId = window.requestAnimationFrame(recenter);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [compact, activeBus.routeId, projection.segmentIndex, stops.length]);
 
   return (
     <div
@@ -21081,142 +21262,33 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         </span>
       </div>
 
-      {/* Middle Area — Responsive Dual Schematic Layout */}
-      <div className="bg-[#F7F9FF]/60 dark:bg-[#161B26]">
-        {/* Mobile (sm:hidden): Where is My Train-style Vertical Live Corridor */}
-        <div className="sm:hidden px-3.5 py-3">
+      {/* Unified Curved Metro-Style SVG Schematic (Mobile, Tablet & Desktop) */}
+      <div className="bg-[#F7F9FF]/75 px-2.5 py-2.5 sm:p-3.5 dark:bg-[#161B26]">
+        {!compact && stops.length > 5 && (
+          <div className="mb-1 flex items-center justify-center sm:hidden">
+            <span className="rounded-full bg-indigo-50/90 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+              ← Swipe schematic corridor →
+            </span>
+          </div>
+        )}
+
+        <div
+          ref={scrollContainerRef}
+          className={compact ? 'w-full overflow-hidden' : 'w-full overflow-x-auto touch-pan-x'}
+        >
           {stops.length === 0 ? (
-            <p className="py-4 text-center text-xs italic text-slate-500 dark:text-slate-400">
+            <p className="py-6 text-center text-xs italic text-slate-500 dark:text-slate-400">
               No corridor stops configured for this route.
             </p>
           ) : (
-            <div className="space-y-0">
-              {visibleMobileEntries.map(({ stop, idx, gapBefore }, listPos) => {
-                const isLastRendered = listPos === visibleMobileEntries.length - 1;
-                const isPassed = idx < projection.segmentIndex || (idx === projection.segmentIndex && projection.segmentProgress > 0.15);
-                const isCurrentOrNext = idx === projection.segmentIndex || idx === projection.segmentIndex + 1;
-                const isYourStop = stop.id === targetHighlightStopId;
-                const isBypassed = Boolean(stop.isBypassed);
-                const schedTime = morningShift ? stop.scheduledMorningTime : stop.scheduledEveningTime;
-
-                return (
-                  <React.Fragment key={stop.id}>
-                    {gapBefore && (
-                      <div className="flex items-center gap-3 py-1.5 pl-2.5">
-                        <span className="h-4 w-0.5 border-l-2 border-dashed border-slate-300 dark:border-slate-600" />
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                          ••• Intermediate stops •••
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="relative flex items-start gap-3">
-                      {/* Left Rail Node + Vertical Track Line */}
-                      <div className="flex flex-col items-center self-stretch">
-                        <span
-                          className={`z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-black shadow-xs transition-colors ${
-                            isBypassed
-                              ? 'border border-dashed border-slate-400 bg-slate-100 text-slate-400 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-500'
-                              : isYourStop
-                                ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white ring-2 ring-amber-300/70'
-                                : isPassed
-                                  ? 'bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] text-white'
-                                  : isCurrentOrNext
-                                    ? 'border-2 border-[#06B6D4] bg-white text-[#4F46E5] dark:bg-[#1E2430] dark:text-cyan-300'
-                                    : 'border border-slate-300 bg-white text-slate-500 dark:border-slate-600 dark:bg-[#1E2430] dark:text-slate-400'
-                          }`}
-                        >
-                          {stop.sequence || idx + 1}
-                        </span>
-                        {!isLastRendered && (
-                          <span
-                            className={`w-0.5 flex-1 min-h-4 ${
-                              idx < projection.segmentIndex
-                                ? 'bg-gradient-to-b from-[#4F46E5] to-[#06B6D4]'
-                                : 'bg-slate-200 dark:bg-slate-700'
-                            }`}
-                          />
-                        )}
-                      </div>
-
-                      {/* Stop Label & Meta */}
-                      <div className={`min-w-0 flex-1 pb-3 ${isBypassed ? 'opacity-55' : ''}`}>
-                        <div className="flex flex-wrap items-center justify-between gap-1.5">
-                          <span
-                            className={`text-xs font-bold leading-snug ${
-                              isBypassed
-                                ? 'line-through text-slate-400 dark:text-slate-500'
-                                : isYourStop
-                                  ? 'text-[#4F46E5] dark:text-cyan-300 font-extrabold'
-                                  : 'text-slate-900 dark:text-white'
-                            }`}
-                          >
-                            {stop.name}
-                          </span>
-                          <span className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">
-                            {schedTime}
-                          </span>
-                        </div>
-
-                        <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                          {isYourStop && !isBypassed && (
-                            <span className="inline-flex items-center gap-1 rounded-full bg-orange-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white shadow-xs">
-                              <MapPin className="h-2.5 w-2.5" />
-                              YOUR STOP
-                            </span>
-                          )}
-                          {isBypassed && (
-                            <span className="inline-flex items-center rounded-full bg-slate-500 px-2 py-0.5 text-[9px] font-extrabold uppercase text-white">
-                              Bypassed
-                            </span>
-                          )}
-                          {stop.metroInterchange && !isBypassed && (
-                            <span className="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] font-bold text-sky-800 dark:bg-sky-950/60 dark:text-sky-300">
-                              Metro: {stop.metroInterchange.stationName}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Smoothly Positioned Live Bus Pill Between Current & Next Stop */}
-                    {showLiveBusAfterStop(idx) && (
-                      <div className="relative flex items-center gap-3 py-1">
-                        <div className="flex flex-col items-center self-stretch">
-                          <span
-                            className={`w-0.5 flex-1 ${
-                              idx < stops.length - 1
-                                ? 'bg-gradient-to-b from-[#4F46E5] to-[#06B6D4]'
-                                : 'bg-transparent'
-                            }`}
-                          />
-                        </div>
-                        <div className="my-0.5 flex flex-1 items-center gap-2 rounded-xl bg-gradient-to-r from-[#4F46E5] to-[#06B6D4] px-3 py-2 text-[11px] font-extrabold text-white shadow-sm transition-all duration-700 ease-out">
-                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20">
-                            <Bus className="h-3 w-3 text-white animate-pulse" />
-                          </span>
-                          <span className="truncate">
-                            Bus #{shortBusNum} • {speedRounded} km/h •{' '}
-                            {idx >= stops.length - 1
-                              ? `At ${stop.shortName || stop.name}`
-                              : `${progressPct}% to ${nextStop?.shortName || nextStop?.name || 'Campus'}`}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Tablet/Desktop (hidden sm:block): Horizontal SVG Metro Corridor */}
-        <div className="hidden sm:block p-3.5">
-          <div className="w-full overflow-x-auto">
             <svg
-              viewBox="0 0 760 195"
-              className="min-w-[660px] w-full select-none"
+              viewBox={`0 0 ${viewWidth} ${viewHeight}`}
+              className="w-full select-none"
+              style={
+                compact
+                  ? undefined
+                  : { minWidth: `${Math.max(660, stops.length >= 12 ? 920 : stops.length * 68)}px` }
+              }
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -21227,74 +21299,165 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 </linearGradient>
               </defs>
 
-              {/* Outer Track Backing */}
+              {/* Continuation Markers in Compact Window */}
+              {compact && hasLeadingMore && metroStations[0] && (
+                <g opacity={0.75}>
+                  <line
+                    x1="12"
+                    y1={metroStations[0].y}
+                    x2={metroStations[0].x}
+                    y2={metroStations[0].y}
+                    stroke="#94A3B8"
+                    strokeWidth="4"
+                    strokeDasharray="4 4"
+                    strokeLinecap="round"
+                  />
+                  <text
+                    x="18"
+                    y={metroStations[0].y - 8}
+                    fill="#64748B"
+                    fontSize="10"
+                    fontWeight="800"
+                    textAnchor="middle"
+                    fontFamily="system-ui"
+                  >
+                    •••
+                  </text>
+                </g>
+              )}
+
+              {compact && hasTrailingMore && metroStations[metroStations.length - 1] && (
+                <g opacity={0.85}>
+                  <line
+                    x1={metroStations[metroStations.length - 1].x}
+                    y1={metroStations[metroStations.length - 1].y}
+                    x2={viewWidth - 14}
+                    y2={metroStations[metroStations.length - 1].y}
+                    stroke="#94A3B8"
+                    strokeWidth="4"
+                    strokeDasharray="4 4"
+                    strokeLinecap="round"
+                  />
+                  <text
+                    x={viewWidth - 20}
+                    y={metroStations[metroStations.length - 1].y - 8}
+                    fill="#4F46E5"
+                    fontSize="10"
+                    fontWeight="800"
+                    textAnchor="middle"
+                    fontFamily="system-ui"
+                    className="dark:fill-cyan-300"
+                  >
+                    •••
+                  </text>
+                  {aheadHighlightName && (
+                    <text
+                      x={viewWidth - 6}
+                      y={metroStations[metroStations.length - 1].y + 15}
+                      fill="#E65100"
+                      fontSize="7.5"
+                      fontWeight="800"
+                      textAnchor="end"
+                      fontFamily="system-ui"
+                    >
+                      → {truncateLabel(aheadHighlightName, 12)}
+                    </text>
+                  )}
+                </g>
+              )}
+
+              {/* Outer Curved Track Backing */}
               {fullTrackPathD && (
                 <path
                   d={fullTrackPathD}
                   stroke="#E2E8F0"
-                  strokeWidth="10"
+                  strokeWidth={compact ? '11' : '12'}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#374151]"
                 />
               )}
 
-              {/* Remaining Corridor Track (Muted Slate) */}
+              {/* Remaining Curved Corridor Track (Muted Slate) */}
               {fullTrackPathD && (
                 <path
                   d={fullTrackPathD}
                   stroke="#94A3B8"
                   strokeOpacity="0.45"
-                  strokeWidth="6"
+                  strokeWidth={compact ? '6' : '6.5'}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dark:stroke-[#64748B]"
                 />
               )}
 
-              {/* Passed Segment Track Up To GPS Position (Indigo -> Cyan Gradient) */}
+              {/* Passed Curved Track Up To Live GPS Position (Indigo -> Cyan Gradient) */}
               {passedTrackPathD && (
                 <path
                   d={passedTrackPathD}
                   stroke={`url(#${gradientId})`}
-                  strokeWidth="6.5"
+                  strokeWidth={compact ? '6.5' : '7'}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="transition-all duration-700 ease-out"
                 />
               )}
 
-              {/* Flyover Bypass Indicator */}
-              {activeBus.flyoverBypassActive && metroStations.length >= 4 && (
+              {/* Flyover Bypass Arc Indicator */}
+              {activeBus.flyoverBypassActive && metroStations.length >= 3 && (
                 <path
-                  d={`M ${metroStations[1]?.x || 120} ${(metroStations[1]?.y || 82) - 15} Q ${metroStations[2]?.x || 250} 20 ${metroStations[Math.min(4, metroStations.length - 1)]?.x || 450} ${(metroStations[Math.min(4, metroStations.length - 1)]?.y || 82) + 15}`}
+                  d={`M ${metroStations[0].x} ${metroStations[0].y - 14} Q ${(metroStations[0].x + metroStations[Math.min(2, metroStations.length - 1)].x) / 2} 18 ${metroStations[Math.min(2, metroStations.length - 1)].x} ${metroStations[Math.min(2, metroStations.length - 1)].y - 14}`}
                   stroke="#4F46E5"
-                  strokeWidth="3.5"
+                  strokeWidth="3"
                   strokeDasharray="4 4"
                   fill="none"
                 />
               )}
 
-              {/* Station Nodes */}
-              {metroStations.map((st, idx) => {
-                const isPassed = idx <= segIdx && (idx < segIdx || projection.segmentProgress > 0.08);
-                const isCurrent = idx === segIdx;
+              {/* Station Nodes & Alternating Labels */}
+              {metroStations.map((st) => {
+                const isPassed =
+                  st.globalIdx < projection.segmentIndex ||
+                  (st.globalIdx === projection.segmentIndex && projection.segmentProgress > 0.08);
+                const isCurrent = st.globalIdx === projection.segmentIndex;
                 const isHighlighted = st.id === targetHighlightStopId;
                 const isBypassed = st.isBypassed;
+
+                const nameY = st.isUpper ? st.y - 15 : st.y + 18;
+                const subY = st.isUpper ? st.y - 26 : st.y + 28.5;
+                const tagY = st.isUpper ? st.y - 39 : st.y + 34;
 
                 return (
                   <g key={st.id} opacity={isBypassed ? 0.45 : 1}>
                     {st.isTerminus ? (
                       <g transform={`translate(${st.x}, ${st.y})`}>
-                        <line x1="0" y1="-12" x2="0" y2="12" stroke="#4F46E5" strokeWidth="4" className="dark:stroke-[#818CF8]" />
-                        <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.5" className="dark:fill-[#818CF8]" />
+                        <line
+                          x1="0"
+                          y1="-12"
+                          x2="0"
+                          y2="12"
+                          stroke="#4F46E5"
+                          strokeWidth="4"
+                          className="dark:stroke-[#818CF8]"
+                        />
+                        <rect
+                          x="-6"
+                          y="-6"
+                          width="12"
+                          height="12"
+                          rx="3"
+                          fill="#4F46E5"
+                          stroke="#FFFFFF"
+                          strokeWidth="2.5"
+                          className="dark:fill-[#818CF8]"
+                        />
                       </g>
                     ) : st.isInterchange ? (
                       <g transform={`translate(${st.x}, ${st.y})`}>
                         <circle
                           cx="0"
                           cy="0"
-                          r="9"
+                          r={compact ? '8.5' : '9'}
                           fill="#FFFFFF"
                           stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
                           strokeWidth="3.5"
@@ -21304,7 +21467,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                         <circle
                           cx="0"
                           cy="0"
-                          r="4"
+                          r="3.8"
                           fill={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#94A3B8'}
                           className="dark:fill-[#38BDF8]"
                         />
@@ -21313,7 +21476,7 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                       <circle
                         cx={st.x}
                         cy={st.y}
-                        r="5.5"
+                        r={compact ? '5.5' : '6'}
                         fill="#FFFFFF"
                         stroke={isBypassed ? '#9CA3AF' : isCurrent ? '#06B6D4' : isPassed ? '#4F46E5' : '#64748B'}
                         strokeWidth="2.5"
@@ -21322,44 +21485,74 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                       />
                     )}
 
+                    {/* YOUR STOP Highlight Halo & Pill */}
                     {isHighlighted && !isBypassed && (
-                      <g transform={`translate(${st.x}, ${st.y})`}>
-                        <circle cx="0" cy="0" r="15" fill="none" stroke="#E65100" strokeWidth="2" strokeDasharray="3 3" />
-                        <rect x="-25" y="-32" width="50" height="14" rx="4" fill="#E65100" />
-                        <text x="0" y="-22" fill="#FFFFFF" fontSize="8" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
-                          YOUR STOP
-                        </text>
+                      <g>
+                        <circle
+                          cx={st.x}
+                          cy={st.y}
+                          r="14"
+                          fill="none"
+                          stroke="#E65100"
+                          strokeWidth="2"
+                          strokeDasharray="3 3"
+                        />
+                        <g transform={`translate(${Math.max(28, Math.min(viewWidth - 28, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 16, tagY + 3)})`}>
+                          <rect x="-25" y="-5" width="50" height="13" rx="4" fill="#E65100" />
+                          <text
+                            x="0"
+                            y="4"
+                            fill="#FFFFFF"
+                            fontSize="7.5"
+                            fontWeight="800"
+                            textAnchor="middle"
+                            fontFamily="system-ui"
+                          >
+                            YOUR STOP
+                          </text>
+                        </g>
                       </g>
                     )}
 
+                    {/* BYPASSED Badge */}
                     {isBypassed && (
-                      <g transform={`translate(${st.x - 20}, ${st.y - 28})`}>
-                        <rect x="0" y="0" width="40" height="11" rx="3" fill="#6B7280" opacity="0.9" />
-                        <text x="20" y="8" fill="#FFFFFF" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="system-ui">
+                      <g transform={`translate(${Math.max(24, Math.min(viewWidth - 24, st.x))}, ${st.isUpper ? Math.max(12, tagY) : Math.min(viewHeight - 15, tagY + 3)})`}>
+                        <rect x="-21" y="-5" width="42" height="11" rx="3" fill="#6B7280" opacity="0.92" />
+                        <text
+                          x="0"
+                          y="3"
+                          fill="#FFFFFF"
+                          fontSize="6.5"
+                          fontWeight="800"
+                          textAnchor="middle"
+                          fontFamily="system-ui"
+                        >
                           BYPASSED
                         </text>
                       </g>
                     )}
 
+                    {/* Stop Name */}
                     <text
-                      x={st.x}
-                      y={st.y > 82 ? st.y + 18 : st.y - 14}
+                      x={Math.max(34, Math.min(viewWidth - 34, st.x))}
+                      y={nameY}
                       textAnchor="middle"
                       fill="#111827"
-                      fontSize="9.5"
+                      fontSize="10"
                       fontWeight="800"
                       fontFamily="system-ui"
-                      className={isBypassed ? 'line-through text-slate-400 dark:fill-slate-500' : 'dark:fill-white'}
+                      className={isBypassed ? 'line-through fill-slate-400 dark:fill-slate-500' : 'dark:fill-white'}
                     >
                       {st.name}
                     </text>
 
+                    {/* Scheduled Time / Metro Subtitle */}
                     <text
-                      x={st.x}
-                      y={st.y > 82 ? st.y + 28 : st.y - 25}
+                      x={Math.max(34, Math.min(viewWidth - 34, st.x))}
+                      y={subY}
                       textAnchor="middle"
-                      fill="#6B7280"
-                      fontSize="7.5"
+                      fill="#64748B"
+                      fontSize="7.8"
                       fontWeight="600"
                       fontFamily="system-ui"
                       className="dark:fill-[#9CA3AF]"
@@ -21367,10 +21560,20 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                       {st.subtitle}
                     </text>
 
-                    {st.isInterchange && !isBypassed && (
-                      <g transform={`translate(${st.x - 14}, ${st.y > 82 ? st.y + 32 : st.y - 36})`}>
-                        <rect x="0" y="0" width="28" height="9" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
-                        <text x="14" y="7" textAnchor="middle" fill="#0369A1" fontSize="6.5" fontWeight="800" fontFamily="system-ui" className="dark:fill-sky-300">
+                    {/* Metro Tag when not covered by YOUR STOP or BYPASSED badge */}
+                    {st.isInterchange && !isBypassed && !isHighlighted && (
+                      <g transform={`translate(${Math.max(20, Math.min(viewWidth - 20, st.x))}, ${st.isUpper ? Math.max(11, tagY) : Math.min(viewHeight - 14, tagY + 2)})`}>
+                        <rect x="-15" y="-4" width="30" height="9.5" rx="2.5" fill="#E0F2FE" className="dark:fill-sky-950" />
+                        <text
+                          x="0"
+                          y="3"
+                          textAnchor="middle"
+                          fill="#0369A1"
+                          fontSize="6.5"
+                          fontWeight="800"
+                          fontFamily="system-ui"
+                          className="dark:fill-sky-300"
+                        >
                           METRO
                         </text>
                       </g>
@@ -21379,20 +21582,48 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
                 );
               })}
 
-              {/* Smoothly Gliding GPS-Projected Bus Marker */}
+              {/* Clamped Speed Callout Pill Above Live Bus Pin */}
               <g
                 className="transition-all duration-700 ease-out"
-                style={{ transform: `translate(${busX}px, ${busY}px)` }}
+                style={{ transform: `translate(${pillCenterX.toFixed(1)}px, ${pillY.toFixed(1)}px)` }}
+              >
+                <rect
+                  x="-36"
+                  y="-12"
+                  width="72"
+                  height="16"
+                  rx="8"
+                  fill={`url(#${gradientId})`}
+                  stroke="#FFFFFF"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="0"
+                  y="-1.5"
+                  fill="#FFFFFF"
+                  fontSize="7.5"
+                  fontWeight="800"
+                  textAnchor="middle"
+                  fontFamily="system-ui"
+                >
+                  {routeShortCode} • {speedRounded} km/h
+                </text>
+              </g>
+
+              {/* Smoothly Gliding GPS-Projected Bus Pin Strictly On the Curved Track */}
+              <g
+                className="transition-all duration-700 ease-out"
+                style={{ transform: `translate(${busX.toFixed(1)}px, ${busY.toFixed(1)}px)` }}
               >
                 <circle cx="0" cy="0" r="15" fill="#4F46E5" opacity="0.24" className="animate-ping" />
-                <circle cx="0" cy="0" r="11" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2.2" />
+                <circle cx="0" cy="0" r="11" fill={`url(#${gradientId})`} stroke="#FFFFFF" strokeWidth="2.2" />
                 <rect x="-5" y="-3.5" width="10" height="7" rx="1.5" fill="white" />
                 <circle cx="-2" cy="1.5" r="0.8" fill="#4F46E5" />
                 <circle cx="2" cy="1.5" r="0.8" fill="#4F46E5" />
                 <rect x="-3.5" y="-2.5" width="7" height="2" rx="0.5" fill="#4F46E5" />
               </g>
             </svg>
-          </div>
+          )}
         </div>
       </div>
 
