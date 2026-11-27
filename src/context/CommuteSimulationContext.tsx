@@ -43,6 +43,13 @@ import type {
   StudentRecord,
   TripDirection,
 } from '../types/transit';
+
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
+
+const getInitialIstTripDirection = (): TripDirection => {
+  const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
+  return istHour < 12 ? 'MORNING_TO_CAMPUS' : 'EVENING_FROM_CAMPUS';
+};
 import {
   CommuteSimulationContext,
   type CommuteSimulationContextValue,
@@ -169,7 +176,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
     structuredClone(INITIAL_STUDENTS),
   );
   const [activeStudentId, setActiveStudentId] = useState<string>('stu-51-18');
-  const [tripDirection, setTripDirection] = useState<TripDirection>('MORNING_TO_CAMPUS');
+  const [tripDirection, setTripDirection] = useState<TripDirection>(getInitialIstTripDirection);
   const [scheduleMode, setScheduleModeState] = useState<ScheduleMode>('REGULAR');
 
   const [autoDriveEnabled, setAutoDriveEnabled] = useState<boolean>(false);
@@ -1102,9 +1109,10 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
       if (!plan) return;
       setRouteOptimizationPlan(plan);
       const rId = plan.routeId;
-      const skippedClusterIds: string[] = Array.isArray(plan.skippedClusterIds)
-        ? plan.skippedClusterIds
-        : [];
+      const skippedClusterIds: string[] =
+        ENABLE_AREA_SKIPPING && Array.isArray(plan.skippedClusterIds)
+          ? plan.skippedClusterIds
+          : [];
 
       setBuses((prev) =>
         prev.map((b) => {
@@ -1117,16 +1125,18 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
           const updatedStops = b.stops.map((s) => ({
             ...s,
             isBypassed:
+              ENABLE_AREA_SKIPPING &&
               s.areaClusterId !== 'cluster-campus' &&
               skippedClusterIds.includes(s.areaClusterId),
           }));
 
           return {
             ...b,
-            skippedClusterIds,
+            skippedClusterIds: ENABLE_AREA_SKIPPING ? skippedClusterIds : [],
             stops: updatedStops,
+            shortcutPath: ENABLE_AREA_SKIPPING ? b.shortcutPath : undefined,
             status:
-              skippedClusterIds.length > 0
+              ENABLE_AREA_SKIPPING && skippedClusterIds.length > 0
                 ? 'REROUTED_SKIP_AREA'
                 : b.status === 'REROUTED_SKIP_AREA'
                 ? 'ON_ROUTE'
@@ -1134,6 +1144,11 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
           };
         }),
       );
+
+      if (!ENABLE_AREA_SKIPPING) {
+        setFuelRoi(INITIAL_FUEL_ROI);
+        return;
+      }
 
       // Compute savings & shortcut path via OSRM
       const currentBuses = busesRef.current;
@@ -1276,6 +1291,14 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
 
   const simulateAreaOptOutAndSkip = useCallback(
     async (requestedClusterId?: string) => {
+      if (!ENABLE_AREA_SKIPPING) {
+        pushToast(
+          'info',
+          'Phase 1 Pilot Policy',
+          'Area-skipping is disabled during Phase 1 pilot — all stops are served.',
+        );
+        return;
+      }
       const bus = buses.find((b) => b.routeId === activeRouteId) ?? buses[0];
       // Default to Uppal–Boduppal or Habsiguda–Nacharam cluster
       const clusterId =

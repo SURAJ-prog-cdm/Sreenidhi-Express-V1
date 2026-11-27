@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
+
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
 import { PhoneOnboardingModal } from '../notifications/PhoneOnboardingModal';
@@ -394,9 +396,11 @@ export const ParentPortal: React.FC = () => {
         {(() => {
           const wardClusterId = activeStudent?.areaClusterId || studentStop?.areaClusterId || '';
           const isClusterBypassed = Boolean(
+            ENABLE_AREA_SKIPPING &&
             routeOptimizationPlan?.skippedClusterIds?.includes(wardClusterId)
           );
           const isDownstreamBypass = Boolean(
+            ENABLE_AREA_SKIPPING &&
             routeOptimizationPlan?.skippedClusterIds?.length &&
             !isClusterBypassed &&
             activeBus?.stops.some(

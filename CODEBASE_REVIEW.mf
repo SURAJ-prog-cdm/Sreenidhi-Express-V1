@@ -4,13 +4,13 @@
 > **Target Institution:** Sreenidhi Institute of Science and Technology (SNIST), Yamnampet, Ghatkesar, Hyderabad, Telangana 501301
 > **Target Reviewer:** Gemini Argon / Senior System Architect / Evaluation Committee
 > **Date of Compilation:** November 27, 2026
-> **Build Status:** Production Prototype / v20.4.2 Multi-Admin Access, Scrollable Full-Corridor Curved Metro SVG & Unified Multi-Stop Google Maps Build (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Full-Corridor Scrollable Curved Cubic-Bézier `MetroSchematicMap` Across Student Home Preview & All Portals Without Frontend Leaflet Dependencies, Shared `buildGoogleMapsRouteUrl` Multi-Stop Directions Across All Portals, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 41/41 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
+> **Build Status:** Production Prototype / v20.4.3 Phase 1 Pilot Hardening — Auto IST Morning/Evening Direction, 9-Waypoint Google Maps Cap & Feature-Gated Area-Skipping (Vite 8, Node.js >=22.12.0, Capacitor Android, SQLite WAL, Pearl-White `#F7F9FF` Light-First Boot Default + Electric Indigo-to-Cyan `#4F46E5 -> #06B6D4` Glassmorphic Design System, Auto IST Morning/Evening Corridor Direction, Full-Corridor Scrollable Curved Cubic-Bézier `MetroSchematicMap` Across Student Home Preview & All Portals Without Frontend Leaflet Dependencies, Mobile-Safe ≤9 Waypoint `buildGoogleMapsRouteUrl` Across All Portals, `VITE_ENABLE_AREA_SKIPPING=false` Phase 1 Pilot Safety Default, Full Fleet Pickup Stop `<select>` Dropdown in Self-Registration, ₹0 Self-Service Forgot Password + Admin Desk Code Visibility, Multi-Admin Credential Support via `ADMIN_ACCOUNTS` + `admin_users` Provisioning/Revocation, Admin Detailed Timestamps & Stop Duration Report Panel with IST Variance & Route/Date Filtering, Student Map-Tab Live Stop-by-Stop ETA & Projected Clock Times, 42/42 Security Unit Tests Passing, 9/9 Automated E2E Pilot Stages Passing, Concurrency Load Benchmark Verified)
 
 ---
 
-## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 82 Findings Resolved)
+## 0. Comprehensive Static Review Resolution & Pilot Hardening Audit (All 83 Findings Resolved)
 
-Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 / v20.4.2 upgrades (Multi-Admin RBAC, Full-Corridor Scrollable Curved GPS Schematic Map, Unified Multi-Stop Google Maps Directions, Registration Stop Dropdown, and ₹0 Forgot Password), all 82 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 41/41 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
+Following the rigorous static architecture, HOD pre-pilot review, Prismatic Daylight Glass UI upgrade, v20.2 mobile polish, v20.3 timestamp reporting, and v20.4 – v20.4.3 upgrades (Multi-Admin RBAC, Full-Corridor Scrollable Curved GPS Schematic Map, ≤9-Waypoint Google Maps Directions, Auto IST Morning/Evening Direction, Phase 1 All-Stops-Active Pilot Gate, Registration Stop Dropdown, and ₹0 Forgot Password), all 83 issues and enhancements across priority tiers P0, P1, and P2 have been systematically resolved in source code and validated with 100% test pass rates across unit tests (`tests/security.test.js`, 42/42 passing) and end-to-end integration tests (`test_e2e_pilot.mjs`, 9/9 stages passing).
 
 ### Summary Audit Matrix:
 
@@ -98,6 +98,7 @@ Following the rigorous static architecture, HOD pre-pilot review, Prismatic Dayl
 | **80** | **P0** | v20.4 Live Schematic Map, Registration Dropdown & ₹0 Forgot Password | **GPS-Driven `MetroSchematicMap`, Frontend Leaflet Removal, Self-Register Stop `<select>` & ₹0 Forgot Password**: Replaced `HybridTransitMap` + frontend `leaflet` / `react-leaflet` packages with a single responsive GPS-projected `MetroSchematicMap` (`projectGpsOntoStops`, mobile vertical timeline with 4-stop compact window, smooth gliding desktop SVG corridor, Top/Bottom HUD bars, and free Google Maps Pin handoff) across all 4 portals while preserving backend tile/CSP tests; upgraded New Commuter Self-Registration Requested Pickup Stop to a grouped `<select>` populated from `INITIAL_BUS_FLEET`; added `POST /api/auth/forgot-password`, `POST /api/auth/reset-password` (timing-safe 6-digit codes, 5-attempt lockout, 15m TTL, optional Telegram alert, Admin Desk visibility via `GET /api/admin/password-reset-requests`); extended `tests/security.test.js` to 40/40 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/auth/StudentLoginPage.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/auth/StudentLoginPage.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`server/dbExtras.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/dbExtras.js), [`server/index.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/server/index.js), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 | **81** | **P1** | v20.4.1 Curved Metro SVG Schematic | **Unified Curved Cubic-Bézier Metro SVG Across Mobile & Desktop**: Removed straight-line vertical mobile stop list in `MetroSchematicMap.tsx` and unified all viewports onto a curved C1-continuous cubic Bézier Metro corridor with exact De Casteljau partial passed-track gradient shading, phone-safe 4–5 stop `compact` `viewBox="0 0 380 185"` preview with clamped `R51 • km/h` callout pill, swipeable full route corridor with auto-centering onto `busX`, and external Top/Bottom HUD bars while preserving `projectGpsOntoStops` & `haversineMeters` exports and 40/40 tests. | [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx) |
 | **82** | **P1** | v20.4.2 Full-Corridor Home Scroll & Multi-Stop Directions | **Scrollable Full-Corridor Home Preview, Lower-Label Clearance & Unified Multi-Stop Google Maps Directions**: Removed the 4-stop crop in `MetroSchematicMap.tsx` `compact` mode so Student/Faculty Home previews expose the complete scrollable curved corridor with `← Swipe / Scroll route →` overflow hint and 4-second manual-scroll cooldown before auto-centering; increased bottom-curve stop label clearance (+9px to `st.y + 27`) so the bus beacon never overlaps Erragadda/bottom stop names; added `buildGoogleMapsRouteUrl` in `corridorProjection.ts` and unified `Open Full Route in Google Maps` & Driver `Navigate Optimized Route` onto multi-stop `/maps/dir/?api=1` Directions URLs; expanded `tests/security.test.js` to 41/41 passing. | [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/map/MetroSchematicMap.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/map/MetroSchematicMap.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
+| **83** | **P0** | v20.4.3 Phase 1 Pilot Hardening | **Auto IST Morning/Evening Direction, Mobile ≤9-Waypoint Google Maps Cap & Feature-Gated Area-Skipping**: Replaced hardcoded `MORNING_TO_CAMPUS` state initializer in `CommuteSimulationContext.tsx` with IST hour-aware `getInitialIstTripDirection` so post-12:00 PM IST evening schedules flow chronologically `SUH Campus -> Erragadda`; evenly sampled intermediate waypoints to `MAX_WAYPOINTS = 9` inside `buildGoogleMapsRouteUrl` for mobile Google Maps compatibility; disabled frontend area/stop skipping by default behind `VITE_ENABLE_AREA_SKIPPING=false` across context & all 4 portals (preserving `"Not Traveling"` headcounts and backend `computeRouteOptimization` APIs); added Test #42 in `tests/security.test.js` (42/42 passing). | [`src/context/CommuteSimulationContext.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/context/CommuteSimulationContext.tsx), [`src/services/corridorProjection.ts`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/services/corridorProjection.ts), [`src/components/portals/StudentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/StudentPortal.tsx), [`src/components/portals/DriverConsole.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/DriverConsole.tsx), [`src/components/portals/AdminDashboard.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/AdminDashboard.tsx), [`src/components/portals/ParentPortal.tsx`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/src/components/portals/ParentPortal.tsx), [`tests/security.test.js`](file:///C:/Users/Rajeshwari/.gemini/antigravity/scratch/sreenidhi-transitpulse/tests/security.test.js) |
 
 ---
 
@@ -121,7 +122,7 @@ Sreenidhi Express (`in.edu.suh.express`) is a production-grade, zero-cost (₹0 
 10. [`server/index.js`](#serverindexjs) — *Express 5 REST API server with timing-safe HMAC JWT auth, self-signup + 1-click admin verification, self-checkin boarding, stop dwell audit logging, 1-hour pre-departure absence cutoff, SSE live stream tickets, and CARTO tile proxy.*
 11. [`server/excelStorage.js`](#serverexcelstoragejs) — *Real-time Excel engine with SQLite WAL persistence, prepared statement cache, configurable DATA_DIR / DB_FILE_PATH / EXCEL_FILE_PATH, and atomic XLSX export.*
 12. [`server/telegramNotifier.js`](#servertelegramnotifierjs) — *Automated Telegram Bot safety alert integration for student transit events and driver dispatches.*
-13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.2 multi-admin auth, GPS schematic projection, multi-stop Google Maps route URL & forgot-password workflow (41/41 passing).*
+13. [`tests/security.test.js`](#testssecuritytestjs) — *Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.3 multi-admin auth, GPS schematic projection, 9-waypoint mobile Google Maps route URL & forgot-password workflow (42/42 passing).*
 14. [`src/types/transit.ts`](#srctypestransitts) — *Complete TypeScript type contracts for buses, students, telemetry, geofences, and safety alerts.*
 15. [`src/config/apiConfig.ts`](#srcconfigapiconfigts) — *Environment variables, backend endpoints, and API client configuration.*
 16. [`src/data/sreenidhiData.ts`](#srcdatasreenidhidatats) — *Hyderabad NH-163 Warangal Highway transit network stops, student master roster, Route 51 manifest (18 students + 8 faculty), and fleet definitions.*
@@ -7865,7 +7866,7 @@ export async function sendTelegramAlert(chatId, messageHtml) {
 
 ## 13. `tests/security.test.js` <a id="testssecuritytestjs"></a>
 
-**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.2 multi-admin auth, GPS schematic projection, multi-stop Google Maps route URL & forgot-password workflow (41/41 passing).  
+**Description:** Comprehensive unit test suite verifying tokens, password hashing, rate limiting, gate token skew, event schema allowlists, Route 51 manifest integrity, area cluster optimization, billing cycle reset, faculty role separation, PRAGMA busy_timeout, push subscriptions, 14-day median ETAs, bulk onboarding, single-use stream tickets, OSRM geometry cache, admin health RBAC, tile proxy validation, v19 OTP onboarding, v20 pilot hardening & verification, v20.3 timestamp report & CSV headers, and v20.4 / v20.4.3 multi-admin auth, GPS schematic projection, 9-waypoint mobile Google Maps route URL & forgot-password workflow (42/42 passing).  
 **File Path:** `sreenidhi-express/tests/security.test.js`  
 
 ```javascript
@@ -9110,6 +9111,33 @@ test('v20.4.2 google maps route url: builds multi-stop directions url with waypo
 
   const emptyUrl = buildGoogleMapsRouteUrl([]);
   assert.equal(emptyUrl, 'https://www.google.com/maps/dir/?api=1&travelmode=driving');
+});
+
+test('v20.4.3 google maps 9-waypoint mobile cap: caps intermediate waypoints at <= 9 on full 14-stop Route 51', () => {
+  const fullRoute51 = [
+    { lat: 17.4558, lng: 78.4294 },
+    { lat: 17.4475, lng: 78.4373 },
+    { lat: 17.4375, lng: 78.4483 },
+    { lat: 17.4384, lng: 78.4582 },
+    { lat: 17.4433, lng: 78.4758 },
+    { lat: 17.4428, lng: 78.5008 },
+    { lat: 17.4355, lng: 78.5196 },
+    { lat: 17.4279, lng: 78.5326 },
+    { lat: 17.4318, lng: 78.5360 },
+    { lat: 17.4397, lng: 78.5424 },
+    { lat: 17.4565, lng: 78.5542 },
+    { lat: 17.4628, lng: 78.5586 },
+    { lat: 17.4681, lng: 78.5561 },
+    { lat: 17.4571986, lng: 78.6652322 },
+  ];
+
+  const url = buildGoogleMapsRouteUrl(fullRoute51);
+  const parsed = new URL(url);
+  assert.equal(parsed.searchParams.get('origin'), '17.4558,78.4294');
+  assert.equal(parsed.searchParams.get('destination'), '17.4571986,78.6652322');
+  const wpParam = parsed.searchParams.get('waypoints') || '';
+  const waypoints = wpParam.split('|').filter(Boolean);
+  assert.ok(waypoints.length <= 9 && waypoints.length === 9);
 });
 
 test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
@@ -11996,6 +12024,13 @@ import type {
   StudentRecord,
   TripDirection,
 } from '../types/transit';
+
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
+
+const getInitialIstTripDirection = (): TripDirection => {
+  const istHour = new Date(Date.now() + 5.5 * 3600 * 1000).getUTCHours();
+  return istHour < 12 ? 'MORNING_TO_CAMPUS' : 'EVENING_FROM_CAMPUS';
+};
 import {
   CommuteSimulationContext,
   type CommuteSimulationContextValue,
@@ -12122,7 +12157,7 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
     structuredClone(INITIAL_STUDENTS),
   );
   const [activeStudentId, setActiveStudentId] = useState<string>('stu-51-18');
-  const [tripDirection, setTripDirection] = useState<TripDirection>('MORNING_TO_CAMPUS');
+  const [tripDirection, setTripDirection] = useState<TripDirection>(getInitialIstTripDirection);
   const [scheduleMode, setScheduleModeState] = useState<ScheduleMode>('REGULAR');
 
   const [autoDriveEnabled, setAutoDriveEnabled] = useState<boolean>(false);
@@ -13055,9 +13090,10 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
       if (!plan) return;
       setRouteOptimizationPlan(plan);
       const rId = plan.routeId;
-      const skippedClusterIds: string[] = Array.isArray(plan.skippedClusterIds)
-        ? plan.skippedClusterIds
-        : [];
+      const skippedClusterIds: string[] =
+        ENABLE_AREA_SKIPPING && Array.isArray(plan.skippedClusterIds)
+          ? plan.skippedClusterIds
+          : [];
 
       setBuses((prev) =>
         prev.map((b) => {
@@ -13070,16 +13106,18 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
           const updatedStops = b.stops.map((s) => ({
             ...s,
             isBypassed:
+              ENABLE_AREA_SKIPPING &&
               s.areaClusterId !== 'cluster-campus' &&
               skippedClusterIds.includes(s.areaClusterId),
           }));
 
           return {
             ...b,
-            skippedClusterIds,
+            skippedClusterIds: ENABLE_AREA_SKIPPING ? skippedClusterIds : [],
             stops: updatedStops,
+            shortcutPath: ENABLE_AREA_SKIPPING ? b.shortcutPath : undefined,
             status:
-              skippedClusterIds.length > 0
+              ENABLE_AREA_SKIPPING && skippedClusterIds.length > 0
                 ? 'REROUTED_SKIP_AREA'
                 : b.status === 'REROUTED_SKIP_AREA'
                 ? 'ON_ROUTE'
@@ -13087,6 +13125,11 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
           };
         }),
       );
+
+      if (!ENABLE_AREA_SKIPPING) {
+        setFuelRoi(INITIAL_FUEL_ROI);
+        return;
+      }
 
       // Compute savings & shortcut path via OSRM
       const currentBuses = busesRef.current;
@@ -13229,6 +13272,14 @@ export const CommuteSimulationProvider: React.FC<{ children: React.ReactNode }> 
 
   const simulateAreaOptOutAndSkip = useCallback(
     async (requestedClusterId?: string) => {
+      if (!ENABLE_AREA_SKIPPING) {
+        pushToast(
+          'info',
+          'Phase 1 Pilot Policy',
+          'Area-skipping is disabled during Phase 1 pilot — all stops are served.',
+        );
+        return;
+      }
       const bus = buses.find((b) => b.routeId === activeRouteId) ?? buses[0];
       // Default to Uppal–Boduppal or Habsiguda–Nacharam cluster
       const clusterId =
@@ -15620,6 +15671,7 @@ function formatProjectedIstClock(etaSec: number): string {
 }
 
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
 
 export const StudentPortal: React.FC = () => {
   const {
@@ -16072,7 +16124,7 @@ export const StudentPortal: React.FC = () => {
     if (busDelayMinutes > 0) {
       return `+${busDelayMinutes} min traffic advisory reported on ${routeNumber} corridor.`;
     }
-    if (routeOptimizationPlan?.skippedClusterIds?.length) {
+    if (ENABLE_AREA_SKIPPING && routeOptimizationPlan?.skippedClusterIds?.length) {
       return `${routeOptimizationPlan.skippedClusterIds.length} empty area cluster(s) bypassed for highway express timing.`;
     }
     if (!isTripActive) {
@@ -16084,10 +16136,12 @@ export const StudentPortal: React.FC = () => {
   const studentStopObj = activeBus?.stops.find((s) => s.id === activeStudent?.pickupStopId) || activeBus?.stops[0];
   const studentClusterId = activeStudent?.areaClusterId || studentStopObj?.areaClusterId || '';
   const isClusterBypassed = Boolean(
-    routeOptimizationPlan?.skippedClusterIds?.includes(studentClusterId)
+    ENABLE_AREA_SKIPPING &&
+      routeOptimizationPlan?.skippedClusterIds?.includes(studentClusterId)
   );
   const isDownstreamBypass = Boolean(
-    routeOptimizationPlan?.skippedClusterIds?.length &&
+    ENABLE_AREA_SKIPPING &&
+      routeOptimizationPlan?.skippedClusterIds?.length &&
       !isClusterBypassed &&
       activeBus?.stops.some(
         (s) =>
@@ -17094,6 +17148,8 @@ import { excelService } from '../../services/excelService';
 import { nativeDeviceService } from '../../services/nativeDeviceService';
 import { haversineKm } from '../../services/mapsService';
 
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
+
 function formatTimer(sec: number): string {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
@@ -17961,7 +18017,51 @@ export const DriverConsole: React.FC = () => {
             )}
           </div>
 
-          {/* Tomorrow / Active Route Optimization Panel */}
+          {/* Tomorrow / Active Route Navigation & Optimization Panel */}
+          {!ENABLE_AREA_SKIPPING ? (
+            <div className="prismatic-card rounded-3xl p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                    <Navigation className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                        Route Navigation &amp; Pilot Mode
+                      </h3>
+                      <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                        Phase 1 Pilot
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                      All stops active — area-skipping disabled for Phase 1 pilot • Tomorrow:{' '}
+                      <b className="text-slate-800 dark:text-slate-200">
+                        {routeOptimizationPlan?.expectedRouteStudents ?? expectedTomorrow} coming
+                      </b>{' '}
+                      /{' '}
+                      <span className="font-semibold text-amber-700 dark:text-amber-300">
+                        {routeOptimizationPlan?.absentRouteStudents ?? absentTomorrowCount} opted out
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href={buildGoogleMapsRouteUrl(activeBus.stops, {
+                    lat: activeBus.currentLat,
+                    lng: activeBus.currentLng,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="electric-cta flex items-center gap-2 rounded-xl text-white px-3.5 py-2 text-xs font-bold cursor-pointer"
+                >
+                  <Navigation className="h-3.5 w-3.5" />
+                  <span>Navigate Full Route (Google Maps)</span>
+                </a>
+              </div>
+            </div>
+          ) : (
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
@@ -18070,6 +18170,7 @@ export const DriverConsole: React.FC = () => {
               </div>
             )}
           </div>
+          )}
         </div>
       )}
 
@@ -18262,6 +18363,8 @@ import {
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
+
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
 
 interface ScrutinyApplication {
   id: string;
@@ -19452,7 +19555,50 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Dynamic Route Optimization & Area Attendance Matrix */}
+          {/* Route Selector & Optimization Status / Area Attendance Matrix */}
+          {!ENABLE_AREA_SKIPPING ? (
+            <div className="prismatic-card rounded-3xl p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                    <Navigation className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                        Fleet Route Status
+                      </h2>
+                      <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                        {activeRouteId === 'route-51'
+                          ? '26 Registered (18 Students • 8 Faculty/Staff)'
+                          : `${routeOptimizationPlan?.totalRouteStudents || 0} Registered`}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                      Phase 1 Pilot Policy: Area-skipping is disabled — all stops remain active. Enable via{' '}
+                      <code className="font-mono text-[11px] font-semibold text-[#4F46E5] dark:text-cyan-300">
+                        VITE_ENABLE_AREA_SKIPPING=true
+                      </code>{' '}
+                      for Phase 2.
+                    </p>
+                  </div>
+                </div>
+
+                <select
+                  aria-label="Select fleet route"
+                  value={activeRouteId}
+                  onChange={(e) => setActiveRouteId(e.target.value)}
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                >
+                  {buses.map((b) => (
+                    <option key={b.routeId} value={b.routeId}>
+                      {b.routeNumber} ({b.routeName})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          ) : (
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
@@ -19594,6 +19740,7 @@ export const AdminDashboard: React.FC = () => {
               </table>
             </div>
           </div>
+          )}
 
           {/* Live Incident Queue */}
           <div className="prismatic-card rounded-3xl p-5">
@@ -20104,6 +20251,8 @@ import {
 } from 'lucide-react';
 import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
+
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
 import { excelService } from '../../services/excelService';
 import { calculateStopEtaSeconds, getGoogleMapsLiveEta } from '../../services/mapsService';
 import { PhoneOnboardingModal } from '../notifications/PhoneOnboardingModal';
@@ -20487,9 +20636,11 @@ export const ParentPortal: React.FC = () => {
         {(() => {
           const wardClusterId = activeStudent?.areaClusterId || studentStop?.areaClusterId || '';
           const isClusterBypassed = Boolean(
+            ENABLE_AREA_SKIPPING &&
             routeOptimizationPlan?.skippedClusterIds?.includes(wardClusterId)
           );
           const isDownstreamBypass = Boolean(
+            ENABLE_AREA_SKIPPING &&
             routeOptimizationPlan?.skippedClusterIds?.length &&
             !isClusterBypassed &&
             activeBus?.stops.some(
@@ -20893,8 +21044,18 @@ export function buildGoogleMapsRouteUrl(
   if (validStops.length >= 2) {
     const origin = validStops[0];
     const destination = validStops[validStops.length - 1];
-    const intermediateWaypoints = validStops
-      .slice(1, -1)
+    const intermediates = validStops.slice(1, -1);
+    const MAX_WAYPOINTS = 9;
+    let selectedIntermediates = intermediates;
+    if (intermediates.length > MAX_WAYPOINTS) {
+      const sampled: Array<{ lat: number; lng: number }> = [];
+      const step = (intermediates.length - 1) / (MAX_WAYPOINTS - 1);
+      for (let i = 0; i < MAX_WAYPOINTS; i++) {
+        sampled.push(intermediates[Math.round(i * step)]);
+      }
+      selectedIntermediates = sampled;
+    }
+    const intermediateWaypoints = selectedIntermediates
       .map((s) => `${s.lat},${s.lng}`)
       .join('|');
     return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}${
@@ -21106,7 +21267,8 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         ? Math.round(viewWidth / 2)
         : Math.round(padX + (i / total) * (viewWidth - padX * 2));
 
-    const isTerminus = stop.areaClusterId === 'cluster-campus' || i === stops.length - 1;
+    const isCampus = stop.areaClusterId === 'cluster-campus';
+    const isTerminus = isCampus || i === stops.length - 1;
     // Lower nodes stay around 120–132 with +27px below-curve label clearance so the bus pin never covers stop names
     const y = isTerminus
       ? 104
@@ -21127,10 +21289,10 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
       globalIdx: i,
       name: truncateLabel(stop.shortName || stop.name, 18),
       subtitle:
-        typeof stop.metroInterchange === 'object'
-          ? truncateLabel(stop.metroInterchange.stationName, 20)
-          : isTerminus
-            ? 'Campus Terminus'
+        isCampus
+          ? 'Campus Terminus'
+          : typeof stop.metroInterchange === 'object'
+            ? truncateLabel(stop.metroInterchange.stationName, 20)
             : morningShift
               ? stop.scheduledMorningTime
               : stop.scheduledEveningTime,

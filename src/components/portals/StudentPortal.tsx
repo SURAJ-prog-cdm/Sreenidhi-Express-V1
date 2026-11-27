@@ -70,6 +70,7 @@ function formatProjectedIstClock(etaSec: number): string {
 }
 
 const ENABLE_PARENT_PORTAL = import.meta.env.VITE_ENABLE_PARENT_PORTAL === 'true';
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
 
 export const StudentPortal: React.FC = () => {
   const {
@@ -522,7 +523,7 @@ export const StudentPortal: React.FC = () => {
     if (busDelayMinutes > 0) {
       return `+${busDelayMinutes} min traffic advisory reported on ${routeNumber} corridor.`;
     }
-    if (routeOptimizationPlan?.skippedClusterIds?.length) {
+    if (ENABLE_AREA_SKIPPING && routeOptimizationPlan?.skippedClusterIds?.length) {
       return `${routeOptimizationPlan.skippedClusterIds.length} empty area cluster(s) bypassed for highway express timing.`;
     }
     if (!isTripActive) {
@@ -534,10 +535,12 @@ export const StudentPortal: React.FC = () => {
   const studentStopObj = activeBus?.stops.find((s) => s.id === activeStudent?.pickupStopId) || activeBus?.stops[0];
   const studentClusterId = activeStudent?.areaClusterId || studentStopObj?.areaClusterId || '';
   const isClusterBypassed = Boolean(
-    routeOptimizationPlan?.skippedClusterIds?.includes(studentClusterId)
+    ENABLE_AREA_SKIPPING &&
+      routeOptimizationPlan?.skippedClusterIds?.includes(studentClusterId)
   );
   const isDownstreamBypass = Boolean(
-    routeOptimizationPlan?.skippedClusterIds?.length &&
+    ENABLE_AREA_SKIPPING &&
+      routeOptimizationPlan?.skippedClusterIds?.length &&
       !isClusterBypassed &&
       activeBus?.stops.some(
         (s) =>

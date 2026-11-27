@@ -176,7 +176,8 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
         ? Math.round(viewWidth / 2)
         : Math.round(padX + (i / total) * (viewWidth - padX * 2));
 
-    const isTerminus = stop.areaClusterId === 'cluster-campus' || i === stops.length - 1;
+    const isCampus = stop.areaClusterId === 'cluster-campus';
+    const isTerminus = isCampus || i === stops.length - 1;
     // Lower nodes stay around 120–132 with +27px below-curve label clearance so the bus pin never covers stop names
     const y = isTerminus
       ? 104
@@ -197,10 +198,10 @@ const MetroSchematicMapComponent: React.FC<MetroSchematicMapProps> = ({
       globalIdx: i,
       name: truncateLabel(stop.shortName || stop.name, 18),
       subtitle:
-        typeof stop.metroInterchange === 'object'
-          ? truncateLabel(stop.metroInterchange.stationName, 20)
-          : isTerminus
-            ? 'Campus Terminus'
+        isCampus
+          ? 'Campus Terminus'
+          : typeof stop.metroInterchange === 'object'
+            ? truncateLabel(stop.metroInterchange.stationName, 20)
             : morningShift
               ? stop.scheduledMorningTime
               : stop.scheduledEveningTime,

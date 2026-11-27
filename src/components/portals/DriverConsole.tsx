@@ -28,6 +28,8 @@ import { excelService } from '../../services/excelService';
 import { nativeDeviceService } from '../../services/nativeDeviceService';
 import { haversineKm } from '../../services/mapsService';
 
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
+
 function formatTimer(sec: number): string {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
@@ -895,7 +897,51 @@ export const DriverConsole: React.FC = () => {
             )}
           </div>
 
-          {/* Tomorrow / Active Route Optimization Panel */}
+          {/* Tomorrow / Active Route Navigation & Optimization Panel */}
+          {!ENABLE_AREA_SKIPPING ? (
+            <div className="prismatic-card rounded-3xl p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                    <Navigation className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                        Route Navigation &amp; Pilot Mode
+                      </h3>
+                      <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                        Phase 1 Pilot
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                      All stops active — area-skipping disabled for Phase 1 pilot • Tomorrow:{' '}
+                      <b className="text-slate-800 dark:text-slate-200">
+                        {routeOptimizationPlan?.expectedRouteStudents ?? expectedTomorrow} coming
+                      </b>{' '}
+                      /{' '}
+                      <span className="font-semibold text-amber-700 dark:text-amber-300">
+                        {routeOptimizationPlan?.absentRouteStudents ?? absentTomorrowCount} opted out
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href={buildGoogleMapsRouteUrl(activeBus.stops, {
+                    lat: activeBus.currentLat,
+                    lng: activeBus.currentLng,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="electric-cta flex items-center gap-2 rounded-xl text-white px-3.5 py-2 text-xs font-bold cursor-pointer"
+                >
+                  <Navigation className="h-3.5 w-3.5" />
+                  <span>Navigate Full Route (Google Maps)</span>
+                </a>
+              </div>
+            </div>
+          ) : (
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
@@ -1004,6 +1050,7 @@ export const DriverConsole: React.FC = () => {
               </div>
             )}
           </div>
+          )}
         </div>
       )}
 

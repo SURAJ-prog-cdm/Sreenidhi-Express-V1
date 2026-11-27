@@ -161,8 +161,18 @@ export function buildGoogleMapsRouteUrl(
   if (validStops.length >= 2) {
     const origin = validStops[0];
     const destination = validStops[validStops.length - 1];
-    const intermediateWaypoints = validStops
-      .slice(1, -1)
+    const intermediates = validStops.slice(1, -1);
+    const MAX_WAYPOINTS = 9;
+    let selectedIntermediates = intermediates;
+    if (intermediates.length > MAX_WAYPOINTS) {
+      const sampled: Array<{ lat: number; lng: number }> = [];
+      const step = (intermediates.length - 1) / (MAX_WAYPOINTS - 1);
+      for (let i = 0; i < MAX_WAYPOINTS; i++) {
+        sampled.push(intermediates[Math.round(i * step)]);
+      }
+      selectedIntermediates = sampled;
+    }
+    const intermediateWaypoints = selectedIntermediates
       .map((s) => `${s.lat},${s.lng}`)
       .join('|');
     return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}${

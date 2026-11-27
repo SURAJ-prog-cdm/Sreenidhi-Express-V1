@@ -27,6 +27,8 @@ import { useCommuteSimulation } from '../../context/useCommuteSimulation';
 import { MetroSchematicMap } from '../map/MetroSchematicMap';
 import { excelService } from '../../services/excelService';
 
+const ENABLE_AREA_SKIPPING = import.meta.env.VITE_ENABLE_AREA_SKIPPING === 'true';
+
 interface ScrutinyApplication {
   id: string;
   studentId: string;
@@ -1216,7 +1218,50 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Dynamic Route Optimization & Area Attendance Matrix */}
+          {/* Route Selector & Optimization Status / Area Attendance Matrix */}
+          {!ENABLE_AREA_SKIPPING ? (
+            <div className="prismatic-card rounded-3xl p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                    <Navigation className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                        Fleet Route Status
+                      </h2>
+                      <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold text-[#4F46E5] dark:bg-indigo-950/60 dark:text-cyan-300">
+                        {activeRouteId === 'route-51'
+                          ? '26 Registered (18 Students • 8 Faculty/Staff)'
+                          : `${routeOptimizationPlan?.totalRouteStudents || 0} Registered`}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                      Phase 1 Pilot Policy: Area-skipping is disabled — all stops remain active. Enable via{' '}
+                      <code className="font-mono text-[11px] font-semibold text-[#4F46E5] dark:text-cyan-300">
+                        VITE_ENABLE_AREA_SKIPPING=true
+                      </code>{' '}
+                      for Phase 2.
+                    </p>
+                  </div>
+                </div>
+
+                <select
+                  aria-label="Select fleet route"
+                  value={activeRouteId}
+                  onChange={(e) => setActiveRouteId(e.target.value)}
+                  className="rounded-xl border border-slate-200 bg-[#F7F9FF] px-3 py-1.5 text-xs font-bold text-slate-900 focus:border-[#4F46E5] focus:outline-none dark:border-[#2E3646] dark:bg-[#141821] dark:text-white"
+                >
+                  {buses.map((b) => (
+                    <option key={b.routeId} value={b.routeId}>
+                      {b.routeNumber} ({b.routeName})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          ) : (
           <div className="prismatic-card rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-[#2E3646]">
               <div className="flex items-center gap-2.5">
@@ -1358,6 +1403,7 @@ export const AdminDashboard: React.FC = () => {
               </table>
             </div>
           </div>
+          )}
 
           {/* Live Incident Queue */}
           <div className="prismatic-card rounded-3xl p-5">

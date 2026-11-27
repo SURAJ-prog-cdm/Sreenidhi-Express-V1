@@ -1241,6 +1241,33 @@ test('v20.4.2 google maps route url: builds multi-stop directions url with waypo
   assert.equal(emptyUrl, 'https://www.google.com/maps/dir/?api=1&travelmode=driving');
 });
 
+test('v20.4.3 google maps 9-waypoint mobile cap: caps intermediate waypoints at <= 9 on full 14-stop Route 51', () => {
+  const fullRoute51 = [
+    { lat: 17.4558, lng: 78.4294 },
+    { lat: 17.4475, lng: 78.4373 },
+    { lat: 17.4375, lng: 78.4483 },
+    { lat: 17.4384, lng: 78.4582 },
+    { lat: 17.4433, lng: 78.4758 },
+    { lat: 17.4428, lng: 78.5008 },
+    { lat: 17.4355, lng: 78.5196 },
+    { lat: 17.4279, lng: 78.5326 },
+    { lat: 17.4318, lng: 78.5360 },
+    { lat: 17.4397, lng: 78.5424 },
+    { lat: 17.4565, lng: 78.5542 },
+    { lat: 17.4628, lng: 78.5586 },
+    { lat: 17.4681, lng: 78.5561 },
+    { lat: 17.4571986, lng: 78.6652322 },
+  ];
+
+  const url = buildGoogleMapsRouteUrl(fullRoute51);
+  const parsed = new URL(url);
+  assert.equal(parsed.searchParams.get('origin'), '17.4558,78.4294');
+  assert.equal(parsed.searchParams.get('destination'), '17.4571986,78.6652322');
+  const wpParam = parsed.searchParams.get('waypoints') || '';
+  const waypoints = wpParam.split('|').filter(Boolean);
+  assert.ok(waypoints.length <= 9 && waypoints.length === 9);
+});
+
 test('v20.4 forgot password flow: issues 6-digit code to admin desk, rejects wrong code, and updates login password', async () => {
   const roll = '26011CSEAI0109';
   const origRow = db.prepare('SELECT password_hash, student_phone, must_change_password, session_version FROM students WHERE roll_number = ?').get(roll);
